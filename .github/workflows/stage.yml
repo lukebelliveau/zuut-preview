@@ -1,4 +1,4 @@
-name: Staging Workflow
+name: Development Workflow
 on:
   push:
     branches:
@@ -16,10 +16,10 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
 
-     - name: Deploy to Heorku
+      - name: Deploy to Heorku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          branch: main
+          branch: dev
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "zuut-qa" #Must be unique in Heroku
           heroku_email: "zuutheroku@gmail.com"
