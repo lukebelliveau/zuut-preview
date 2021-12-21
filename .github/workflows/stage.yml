@@ -23,7 +23,7 @@ jobs:
         with:
           branch: main
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "zuut-dev" #Must be unique in Heroku
+          heroku_app_name: "zuut-qa" #Must be unique in Heroku
           heroku_email: "zuutheroku@gmail.com"
           #healthcheck: true // save for later
           #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
