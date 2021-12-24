@@ -21,7 +21,6 @@
   },
   "scripts": {
     "build": "react-scripts build",
-    "ci-test": "jest",
     "eject": "react-scripts eject",
     "start": "react-scripts start",
     "test": "react-scripts test"

@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "15.14.0"
-      - run: npm install
+      - run: npm ci
 
   build:
     runs-on: ubuntu-18.04
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "15.14.0"
-      - run: npm install
+      - run: npm ci
 
       - run: npm run build --if-present
 
@@ -36,15 +36,17 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     needs: setup
+    env:
+      CI: "true"
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "15.14.0"
-      - run: npm install
+      - run: npm ci
 
-      - run: npm run ci-test
+      - run: npm test
 
   deploy:
     runs-on: ubuntu-18.04
