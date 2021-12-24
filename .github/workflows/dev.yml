@@ -53,7 +53,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: test-results/**/*.xml
+          files: junit.xml
 
   deploy:
     runs-on: ubuntu-18.04
