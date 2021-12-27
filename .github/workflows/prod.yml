@@ -1,8 +1,8 @@
-name: Production Workflow
+name: prod
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 jobs:
   build:
     runs-on: ubuntu-18.04

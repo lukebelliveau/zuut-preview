@@ -1,4 +1,4 @@
-name: QA Workflow
+name: qa
 on:
   push:
     branches:
