@@ -1,8 +1,8 @@
 name: qa
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "q*"
 jobs:
   build:
     runs-on: ubuntu-18.04
