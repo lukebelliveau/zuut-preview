@@ -1,4 +1,4 @@
-name: Development Workflow
+name: dev
 on:
   push:
     branches:
@@ -45,6 +45,9 @@ jobs:
         with:
           node-version: "15.14.0"
       - run: npm ci
+
+      - name: Lint
+        run: npm run lint
 
       - name: Run unit tests
         run: npm test -- --reporters=default --reporters=jest-junit
