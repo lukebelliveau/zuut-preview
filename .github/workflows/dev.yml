@@ -52,12 +52,6 @@ jobs:
       - name: Run unit tests
         run: npm test -- --reporters=default --reporters=jest-junit
 
-      - name: Publish unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: junit.xml
-
   deploy:
     runs-on: ubuntu-18.04
     needs:
