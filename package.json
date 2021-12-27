@@ -36,7 +36,7 @@
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "format": "prettier --write src/**/*.ts{,x}",
+    "format": "eslint --fix src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "start": "react-scripts start",
     "test": "react-scripts test"
@@ -45,7 +45,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "quotes": [2, "single", "avoid-escape"],
+      "testing-library/prefer-screen-queries": 0
+    }
   },
   "browserslist": {
     "production": [

@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import playgroundReducer from "../features/playground/playgroundSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import playgroundReducer from '../features/playground/playgroundSlice';
 
 export const store = configureStore({
   reducer: {
