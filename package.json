@@ -53,7 +53,10 @@
         "single",
         "avoid-escape"
       ],
-      "semi": ["error", "always"],
+      "semi": [
+        "error",
+        "always"
+      ],
       "testing-library/prefer-screen-queries": "off"
     }
   },
