@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth';
+import AccessDenied from './routes/AccessDenied';
 import Home from './routes/Home';
 import Login from './routes/Login';
 import NotFound from './routes/NotFound';
@@ -20,6 +21,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/access-denied" element={<AccessDenied />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

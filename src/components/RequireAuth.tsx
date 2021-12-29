@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const RequireAuth = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading, error } = useAuth0();
 
   if (process.env.REACT_APP_DISABLE_AUTH) {
     return <Fragment>{children}</Fragment>;
@@ -11,6 +11,11 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    console.debug('Error authenticating: ', error);
+    return <Navigate to="/access-denied" />;
   }
 
   return isAuthenticated === true ? (
