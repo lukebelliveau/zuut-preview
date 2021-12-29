@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^1.8.0",
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -39,7 +40,8 @@
     "format": "eslint --fix src",
     "lint": "tsc --noEmit && eslint src",
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start"
   },
   "eslintConfig": {
     "extends": [

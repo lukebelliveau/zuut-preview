@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './Layout.css';
+import LogoutButton from './LogoutButton';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -17,9 +18,18 @@ export default function Layout(props: LayoutProps) {
       </header>
       <nav>
         <ul>
-          <li><Link to="/playground">Playground</Link></li>
-          <li><Link to="/shopping">Shopping List</Link></li>
-          <li><Link to="/workplace">Workplace</Link></li>
+          <li>
+            <Link to="/playground">Playground</Link>
+          </li>
+          <li>
+            <Link to="/shopping">Shopping List</Link>
+          </li>
+          <li>
+            <Link to="/workplace">Workplace</Link>
+          </li>
+          <li>
+            <LogoutButton />
+          </li>
         </ul>
       </nav>
       <div className="content">
