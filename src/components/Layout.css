@@ -2,9 +2,9 @@
   display: grid;
   grid-template-columns: repeat(12, [col-start] 1fr);
   grid-template-areas:
-    "header"
-    "sidebar"
-    "content";
+    'header'
+    'sidebar'
+    'content';
 }
 
 header {
@@ -36,14 +36,76 @@ header h1 {
   font-weight: bold;
 }
 
-nav {
+#sidebar {
   grid-area: sidebar;
   grid-column: col-start / span 2;
   grid-row: 2 / 4;
+
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 9px 16px 9px 8px;
 }
 
-.content {
+#dashboard-accordian {
+  color: var(--blue);
+  font-size: 14px;
+  margin-left: 40px;
+  position: relative;
+  left: -16px;
+}
+
+#dashboard-accordian::before {
+  content: url('../images/dashboard.png');
+  width: 14px;
+  position: relative;
+  left: -12px;
+}
+
+nav ul {
+  margin: 9px 0 9px 40px;
+  padding: 0;
+}
+
+nav li {
+  list-style-type: none;
+  font-size: 14px;
+  margin-top: 18px;
+}
+
+nav a:link {
+  color: var(--text);
+  text-decoration: none;
+}
+nav a:visited {
+  color: var(--text);
+  text-decoration: none;
+}
+
+#dashboard-icon {
+  width: 14px;
+}
+
+#content {
   grid-area: content;
   grid-column: col-start 3 / span 8;
   grid-row: 2 / 4;
+  background-color: #eceff3;
+}
+
+#subheading {
+  background-color: #fff;
+  padding: 24px 20px;
+  margin-left: 2px;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+#main {
+  margin: 10px 24px 28px 24px;
+  background-color: #fff;
+  min-height: 600px;
 }
