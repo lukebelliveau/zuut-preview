@@ -109,3 +109,9 @@ h2 {
   background-color: #fff;
   min-height: 600px;
 }
+
+#sandbox {
+  margin: 0 0 0 2px;
+  background-color: #fff;
+  min-height: 600px;
+}

@@ -41,9 +41,7 @@ export default function Layout(props: LayoutProps) {
         <div id="subheading">
           <h2>{props.header}</h2>
         </div>
-        <div id="main">
-          {props.children}
-        </div>
+        {props.children}
       </div>
     </div>
   );
