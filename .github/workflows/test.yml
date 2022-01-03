@@ -1,18 +1,35 @@
 name: test
+
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 jobs:
-  build:
+  unit-tests:
     runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: unit-tests
         uses: actions/setup-node@v2
         with:
           node-version: "15.14.0"
           cache: 'npm'
       - run: npm install
       - run: npm test
+  
+  browser-tests:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: browser-tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: "15.14.0"
+          cache: 'npm'
+      - run: npm install
+      - run: npm run taiko-test

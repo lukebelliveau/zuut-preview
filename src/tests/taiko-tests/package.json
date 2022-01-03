@@ -1,0 +1,10 @@
+{
+  "name": "gauge-taiko",
+  "description": "JS Tests for Gauge",
+  "scripts": {
+    "test": "gauge run specs/"
+  },
+  "dependencies": {
+    "taiko": "latest"
+  }
+}

@@ -42,7 +42,8 @@
     "format": "eslint --fix src",
     "lint": "tsc --noEmit && eslint src",
     "start": "react-scripts start",
-    "test": "gauge run specs",
+    "test": "react-scripts test",
+    "taiko-test": "cd src/tests/taiko-tests && gauge run specs",
     "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start"
   },
   "eslintConfig": {
