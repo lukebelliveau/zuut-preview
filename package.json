@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
+    "@getgauge/cli": "latest",
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -31,10 +32,9 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
-    "typescript": "~4.1.5",
-    "web-vitals": "^2.1.2",
     "taiko": "latest",
-    "@getgauge/cli": "latest"
+    "typescript": "~4.1.5",
+    "web-vitals": "^2.1.2"
   },
   "scripts": {
     "build": "react-scripts build",

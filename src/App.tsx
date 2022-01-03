@@ -5,6 +5,7 @@ import AccessDenied from './routes/AccessDenied';
 import Home from './routes/Home';
 import Login from './routes/Login';
 import NotFound from './routes/NotFound';
+import Playground from './routes/Playground';
 import Workplace from './routes/Workplace';
 
 function App() {
@@ -12,6 +13,14 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route
+          path="/playground"
+          element={
+            <RequireAuth>
+              <Playground />
+            </RequireAuth>
+          }
+        />
         <Route
           path="/workplace"
           element={
