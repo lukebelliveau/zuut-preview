@@ -107,11 +107,15 @@ h2 {
 #main {
   margin: 10px 24px 28px 24px;
   background-color: #fff;
-  min-height: 600px;
 }
 
 #sandbox {
   margin: 0 0 0 2px;
   background-color: #fff;
-  min-height: 600px;
+}
+
+#sandbox-container {
+  display: grid;
+  grid-template-columns: repeat(11, [col-start] 1fr);
+  grid-template-rows: repeat(5, [row-start] 1fr);
 }

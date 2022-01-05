@@ -36,20 +36,24 @@ export default function NewPlayground() {
   return (
     <Layout header="Playground">
       <div id="sandbox">
-        <section id="new-playground">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="field-name">
-              <label htmlFor="name">Grow Plan Name:</label>
-            </div>
-            <div className="field-name-input">
-              <input placeholder="Give the grow plan a name" 
-                {...register('name', { required: true })} />
-            </div>
-            <div className="create-button">
-              <input type="submit" value="Create layout" />
-            </div>
-          </form>
-        </section>
+        <div id="sandbox-container">
+          <div id="new-playground-window">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <section id="new-playground">
+                <div className="field-name">
+                  <label htmlFor="name">Grow Plan Name:</label>
+                </div>
+                <div className="field-name-input">
+                  <input placeholder="Give the grow plan a name" 
+                    {...register('name', { required: true })} />
+                </div>
+                <div className="create-button">
+                  <input type="submit" value="Create layout" />
+                </div>
+              </section>
+            </form>
+          </div>
+        </div>
       </div>
     </Layout>
   );
