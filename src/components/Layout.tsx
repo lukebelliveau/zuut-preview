@@ -1,15 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import './Layout.css';
 import LogoutButton from './LogoutButton';
+import { new_playground_path } from '../routes/playgrounds/NewPlayground';
+import { playground_path } from '../routes/playgrounds/ShowPlayground';
+import { selectPlaygroundPlan } from '../features/playgroundPlan/playgroundPlanSelector';
 
 type LayoutProps = {
   children: React.ReactNode;
-  header: String;
+  header: string | React.ReactNode;
 };
 
 export default function Layout(props: LayoutProps) {
+  const playground = useSelector(selectPlaygroundPlan);
+  const playgroundLink = playground ? playground_path() : new_playground_path();
+
   return (
     <div className="wrapper">
       <header>
@@ -22,14 +29,14 @@ export default function Layout(props: LayoutProps) {
         </div>
         <nav>
           <ul>
-            <li>
-              <Link to="/playground">Playground</Link>
-            </li>
+            {/* <li>
+              <Link to="/workplace">Workplace</Link>
+            </li> */}
             <li>
               <Link to="/shopping">Shopping List</Link>
             </li>
             <li>
-              <Link to="/workplace">Workplace</Link>
+              <Link to={playgroundLink}>Playground</Link>
             </li>
             <li>
               <LogoutButton />

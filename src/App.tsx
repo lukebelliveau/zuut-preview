@@ -5,7 +5,8 @@ import AccessDenied from './routes/AccessDenied';
 import Home from './routes/Home';
 import Login from './routes/Login';
 import NotFound from './routes/NotFound';
-import Playground from './routes/Playground';
+import NewPlayground, { new_playground_path } from './routes/playgrounds/NewPlayground';
+import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
 
 function App() {
@@ -14,10 +15,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/playground"
+          path={new_playground_path()}
           element={
             <RequireAuth>
-              <Playground />
+              <NewPlayground />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={playground_path()}
+          element={
+            <RequireAuth>
+              <ShowPlayground />
             </RequireAuth>
           }
         />
