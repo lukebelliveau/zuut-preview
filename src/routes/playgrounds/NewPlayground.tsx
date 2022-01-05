@@ -25,7 +25,7 @@ function formDataAdapter(params: CreatePlanParams): Plan {
 
 export default function NewPlayground() {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<CreatePlanParams>();
+  const { register, handleSubmit } = useForm<CreatePlanParams>();
   const dispatch = useDispatch();
   const onSubmit: SubmitHandler<CreatePlanParams> = data => {
     const plan = formDataAdapter(data);
