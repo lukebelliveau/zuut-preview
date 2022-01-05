@@ -1,6 +1,10 @@
-# Specs
+# Getting Started with Gauge
 
-Tasks run in step_implementation.js file
+This is an executable specification file. This file follows markdown syntax. Every heading in this file denotes a scenario. Every bulleted point denotes a step.
+To execute this specification, use
+	npm test
 
-## Load Page
-* Go to Zuut QA
+## Search Taiko Repository
+
+* Goto Zuut Page
+* Page contains "Welcome Home"

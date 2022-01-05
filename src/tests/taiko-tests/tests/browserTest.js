@@ -1,53 +1,25 @@
 /* globals gauge*/
 "use strict";
-const path = require('path');
-const {
-    openBrowser,
-    write,
-    closeBrowser,
-    goto,
-    press,
-    screenshot,
-    above,
-    click,
-    checkBox,
-    listItem,
-    toLeftOf,
-    link,
-    text,
-    into,
-    textBox,
-    evaluate
-} = require('taiko');
+const { openBrowser,write, closeBrowser, goto, press, screenshot, text, focus, textBox, toRightOf } = require('taiko');
 const assert = require("assert");
 const headless = process.env.headless_chrome.toLowerCase() === 'true';
 
 beforeSuite(async () => {
-    await openBrowser({
-        headless: headless
-    })
+    await openBrowser({ headless: headless })
 });
 
 afterSuite(async () => {
     await closeBrowser();
 });
 
-// Return a screenshot file name
-//gauge.customScreenshotWriter = async function () {
-//    const screenshotFilePath = path.join(process.env['gauge_screenshots_dir'],
-//        `screenshot-${process.hrtime.bigint()}.png`);
+gauge.screenshotFn = async function() {
+    return await screenshot({ encoding: 'base64' });
+};
 
-//    await screenshot({
-//        path: screenshotFilePath
-//    });
-//    return path.basename(screenshotFilePath);
-//};
+step("Goto Zuut Page", async () => {
+    await goto('https://zuut-dev.herokuapp.com');
+});
 
-step("Go to Zuut QA", async (item) => {
- try {
-  await goto("https://zuut-qa.herokuapp.com");
-  //await text('Welcone Home').get().then(elements => console.log(elements.length));
- } catch (error) {
-  console.log(error);
- }
+step("Page contains <content>", async (content) => {
+    assert.ok(await text(content).exists());
 });
