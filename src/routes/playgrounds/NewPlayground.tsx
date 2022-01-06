@@ -15,8 +15,9 @@ export const new_playground_path = () => '/playgrounds/new';
 
 export type CreatePlanParams = {
   name: string;
-  // width: number;
-  // length: number;
+  height: number;
+  length: number;
+  width: number;
 }
 
 function formDataAdapter(params: CreatePlanParams): Plan {
@@ -40,12 +41,29 @@ export default function NewPlayground() {
           <div id="new-playground-window">
             <form onSubmit={handleSubmit(onSubmit)}>
               <section id="new-playground">
-                <div className="field-name">
+                <div className="field-label field-name">
                   <label htmlFor="name">Grow Plan Name:</label>
                 </div>
-                <div className="field-name-input">
+                <div className="field-value field-name-input">
                   <input placeholder="Give the grow plan a name" 
                     {...register('name', { required: true })} />
+                </div>
+                <div className="field-label field-dimensions">
+                  Room Dimensions:
+                </div>
+                <div className="field-value field-dimensions-input">
+                  <span className="dimension">
+                    <label htmlFor="length">Length (ft)</label>
+                    <input {...register('length', { required: true })} />
+                  </span>
+                  <span className="dimension">
+                    <label htmlFor="width">Width (ft)</label>
+                    <input {...register('width', { required: true })} />
+                  </span>
+                  <span className="dimension">
+                    <label htmlFor="height">Height (ft)</label>
+                    <input {...register('height')} />
+                  </span>
                 </div>
                 <div className="create-button">
                   <input type="submit" value="Create layout" />
