@@ -54,7 +54,7 @@ header h1 {
 }
 
 #dashboard-accordian::before {
-  content: url('../images/dashboard.png');
+  content: url('../images/dashboard.svg');
   width: 14px;
   position: relative;
   left: -12px;
