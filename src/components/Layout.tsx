@@ -21,7 +21,7 @@ export default function Layout(props: LayoutProps) {
     <div className="wrapper">
       <header>
         <img id="logo" src="/logo.png" alt="GreenGrids Logo" />
-        <h1>GreenGrids</h1>
+        <h1>Zuut</h1>
       </header>
       <div id="sidebar">
         <div id="dashboard-accordian">
