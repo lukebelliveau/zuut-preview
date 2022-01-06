@@ -21,7 +21,12 @@ export type CreatePlanParams = {
 }
 
 function formDataAdapter(params: CreatePlanParams): Plan {
-  return new Plan(params.name, 1, 1);
+  return new Plan(
+    params.name,
+    params.width,
+    params.length,
+    params.height,
+  );
 }
 
 export default function NewPlayground() {

@@ -6,6 +6,7 @@ type PlanState = {
   name: string;
   width: number;
   length: number;
+  height: number;
 }
 
 export function planStateBuilder(plan: Plan): PlanState {
@@ -14,6 +15,7 @@ export function planStateBuilder(plan: Plan): PlanState {
     name: plan.name,
     width: plan.width,
     length: plan.length,
+    height: plan.height,
   };
 }
 
@@ -22,6 +24,7 @@ export function planBuilder(planState: PlanState): Plan {
     planState.name,
     planState.width,
     planState.length,
+    planState.height,
     planState.id,
   );
 }

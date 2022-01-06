@@ -5,11 +5,13 @@ export default class Plan {
   name: string;
   width: number;
   length: number;
+  height: number;
 
-  constructor(name: string, width: number, length: number, id: string = uuidv4()) {
+  constructor(name: string, width: number, length: number, height: number, id: string = uuidv4()) {
     this.id = id;
     this.name = name;
     this.width = width;
     this.length = length;
+    this.height = height;
   }
 }
