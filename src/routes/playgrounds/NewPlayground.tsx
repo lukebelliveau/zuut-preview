@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './NewPlayground.css';
 
+import { feetToMm } from '../../lib/conversions';
 import Layout from '../../components/Layout';
 import { create } from '../../features/playgroundPlan/playgroundPlanSlice';
 import { playground_path } from './ShowPlayground';
@@ -23,9 +24,9 @@ export type CreatePlanParams = {
 function formDataAdapter(params: CreatePlanParams): Plan {
   return new Plan(
     params.name,
-    params.width,
-    params.length,
-    params.height,
+    feetToMm(params.width),
+    feetToMm(params.length),
+    feetToMm(params.height),
   );
 }
 
