@@ -1,7 +1,7 @@
 import { Placement } from './placement';
-import RoomRenderer from './roomRenderer';
+import Room from '../objects/room';
 
-const INSET_WIDTH = 5;
+const INSET_WIDTH = 20;
 
 export default class DisplaySpace {
   xMax: number;
@@ -16,17 +16,16 @@ export default class DisplaySpace {
     this.displayTotalHeightMm = displayTotalHeightMm;
   }
 
-  place(item: RoomRenderer): Placement {
+  place(item: Room): Placement {
     return {
-      x: this.mmToPixels(item.xOffsetMm) + INSET_WIDTH,
-      y: this.mmToPixels(item.yOffsetMm) + INSET_WIDTH,
+      x: INSET_WIDTH,
+      y: INSET_WIDTH,
       width: this.mmToPixels(item.widthMm),
       height: this.mmToPixels(item.lengthMm),
     };
   }
 
   private mmToPixels(mm: number): number {
-    const ratio = (this.xMax - 2 * INSET_WIDTH) / this.xMax;
-    return Math.trunc(ratio * mm);
+    return this.xMax - 2 * INSET_WIDTH;
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import Plan from './plan';
 import DisplaySpace from './renderer/displaySpace';
+import Plan from './plan';
+import Room from './objects/room';
 import RoomRenderer from './renderer/roomRenderer';
 
 export default class Renderer {
@@ -9,11 +10,10 @@ export default class Renderer {
 
   public static fromPlan(displayWidth: number, displayHeight: number, plan: Plan): Renderer {
     const displaySpace = new DisplaySpace(displayWidth, displayHeight, plan.width, plan.length);
+    const room = new Room(plan.width, plan.length, plan.height);
     const roomRenderer = new RoomRenderer(
       displaySpace,
-      plan.width,
-      plan.length,
-      plan.height,
+      room
     );
     return new Renderer(displaySpace, roomRenderer);
   }
