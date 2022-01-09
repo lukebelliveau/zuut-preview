@@ -1,18 +1,18 @@
 export default class Room {
-  widthMm: number;
-  lengthMm: number;
-  heightMm: number;
+  width: number;
+  length: number;
+  height: number;
 
-  constructor(widthMm: number, lengthMm: number, heightMm: number) {
-    this.widthMm = widthMm;
-    this.lengthMm = lengthMm;
-    this.heightMm = heightMm;
+  constructor(width: number, length: number, height: number) {
+    this.width = width;
+    this.length = length;
+    this.height = height;
   }
 
-  get xOffsetMm(): number {
+  get x(): number {
     return 0;
   }
-  get yOffsetMm(): number {
+  get y(): number {
     return 0;
   }
 }

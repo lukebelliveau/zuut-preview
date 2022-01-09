@@ -7,7 +7,7 @@ const playgroundPlanSelectors = playgroundPlanReduxAdapter.getSelectors<RootStat
   (state) => state.playgroundPlan
 );
 
-export function selectPlaygroundPlan(): Plan | undefined {
+export function selectPlan(): Plan | undefined {
   const plans = playgroundPlanSelectors.selectAll(store.getState());
   if (plans.length > 0) {
     return planBuilder(plans[0]);

@@ -1,31 +1,37 @@
 import { Placement } from './placement';
 import Room from '../objects/room';
+import { Point } from '../point';
 
-const INSET_WIDTH = 20;
+const DEFAULT_SCALE = 1.0 / 10_000.0;
 
 export default class DisplaySpace {
   xMax: number;
   yMax: number;
+  scale: number;
   displayTotalWidthMm: number;
   displayTotalHeightMm: number;
 
-  constructor(xMax: number, yMax: number, displayTotalWidthMm: number, displayTotalHeightMm: number) {
+  constructor(xMax: number, yMax: number, displayTotalWidthMm: number, displayTotalHeightMm: number, scale: number = DEFAULT_SCALE) {
     this.xMax = xMax;
     this.yMax = yMax;
     this.displayTotalWidthMm = displayTotalWidthMm;
     this.displayTotalHeightMm = displayTotalHeightMm;
+    this.scale = scale;
   }
 
   place(item: Room): Placement {
     return {
-      x: INSET_WIDTH,
-      y: INSET_WIDTH,
-      width: this.mmToPixels(item.widthMm),
-      height: this.mmToPixels(item.lengthMm),
+      x: item.x,
+      y: item.y,
+      width: item.width,
+      height: item.length,
     };
   }
 
-  private mmToPixels(mm: number): number {
-    return this.xMax - 2 * INSET_WIDTH;
+  get center(): Point {
+    return {
+      x: this.displayTotalWidthMm / 2,
+      y: this.displayTotalHeightMm / 2
+    };
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -21,28 +21,29 @@ export type CreatePlanParams = {
   width: number;
 }
 
-function formDataAdapter(params: CreatePlanParams): Plan {
-  return new Plan(
-    params.name,
-    feetToMm(params.width),
-    feetToMm(params.length),
-    feetToMm(params.height),
-  );
-}
-
 export default function NewPlayground() {
+  let sandboxElement: HTMLDivElement | null = null;
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreatePlanParams>();
   const dispatch = useDispatch();
   const onSubmit: SubmitHandler<CreatePlanParams> = data => {
-    const plan = formDataAdapter(data);
+    const displayWidth = sandboxElement?.clientWidth || 1024;
+    const displayHeight = sandboxElement?.clientHeight || 768;
+    const plan = new Plan(
+      data.name,
+      feetToMm(data.width),
+      feetToMm(data.length),
+      feetToMm(data.height),
+      displayWidth,
+      displayHeight
+    );
     dispatch(create(planStateBuilder(plan)));
     navigate(playground_path());
   };
 
   return (
     <Layout header="Playground">
-      <div id="sandbox">
+      <div id="sandbox" ref={(element) => { sandboxElement = element; }}>
         <div id="sandbox-container">
           <div id="new-playground-window">
             <form onSubmit={handleSubmit(onSubmit)}>
