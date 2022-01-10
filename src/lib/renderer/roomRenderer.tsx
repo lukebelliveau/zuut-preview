@@ -3,8 +3,6 @@ import { Rect } from 'react-konva';
 
 import Room from '../objects/room';
 
-export const INSET_BUFFER = 50; // pixels
-
 export default class RoomRenderer {
   room: Room;
 

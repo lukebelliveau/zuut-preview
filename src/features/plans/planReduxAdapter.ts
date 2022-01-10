@@ -1,4 +1,5 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
+
 import Plan from '../../lib/plan';
 
 type PlanState = {
@@ -7,8 +8,6 @@ type PlanState = {
   width: number;
   length: number;
   height: number;
-  displayWidth: number;
-  displayHeight: number;
 }
 
 export function planStateBuilder(plan: Plan): PlanState {
@@ -18,8 +17,6 @@ export function planStateBuilder(plan: Plan): PlanState {
     width: plan.width,
     length: plan.length,
     height: plan.height,
-    displayWidth: plan.displayWidth,
-    displayHeight: plan.displayHeight
   };
 }
 
@@ -29,14 +26,12 @@ export function planBuilder(planState: PlanState): Plan {
     planState.width,
     planState.length,
     planState.height,
-    planState.displayWidth,
-    planState.displayHeight,
     planState.id,
   );
 }
 
-const playgroundPlanReduxAdapter = createEntityAdapter<PlanState>({
+const planReduxAdapter = createEntityAdapter<PlanState>({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
-export default playgroundPlanReduxAdapter;
+export default planReduxAdapter;

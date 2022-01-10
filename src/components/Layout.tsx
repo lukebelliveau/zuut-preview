@@ -6,7 +6,7 @@ import './Layout.css';
 import LogoutButton from './LogoutButton';
 import { new_playground_path } from '../routes/playgrounds/NewPlayground';
 import { playground_path } from '../routes/playgrounds/ShowPlayground';
-import { selectPlan } from '../features/playgroundPlan/playgroundSelectors';
+import { selectPlayground } from '../features/playgrounds/playgroundSelector';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ type LayoutProps = {
 };
 
 export default function Layout(props: LayoutProps) {
-  const playground = useSelector(selectPlan);
+  const playground = useSelector(selectPlayground);
   const playgroundLink = playground ? playground_path() : new_playground_path();
 
   return (

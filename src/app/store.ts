@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import { resizePlaygroundOnWindowResize } from '../features/playgroundPlan/playgroundPlanEffects';
+import { resizePlaygroundOnWindowResize } from '../features/playgrounds/playgroundEffects';
 
-import playgroundPlanReducer from '../features/playgroundPlan/playgroundPlanSlice';
+import playgroundReducer from '../features/playgrounds/playgroundSlice';
+import plansReducer from '../features/plans/planSlice';
 
 export const store = configureStore({
   reducer: {
-    playgroundPlan: playgroundPlanReducer,
+    plans: plansReducer,
+    playground: playgroundReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

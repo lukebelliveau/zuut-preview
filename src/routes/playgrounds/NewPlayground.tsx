@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +7,11 @@ import './NewPlayground.css';
 
 import { feetToMm } from '../../lib/conversions';
 import Layout from '../../components/Layout';
-import { create } from '../../features/playgroundPlan/playgroundPlanSlice';
+import { create } from '../../features/plans/planSlice';
 import { playground_path } from './ShowPlayground';
 import Plan from '../../lib/plan';
-import { planStateBuilder } from '../../features/playgroundPlan/playgourndPlanReduxAdapter';
+import { planStateBuilder } from '../../features/plans/planReduxAdapter';
+import { setPlan } from '../../features/playgrounds/playgroundSlice';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -22,28 +23,25 @@ export type CreatePlanParams = {
 }
 
 export default function NewPlayground() {
-  let sandboxElement: HTMLDivElement | null = null;
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreatePlanParams>();
   const dispatch = useDispatch();
+
   const onSubmit: SubmitHandler<CreatePlanParams> = data => {
-    const displayWidth = sandboxElement?.clientWidth || 1024;
-    const displayHeight = sandboxElement?.clientHeight || 768;
     const plan = new Plan(
       data.name,
       feetToMm(data.width),
       feetToMm(data.length),
       feetToMm(data.height),
-      displayWidth,
-      displayHeight
     );
     dispatch(create(planStateBuilder(plan)));
+    dispatch(setPlan(plan.id));
     navigate(playground_path());
   };
 
   return (
     <Layout header="Playground">
-      <div id="sandbox" ref={(element) => { sandboxElement = element; }}>
+      <div id="sandbox">
         <div id="sandbox-container">
           <div id="new-playground-window">
             <form onSubmit={handleSubmit(onSubmit)}>
