@@ -8,7 +8,6 @@ import { create } from '../../features/plans/planSlice';
 import Plan from '../../lib/plan';
 import { planStateBuilder } from '../../features/plans/planReduxAdapter';
 import { setPlan } from '../../features/playgrounds/playgroundSlice';
-import CloseButton from './CloseButton';
 import Section from './Section';
 
 export const new_playground_path = () => '/playgrounds/new';
