@@ -12,6 +12,7 @@ import { store } from '../../app/store';
 import Playground from '../../lib/playground';
 import PillInput from '../../components/PillInput';
 import { playground_path } from './ShowPlayground';
+import Section from './Section';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -28,19 +29,20 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
 
   const plan = selectPlanById(store.getState(), planId);
   if (!plan) return <></>;
-  
 
   function togglePopup() {
     setShowCreateLayoutPopup(!showCreateLayoutPopup);
   }
 
-  return (<>
-    <h1>Choose your layout.</h1>
-    <button onClick={togglePopup}>Create new layout</button>
-    {showCreateLayoutPopup ?
-      <CreateLayoutPopup playground={playground} plan={plan} nextPage={props.nextPage} /> :
-      <></>}
-  </>);
+  return (
+    <Section>
+      <h1>Choose your layout.</h1>
+      <button onClick={togglePopup}>Create new layout</button>
+      {showCreateLayoutPopup ?
+        <CreateLayoutPopup playground={playground} plan={plan} nextPage={props.nextPage} /> :
+        <></>}
+    </Section>
+  );
 }
 
 type CreateLayoutPopupParams = {

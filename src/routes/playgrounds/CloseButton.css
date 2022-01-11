@@ -1,0 +1,9 @@
+#close-button {
+  display: absolute;
+  text-align: right;
+  display: block;
+  position: fixed;
+  width: 100%;
+  top: 2.65rem;
+  right: 2.65rem;
+}

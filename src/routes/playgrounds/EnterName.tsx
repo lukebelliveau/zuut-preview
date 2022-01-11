@@ -8,6 +8,8 @@ import { create } from '../../features/plans/planSlice';
 import Plan from '../../lib/plan';
 import { planStateBuilder } from '../../features/plans/planReduxAdapter';
 import { setPlan } from '../../features/playgrounds/playgroundSlice';
+import CloseButton from './CloseButton';
+import Section from './Section';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -33,29 +35,14 @@ export default function EnterName(props: EnterNameProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>
-        <label htmlFor="name">Give your grow a name.</label>
-      </h1>
-      <input placeholder="Give the grow plan a name" 
-        {...register('name', { required: true })} />
-    </form>
+    <Section>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h1>
+          <label htmlFor="name">Give your grow a name.</label>
+        </h1>
+        <input type="text" placeholder="type the name here" 
+          {...register('name', { required: true })} />
+      </form>
+    </Section>
   );
 }
-                // <div className="field-value field-dimensions-input">
-                //   <span className="dimension">
-                //     <label htmlFor="length">Length (ft)</label>
-                //     <input {...register('length', { required: true })} />
-                //   </span>
-                //   <span className="dimension">
-                //     <label htmlFor="width">Width (ft)</label>
-                //     <input {...register('width', { required: true })} />
-                //   </span>
-                //   <span className="dimension">
-                //     <label htmlFor="height">Height (ft)</label>
-                //     <input {...register('height')} />
-                //   </span>
-                // </div>
-                // <div className="create-button">
-                //   <input type="submit" value="Create layout" />
-                // </div>
