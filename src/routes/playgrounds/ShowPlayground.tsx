@@ -19,7 +19,7 @@ export default function ShowPlayground() {
   if (!plan) throw new Error('No plan found');
 
   const header = <span>Playground / <strong>{plan.name}</strong></span>;
-  const renderer = Renderer.fromPlan(1000, 1000, plan);
+  const renderer = new Renderer(playground, plan);
 
   return (
     <Layout header={header}>

@@ -1,25 +1,17 @@
 import React from 'react';
 
-import Plan from './plan';
-import Room from './objects/room';
 import RoomRenderer from './renderer/roomRenderer';
 import { Point } from './point';
 import Playground from './playground';
+import Plan from './plan';
 
 export default class Renderer {
-  room: RoomRenderer;
+  plan: Plan;
   playground: Playground;
 
-  public static fromPlan(displayWidth: number, displayHeight: number, plan: Plan): Renderer {
-    const playground = new Playground(displayWidth, displayHeight, plan.id);
-    const room = new Room(plan.width, plan.length, plan.height);
-    const roomRenderer = new RoomRenderer(room);
-    return new Renderer(playground, roomRenderer);
-  }
-
-  constructor(playground: Playground, room: RoomRenderer) {
+  constructor(playground: Playground, plan: Plan) {
     this.playground = playground;
-    this.room = room;
+    this.plan = plan;
   }
 
   get center(): Point {
@@ -27,6 +19,11 @@ export default class Renderer {
   }
 
   render(): React.ReactNode {
-    return this.room.render();
+    if (this.plan.room) {
+      const roomRenderer = new RoomRenderer(this.plan.room);
+      return roomRenderer.render();
+    } else {
+      return <></>;
+    }
   }
 }

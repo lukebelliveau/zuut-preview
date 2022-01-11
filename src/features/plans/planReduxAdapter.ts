@@ -4,10 +4,10 @@ import Plan from '../../lib/plan';
 
 type PlanState = {
   id: string;
-  name: string;
-  width: number;
-  length: number;
-  height: number;
+  name: string | undefined;
+  width: number | undefined;
+  length: number | undefined;
+  height: number | undefined;
 }
 
 export function planStateBuilder(plan: Plan): PlanState {
@@ -31,7 +31,12 @@ export function planBuilder(planState: PlanState): Plan {
 }
 
 const planReduxAdapter = createEntityAdapter<PlanState>({
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
+  sortComparer: (a, b) => {
+    if (a.name && b.name)
+      return a.name.localeCompare(b.name);
+    else
+      return a.id.localeCompare(b.id);
+  }
 });
 
 export default planReduxAdapter;
