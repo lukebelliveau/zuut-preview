@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm dev:noauth`
+### `npm run dev:noauth`
 
 Runs the app in development mode, but does not require authentication for protected routes.\
 See [`RequireAuth.tsx`](src/components/RequireAuth.tsx) for more details.
