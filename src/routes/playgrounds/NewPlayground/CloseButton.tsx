@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { homePath } from '../Home';
+import { homePath } from '../../Home';
 
 import CloseButtonIcon from '../../images/close_button.svg';
 import './CloseButton.css';

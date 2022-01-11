@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 
 // import './NewPlayground.css';
 
-import { create } from '../../features/plans/planSlice';
-import Plan from '../../lib/plan';
-import { planStateBuilder } from '../../features/plans/planReduxAdapter';
-import { setPlan } from '../../features/playgrounds/playgroundSlice';
+import { create } from '../../../features/plans/planSlice';
+import Plan from '../../../lib/plan';
+import { planStateBuilder } from '../../../features/plans/planReduxAdapter';
+import { setPlan } from '../../../features/playgrounds/playgroundSlice';
 import Section from './Section';
 
 export const new_playground_path = () => '/playgrounds/new';

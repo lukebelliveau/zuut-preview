@@ -3,8 +3,8 @@ import { FullPage, Slide } from 'react-full-page';
 
 import './NewPlayground.css';
 
-import EnterName from './EnterName';
-import EnterDimensions from './EnterDimensions';
+import EnterName from './NewPlayground/EnterName';
+import EnterDimensions from './NewPlayground/EnterDimensions';
 
 export const new_playground_path = () => '/playgrounds/new';
 
