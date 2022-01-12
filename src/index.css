@@ -145,6 +145,7 @@
 
 :root {
   --black: #000;
+  --pink: #ffc2c2;
   --primary-green: #030303;
   --primary-white: #fff;
   --blue: #1890ff;
@@ -166,4 +167,19 @@ h1 {
   font-weight: 900;
   font-size: 3rem;
   line-height: 3.5rem;
+}
+
+button {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.25rem;
+
+  border: 0.063rem solid var(--black);
+  border-radius: 0.375rem;
+  background-color: var(--primary-white);
+  padding: 0.5rem 2rem;
+}
+
+button.warning {
+  background-color: var(--pink);
 }

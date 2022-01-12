@@ -12,28 +12,38 @@ header {
   grid-row: 1 / 2;
 
   padding: 0;
-  background: var(--primary-green);
-  color: var(--primary-white);
+  border: 1px solid var(--black);
+  height: 6.313rem;
 
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(11, [col-start] 1fr);
 }
 
+#header-logo {
+  grid-column: col-start / span 2;
+}
 #logo {
-  width: 32px;
-  height: 31.5px;
-  margin: 8px 0 8.5px 16px;
+  width: 4.859rem;
+  height: 4.859rem;
+  margin: 0.719rem 0 0.719rem 1.906rem;
   padding: 0;
 }
 
-header h1 {
-  margin: 8px 12px;
-  padding: 0;
-  line-height: 32px;
+#header-name {
+  grid-column: 3 / span 7;
 
-  font-size: 18px;
-  font-style: normal;
-  font-weight: bold;
+  height: 6.313rem;
+}
+header h1 {
+  font-size: 1.353rem;
+  margin: 2.6rem 0;
+  line-height: 1.353rem;
+}
+
+#header-auth {
+  grid-column: 10 / span 2;
+  padding: 0.943rem 1.586rem 0 0;
+  text-align: right;
 }
 
 #sidebar {
@@ -41,81 +51,21 @@ header h1 {
   grid-column: col-start / span 2;
   grid-row: 2 / 4;
 
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 9px 16px 9px 8px;
-}
-
-#dashboard-accordian {
-  color: var(--blue);
-  font-size: 14px;
-  margin-left: 40px;
-  position: relative;
-  left: -16px;
-}
-
-#dashboard-accordian::before {
-  content: url('../images/dashboard.svg');
-  width: 14px;
-  position: relative;
-  left: -12px;
-}
-
-nav ul {
-  margin: 9px 0 9px 40px;
-  padding: 0;
-}
-
-nav li {
-  list-style-type: none;
-  font-size: 14px;
-  margin-top: 18px;
-}
-
-nav a:link {
-  color: var(--text);
-  text-decoration: none;
-}
-nav a:visited {
-  color: var(--text);
-  text-decoration: none;
-}
-
-#dashboard-icon {
-  width: 14px;
+  border: 1px solid var(--black);
+  border-radius: 0.375rem;
+  margin: 1px 0 0;
 }
 
 #content {
   grid-area: content;
   grid-column: col-start 3 / span 10;
   grid-row: 2 / 4;
-  background-color: #eceff3;
-}
-
-#subheading {
-  background-color: #fff;
-  padding: 24px 20px;
-  margin-left: 2px;
-}
-
-h2 {
-  margin: 0;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
 }
 
 #main {
   margin: 10px 24px 28px 24px;
-  background-color: #fff;
 }
 
 #sandbox {
   margin: 0 0 0 2px;
-  background-color: #fff;
-}
-
-#sandbox-container {
-  display: grid;
-  grid-template-columns: repeat(11, [col-start] 1fr);
-  grid-template-rows: repeat(5, [row-start] 1fr);
 }

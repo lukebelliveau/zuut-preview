@@ -18,11 +18,10 @@ export default function ShowPlayground() {
   const plan = selectPlanById(store.getState(), planId);
   if (!plan) throw new Error('No plan found');
 
-  const header = <span>Playground / <strong>{plan.name}</strong></span>;
   const renderer = new Renderer(playground, plan);
 
   return (
-    <Layout header={header}>
+    <Layout>
       <div id="sandbox">
         <Stage
           width={playground.displayWidth}

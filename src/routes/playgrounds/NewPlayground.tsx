@@ -1,8 +1,6 @@
 import React, { createRef } from 'react';
 import { FullPage, Slide } from 'react-full-page';
 
-import './NewPlayground.css';
-
 import EnterName from './NewPlayground/EnterName';
 import EnterDimensions from './NewPlayground/EnterDimensions';
 

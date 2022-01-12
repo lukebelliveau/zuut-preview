@@ -6,7 +6,7 @@ export default function Workplace() {
   const { user } = useAuth0();
 
   return (
-    <Layout header="Workplace">
+    <Layout>
       <div id="main">
         <p>Hello, {user?.name}</p>
         <p>You don't have any saved grows yet</p>
