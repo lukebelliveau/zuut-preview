@@ -13,6 +13,7 @@ import Playground from '../../../lib/playground';
 import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
+import { feetToMm } from '../../../lib/conversions';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -65,9 +66,9 @@ function CreateLayoutPopup(props: CreateLayoutPopupParams) {
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = data => {
     const newPlan = new Plan(
       props.plan.name,
-      data.width,
-      data.length,
-      data.height,
+      feetToMm(data.width),
+      feetToMm(data.length),
+      feetToMm(data.height),
       props.plan.id,
     );
     dispatch(update({ id: newPlan.id, changes: planStateBuilder(newPlan) }));
