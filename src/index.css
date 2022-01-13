@@ -145,13 +145,15 @@
 
 :root {
   --black: #000;
-  --pink: #ffc2c2;
-  --primary-green: #030303;
+  --pink-1: #ffc2c2;
+  --green-1: #21ffae;
+  --purple-1: #4c00ff;
+  --yellow-1: #ffef9d;
   --primary-white: #fff;
-  --blue: #1890ff;
-  --blue-border: #6ab8fd;
-  --gray-1: #fafafa;
-  --gray-2: #d9d9d9;
+  --gray-1: #636363;
+  --gray-2: #aeaeae;
+  --gray-3: #e0e0e0;
+  --gray-4: #f9f9f9;
   --text: rgba(0, 0, 0, 0.85);
 }
 
@@ -164,9 +166,36 @@ body {
 }
 
 h1 {
-  font-weight: 900;
+  font-weight: bold;
+  font-size: 3.5rem;
+  line-height: 4.25rem;
+}
+h2 {
+  font-weight: bold;
   font-size: 3rem;
-  line-height: 3.5rem;
+  line-height: 3.625rem;
+}
+h3 {
+  font-weight: bold;
+  font-size: 2.5rem;
+  line-height: 3rem;
+}
+h4 {
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 2.438rem;
+}
+h5 {
+  color: var(--gray-1);
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 1.813rem;
+}
+h6 {
+  color: var(--gray-1);
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.188rem;
 }
 
 button {
@@ -181,5 +210,5 @@ button {
 }
 
 button.warning {
-  background-color: var(--pink);
+  background-color: var(--pink-1);
 }

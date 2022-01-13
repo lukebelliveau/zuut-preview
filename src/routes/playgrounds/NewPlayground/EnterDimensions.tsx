@@ -37,7 +37,7 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
 
   return (
     <Section>
-      <h1>Choose your layout.</h1>
+      <h2>Choose your layout.</h2>
       <button onClick={togglePopup}>Create new layout</button>
       {showCreateLayoutPopup ?
         <CreateLayoutPopup playground={playground} plan={plan} nextPage={props.nextPage} /> :

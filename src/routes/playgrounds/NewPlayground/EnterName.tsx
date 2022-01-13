@@ -36,9 +36,9 @@ export default function EnterName(props: EnterNameProps) {
   return (
     <Section>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>
+        <h2>
           <label htmlFor="name">Give your grow a name.</label>
-        </h1>
+        </h2>
         <input type="text" placeholder="type the name here" 
           {...register('name', { required: true })} />
       </form>
