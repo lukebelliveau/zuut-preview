@@ -7,7 +7,7 @@ export const planSlice = createSlice({
   initialState: planAdapter.getInitialState(),
   reducers: {
     create: planAdapter.addOne,
-    update: planAdapter.updateOne,
+    update: planAdapter.updateOne
   },
 });
 

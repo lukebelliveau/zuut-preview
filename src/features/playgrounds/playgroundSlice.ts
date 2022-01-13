@@ -4,7 +4,7 @@ import { Size } from '../../lib/size';
 import { PlaygroundState } from './playgroundState';
 
 const initialState: PlaygroundState = {
-  planId: undefined,
+  planId: '0',
   displayWidth: 1024,
   displayHeight: 768
 };

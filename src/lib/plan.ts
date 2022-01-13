@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import Room from './objects/room';
 
 export default class Plan {
@@ -9,7 +8,7 @@ export default class Plan {
   height: number | undefined;
   room: Room | undefined;
 
-  constructor(name?: string, width?: number, length?: number, height?: number, id: string = uuidv4()) {
+  constructor(name?: string, width?: number, length?: number, height?: number, id: string = '0') {
     this.id = id;
     this.name = name;
     this.width = width;

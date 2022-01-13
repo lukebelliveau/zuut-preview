@@ -3,20 +3,15 @@ import { Layer, Stage } from 'react-konva';
 import { useSelector } from 'react-redux';
 
 import Layout from '../../components/Layout';
-import { selectById as selectPlanById } from '../../features/plans/planSelectors';
 import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
-import { store } from '../../app/store';
 import Renderer from '../../lib/renderer';
+import { useSandboxPlan } from '../../app/hooks';
 
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
   const playground = useSelector(selectPlayground);
-  const planId = playground.planId;
-  if (!planId) throw new Error('No plan available');
-
-  const plan = selectPlanById(store.getState(), planId);
-  if (!plan) throw new Error('No plan found');
+  const plan = useSandboxPlan();
 
   const renderer = new Renderer(playground, plan);
 

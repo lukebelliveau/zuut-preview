@@ -1,5 +1,5 @@
 export type PlaygroundState = {
-  planId: string | undefined;
+  planId: string;
   displayWidth: number;
   displayHeight: number;
 }

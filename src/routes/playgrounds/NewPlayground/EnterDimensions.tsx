@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { update } from '../../../features/plans/planSlice';
 import Plan from '../../../lib/plan';
 import { planStateBuilder } from '../../../features/plans/planReduxAdapter';
-import { selectById as selectPlanById } from '../../../features/plans/planSelectors';
 import { selectPlayground } from '../../../features/playgrounds/playgroundSelector';
-import { store } from '../../../app/store';
 import Playground from '../../../lib/playground';
 import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
 import { feetToMm } from '../../../lib/conversions';
+import NextButton from './NextButton';
+import { useSandboxPlan } from '../../../app/hooks';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -24,18 +24,14 @@ type EnterDimensionsProps = {
 export default function EnterDimensions(props: EnterDimensionsProps) {
   const [showCreateLayoutPopup, setShowCreateLayoutPopup] = useState(false);
 
+  const plan = useSandboxPlan();
   const playground = useSelector(selectPlayground);
-  const planId = playground.planId;
-  if (!planId) return <></>;
-
-  const plan = selectPlanById(store.getState(), planId);
-  if (!plan) return <></>;
 
   function togglePopup() {
     setShowCreateLayoutPopup(!showCreateLayoutPopup);
   }
 
-  return (
+  return (<>
     <Section>
       <h2>Choose your layout.</h2>
       <button onClick={togglePopup}>Create new layout</button>
@@ -43,7 +39,8 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
         <CreateLayoutPopup playground={playground} plan={plan} nextPage={props.nextPage} /> :
         <></>}
     </Section>
-  );
+    <NextButton nextPage={props.nextPage} />
+    </>);
 }
 
 type CreateLayoutPopupParams = {

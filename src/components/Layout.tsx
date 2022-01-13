@@ -1,15 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import './Layout.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 
 import LogoutButton from './LogoutButton';
-import { selectById as selectPlanById } from '../features/plans/planSelectors';
-import { selectPlayground } from '../features/playgrounds/playgroundSelector';
 import { homePath } from '../routes/Home';
-import { store } from '../app/store';
+import { useSandboxPlan } from '../app/hooks';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -17,14 +14,8 @@ type LayoutProps = {
 
 export default function Layout(props: LayoutProps) {
   const navigate = useNavigate();
-  const playground = useSelector(selectPlayground);
-  const planId = playground.planId;
-  if (!planId) {
-    navigate(homePath());
-    return <></>;
-  }
 
-  const plan = selectPlanById(store.getState(), planId);
+  const plan = useSandboxPlan();
   if (!plan) {
     navigate(homePath());
     return <></>;

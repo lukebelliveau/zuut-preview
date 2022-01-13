@@ -4,11 +4,14 @@ import { useDispatch } from 'react-redux';
 
 // import './NewPlayground.css';
 
-import { create } from '../../../features/plans/planSlice';
+import { create, update } from '../../../features/plans/planSlice';
 import Plan from '../../../lib/plan';
-import { planStateBuilder } from '../../../features/plans/planReduxAdapter';
+import planReduxAdapter from '../../../features/plans/planReduxAdapter';
 import { setPlan } from '../../../features/playgrounds/playgroundSlice';
 import Section from './Section';
+import NextButton from './NextButton';
+import { useSandboxPlan } from '../../../app/hooks';
+import { store } from '../../../app/store';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -22,18 +25,23 @@ type EnterNameProps = {
 
 export default function EnterName(props: EnterNameProps) {
   const { register, handleSubmit } = useForm<PlanNameParams>();
+  const plan = useSandboxPlan();
   const dispatch = useDispatch();
+  dispatch(setPlan(plan.id));
 
   const onSubmit: SubmitHandler<PlanNameParams> = data => {
-    const plan = new Plan(
+    const updatedPlan = new Plan(
       data.name,
+      plan.width,
+      plan.length,
+      plan.height,
+      plan.id
     );
-    dispatch(create(planStateBuilder(plan)));
-    dispatch(setPlan(plan.id));
+    dispatch(update({ id: updatedPlan.id, changes: updatedPlan }));
     props.nextPage();
   };
 
-  return (
+  return (<>
     <Section>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2>
@@ -43,5 +51,6 @@ export default function EnterName(props: EnterNameProps) {
           {...register('name', { required: true })} />
       </form>
     </Section>
-  );
+    <NextButton nextPage={props.nextPage} />
+  </>);
 }
