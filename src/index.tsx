@@ -6,6 +6,7 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { new_playground_path } from './routes/playgrounds/NewPlayground/EnterName';
 
 const AUTH0_DOMAIN = 'dev-baqlbrdt.us.auth0.com';
 const AUTH0_CLIENT_ID = 'ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid';
@@ -15,7 +16,7 @@ ReactDOM.render(
     <Auth0Provider
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
-      redirectUri={`${window.location.origin}/workplace`}
+      redirectUri={`${window.location.origin}${new_playground_path()}`}
     >
       <Provider store={store}>
         <App />
