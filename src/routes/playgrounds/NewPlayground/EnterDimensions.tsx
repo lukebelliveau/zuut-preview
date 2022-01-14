@@ -3,49 +3,21 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import LayoutIcon from '../../../images/glyphs/layout.svg';
+import './EnterDimensions.css';
+
 import { update } from '../../../features/plans/planSlice';
 import Plan from '../../../lib/plan';
 import { planStateBuilder } from '../../../features/plans/planReduxAdapter';
-import { selectPlayground } from '../../../features/playgrounds/playgroundSelector';
-import Playground from '../../../lib/playground';
 import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
 import { feetToMm } from '../../../lib/conversions';
-import NextButton from './NextButton';
 import { useSandboxPlan } from '../../../app/hooks';
 
 export const new_playground_path = () => '/playgrounds/new';
 
 type EnterDimensionsProps = {
-  nextPage: () => void;
-}
-
-export default function EnterDimensions(props: EnterDimensionsProps) {
-  const [showCreateLayoutPopup, setShowCreateLayoutPopup] = useState(false);
-
-  const plan = useSandboxPlan();
-  const playground = useSelector(selectPlayground);
-
-  function togglePopup() {
-    setShowCreateLayoutPopup(!showCreateLayoutPopup);
-  }
-
-  return (<>
-    <Section>
-      <h2>Choose your layout.</h2>
-      <button onClick={togglePopup}>Create new layout</button>
-      {showCreateLayoutPopup ?
-        <CreateLayoutPopup playground={playground} plan={plan} nextPage={props.nextPage} /> :
-        <></>}
-    </Section>
-    <NextButton nextPage={props.nextPage} />
-    </>);
-}
-
-type CreateLayoutPopupParams = {
-  playground: Playground;
-  plan: Plan;
   nextPage: () => void;
 }
 
@@ -55,43 +27,54 @@ type CreateLayoutFormParams = {
   height: number;
 }
 
-function CreateLayoutPopup(props: CreateLayoutPopupParams) {
+export default function EnterDimensions(props: EnterDimensionsProps) {
+  const plan = useSandboxPlan();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = data => {
     const newPlan = new Plan(
-      props.plan.name,
+      plan.name,
       feetToMm(data.width),
       feetToMm(data.length),
       feetToMm(data.height),
-      props.plan.id,
+      plan.id,
     );
     dispatch(update({ id: newPlan.id, changes: planStateBuilder(newPlan) }));
     navigate(playground_path());
   };
 
-  return <div>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="field-value field-dimensions-input">
-        <span className="dimension">
-          <label htmlFor="length">room length</label>
-          <PillInput registrationOptions={register('length', { required: true })} description="ft" />
-        </span>
-        <span className="dimension">
-          <label htmlFor="width">Width (ft)</label>
-          <PillInput registrationOptions={register('width', { required: true })} description="ft" />
-        </span>
-        <span className="dimension">
-          <label htmlFor="height">Height (ft)</label>
-          <PillInput registrationOptions={register('height', { required: true })} description="ft" />
-          <span></span>
-        </span>
+  return (<>
+    <Section>
+      <h2>Tell me about your grow area</h2>
+      <div className="dimension">
+        <PillInput
+          name="length"
+          label="room length"
+          registrationOptions={register('length', { required: true })}
+          description="ft" />
+      </div>
+      <div className="dimension">
+        <PillInput
+          name="width"
+          label="room width"
+          registrationOptions={register('width', { required: true })}
+          description="ft" />
+      </div>
+      <div className="dimension">
+        <PillInput
+          name="height"
+          label="room height"
+          registrationOptions={register('height', { required: true })}
+          description="ft" />
       </div>
       <div className="create-button">
-        <input type="submit" value="Create layout" />
+        <button className="primary" onClick={handleSubmit(onSubmit)}>
+          <img alt="Layout icon" src={LayoutIcon} />
+          <span>Create new layout</span>
+        </button>
       </div>
-    </form>
-  </div>;
+    </Section>
+  </>);
 }

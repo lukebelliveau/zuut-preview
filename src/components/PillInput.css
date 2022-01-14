@@ -1,0 +1,27 @@
+.pill-input label {
+  display: block;
+}
+
+.pill-input .pill {
+  position: relative;
+}
+
+.pill-input input {
+  position: absolute;
+  left: 0;
+  height: 2.063rem;
+  border: 0.063rem solid var(--black);
+  border-radius: 0.5rem;
+  width: 6.25rem;
+}
+
+.pill-input .description {
+  position: absolute;
+  left: 4.6rem;
+  height: 2.188rem;
+  border: 0.063rem solid var(--black);
+  border-radius: 0.5rem;
+  min-width: 1.875rem;
+  vertical-align: middle;
+  padding: auto;
+}

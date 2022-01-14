@@ -1,3 +1,4 @@
+import Plan from './plan';
 import { Point } from './point';
 
 export default class Playground {
@@ -18,7 +19,7 @@ export default class Playground {
     };
   }
   
-  get scale(): number {
+  scale(plan: Plan): number {
     return 1 / (4572.0 / 1198.0); // 15ft per macbook fullscreen width
   }
 }

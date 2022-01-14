@@ -2,16 +2,13 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-// import './NewPlayground.css';
-
-import { create, update } from '../../../features/plans/planSlice';
+import { update } from '../../../features/plans/planSlice';
 import Plan from '../../../lib/plan';
-import planReduxAdapter from '../../../features/plans/planReduxAdapter';
 import { setPlan } from '../../../features/playgrounds/playgroundSlice';
 import Section from './Section';
 import NextButton from './NextButton';
 import { useSandboxPlan } from '../../../app/hooks';
-import { store } from '../../../app/store';
+import { planStateBuilder } from '../../../features/plans/planReduxAdapter';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -37,7 +34,7 @@ export default function EnterName(props: EnterNameProps) {
       plan.height,
       plan.id
     );
-    dispatch(update({ id: updatedPlan.id, changes: updatedPlan }));
+    dispatch(update({ id: updatedPlan.id, changes: planStateBuilder(updatedPlan) }));
     props.nextPage();
   };
 

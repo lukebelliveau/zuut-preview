@@ -12,6 +12,7 @@ export const playground_path = () => '/playgrounds/current';
 export default function ShowPlayground() {
   const playground = useSelector(selectPlayground);
   const plan = useSandboxPlan();
+  const scale = playground.scale(plan);
 
   const renderer = new Renderer(playground, plan);
 
@@ -23,8 +24,8 @@ export default function ShowPlayground() {
           height={playground.displayHeight}
           x={10}
           y={10}
-          scaleX={playground.scale}
-          scaleY={playground.scale}
+          scaleX={scale}
+          scaleY={scale}
           draggable>
           <Layer>
             {renderer.render()}

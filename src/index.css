@@ -148,6 +148,7 @@
   --pink-1: #ffc2c2;
   --green-1: #21ffae;
   --purple-1: #4c00ff;
+  --purple-2: #a680ff;
   --yellow-1: #ffef9d;
   --primary-white: #fff;
   --gray-1: #636363;
@@ -230,7 +231,45 @@ button {
   background-color: var(--primary-white);
   padding: 0.5rem 2rem;
 }
+button > img {
+  width: 1.5rem;
+  margin-right: 0.75rem;
+}
+button > * {
+  vertical-align: middle;
+}
 
 button.warning {
   background-color: var(--pink-1);
+}
+
+input[type='submit'] {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.25rem;
+
+  border: 0.063rem solid var(--black);
+  border-radius: 0.5rem;
+  padding: 0.5rem 2rem;
+}
+
+.primary {
+  color: var(--primary-white);
+  background-color: var(--purple-1);
+}
+.primary:hover {
+  color: var(--black);
+  background-color: var(--purple-2);
+}
+
+.secondary {
+  background-color: var(--primary-white);
+}
+.secondary:hover {
+  background-color: var(--gray-3);
+}
+
+.glyph-layout {
+  width: 2rem;
+  color: white;
 }
