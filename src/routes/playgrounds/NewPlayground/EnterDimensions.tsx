@@ -13,8 +13,6 @@ import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
 import { feetToMm } from '../../../lib/conversions';
-import { store } from '../../../app/store';
-import { selectById as selectPlanById } from '../../../features/plans/planSelectors';
 import { useSandboxPlan } from '../../../app/hooks';
 
 export const new_playground_path = () => '/playgrounds/new';

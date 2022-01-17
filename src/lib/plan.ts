@@ -3,9 +3,6 @@ import Room from './objects/room';
 export default class Plan {
   id: string;
   name: string | undefined;
-  width: number | undefined;
-  length: number | undefined;
-  height: number | undefined;
   room: Room | undefined;
 
   public static sandbox() {
@@ -15,10 +12,17 @@ export default class Plan {
   constructor(name?: string, width?: number, length?: number, height?: number, id: string = '0') {
     this.id = id;
     this.name = name;
-    this.width = width;
-    this.length = length;
-    this.height = height;
 
     if (width && length && height) this.room = new Room(width, length, height);
+  }
+
+  get width(): number | undefined {
+    return this.room?.width;
+  }
+  get length(): number | undefined {
+    return this.room?.length;
+  }
+  get height(): number | undefined {
+    return this.room?.height;
   }
 }
