@@ -1,11 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import './Layout.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 
 import LogoutButton from './LogoutButton';
-import { homePath } from '../routes/Home';
 import { useSandboxPlan } from '../app/hooks';
 
 type LayoutProps = {
@@ -13,13 +11,8 @@ type LayoutProps = {
 };
 
 export default function Layout(props: LayoutProps) {
-  const navigate = useNavigate();
-
   const plan = useSandboxPlan();
-  if (!plan) {
-    navigate(homePath());
-    return <></>;
-  }
+  if (!plan) return <></>;
 
   return (
     <div className="wrapper">

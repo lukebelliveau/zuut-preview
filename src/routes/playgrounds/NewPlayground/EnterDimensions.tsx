@@ -13,6 +13,8 @@ import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
 import { feetToMm } from '../../../lib/conversions';
+import { store } from '../../../app/store';
+import { selectById as selectPlanById } from '../../../features/plans/planSelectors';
 import { useSandboxPlan } from '../../../app/hooks';
 
 export const new_playground_path = () => '/playgrounds/new';
@@ -28,14 +30,16 @@ type CreateLayoutFormParams = {
 }
 
 export default function EnterDimensions(props: EnterDimensionsProps) {
-  const plan = useSandboxPlan();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
-  const dispatch = useDispatch();
+
+  const plan = useSandboxPlan();
+  if (!plan) return <></>;
 
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = data => {
     const newPlan = new Plan(
-      plan.name,
+      plan?.name,
       feetToMm(data.width),
       feetToMm(data.length),
       feetToMm(data.height),
@@ -78,3 +82,4 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
     </Section>
   </>);
 }
+

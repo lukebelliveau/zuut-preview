@@ -22,8 +22,11 @@ type EnterNameProps = {
 
 export default function EnterName(props: EnterNameProps) {
   const { register, handleSubmit } = useForm<PlanNameParams>();
-  const plan = useSandboxPlan();
   const dispatch = useDispatch();
+
+  const plan = useSandboxPlan();
+  if (!plan) return <></>;
+
   dispatch(setPlan(plan.id));
 
   const onSubmit: SubmitHandler<PlanNameParams> = data => {

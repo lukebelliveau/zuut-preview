@@ -17,7 +17,8 @@ export default class RoomRenderer {
       width={this.room.width}
       height={this.room.length}
       stroke="black"
-      strokeWidth={2}
+      strokeWidth={1}
+      strokeScaleEnabled={false}
     />;
   }
 }

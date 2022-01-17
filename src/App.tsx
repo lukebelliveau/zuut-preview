@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth';
+import { planStateBuilder } from './features/plans/planReduxAdapter';
+import { create } from './features/plans/planSlice';
+import { setPlan } from './features/playgrounds/playgroundSlice';
+import Plan from './lib/plan';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
 import Login from './routes/Login';
@@ -10,6 +15,18 @@ import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlaygr
 import Workplace from './routes/Workplace';
 
 function App() {
+  const [firstLoad, setFirstLoad] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (firstLoad) {
+      const plan = Plan.sandbox();
+      dispatch(create(planStateBuilder(plan)));
+      dispatch(setPlan(plan.id));
+      setFirstLoad(false);
+    }
+  }, [dispatch, firstLoad]);
+
   return (
     <Router>
       <Routes>

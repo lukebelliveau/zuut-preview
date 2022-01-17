@@ -143,6 +143,11 @@
       url('./fonts/montserrat-v18-latin-900.svg#Montserrat') format('svg'); /* Legacy iOS */
 }
 
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
 :root {
   --black: #000;
   --pink-1: #ffc2c2;

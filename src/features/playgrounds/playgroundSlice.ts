@@ -5,8 +5,8 @@ import { PlaygroundState } from './playgroundState';
 
 const initialState: PlaygroundState = {
   planId: '0',
-  displayWidth: 1024,
-  displayHeight: 768
+  displayWidth: 10,
+  displayHeight: 10
 };
 
 export const playgroundSlice = createSlice({

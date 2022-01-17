@@ -5,7 +5,7 @@ export function resizePlaygroundOnWindowResize(store: any) {
   if (!sandbox) return;
 
   store.dispatch(resize({
-    width: sandbox.clientWidth,
-    length: sandbox.clientHeight
+    width: sandbox.offsetWidth - 20,
+    length: sandbox.offsetHeight - 20
   }));
 }

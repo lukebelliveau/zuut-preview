@@ -1,4 +1,4 @@
-import Plan from './plan';
+import Room from './objects/room';
 import { Point } from './point';
 
 export default class Playground {
@@ -12,14 +12,10 @@ export default class Playground {
     this.planId = planId;
   }
 
-  get center(): Point {
+  center(room: Room): Point {
     return {
-      x: this.displayWidth / 2,
-      y: this.displayHeight / 2
+      x: room.width / 2,
+      y: room.height / 2
     };
-  }
-  
-  scale(plan: Plan): number {
-    return 1 / (4572.0 / 1198.0); // 15ft per macbook fullscreen width
   }
 }

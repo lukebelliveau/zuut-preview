@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 import { useSelector } from 'react-redux';
 
@@ -6,15 +6,27 @@ import Layout from '../../components/Layout';
 import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
 import Renderer from '../../lib/renderer';
 import { useSandboxPlan } from '../../app/hooks';
+import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
+import { store } from '../../app/store';
 
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
+  const [firstLoad, setFirstLoad] = useState(true);
   const playground = useSelector(selectPlayground);
   const plan = useSandboxPlan();
-  const scale = playground.scale(plan);
+  if (!plan) throw new Error('No plan to display');
+  if (!plan.room) throw new Error('No room to display');
 
+  useEffect(() => {
+    if (firstLoad) {
+      resizePlaygroundOnWindowResize(store);
+      setFirstLoad(false);
+    }
+  }, [firstLoad]);
+  
   const renderer = new Renderer(playground, plan);
+  const scale = renderer.scale();
 
   return (
     <Layout>
@@ -22,8 +34,6 @@ export default function ShowPlayground() {
         <Stage
           width={playground.displayWidth}
           height={playground.displayHeight}
-          x={10}
-          y={10}
           scaleX={scale}
           scaleY={scale}
           draggable>

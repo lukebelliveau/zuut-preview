@@ -8,6 +8,10 @@ export default class Plan {
   height: number | undefined;
   room: Room | undefined;
 
+  public static sandbox() {
+    return new Plan(undefined, undefined, undefined, undefined, '0');
+  }
+
   constructor(name?: string, width?: number, length?: number, height?: number, id: string = '0') {
     this.id = id;
     this.name = name;
