@@ -36,12 +36,14 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
   if (!plan) return <></>;
 
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = data => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const currentPlan = useSandboxPlan();
     const newPlan = new Plan(
-      plan?.name,
+      currentPlan?.name,
       feetToMm(data.width),
       feetToMm(data.length),
       feetToMm(data.height),
-      plan.id,
+      currentPlan?.id,
     );
     dispatch(update({ id: newPlan.id, changes: planStateBuilder(newPlan) }));
     navigate(playground_path());
