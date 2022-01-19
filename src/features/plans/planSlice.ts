@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import planAdapter from './planReduxAdapter';
+import planAdapter from './planEntityAdapter';
 
 export const planSlice = createSlice({
   name: 'plan',

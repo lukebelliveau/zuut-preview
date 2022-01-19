@@ -1,11 +1,12 @@
-import { resize } from './playgroundSlice';
+import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 
-export function resizePlaygroundOnWindowResize(store: any) {
+export function resizePlaygroundOnWindowResize() {
   const sandbox = window.document.getElementById('sandbox');
   if (!sandbox) return;
 
-  store.dispatch(resize({
-    width: sandbox.offsetWidth - 20,
-    length: sandbox.offsetHeight - 20
-  }));
+  const playgroundRepo = PlaygroundRepository.forRedux();
+  const playground = playgroundRepo.select();
+  
+  playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
+  playgroundRepo.update(playground);
 }

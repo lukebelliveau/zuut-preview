@@ -1,32 +1,45 @@
 import React, { useEffect, useState } from 'react';
+import Konva from 'konva';
 import { Layer, Stage } from 'react-konva';
-import { useSelector } from 'react-redux';
 
 import Layout from '../../components/Layout';
-import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
 import Renderer from '../../lib/renderer';
-import { useSandboxPlan } from '../../app/hooks';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
-import { store } from '../../app/store';
+import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 
 export const playground_path = () => '/playgrounds/current';
 
+const playgroundRepo = PlaygroundRepository.forRedux();
+
+function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
+  event.evt.preventDefault();
+  const playground = playgroundRepo.select();
+
+  if (event.evt.deltaY > 0) {
+    playground.zoomIn();
+  } else {
+    playground.zoomOut();
+  }
+
+  playgroundRepo.update(playground);
+}
+
 export default function ShowPlayground() {
   const [firstLoad, setFirstLoad] = useState(true);
-  const playground = useSelector(selectPlayground);
-  const plan = useSandboxPlan();
-  if (!plan) throw new Error('No plan to display');
-  if (!plan.room) throw new Error('No room to display');
+  const playground = playgroundRepo.select();
+  const plan = playground.plan;
+
+  if (!plan?.room) throw new Error('No room to display');
 
   useEffect(() => {
     if (firstLoad) {
-      resizePlaygroundOnWindowResize(store);
+      resizePlaygroundOnWindowResize();
       setFirstLoad(false);
     }
   }, [firstLoad]);
   
-  const renderer = new Renderer(playground, plan);
-  const scale = renderer.scale();
+  const renderer = new Renderer(playground);
+  const scale = playground.scale;
 
   return (
     <Layout>
@@ -34,8 +47,11 @@ export default function ShowPlayground() {
         <Stage
           width={playground.displayWidth}
           height={playground.displayHeight}
+          x={10}
+          y={10}
           scaleX={scale}
           scaleY={scale}
+          onWheel={zoom}
           draggable>
           <Layer>
             {renderer.render()}

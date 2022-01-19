@@ -4,14 +4,14 @@ import './Layout.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 
 import LogoutButton from './LogoutButton';
-import { useSandboxPlan } from '../app/hooks';
+import PlanRepository from '../lib/plan/planRepository';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
 export default function Layout(props: LayoutProps) {
-  const plan = useSandboxPlan();
+  const plan = PlanRepository.forRedux().default();
   if (!plan) return <></>;
 
   return (

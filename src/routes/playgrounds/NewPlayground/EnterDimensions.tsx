@@ -1,19 +1,16 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import LayoutIcon from '../../../images/glyphs/layout.svg';
 import './EnterDimensions.css';
 
-import { update } from '../../../features/plans/planSlice';
 import Plan from '../../../lib/plan';
-import { planStateBuilder } from '../../../features/plans/planReduxAdapter';
 import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
 import { feetToMm } from '../../../lib/conversions';
-import { useSandboxPlan } from '../../../app/hooks';
+import PlanRepository from '../../../lib/plan/planRepository';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -27,17 +24,14 @@ type CreateLayoutFormParams = {
   height: number;
 }
 
+const planRepo = PlanRepository.forRedux();
+
 export default function EnterDimensions(props: EnterDimensionsProps) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
 
-  const plan = useSandboxPlan();
-  if (!plan) return <></>;
-
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = data => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const currentPlan = useSandboxPlan();
+    const currentPlan = planRepo.default();
     const newPlan = new Plan(
       currentPlan?.name,
       feetToMm(data.width),
@@ -45,9 +39,12 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
       feetToMm(data.height),
       currentPlan?.id,
     );
-    dispatch(update({ id: newPlan.id, changes: planStateBuilder(newPlan) }));
+    planRepo.update(newPlan);
     navigate(playground_path());
   };
+
+  const plan = planRepo.default();
+  if (!plan) return <></>;
 
   return (<>
     <Section>

@@ -1,28 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Size } from '../../lib/size';
 
 import { PlaygroundState } from './playgroundState';
 
 const initialState: PlaygroundState = {
   planId: '0',
   displayWidth: 10,
-  displayHeight: 10
+  displayHeight: 10,
+  scale: 1
 };
 
 export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    setPlan: (state: PlaygroundState, action: PayloadAction<string>) => {
-      state.planId = action.payload;
+    update: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+      state.displayHeight = action.payload.displayHeight;
+      state.displayWidth = action.payload.displayWidth;
+      state.planId = action.payload.planId;
+      state.scale = action.payload.scale;
     },
-    resize: (state: PlaygroundState, action: PayloadAction<Size>) => {
-      state.displayWidth = action.payload.width;
-      state.displayHeight = action.payload.length;
-    }
   },
 });
 
-export const { setPlan, resize } = playgroundSlice.actions;
+export const { update } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

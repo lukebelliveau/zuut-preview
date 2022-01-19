@@ -13,6 +13,6 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
-window.addEventListener('resize', () => { resizePlaygroundOnWindowResize(store); });
+window.addEventListener('resize', () => { resizePlaygroundOnWindowResize(); });
 
 export type AppDispatch = typeof store.dispatch;

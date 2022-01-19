@@ -1,16 +1,6 @@
 import { RootState } from '../../app/rootState';
-import Plan from '../../lib/plan';
-import planReduxAdapter, { planBuilder } from './planReduxAdapter';
+import planEntityAdapter from './planEntityAdapter';
 
-export const planSelectors = planReduxAdapter.getSelectors<RootState>(
+export const planSelectors = planEntityAdapter.getSelectors<RootState>(
   (state) => state.plans
 );
-
-export function selectById(state: RootState, id: string): Plan | undefined {
-  const planState = planSelectors.selectById(state, id);
-  if (planState) {
-    return planBuilder(planState);
-  } else {
-    return undefined;
-  }
-}

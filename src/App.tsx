@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+
 import RequireAuth from './components/RequireAuth';
-import { planStateBuilder } from './features/plans/planReduxAdapter';
-import { create } from './features/plans/planSlice';
-import { setPlan } from './features/playgrounds/playgroundSlice';
 import Plan from './lib/plan';
+import PlanRepository from './lib/plan/planRepository';
+import PlaygroundRepository from './lib/playground/playgroundRepository';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
 import Login from './routes/Login';
@@ -14,6 +14,9 @@ import NewPlayground, { new_playground_path } from './routes/playgrounds/NewPlay
 import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
 
+const planRepo = PlanRepository.forRedux();
+const playgroundRepo = PlaygroundRepository.forRedux();
+
 function App() {
   const [firstLoad, setFirstLoad] = useState(true);
   const dispatch = useDispatch();
@@ -21,8 +24,12 @@ function App() {
   useEffect(() => {
     if (firstLoad) {
       const plan = Plan.sandbox();
-      dispatch(create(planStateBuilder(plan)));
-      dispatch(setPlan(plan.id));
+      planRepo.create(plan);
+
+      const playground = playgroundRepo.select();
+      playground.plan = plan;
+      playgroundRepo.update(playground);
+
       setFirstLoad(false);
     }
   }, [dispatch, firstLoad]);

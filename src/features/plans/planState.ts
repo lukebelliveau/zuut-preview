@@ -1,7 +1,7 @@
 export type PlanState = {
   id: string;
-  name: string;
-  width: number;
-  length: number;
-  height: number;
+  name: string | undefined;
+  width: number | undefined;
+  length: number | undefined;
+  height: number | undefined;
 }
