@@ -1,18 +1,18 @@
-import { Adapter } from '../adapter';
 import Plan from '../plan';
+import { PlanAdapter } from './planAdapter';
 import PlanReduxAdapter from './planReduxAdapter';
 
 const DEFAULT_PLAN_ID = '0';
 
 export default class PlanRepository {
-  adapter: Adapter<Plan>;
+  adapter: PlanAdapter;
 
   public static forRedux() {
     const adapter = new PlanReduxAdapter();
     return new PlanRepository(adapter);
   }
 
-  constructor(adapter: Adapter<Plan>) {
+  constructor(adapter: PlanAdapter) {
     this.adapter = adapter;
   }
 

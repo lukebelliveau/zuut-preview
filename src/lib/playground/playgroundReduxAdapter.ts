@@ -1,15 +1,36 @@
 import { store } from '../../app/store';
-import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
-import { update } from '../../features/playgrounds/playgroundSlice';
+import { selectPlaygroundState } from '../../features/playgrounds/playgroundSelector';
+import { resize, update } from '../../features/playgrounds/playgroundSlice';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
-import { Adapter } from '../adapter';
 import PlanReduxAdapter from '../plan/planReduxAdapter';
 import Playground from '../playground';
+import { PlaygroundAdapter } from './playgroundAdapter';
 
-export default class PlaygroundReduxAdapter implements Adapter<Playground> {
+export default class PlaygroundReduxAdapter implements PlaygroundAdapter {
   select(): Playground {
-    const playgroundState = selectPlayground(store.getState());
+    const playgroundState = selectPlaygroundState(store.getState());
 
+    return PlaygroundReduxAdapter.playgroundFromState(playgroundState);
+  }
+
+  update(playground: Playground) {
+    store.dispatch(update(PlaygroundReduxAdapter.playgroundToState(playground)));
+  }
+
+  resize(playground: Playground) {
+    store.dispatch(resize(PlaygroundReduxAdapter.playgroundToState(playground)));
+  }
+
+  public static playgroundToState(playground: Playground): PlaygroundState {
+    return {
+      planId: playground.plan?.id,
+      displayWidth: playground.displayWidth,
+      displayHeight: playground.displayHeight,
+      scale: playground.scale,
+    };
+  }
+
+  public static playgroundFromState(playgroundState: PlaygroundState): Playground {
     const planAdapter = new PlanReduxAdapter();
     const plan = planAdapter.selectById(playgroundState.planId || '0');
 
@@ -19,23 +40,5 @@ export default class PlaygroundReduxAdapter implements Adapter<Playground> {
       playgroundState.scale,
       plan
     );
-  }
-
-  selectById(id: string): Playground {
-    throw new Error('Playground#selectById not implemented');
-  }
-
-  create(playground: Playground) {
-    throw new Error('Playground#create not implemented');
-  }
-
-  update(playground: Playground) {
-    const playgroundState: PlaygroundState = {
-      planId: playground.plan?.id,
-      displayWidth: playground.displayWidth,
-      displayHeight: playground.displayHeight,
-      scale: playground.scale,
-    };
-    store.dispatch(update(playgroundState));
   }
 }

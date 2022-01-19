@@ -19,9 +19,14 @@ export const playgroundSlice = createSlice({
       state.planId = action.payload.planId;
       state.scale = action.payload.scale;
     },
+    resize: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+      state.displayWidth = action.payload.displayWidth;
+      state.displayHeight = action.payload.displayHeight;
+      state.scale = action.payload.scale;
+    }
   },
 });
 
-export const { update } = playgroundSlice.actions;
+export const { update, resize } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

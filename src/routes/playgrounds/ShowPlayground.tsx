@@ -6,6 +6,8 @@ import Layout from '../../components/Layout';
 import Renderer from '../../lib/renderer';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import PlaygroundRepository from '../../lib/playground/playgroundRepository';
+import { useSelector } from 'react-redux';
+import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -26,7 +28,7 @@ function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
 
 export default function ShowPlayground() {
   const [firstLoad, setFirstLoad] = useState(true);
-  const playground = playgroundRepo.select();
+  const playground = useSelector(selectPlayground);
   const plan = playground.plan;
 
   if (!plan?.room) throw new Error('No room to display');

@@ -2,14 +2,10 @@ import { store } from '../../app/store';
 import { planSelectors } from '../../features/plans/planSelectors';
 import { create, update } from '../../features/plans/planSlice';
 import { PlanState } from '../../features/plans/planState';
-import { Adapter } from '../adapter';
 import Plan from '../plan';
+import { PlanAdapter } from './planAdapter';
 
-export default class PlanReduxAdapter implements Adapter<Plan> {
-  select(): Plan {
-    throw new Error('PlanReduxAdapter#select not implemented');
-  }
-
+export default class PlanReduxAdapter implements PlanAdapter {
   selectById(id: string): Plan {
     const planState = planSelectors.selectById(store.getState(), id);
 

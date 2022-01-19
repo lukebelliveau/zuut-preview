@@ -8,5 +8,5 @@ export function resizePlaygroundOnWindowResize() {
   const playground = playgroundRepo.select();
   
   playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
-  playgroundRepo.update(playground);
+  playgroundRepo.resize(playground);
 }
