@@ -4,7 +4,9 @@ import './Layout.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 
 import LogoutButton from './LogoutButton';
+
 import PlanRepository from '../lib/plan/planRepository';
+import Sidebar from './Sidebar';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -28,7 +30,7 @@ export default function Layout(props: LayoutProps) {
         </div>
       </header>
       <div id="sidebar">
-        
+        <Sidebar />
       </div>
       <div id="content">
         {props.children}

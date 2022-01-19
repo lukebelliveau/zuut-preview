@@ -1,0 +1,34 @@
+.sidebarMenuTabs {
+  display: inline-block;
+  flex-direction: row;
+  align-items: flex-start;
+  width: auto;
+  overflow: auto;
+  margin: 1rem;
+}
+
+.contentSection {
+  padding-top: 0.25rem;
+}
+
+button#layout {
+  padding: 0.25rem;
+  border-radius: 8px 0px 0px 8px;
+  font-size: 0.75rem;
+}
+
+button#toolbox {
+  padding: 0.25rem;
+  border-radius: 0px;
+  font-size: 0.75rem;
+}
+
+button#objects {
+  padding: 0.25rem;
+  border-radius: 0px 8px 8px 0px;
+  font-size: 0.75rem;
+}
+
+button.active {
+  background-color: #21FFAE;
+}
