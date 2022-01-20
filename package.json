@@ -53,7 +53,7 @@
     "prepush": "npm run lint -- --max-warnings=0 && CI=true npm test",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "taiko-test": "cd src/tests/taiko-tests && npm install && gauge run specs",
+    "taiko-test": "gauge run specs",
     "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start"
   },
   "eslintConfig": {

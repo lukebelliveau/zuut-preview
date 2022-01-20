@@ -11,7 +11,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "15.14.0"
+          node-version: '15.14.0'
           cache: 'npm'
       - run: npm ci
 
@@ -23,7 +23,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "15.14.0"
+          node-version: '15.14.0'
           cache: 'npm'
       - run: npm ci
 
@@ -39,18 +39,31 @@ jobs:
     runs-on: ubuntu-18.04
     needs: setup
     env:
-      CI: "true"
+      CI: 'true'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "15.14.0"
+          node-version: '15.14.0'
           cache: 'npm'
       - run: npm ci
 
       - name: Run unit tests
         run: npm test -- --reporters=default --reporters=jest-junit
+
+  browser-tests:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: browser-tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run taiko-test
 
   deploy:
     runs-on: ubuntu-18.04
@@ -68,8 +81,8 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "zuut-dev" #Must be unique in Heroku
-          heroku_email: "zuutheroku@gmail.com"
+          heroku_app_name: 'zuut-dev' #Must be unique in Heroku
+          heroku_email: 'zuutheroku@gmail.com'
           #healthcheck: true // save for later
           #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
         env:
