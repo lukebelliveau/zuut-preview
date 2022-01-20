@@ -2,7 +2,6 @@ import Plan from './plan';
 import { Point } from './point';
 
 const SCALE_MODIFIER = 20;
-const STAGE_INSET = 10;
 
 type ZoomParams = {
   mouseX: number;
