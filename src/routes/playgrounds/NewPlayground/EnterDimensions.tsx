@@ -21,7 +21,6 @@ type EnterDimensionsProps = {
 type CreateLayoutFormParams = {
   width: number;
   length: number;
-  height: number;
 }
 
 const planRepo = PlanRepository.forRedux();
@@ -36,7 +35,7 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
       currentPlan?.name,
       feetToMm(data.width),
       feetToMm(data.length),
-      feetToMm(data.height),
+      undefined,
       currentPlan?.id,
     );
     planRepo.update(newPlan);
@@ -61,13 +60,6 @@ export default function EnterDimensions(props: EnterDimensionsProps) {
           name="width"
           label="room width"
           registrationOptions={register('width', { required: true })}
-          description="ft" />
-      </div>
-      <div className="dimension">
-        <PillInput
-          name="height"
-          label="room height"
-          registrationOptions={register('height', { required: true })}
           description="ft" />
       </div>
       <div className="create-button">

@@ -6,6 +6,8 @@ const initialState: PlaygroundState = {
   planId: '0',
   displayWidth: 10,
   displayHeight: 10,
+  centerX: 0,
+  centerY: 0,
   scale: 1
 };
 
@@ -23,10 +25,15 @@ export const playgroundSlice = createSlice({
       state.displayWidth = action.payload.displayWidth;
       state.displayHeight = action.payload.displayHeight;
       state.scale = action.payload.scale;
+    },
+    zoom: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+      state.centerX = action.payload.centerX;
+      state.centerY = action.payload.centerY;
+      state.scale = action.payload.scale;
     }
   },
 });
 
-export const { update, resize } = playgroundSlice.actions;
+export const { update, resize, zoom } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

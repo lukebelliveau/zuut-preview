@@ -29,8 +29,15 @@ describe('Playground', () => {
     it('increases zoom by 5%', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, 1, plan);
-      playground.zoomIn();
+      playground.zoomIn({
+        mouseX: 10,
+        mouseY: 10,
+        stageX: 20,
+        stageY: 20
+      });
       expect(playground.scale).toBe(1.05);
+      expect(playground.centerX).toBe(20.5);
+      expect(playground.centerY).toBe(20.5);
     });
   });
 
@@ -38,8 +45,15 @@ describe('Playground', () => {
     it('decreases zoom by 5%', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, 1, plan);
-      playground.zoomOut();
+      playground.zoomOut({
+        mouseX: 10,
+        mouseY: 10,
+        stageX: 20,
+        stageY: 20
+      });
       expect(playground.scale).toBe(0.95);
+      expect(playground.centerX).toBe(19.5);
+      expect(playground.centerY).toBe(19.5);
     });
   });
 });

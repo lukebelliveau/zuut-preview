@@ -25,4 +25,8 @@ export default class PlaygroundRepository {
   resize(playground: Playground) {
     this.adapter.resize(playground);
   }
+
+  zoom(playground: Playground) {
+    this.adapter.zoom(playground);
+  }
 }

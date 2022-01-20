@@ -15,3 +15,6 @@
 
   cursor: pointer;
 }
+.nextButton > img {
+  margin: 0;
+}

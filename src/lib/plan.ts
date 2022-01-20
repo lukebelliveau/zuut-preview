@@ -13,7 +13,7 @@ export default class Plan {
     this.id = id;
     this.name = name;
 
-    if (width && length && height) this.room = new Room(width, length, height);
+    if (width && length) this.room = new Room(width, length, height);
   }
 
   get width(): number | undefined {

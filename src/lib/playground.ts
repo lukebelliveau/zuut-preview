@@ -1,18 +1,31 @@
 import Plan from './plan';
+import { Point } from './point';
 
 const SCALE_MODIFIER = 20;
+const STAGE_INSET = 10;
+
+type ZoomParams = {
+  mouseX: number;
+  mouseY: number;
+  stageX: number;
+  stageY: number;
+}
 
 export default class Playground {
   displayWidth: number;
   displayHeight: number;
   scale: number;
+  centerX: number = 0;
+  centerY: number = 0;
   plan: Plan | undefined;
 
-  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan) {
+  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0) {
     this.displayWidth = displayWidth;
     this.displayHeight = displayHeight;
     this.plan = plan;
     this.scale = scale || this.initialScale();
+    this.centerX = centerX;
+    this.centerY = centerY;
   }
 
   setDisplayDimensions(width: number, height: number) {
@@ -23,19 +36,47 @@ export default class Playground {
 
   initialScale(): number {
     if (this.plan?.room) {
-      const widthScaleFactor = this.plan.room.width / (this.displayWidth - SCALE_MODIFIER);
-      const lengthScaleFactor = this.plan.room.length / (this.displayHeight - SCALE_MODIFIER);
-      return 1 / Math.max(widthScaleFactor, lengthScaleFactor);
+      return 1 / Math.max(this.widthScaleFactor, this.lengthScaleFactor);
     } else {
       return 1;
     }
   }
 
-  zoomIn() {
-    this.scale = this.scale * 1.05;
+  zoomIn(params: ZoomParams) {
+    this.zoom(params, 1.05);
   }
 
-  zoomOut() {
-    this.scale = this.scale * 0.95;
+  zoomOut(params: ZoomParams) {
+    this.zoom(params, 0.95);
+  }
+
+  get centerPosition(): Point {
+    const x = ((this.centerX / this.displayWidth) * (this.plan?.room?.width || 10)) / this.widthScaleFactor;
+    const y = ((this.centerY / this.displayHeight) * (this.plan?.room?.length || 10)) / this.lengthScaleFactor;
+    return { x, y };
+  }
+
+  private get widthScaleFactor(): number {
+    const width = this.plan?.room?.width || 10; 
+    return width / (this.displayWidth - SCALE_MODIFIER);
+  }
+
+  private get lengthScaleFactor(): number {
+    const length = this.plan?.room?.length || 10; 
+    return length / (this.displayHeight - SCALE_MODIFIER);
+  }
+
+  private zoom(params: ZoomParams, scaleFactor: number) {
+    const oldScale = this.scale;
+    const newScale = this.scale * scaleFactor;
+
+    const mousePointTo = {
+      x: (params.mouseX - params.stageX) / oldScale,
+      y: (params.mouseY - params.stageY) / oldScale,
+    };
+
+    this.scale = newScale;
+    this.centerX = params.mouseX - mousePointTo.x * newScale;
+    this.centerY = params.mouseY - mousePointTo.y * newScale;
   }
 }
