@@ -1,6 +1,6 @@
 import React from 'react';
 
-type MenuTabProps = {
+interface MenuTabProps {
   title: string
   id: string
 }

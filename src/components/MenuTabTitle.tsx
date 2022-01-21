@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import './MenuTabs.css';
 
-type Props = {
+interface IMenuTabTitleProps {
   title: string
   index: number
   setSelectedTab: (index: number) => void
@@ -9,7 +9,7 @@ type Props = {
   id: string
 }
 
-const MenuTabTitle: React.FC<Props> = ({ title, setSelectedTab, index, active, id}) => {
+const MenuTabTitle: React.FC<IMenuTabTitleProps> = ({ title, setSelectedTab, index, active, id}) => {
 
   const onClick = useCallback(() => {
     setSelectedTab(index);
