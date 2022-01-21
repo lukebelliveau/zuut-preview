@@ -15,12 +15,13 @@
 }
 
 .pill input {
+  box-sizing: border-box;
   position: absolute;
   left: 0;
-  height: 2.063rem;
+  height: 2.31rem;
   border: 0.063rem solid var(--black);
   border-radius: 0.5rem;
-  width: 6.25rem;
+  width: 6.56rem;
 }
 
 .pill .description {
@@ -31,6 +32,9 @@
   border-right: 0;
   border-radius: 0.5rem;
   min-width: 1.9rem;
-  vertical-align: middle;
   padding: auto;
+}
+
+.pill .description div {
+  margin: 0.5rem;
 }
