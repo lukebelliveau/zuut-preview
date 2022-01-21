@@ -54,7 +54,7 @@ jobs:
 
   browser-tests:
     runs-on: ubuntu-18.04
-
+    needs: setup
     steps:
       - uses: actions/checkout@v2
       - name: browser-tests
