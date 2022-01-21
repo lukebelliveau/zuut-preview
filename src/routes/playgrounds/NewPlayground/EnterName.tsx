@@ -1,15 +1,10 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
-import { ChangeHandler, SubmitHandler, useForm } from 'react-hook-form';
 
 import Section from './Section';
 import NextButton from './NextButton';
 import PlanRepository from '../../../lib/plan/planRepository';
 
 export const new_playground_path = () => '/playgrounds/new';
-
-type PlanNameParams = {
-  name: string | undefined;
-}
 
 type EnterNameProps = {
   nextPage: () => void;
