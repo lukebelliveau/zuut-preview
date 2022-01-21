@@ -1,4 +1,5 @@
 import React, { createRef } from 'react';
+import { Helmet } from 'react-helmet';
 import { FullPage, Slide } from 'react-full-page';
 
 import EnterName from './NewPlayground/EnterName';
@@ -13,7 +14,8 @@ export default function NewPlayground() {
     fullPageRef.current.scrollNext();
   }
 
-  return (
+  return (<>
+    <Helmet><title>Zuut - Create a new grow</title></Helmet>
     <FullPage ref={fullPageRef}>
       <Slide>
         <EnterName nextPage={nextPage} />
@@ -22,5 +24,5 @@ export default function NewPlayground() {
         <EnterDimensions nextPage={nextPage} />
       </Slide>
     </FullPage>
-  );
+  </>);
 }

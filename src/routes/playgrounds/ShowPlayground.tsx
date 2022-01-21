@@ -8,6 +8,7 @@ import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playg
 import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import { useSelector } from 'react-redux';
 import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
+import { Helmet } from 'react-helmet';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -54,7 +55,8 @@ export default function ShowPlayground() {
   const renderer = new Renderer(playground);
   const scale = playground.scale;
 
-  return (
+  return (<>
+    <Helmet><title>Zuut - Design your grow</title></Helmet>
     <Layout>
       <div id="sandbox">
         <Stage
@@ -73,5 +75,5 @@ export default function ShowPlayground() {
         </Stage>
       </div>
     </Layout>
-  );
+  </>);
 }
