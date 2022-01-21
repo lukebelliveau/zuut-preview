@@ -16,10 +16,8 @@ gauge.screenshotFn = async function() {
     return await screenshot({ encoding: 'base64' });
 };
 
-step("Goto Zuut Page", async () => {
-    await goto('https://zuut-dev.herokuapp.com');
-});
+step("Create a grow", async () => {
+    await goto('http://localhost:3000/playgrounds/new');
 
-step("Page contains <content>", async (content) => {
-    assert.ok(await text(content).exists());
+    assert.ok(await text("Give your grow a name").exists());
 });
