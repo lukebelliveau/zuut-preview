@@ -32,6 +32,7 @@ export default function EnterName(props: EnterNameProps) {
         <label htmlFor="name">Give your grow a name.</label>
       </h2>
       <input type="text" placeholder="type the name here"
+        name="name"
         value={plan?.name}
         onChange={onChange}
         onKeyDown={onKeyDown}

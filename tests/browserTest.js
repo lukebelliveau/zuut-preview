@@ -1,23 +1,27 @@
 /* globals gauge*/
 "use strict";
-const { openBrowser,write, closeBrowser, goto, press, screenshot, text, focus, textBox, toRightOf } = require('taiko');
+const { $, click, openBrowser, write, closeBrowser, goto, into, press, text } = require('taiko');
 const assert = require("assert");
 const headless = process.env.headless_chrome.toLowerCase() === 'true';
 
 beforeSuite(async () => {
-    await openBrowser({ headless: headless })
+  await openBrowser({ headless: headless });
 });
 
 afterSuite(async () => {
-    await closeBrowser();
+  await closeBrowser();
 });
 
-gauge.screenshotFn = async function() {
-    return await screenshot({ encoding: 'base64' });
-};
-
 step("Create a grow", async () => {
-    await goto('http://localhost:3000/playgrounds/new');
+  await goto('http://localhost:3000/playgrounds/new');
 
-    assert.ok(await text("Give your grow a name").exists());
+  await write('Taiko Time', into($('input[name="name"]')));
+  await press('Enter');
+
+  await write('12', into($('input[name="length"]')));
+  await write('11', into($('input[name="width"]')));
+
+  await click('Create new layout');
+
+  await text('Taiko Time').exists();
 });
