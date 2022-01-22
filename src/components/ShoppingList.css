@@ -30,7 +30,7 @@
 }
 #shopping-list h2::after {
   margin-left: 1rem;
-  content: url('../../images/triangle-upside-down.svg');
+  content: url('../images/triangle-upside-down.svg');
 }
 #shopping-list h2 button {
   background-color: var(--purple-1);
@@ -45,7 +45,7 @@
   text-transform: uppercase;
 }
 #shopping-list.hidden h2::after {
-  content: url('../../images/triangle.svg');
+  content: url('../images/triangle.svg');
 }
 
 .shopping-list-body {
