@@ -61,10 +61,6 @@ button.active {
   background-color: #21FFAE;
 }
 
-.accordion_item {
-  display: inline-block;
-}
-
 .accordion_item .button {
   border: none;
   font-family: Montserrat;
