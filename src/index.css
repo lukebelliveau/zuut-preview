@@ -152,8 +152,9 @@
   --black: #000;
   --pink-1: #ffc2c2;
   --green-1: #21ffae;
-  --purple-1: #4c00ff;
-  --purple-2: #a680ff;
+  --purple-1: #3900ff;
+  --purple-2: #4c00ff;
+  --purple-3: #a680ff;
   --yellow-1: #ffef9d;
   --primary-white: #fff;
   --gray-1: #636363;
@@ -221,7 +222,7 @@ input::placeholder {
   font-style: normal;
 }
 input[type='text']:focus {
-  border: 0.125rem solid var(--purple-1);
+  border: 0.125rem solid var(--purple-2);
   border-radius: 0.5rem;
   outline: none;
 }
@@ -260,11 +261,11 @@ input[type='submit'] {
 
 .primary {
   color: var(--primary-white);
-  background-color: var(--purple-1);
+  background-color: var(--purple-2);
 }
 .primary:hover {
   color: var(--black);
-  background-color: var(--purple-2);
+  background-color: var(--purple-3);
 }
 
 .secondary {

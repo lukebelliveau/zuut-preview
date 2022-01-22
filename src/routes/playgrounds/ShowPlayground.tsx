@@ -9,6 +9,7 @@ import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import { useSelector } from 'react-redux';
 import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
 import { Helmet } from 'react-helmet';
+import ShoppingList from './ShoppingList';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -73,6 +74,8 @@ export default function ShowPlayground() {
             {renderer.render()}
           </Layer>
         </Stage>
+        
+        <ShoppingList />
       </div>
     </Layout>
   </>);
