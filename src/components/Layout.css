@@ -12,7 +12,7 @@
   height: 100%;
 }
 
-header {
+.wrapper header {
   grid-column: col-start / span 12;
   grid-row: 1 / 2;
 
@@ -24,28 +24,28 @@ header {
   grid-template-columns: repeat(11, [col-start] 1fr);
 }
 
-#header-logo {
+.wrapper #header-logo {
   grid-column: col-start / span 2;
 }
-#logo {
+.wrapper #logo {
   width: 4.859rem;
   height: 4.859rem;
   margin: 0.719rem 0 0.719rem 1.906rem;
   padding: 0;
 }
 
-#header-name {
+.wrapper #header-name {
   grid-column: 3 / span 7;
 
   height: 6.313rem;
 }
-header h1 {
+.wrapper header h1 {
   font-size: 1.353rem;
   margin: 2.6rem 0;
   line-height: 1.353rem;
 }
 
-#header-auth {
+.wrapper #header-auth {
   grid-column: 10 / span 2;
   padding: 0.943rem 1.586rem 0 0;
   text-align: right;
@@ -61,7 +61,7 @@ header h1 {
   margin: 1px 0 0;
 }
 
-#content {
+.wrapper #content {
   grid-area: content;
   grid-column: col-start 3 / span 10;
   grid-row: 2 / 4;
@@ -70,7 +70,7 @@ header h1 {
   height: 100%;
 }
 
-#main {
+.wrapper #main {
   margin: 10px 24px 28px 24px;
 }
 

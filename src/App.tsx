@@ -8,7 +8,6 @@ import PlanRepository from './lib/plan/planRepository';
 import PlaygroundRepository from './lib/playground/playgroundRepository';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
-import Login from './routes/Login';
 import NotFound from './routes/NotFound';
 import NewPlayground, { new_playground_path } from './routes/playgrounds/NewPlayground';
 import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlayground';
@@ -62,7 +61,6 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="/login" element={<Login />} />
         <Route path="/access-denied" element={<AccessDenied />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -13,7 +13,9 @@ afterSuite(async () => {
 });
 
 step("Create a grow", async () => {
-  await goto('http://localhost:3000/playgrounds/new');
+  await goto('http://localhost:3000/');
+
+  await click('Get started');
 
   await write('Taiko Time', into($('input[name="name"]')));
   await press('Enter');

@@ -180,6 +180,7 @@ h1 {
 h2 {
   font-weight: bold;
   font-size: 3rem;
+  font-weight: 900;
   line-height: 3.625rem;
 }
 h3 {
@@ -227,15 +228,23 @@ input[type='text']:focus {
   outline: none;
 }
 
-button {
+button,
+a.button {
+  display: inline-block;
+
   font-weight: 600;
   font-size: 1rem;
   line-height: 1.25rem;
 
   border: 0.063rem solid var(--black);
   border-radius: 0.5rem;
-  background-color: var(--primary-white);
   padding: 0.5rem 2rem;
+}
+a.button {
+  text-decoration: none;
+}
+a.button:visited {
+  color: inherit;
 }
 button > img {
   width: 1.5rem;
@@ -245,8 +254,16 @@ button > * {
   vertical-align: middle;
 }
 
+button.default {
+  background-color: var(--primary-white);
+}
+
 button.warning {
   background-color: var(--pink-1);
+}
+
+.go {
+  background-color: var(--green-1);
 }
 
 input[type='submit'] {
