@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { Layer, Stage } from 'react-konva';
 import Konva from 'konva';
@@ -12,6 +12,8 @@ import { Helmet } from 'react-helmet';
 import ShoppingList from '../../components/ShoppingList';
 import MiscItem from '../../lib/objects/miscItem';
 import ShoppingListRepository from '../../lib/shoppingList/shoppingListRepository';
+import ItemsRenderer from '../../lib/renderer/itemsRenderer';
+import Growspace from '../../lib/objects/growspace';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -64,6 +66,9 @@ export default function ShowPlayground() {
   }
   
   const renderer = new Renderer(playground);
+  const itemsRenderer = new ItemsRenderer([
+    new Growspace((playground.plan?.room?.width || 0)/2, (playground.plan?.room?.length || 0)/2, 30, 30, 30)
+  ]);
   const scale = playground.scale;
 
   return (<>
@@ -82,6 +87,9 @@ export default function ShowPlayground() {
           draggable>
           <Layer>
             {renderer.render()}
+          </Layer>
+          <Layer>
+            {itemsRenderer.render()}
           </Layer>
         </Stage>
       </div>
