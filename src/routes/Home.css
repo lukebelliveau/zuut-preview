@@ -26,6 +26,8 @@
   display: grid;
   grid-template-columns: repeat(11, [col-start] 1fr);
   grid-template-rows: 1fr;
+
+  z-index: 1;
 }
 
 .home-wrapper #header-logo {
@@ -53,6 +55,8 @@
   display: grid;
   grid-template-columns: 8.875rem 1fr 45.75rem;
   grid-template-rows: 16.125rem 1fr 20.625rem;
+
+  background: right no-repeat url('../images/landing.svg');
 }
 
 #intro {
