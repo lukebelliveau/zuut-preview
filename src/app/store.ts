@@ -4,11 +4,13 @@ import { resizePlaygroundOnWindowResize } from '../features/playgrounds/playgrou
 
 import playgroundReducer from '../features/playgrounds/playgroundSlice';
 import plansReducer from '../features/plans/planSlice';
+import shoppingListReducer from '../features/shoppingListItems/shoppingListSlice';
 
 export const store = configureStore({
   reducer: {
     plans: plansReducer,
     playground: playgroundReducer,
+    shoppingListItems: shoppingListReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -1,17 +1,24 @@
+import MiscItem from '../lib/objects/miscItem';
 import { IItemGroup } from './MenuSection';
 
 const ObjectsMenu: IItemGroup[] = [
   {
     itemGroup: 'pots',
-    items: ['pot1', 'pot2']
+    items: [{ name: 'pot1' }, { name: 'pot2' }]
   },
   {
     itemGroup: 'climate',
-    items: ['climate obj']
+    items: [{ name: 'climate obj' }]
   },
   {
     itemGroup: 'structure',
-    items: ['24x24x36 tent']
+    items: [{ name: '24x24x36 tent' }]
+  },
+  {
+    itemGroup: 'Misc',
+    items: [
+      new MiscItem('Nutrients')
+    ]
   },
 ];
 

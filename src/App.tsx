@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
@@ -34,37 +36,39 @@ function App() {
   }, [dispatch, firstLoad]);
 
   return (
-    <Router>
-      <Routes>
-        <Route path={homePath()} element={<Home />} />
-        <Route
-          path={new_playground_path()}
-          element={
-            <RequireAuth>
-              <NewPlayground />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path={playground_path()}
-          element={
-            <RequireAuth>
-              <ShowPlayground />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/workplace"
-          element={
-            <RequireAuth>
-              <Workplace />
-            </RequireAuth>
-          }
-        />
-        <Route path="/access-denied" element={<AccessDenied />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <DndProvider backend={HTML5Backend}>
+      <Router>
+        <Routes>
+          <Route path={homePath()} element={<Home />} />
+          <Route
+            path={new_playground_path()}
+            element={
+              <RequireAuth>
+                <NewPlayground />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path={playground_path()}
+            element={
+              <RequireAuth>
+                <ShowPlayground />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/workplace"
+            element={
+              <RequireAuth>
+                <Workplace />
+              </RequireAuth>
+            }
+          />
+          <Route path="/access-denied" element={<AccessDenied />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </DndProvider>
   );
 }
 

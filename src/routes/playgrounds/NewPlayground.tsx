@@ -21,7 +21,7 @@ export default function NewPlayground() {
         <EnterName nextPage={nextPage} />
       </Slide>
       <Slide>
-        <EnterDimensions nextPage={nextPage} />
+        <EnterDimensions />
       </Slide>
     </FullPage>
   </>);

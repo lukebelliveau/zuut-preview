@@ -74,9 +74,8 @@ export default function ShowPlayground() {
             {renderer.render()}
           </Layer>
         </Stage>
-
-        <ShoppingList />
       </div>
     </Layout>
+    <ShoppingList />
   </>);
 }

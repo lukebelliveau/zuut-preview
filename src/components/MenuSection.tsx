@@ -1,8 +1,11 @@
 import { useState } from 'react';
 
+import { Item } from '../lib/objects/item';
+import ShoppingListCandidate from './MenuSection/ShoppingListCandidate';
+
 export interface IItemGroup {
   itemGroup: string,
-  items: string[]
+  items: Item[]
 }
 
 export const MenuSection = ({ itemGroup, items }: IItemGroup) => {
@@ -20,7 +23,9 @@ export const MenuSection = ({ itemGroup, items }: IItemGroup) => {
       </div>
       {/* Replace item strings with dynamic icons */}
       <div className={`items_wrapper ${open ? 'open' : ''}`}>
-        <div className="items">{items.map(item => item)}</div>
+        <ul className="items">
+          {items.map(item => <ShoppingListCandidate item={item} />)}
+        </ul>
       </div>
     </div>
   );

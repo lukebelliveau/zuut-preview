@@ -14,10 +14,6 @@ import PlanRepository from '../../../lib/plan/planRepository';
 
 export const new_playground_path = () => '/playgrounds/new';
 
-type EnterDimensionsProps = {
-  nextPage: () => void;
-}
-
 type CreateLayoutFormParams = {
   width: number;
   length: number;
@@ -25,7 +21,7 @@ type CreateLayoutFormParams = {
 
 const planRepo = PlanRepository.forRedux();
 
-export default function EnterDimensions(props: EnterDimensionsProps) {
+export default function EnterDimensions() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
 
