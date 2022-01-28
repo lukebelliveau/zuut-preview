@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Konva from 'konva';
+import { useDrop } from 'react-dnd';
 import { Layer, Stage } from 'react-konva';
+import Konva from 'konva';
 
 import Layout from '../../components/Layout';
 import Renderer from '../../lib/renderer';
@@ -9,6 +10,8 @@ import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import ShoppingList from '../../components/ShoppingList';
+import MiscItem from '../../lib/objects/miscItem';
+import ShoppingListRepository from '../../lib/shoppingList/shoppingListRepository';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -27,6 +30,14 @@ export default function ShowPlayground() {
       setFirstLoad(false);
     }
   }, [firstLoad]);
+
+  const [_, drop] = useDrop(() => ({
+    accept: 'Misc',
+    drop: (item: MiscItem) => {
+      const repo = ShoppingListRepository.forRedux();
+      repo.create(item);
+    }
+  }));
 
   function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
     event.evt.preventDefault();
@@ -58,7 +69,7 @@ export default function ShowPlayground() {
   return (<>
     <Helmet><title>Zuut - Design your grow</title></Helmet>
     <Layout>
-      <div id="sandbox">
+      <div id="sandbox" ref={drop}>
         <Stage
           ref={stageRef}
           width={playground.displayWidth}
