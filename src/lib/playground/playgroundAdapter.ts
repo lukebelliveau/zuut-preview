@@ -2,7 +2,8 @@ import Playground from '../playground';
 
 export interface PlaygroundAdapter {
   select(): Playground;
-  update(item: Playground): void;
-  resize(item: Playground): void;
-  zoom(item: Playground): void;
+  update(playground: Playground): void;
+  resize(playground: Playground): void;
+  zoom(playground: Playground): void;
+  addItem(playground: Playground): void;
 }

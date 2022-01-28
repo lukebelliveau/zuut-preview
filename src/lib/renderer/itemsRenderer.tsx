@@ -1,12 +1,11 @@
 import React from 'react';
 import { Rect } from 'react-konva';
-
-import Growspace from '../objects/growspace';
+import { Item } from '../items/item';
 
 export default class ItemsRenderer {
-  items: Growspace[];
+  items: Item[];
 
-  constructor(items: Growspace[]) {
+  constructor(items: Item[]) {
     this.items = items;
   }
 

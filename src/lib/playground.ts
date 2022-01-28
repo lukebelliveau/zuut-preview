@@ -1,3 +1,4 @@
+import { Item } from './items/item';
 import Plan from './plan';
 import { Point } from './point';
 
@@ -17,14 +18,16 @@ export default class Playground {
   centerX: number = 0;
   centerY: number = 0;
   plan: Plan | undefined;
+  items: Item[];
 
-  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0) {
+  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0, items: Item[] = []) {
     this.displayWidth = displayWidth;
     this.displayHeight = displayHeight;
     this.plan = plan;
     this.scale = scale || this.initialScale();
     this.centerX = centerX;
     this.centerY = centerY;
+    this.items = items;
   }
 
   setDisplayDimensions(width: number, height: number) {

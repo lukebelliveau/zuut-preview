@@ -2,7 +2,7 @@ import { store } from '../../app/store';
 import { shoppingListSelectors } from '../../features/shoppingListItems/shoppingListSelectors';
 import { create } from '../../features/shoppingListItems/shoppingListSlice';
 import { ShoppingListState } from '../../features/shoppingListItems/shoppingListState';
-import MiscItem from '../objects/miscItem';
+import MiscItem from '../items/miscItem';
 import { ShoppingListAdapter } from './shoppingListAdapter';
 
 export default class ShoppingListReduxAdapter implements ShoppingListAdapter {

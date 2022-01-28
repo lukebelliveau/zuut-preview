@@ -1,5 +1,5 @@
 import { useDrag } from 'react-dnd';
-import { Item } from '../../lib/objects/item';
+import { Item } from '../../lib/items/item';
 
 type ShoppingListCandidateProps = {
   item: Item;

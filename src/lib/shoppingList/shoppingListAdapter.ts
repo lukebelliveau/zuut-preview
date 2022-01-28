@@ -1,4 +1,4 @@
-import MiscItem from '../objects/miscItem';
+import MiscItem from '../items/miscItem';
 
 export interface ShoppingListAdapter {
   all(): MiscItem[];

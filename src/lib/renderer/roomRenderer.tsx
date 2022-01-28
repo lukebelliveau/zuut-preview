@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rect } from 'react-konva';
 
-import Room from '../objects/room';
+import Room from '../items/room';
 
 export default class RoomRenderer {
   room: Room;

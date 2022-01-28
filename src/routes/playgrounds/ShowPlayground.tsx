@@ -10,10 +10,9 @@ import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import ShoppingList from '../../components/ShoppingList';
-import MiscItem from '../../lib/objects/miscItem';
+import MiscItem from '../../lib/items/miscItem';
 import ShoppingListRepository from '../../lib/shoppingList/shoppingListRepository';
 import ItemsRenderer from '../../lib/renderer/itemsRenderer';
-import Growspace from '../../lib/objects/growspace';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -66,9 +65,7 @@ export default function ShowPlayground() {
   }
   
   const renderer = new Renderer(playground);
-  const itemsRenderer = new ItemsRenderer([
-    new Growspace((playground.plan?.room?.width || 0)/2, (playground.plan?.room?.length || 0)/2, 30, 30, 30)
-  ]);
+  const itemsRenderer = new ItemsRenderer(playground.items);
   const scale = playground.scale;
 
   return (<>

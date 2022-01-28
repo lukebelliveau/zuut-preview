@@ -1,5 +1,5 @@
 import { shoppingListSelectors } from '../../features/shoppingListItems/shoppingListSelectors';
-import MiscItem from '../objects/miscItem';
+import MiscItem from '../items/miscItem';
 import { ShoppingListAdapter } from './shoppingListAdapter';
 import ShoppingListReduxAdapter from './shoppingListReduxAdapter';
 

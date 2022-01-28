@@ -5,4 +5,14 @@ export type PlaygroundState = {
   centerX: number;
   centerY: number;
   scale: number;
+  items: ItemState[];
+}
+
+export type ItemState = {
+  name: string;
+  x: number;
+  y: number;
+  width: number;
+  length: number;
+  height: number | undefined;
 }

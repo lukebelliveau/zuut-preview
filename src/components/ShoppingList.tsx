@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
-import MiscItem from '../lib/objects/miscItem';
+import MiscItem from '../lib/items/miscItem';
 import ShoppingListRepository from '../lib/shoppingList/shoppingListRepository';
 
 import './ShoppingList.css';

@@ -1,6 +1,6 @@
 import { store } from '../../app/store';
 import { selectPlaygroundState } from '../../features/playgrounds/playgroundSelector';
-import { resize, update, zoom } from '../../features/playgrounds/playgroundSlice';
+import { addItem, resize, update, zoom } from '../../features/playgrounds/playgroundSlice';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
 import PlanReduxAdapter from '../plan/planReduxAdapter';
 import Playground from '../playground';
@@ -25,6 +25,10 @@ export default class PlaygroundReduxAdapter implements PlaygroundAdapter {
     store.dispatch(zoom(PlaygroundReduxAdapter.playgroundToState(playground)));
   }
 
+  addItem(playground: Playground) {
+    store.dispatch(addItem(PlaygroundReduxAdapter.playgroundToState(playground)));
+  }
+
   public static playgroundToState(playground: Playground): PlaygroundState {
     return {
       planId: playground.plan?.id,
@@ -33,6 +37,14 @@ export default class PlaygroundReduxAdapter implements PlaygroundAdapter {
       centerX: playground.centerX,
       centerY: playground.centerY,
       scale: playground.scale,
+      items: playground.items.map((item) => ({
+        name: item.name,
+        x: item.x,
+        y: item.y,
+        width: item.width,
+        length: item.length,
+        height: item.height
+      }))
     };
   }
 
@@ -47,6 +59,7 @@ export default class PlaygroundReduxAdapter implements PlaygroundAdapter {
       plan,
       playgroundState.centerX,
       playgroundState.centerY,
+      playgroundState.items
     );
   }
 }

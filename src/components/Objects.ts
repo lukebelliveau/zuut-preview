@@ -1,18 +1,19 @@
-import MiscItem from '../lib/objects/miscItem';
+import Growspace from '../lib/items/growspace';
+import MiscItem from '../lib/items/miscItem';
 import { IItemGroup } from './MenuSection';
 
-const ObjectsMenu: IItemGroup[] = [
+const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'pots',
-    items: [{ name: 'pot1' }, { name: 'pot2' }]
+    items: [new MiscItem('Pot 1'), new MiscItem('Pot 2')]
   },
   {
     itemGroup: 'climate',
-    items: [{ name: 'climate obj' }]
+    items: [new MiscItem('climate obj')]
   },
   {
     itemGroup: 'structure',
-    items: [{ name: '24x24x36 tent' }]
+    items: [new Growspace('24x24x36 tent')]
   },
   {
     itemGroup: 'Misc',
@@ -36,4 +37,4 @@ const ObjectsMenu: IItemGroup[] = [
   },
 ];
 
-export default ObjectsMenu;
+export default ItemsLibrary;

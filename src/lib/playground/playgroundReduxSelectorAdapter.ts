@@ -1,6 +1,4 @@
 import { selectPlaygroundState } from '../../features/playgrounds/playgroundSelector';
-import { shoppingListSelectors } from '../../features/shoppingListItems/shoppingListSelectors';
-import MiscItem from '../objects/miscItem';
 import Playground from '../playground';
 import { PlaygroundAdapter } from './playgroundAdapter';
 import PlaygroundReduxAdapter from './playgroundReduxAdapter';
@@ -23,6 +21,9 @@ export default class PlaygroundReduxSelectorAdapter implements PlaygroundAdapter
     throw new Error('Method not implemented.');
   }
   zoom(): void {
+    throw new Error('Method not implemented.');
+  }
+  addItem(): void {
     throw new Error('Method not implemented.');
   }
 }

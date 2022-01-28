@@ -35,4 +35,8 @@ export default class PlaygroundRepository {
   zoom(playground: Playground) {
     this.adapter.zoom(playground);
   }
+
+  addItem(playground: Playground) {
+    this.adapter.addItem(playground);
+  }
 }

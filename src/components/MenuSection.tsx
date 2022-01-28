@@ -1,15 +1,21 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
-
-import { Item } from '../lib/objects/item';
+import { useSelector } from 'react-redux';
+import PlaygroundRepository from '../lib/playground/playgroundRepository';
 import ShoppingListCandidate from './MenuSection/ShoppingListCandidate';
+import MiscItem from '../lib/items/miscItem';
 
 export interface IItemGroup {
   itemGroup: string,
-  items: Item[]
+  items: MiscItem[]
 }
+
+// TODO: Remove the eslint disablers and make accessible!
 
 export const MenuSection = ({ itemGroup, items }: IItemGroup) => {
   const [open, setOpen] = useState(true);
+  const playgroundRepo = PlaygroundRepository.forReduxSelector(useSelector);
+  const playground = playgroundRepo.select();
 
   // Fix CSS for accordion panels
   return (
@@ -24,7 +30,18 @@ export const MenuSection = ({ itemGroup, items }: IItemGroup) => {
       {/* Replace item strings with dynamic icons */}
       <div className={`items_wrapper ${open ? 'open' : ''}`}>
         <ul className="items">
-          {items.map(item => <ShoppingListCandidate key={item.name} item={item} />)}
+          {items.map(item => 
+          // TODO: Combine playground and shoppinglist select/drag-n-drop
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+          <div onClick={() =>
+            { const repo = PlaygroundRepository.forRedux();
+              item.setStartingXPosition((playground.plan?.room?.width || 0)/2);
+              item.setStartingYPosition((playground.plan?.room?.length || 0)/2);
+              playground.items = playground.items.concat(item);
+              repo.addItem(playground);}
+          }>
+            <ShoppingListCandidate key={item.name} item={item} />
+          </div>)}
         </ul>
       </div>
     </div>
