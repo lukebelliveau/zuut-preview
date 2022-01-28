@@ -7,18 +7,16 @@ import Renderer from '../../lib/renderer';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import { useSelector } from 'react-redux';
-import { selectPlayground } from '../../features/playgrounds/playgroundSelector';
 import { Helmet } from 'react-helmet';
 import ShoppingList from '../../components/ShoppingList';
 
 export const playground_path = () => '/playgrounds/current';
 
-const playgroundRepo = PlaygroundRepository.forRedux();
-
 export default function ShowPlayground() {
   const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
-  const playground = useSelector(selectPlayground);
+  const playgroundRepo = PlaygroundRepository.forReduxSelector(useSelector);
+  const playground = playgroundRepo.select();
   const plan = playground.plan;
 
   if (!plan?.room) throw new Error('No room to display');
@@ -32,7 +30,8 @@ export default function ShowPlayground() {
 
   function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
     event.evt.preventDefault();
-    const playground = playgroundRepo.select();
+    const repo = PlaygroundRepository.forRedux();
+    const playground = repo.select();
   
     if (stageRef.current) {
       const { x, y } = stageRef.current.getPointerPosition();
@@ -49,7 +48,7 @@ export default function ShowPlayground() {
         playground.zoomOut(zoomParams);
       }
   
-      playgroundRepo.zoom(playground);
+      repo.zoom(playground);
     }
   }
   

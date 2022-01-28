@@ -5,8 +5,4 @@ import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter'
 
 const playgroundState = (state: RootState) => state.playground;
 
-export const selectPlayground = createSelector(
-  playgroundState,
-  playgroundState => PlaygroundReduxAdapter.playgroundFromState(playgroundState)
-);
 export const selectPlaygroundState = createSelector(playgroundState, playgroundState => playgroundState);
