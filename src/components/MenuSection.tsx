@@ -24,7 +24,7 @@ export const MenuSection = ({ itemGroup, items }: IItemGroup) => {
       {/* Replace item strings with dynamic icons */}
       <div className={`items_wrapper ${open ? 'open' : ''}`}>
         <ul className="items">
-          {items.map(item => <ShoppingListCandidate item={item} />)}
+          {items.map(item => <ShoppingListCandidate key={item.name} item={item} />)}
         </ul>
       </div>
     </div>
