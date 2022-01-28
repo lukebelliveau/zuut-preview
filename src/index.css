@@ -296,3 +296,12 @@ input[type='submit'] {
   width: 2rem;
   color: white;
 }
+
+input[type="checkbox"]:checked {
+  background-color: var(--green-1);
+}
+
+li {
+  font-weight: 600;
+  font-size: 0.75rem;
+}

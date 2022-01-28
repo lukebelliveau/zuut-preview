@@ -59,3 +59,17 @@
 #shopping-list ul {
   margin: 0;
 }
+
+#shopping-list ul {
+  padding: 0 0 0 0.5rem;
+}
+#shopping-list li {
+  list-style-type: none;
+}
+#shopping-list li input[type="checkbox"] {
+  margin: 0 0.5rem 0.625rem 0;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 0.313rem;
+  border: 0.063rem solid var(--black);
+}

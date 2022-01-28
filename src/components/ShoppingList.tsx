@@ -32,7 +32,10 @@ export default function ShoppingList() {
       {shoppingListItems.length > 0 ?
         <ul>
           {shoppingListItems.map(item => (
-            <li key={item.name}>{item.name}</li>
+            <li key={item.name}>
+              <input type="checkbox" />
+              {item.name}
+            </li>
           ))}
         </ul>
         : <p>Drag items from the Objects toolbox</p>
