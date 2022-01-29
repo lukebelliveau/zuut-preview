@@ -58,7 +58,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "taiko-test": "gauge run specs",
-    "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start"
+    "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start",
+    "dev": "REACT_APP_DISABLE_AUTH=true REACT_APP_TEST_PLAYGROUND=true npm start"
   },
   "eslintConfig": {
     "extends": [
@@ -68,7 +69,12 @@
       "prettier"
     ],
     "rules": {
-      "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": ".*" }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "varsIgnorePattern": ".*"
+        }
+      ],
       "quotes": [
         "error",
         "single",

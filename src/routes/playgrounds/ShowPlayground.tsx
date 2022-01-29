@@ -13,10 +13,13 @@ import ShoppingList from '../../components/ShoppingList';
 import MiscItem from '../../lib/items/miscItem';
 import ShoppingListRepository from '../../lib/shoppingList/shoppingListRepository';
 import ItemsRenderer from '../../lib/renderer/itemsRenderer';
+import createTestRoom from './createTestRoom';
 
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
+  if (process.env.REACT_APP_TEST_PLAYGROUND) createTestRoom(20, 10);
+
   const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
   const playgroundRepo = PlaygroundRepository.forReduxSelector(useSelector);
