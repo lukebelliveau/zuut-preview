@@ -20,7 +20,7 @@ export default function Layout(props: LayoutProps) {
     <div className="wrapper">
       <header>
         <div id="header-logo">
-          <img id="logo" src={ZuutLogo} alt="Zuut Logo" />
+          <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
         </div>
         <div id="header-name">
           <h1>Name: {plan.name}</h1>

@@ -11,7 +11,7 @@ function Home() {
     <div className="home-wrapper">
       <header>
         <div id="header-logo">
-          <img id="logo" src={ZuutLogo} alt="Zuut Logo" />
+          <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
         </div>
         <div id="header-auth">
           <LoginButton />

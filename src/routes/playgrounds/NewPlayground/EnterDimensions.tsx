@@ -60,7 +60,7 @@ export default function EnterDimensions() {
       </div>
       <div className="create-button">
         <button className="primary" onClick={handleSubmit(onSubmit)}>
-          <img alt="Layout icon" src={LayoutIcon} />
+          <img alt="Layout icon" src={LayoutIcon} aria-hidden="true" />
           <span>Create new layout</span>
         </button>
       </div>

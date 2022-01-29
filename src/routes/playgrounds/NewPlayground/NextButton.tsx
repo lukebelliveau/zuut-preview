@@ -7,7 +7,7 @@ type NextButtonProps = {
 
 export default function NextButton(props: NextButtonProps) {
   return <button className="nextButton" onClick={props.nextPage}>
-    <img alt="Down arrow" src={DownArrow} />
+    <img alt="Down arrow" src={DownArrow} aria-hidden="true" />
     <p>scroll to continue</p>
   </button>;
 }

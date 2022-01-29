@@ -15,7 +15,7 @@ export default function PillInput(props: PillInputProps) {
     <div className="pill-container">
       <div className="pill">
         <input type="text" {...props.registrationOptions} />
-        <div className="description"><div>{props.description}</div></div>
+        <div className="description" aria-hidden="true"><div>{props.description}</div></div>
       </div>
     </div>
   </div>;
