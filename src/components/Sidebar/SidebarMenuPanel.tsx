@@ -1,12 +1,12 @@
-import { MenuSection, IItemGroup } from './MenuSection';
+import { IItemGroup } from '../../lib/itemsLibrary';
+import { MenuSection } from './MenuSection';
 
 interface ISidebarMenuPanelSections {
   sections: IItemGroup[];
 };
 
 const SidebarMenuPanel = ({ sections }: ISidebarMenuPanelSections) => {
-
-    return <div className='contentSection '>
+    return <div className="content-section">
       {sections.map(section => (
         <MenuSection 
           key={section.itemGroup}

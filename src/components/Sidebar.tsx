@@ -1,19 +1,13 @@
-import MenuTabs from './MenuTabs';
-import SingleMenuTab from './SingleMenuTab';
-import SidebarMenuPanel from './SidebarMenuPanel';
-import ItemsLibrary from './Objects';
-import MiscItem from '../lib/items/miscItem';
+import MenuTabs from './Sidebar/MenuTabs';
+import LayoutTab from './Sidebar/LayoutTab';
+import ObjectsTab from './Sidebar/ObjectsTab';
 
 const Sidebar = () => {
 
   return (
     <MenuTabs>
-      <SingleMenuTab id='layout' title="Layout">
-        <SidebarMenuPanel sections={[{itemGroup: 'layout', items: [new MiscItem('window')]}]} />
-      </SingleMenuTab>
-      <SingleMenuTab id='objects' title="Objects">
-        <SidebarMenuPanel sections={ItemsLibrary} />
-      </SingleMenuTab>
+      <LayoutTab />
+      <ObjectsTab />
     </MenuTabs>
   );
 };

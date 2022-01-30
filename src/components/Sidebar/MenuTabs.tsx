@@ -11,16 +11,20 @@ const MenuTabs: React.FC<Props> = ({ children }) => {
 
   return (
     <div className="sidebarMenuTabs" role="tablist"> 
-        {children.map((item, index) => (
-          <MenuTabTitle
-            key={index}
-            title={item.props.title}
-            index={index}
-            setSelectedTab={setSelectedTab}
-            active={index === selectedTab}
-            id={item.props.id}
-          />
-        ))}
+      <MenuTabTitle
+        title="Layout"
+        index={0}
+        setSelectedTab={setSelectedTab}
+        active={selectedTab === 0}
+        id="layout"
+      />
+      <MenuTabTitle
+        title="Objects"
+        index={1}
+        setSelectedTab={setSelectedTab}
+        active={selectedTab === 1}
+        id="objects"
+      />
       {children[selectedTab]}
     </div>
   );

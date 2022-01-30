@@ -1,6 +1,10 @@
-import Growspace from '../lib/items/growspace';
-import MiscItem from '../lib/items/miscItem';
-import { IItemGroup } from './MenuSection';
+import Growspace from './items/growspace';
+import MiscItem from './items/miscItem';
+
+export interface IItemGroup {
+  itemGroup: string,
+  items: MiscItem[]
+}
 
 const ItemsLibrary: IItemGroup[] = [
   {

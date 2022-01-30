@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import PlaygroundRepository from '../lib/playground/playgroundRepository';
-import ShoppingListCandidate from './MenuSection/ShoppingListCandidate';
-import MiscItem from '../lib/items/miscItem';
 
-export interface IItemGroup {
-  itemGroup: string,
-  items: MiscItem[]
-}
+import PlaygroundRepository from '../../lib/playground/playgroundRepository';
+import ShoppingListCandidate from './ShoppingListCandidate';
+import MiscItem from '../../lib/items/miscItem';
+import { IItemGroup } from '../../lib/itemsLibrary';
 
 // TODO: Remove the eslint disablers and make accessible!
 

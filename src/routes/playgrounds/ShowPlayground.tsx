@@ -74,7 +74,7 @@ export default function ShowPlayground() {
   return (<>
     <Helmet><title>Zuut - Design your grow</title></Helmet>
     <Layout>
-      <div id="sandbox" ref={drop}>
+      <div id="sandbox" role="application" ref={drop}>
         <Stage
           ref={stageRef}
           width={playground.displayWidth}
