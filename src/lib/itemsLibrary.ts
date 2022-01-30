@@ -20,7 +20,7 @@ const ItemsLibrary: IItemGroup[] = [
     items: [new Growspace('24x24x36 tent')]
   },
   {
-    itemGroup: 'Misc',
+    itemGroup: 'misc',
     items: [
       new MiscItem('Chip Bag Clips'),
       new MiscItem('CO2 System'),
@@ -40,5 +40,12 @@ const ItemsLibrary: IItemGroup[] = [
     ]
   },
 ];
+
+export function itemGroup(name: string): MiscItem[] {
+  const group = ItemsLibrary.find(group => group.itemGroup === name);
+  if (group === undefined) throw new Error(`Unknown item group: ${name}`);
+
+  return group.items;
+}
 
 export default ItemsLibrary;
