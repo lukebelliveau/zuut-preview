@@ -1,6 +1,13 @@
 import MiscItem from '../../lib/items/miscItem';
-import SidebarMenuPanel from './SidebarMenuPanel';
+import MenuSection from './MenuSection';
+import SidebarTab from './SidebarTab';
 
 export default function LayoutTab() {
-  return <SidebarMenuPanel sections={[{itemGroup: 'layout', items: [new MiscItem('window')]}]} />;
+  return <SidebarTab>
+    <MenuSection 
+      key="layout"
+      itemGroup="layout"
+      items={[new MiscItem('window')]}
+    />
+  </SidebarTab> ;
 }

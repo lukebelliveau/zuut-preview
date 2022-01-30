@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import './MenuTabs.css';
 
 interface IMenuTabTitleProps {
   title: string
@@ -9,7 +8,7 @@ interface IMenuTabTitleProps {
   id: string
 }
 
-const MenuTabTitle: React.FC<IMenuTabTitleProps> = ({ title, setSelectedTab, index, active, id}) => {
+const SidebarTabTitle: React.FC<IMenuTabTitleProps> = ({ title, setSelectedTab, index, active, id}) => {
 
   const onClick = useCallback(() => {
     setSelectedTab(index);
@@ -20,4 +19,4 @@ const MenuTabTitle: React.FC<IMenuTabTitleProps> = ({ title, setSelectedTab, ind
   );
 };
 
-export default MenuTabTitle;
+export default SidebarTabTitle;

@@ -1,6 +1,8 @@
 import ItemsLibrary from '../../lib/itemsLibrary';
-import SidebarMenuPanel from './SidebarMenuPanel';
+import SidebarTab from './SidebarTab';
 
 export default function LayoutTab() {
-  return <SidebarMenuPanel sections={ItemsLibrary} />;
+  return <SidebarTab>
+    
+  </SidebarTab>;
 }

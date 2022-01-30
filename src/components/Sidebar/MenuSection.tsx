@@ -9,7 +9,7 @@ import { IItemGroup } from '../../lib/itemsLibrary';
 
 // TODO: Remove the eslint disablers and make accessible!
 
-export const MenuSection = ({ itemGroup, items }: IItemGroup) => {
+export default function MenuSection({ itemGroup, items }: IItemGroup) {
   const [open, setOpen] = useState(true);
   const playgroundRepo = PlaygroundRepository.forReduxSelector(useSelector);
   const playground = playgroundRepo.select();

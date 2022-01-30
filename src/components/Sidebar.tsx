@@ -1,14 +1,9 @@
-import MenuTabs from './Sidebar/MenuTabs';
-import LayoutTab from './Sidebar/LayoutTab';
-import ObjectsTab from './Sidebar/ObjectsTab';
+import SidebarTabs from './Sidebar/SidebarTabs';
 
 const Sidebar = () => {
 
   return (
-    <MenuTabs>
-      <LayoutTab />
-      <ObjectsTab />
-    </MenuTabs>
+    <SidebarTabs />
   );
 };
 
