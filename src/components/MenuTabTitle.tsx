@@ -16,7 +16,7 @@ const MenuTabTitle: React.FC<IMenuTabTitleProps> = ({ title, setSelectedTab, ind
   }, [setSelectedTab, index]);
 
   return (
-    <button onClick={onClick} id={id} {...(active ? {className: 'active'} : {})}>{title}</button>
+    <button role="tab" aria-selected={active} onClick={onClick} id={id} {...(active ? {className: 'active'} : {})}>{title}</button>
   );
 };
 

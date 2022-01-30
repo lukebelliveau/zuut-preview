@@ -10,7 +10,7 @@ const MenuTabs: React.FC<Props> = ({ children }) => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   return (
-    <div className="sidebarMenuTabs"> 
+    <div className="sidebarMenuTabs" role="tablist"> 
         {children.map((item, index) => (
           <MenuTabTitle
             key={index}
