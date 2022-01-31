@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const RequireAuth = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isLoading, error } = useAuth0();
+  const { isAuthenticated, isLoading, error, loginWithRedirect } = useAuth0();
 
   if (process.env.REACT_APP_DISABLE_AUTH) {
     return <Fragment>{children}</Fragment>;
@@ -18,11 +18,9 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/access-denied" />;
   }
 
-  return isAuthenticated === true ? (
-    <Fragment>{children}</Fragment>
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (!isAuthenticated) loginWithRedirect();
+
+  return <Fragment>{children}</Fragment>;
 };
 
 export default RequireAuth;
