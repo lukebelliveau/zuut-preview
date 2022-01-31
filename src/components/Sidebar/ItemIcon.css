@@ -1,4 +1,6 @@
 .item-icon {
+  display: inline-block;
+
   border: 0;
   border-radius: 1rem;
   background-color: var(--gray-3);

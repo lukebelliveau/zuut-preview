@@ -1,10 +1,7 @@
-.sidebarMenuTabs {
+.sidebar-menu-tabs {
   display: inline-block;
-  flex-direction: row;
-  align-items: flex-start;
-  width: auto;
-  overflow: auto;
-  margin: 1rem;
+  width: 100%;
+  overflow: hidden;
 }
 
 .content-section {
@@ -59,18 +56,4 @@ button#objects {
 
 button.active {
   background-color: #21ffae;
-}
-
-.accordion_item .button {
-  border: none;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 12px;
-  line-height: 15px;
-  /* identical to box height */
-
-  text-align: center;
-
-  color: #434343;
 }

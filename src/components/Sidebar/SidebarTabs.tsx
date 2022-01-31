@@ -9,8 +9,8 @@ import './SidebarTabs.css';
 function SidebarTabs() {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  return (
-    <div className="sidebarMenuTabs" role="tablist"> 
+  return (<>
+    <div className="sidebar-menu-tabs" role="tablist"> 
       <SidebarTabTitle
         title="Layout"
         index={0}
@@ -25,12 +25,12 @@ function SidebarTabs() {
         active={selectedTab === 1}
         id="objects"
       />
-      {[
-        <LayoutTab />,
-        <ObjectsTab />
-      ][selectedTab]}
     </div>
-  );
+    {[
+      <LayoutTab />,
+      <ObjectsTab />
+    ][selectedTab]}
+  </>);
 }
 
 export default SidebarTabs;

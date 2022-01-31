@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
 
+import './MenuSection.css';
+
 type MenuSectionProps = {
   title: string;
   children: React.ReactNode;
@@ -11,16 +13,15 @@ export default function MenuSection({ title, children }: MenuSectionProps) {
 
   // Fix CSS for accordion panels
   return (
-    <div className={`accordion_item ${open ? 'active' : ''}`}>
-      <div>
-        <button className="button" onClick={() => setOpen(!open)}>
+    <div className={`accordion-item ${open ? 'active' : ''}`}>
+      <div className="accordion-title">
+        <button onClick={() => setOpen(!open)}>
           {title}
-          {/* Change to caret icons using Semantic UI */}
           <span className="control">{open ? '   -' : '   +' } </span>
         </button>
       </div>
       {open ?
-        <div>
+        <div className="accordion-content">
           {children}
         </div>
         : <></>
