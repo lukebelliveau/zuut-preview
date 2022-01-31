@@ -8,19 +8,19 @@ export default function LayoutTab() {
   return <SidebarTab>
     <MenuSection title="Pots">
       {itemGroup('pots').map(item =>
-        <PlaceableItem item={item} />)}
+        <PlaceableItem key={item.name} item={item} />)}
     </MenuSection>
     <MenuSection title="Climate">
       {itemGroup('climate').map(item =>
-        <PlaceableItem item={item} />)}
+        <PlaceableItem key={item.name} item={item} />)}
     </MenuSection>
     <MenuSection title="Structure">
       {itemGroup('structure').map(item =>
-        <PlaceableItem item={item} />)}
+        <PlaceableItem key={item.name} item={item} />)}
     </MenuSection>
     <MenuSection title="Misc">
       {itemGroup('misc').map(item =>
-        <ShoppingListCandidate item={item} />)}
+        <ShoppingListCandidate key={item.name} item={item} />)}
     </MenuSection>
   </SidebarTab>;
 }

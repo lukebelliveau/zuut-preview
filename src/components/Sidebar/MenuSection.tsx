@@ -19,9 +19,12 @@ export default function MenuSection({ title, children }: MenuSectionProps) {
           <span className="control">{open ? '   -' : '   +' } </span>
         </button>
       </div>
-      <div aria-hidden={!open} className={`items_wrapper ${open ? 'open' : ''}`}>
-        {children}
-      </div>
+      {open ?
+        <div>
+          {children}
+        </div>
+        : <></>
+      }
     </div>
   );
 };

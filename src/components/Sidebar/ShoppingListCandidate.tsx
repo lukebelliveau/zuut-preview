@@ -1,9 +1,11 @@
 import { useDrag } from 'react-dnd';
 
-import { Item } from '../../lib/items/item';
+import MiscItem from '../../lib/items/miscItem';
+import ShoppingListRepository from '../../lib/shoppingList/shoppingListRepository';
+import ItemIcon from './ItemIcon';
 
 type ShoppingListCandidateProps = {
-  item: Item;
+  item: MiscItem;
 }
 
 export default function ShoppingListCandidate({ item }: ShoppingListCandidateProps) {
@@ -13,11 +15,9 @@ export default function ShoppingListCandidate({ item }: ShoppingListCandidatePro
   }));
 
   function sendToShoppingList() {
-    
-  }
-  function onKeyboard(e: any): void {
-    if (e.key === 'Return') sendToShoppingList();
+    const repo = ShoppingListRepository.forRedux();
+    repo.create(item);
   }
 
-  return <div key={item.name} ref={drag} tabIndex={0} role="button" onClick={sendToShoppingList} onKeyUp={onKeyboard}>{item.name}</div>;
+  return <ItemIcon dragRef={drag} item={item} onKeyboard={sendToShoppingList} />;
 }

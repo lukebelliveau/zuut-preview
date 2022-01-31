@@ -74,10 +74,3 @@ button.active {
 
   color: #434343;
 }
-.items_wrapper {
-  height: 0;
-  overflow: hidden;
-}
-.items_wrapper.open {
-  height: auto;
-}

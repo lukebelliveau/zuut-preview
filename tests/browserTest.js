@@ -1,6 +1,6 @@
 /* globals gauge*/
 "use strict";
-const { $, click, openBrowser, write, closeBrowser, goto, into, press, text } = require('taiko');
+const { $, button, click, focus, openBrowser, write, closeBrowser, goto, into, press, text } = require('taiko');
 const assert = require("assert");
 const headless = process.env.headless_chrome.toLowerCase() === 'true';
 
@@ -26,4 +26,9 @@ step("Create a grow", async () => {
   await click('Create new layout');
 
   await text('Taiko Time').exists();
+
+  await click('Objects');
+  await focus($(`//*[text()='Syringes']`));
+  await press('Enter');
+  await assert.ok(await $("//li[text()='Syringes']").exists());
 });
