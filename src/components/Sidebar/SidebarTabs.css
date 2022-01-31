@@ -8,52 +8,27 @@
   padding-top: 0.5rem;
 }
 
-button#layout {
+.sidebar-menu-tabs button {
   padding: 0.25rem 1rem;
-  border-radius: 8px 0px 0px 8px;
   font-size: 0.75rem;
-
   position: static;
-
-  font-family: Montserrat;
-  font-style: normal;
   font-weight: 600;
-  font-size: 12px;
   line-height: 15px;
-
   text-align: center;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--black);
 
-  flex: none;
-  order: 0;
-  flex-grow: 1;
-  margin: auto;
+  width: 48%;
+}
+
+button#layout {
+  border-radius: 8px 0px 0px 8px;
 }
 
 button#objects {
-  padding: 0.25rem 1rem;
   border-radius: 0px 8px 8px 0px;
-  font-size: 0.75rem;
-
-  position: static;
-
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-
-  text-align: center;
-  text-transform: uppercase;
-  color: #000000;
-
-  flex: none;
-  order: 0;
-  flex-grow: 1;
-  margin: auto;
 }
 
 button.active {
-  background-color: #21ffae;
+  background-color: var(--green-1);
 }
