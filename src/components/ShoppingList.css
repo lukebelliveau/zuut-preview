@@ -49,6 +49,7 @@
 }
 
 .shopping-list-body {
+  background-color: var(--primary-white);
   border: 0.063rem solid var(--black);
   border-top: 0;
   visibility: visible;
