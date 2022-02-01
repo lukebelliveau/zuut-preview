@@ -9,6 +9,7 @@ export type PlaygroundState = {
 }
 
 export type ItemState = {
+  type: string;
   name: string;
   x: number;
   y: number;

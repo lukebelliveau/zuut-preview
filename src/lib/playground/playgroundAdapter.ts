@@ -6,4 +6,5 @@ export interface PlaygroundAdapter {
   resize(playground: Playground): void;
   zoom(playground: Playground): void;
   addItem(playground: Playground): void;
+  positionItem(playground: Playground): void;
 }

@@ -68,7 +68,7 @@ export default function ShowPlayground() {
   }
   
   const renderer = new Renderer(playground);
-  const itemsRenderer = new ItemsRenderer(playground.items);
+  const itemsRenderer = new ItemsRenderer(playground);
   const scale = playground.scale;
 
   return (<>

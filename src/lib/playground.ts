@@ -1,4 +1,4 @@
-import { Item } from './items/item';
+import PlaceableItem from './items/placeableItem';
 import Plan from './plan';
 import { Point } from './point';
 
@@ -18,9 +18,9 @@ export default class Playground {
   centerX: number = 0;
   centerY: number = 0;
   plan: Plan | undefined;
-  items: Item[];
+  items: PlaceableItem[];
 
-  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0, items: Item[] = []) {
+  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0, items: PlaceableItem[] = []) {
     this.displayWidth = displayWidth;
     this.displayHeight = displayHeight;
     this.plan = plan;

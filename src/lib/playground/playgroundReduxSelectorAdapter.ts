@@ -26,4 +26,7 @@ export default class PlaygroundReduxSelectorAdapter implements PlaygroundAdapter
   addItem(): void {
     throw new Error('Method not implemented.');
   }
+  positionItem(): void {
+    throw new Error('Method not implemented.');
+  }
 }

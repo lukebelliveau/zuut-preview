@@ -1,15 +1,16 @@
 import { useSelector } from 'react-redux';
 
 import MiscItem from '../../lib/items/miscItem';
+import PlaceableItem from '../../lib/items/placeableItem';
 import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import ShoppingListRepository from '../../lib/shoppingList/shoppingListRepository';
 import ItemIcon from './ItemIcon';
 
-type PlaceableItemProps = {
-  item: MiscItem;
+type PlaceableLibraryItemProps = {
+  item: PlaceableItem;
 }
 
-export default function PlaceableItem({ item }: PlaceableItemProps) {
+export default function PlaceableLibraryItem({ item }: PlaceableLibraryItemProps) {
   const playgroundRepo = PlaygroundRepository.forReduxSelector(useSelector);
   const playground = playgroundRepo.select();
   

@@ -1,23 +1,29 @@
 import Growspace from './items/growspace';
+import GrowspaceItem from './items/growspaceItem';
+import { Item } from './items/item';
 import MiscItem from './items/miscItem';
+import RoomItem from './items/roomItem';
 
 export interface IItemGroup {
   itemGroup: string,
-  items: MiscItem[]
+  items: Item[]
 }
 
 const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'pots',
-    items: [new MiscItem('Pot 1'), new MiscItem('Pot 2')]
+    items: [
+      new GrowspaceItem('Pot 1', undefined, undefined, undefined, 304.8, 304.8, 304.8),
+      new GrowspaceItem('Pot 2', undefined, undefined, undefined, 304.8, 304.8, 304.8)
+    ]
   },
   {
     itemGroup: 'climate',
-    items: [new MiscItem('climate obj')]
+    items: [new RoomItem('climate obj', undefined, undefined, undefined, 304.8, 304.8, 304.8)]
   },
   {
     itemGroup: 'structure',
-    items: [new Growspace('24x24x36 tent')]
+    items: [new Growspace('24x24x36 tent', undefined, undefined, undefined, 7315.2, 7315.2, 10972.8)]
   },
   {
     itemGroup: 'misc',
@@ -41,7 +47,7 @@ const ItemsLibrary: IItemGroup[] = [
   },
 ];
 
-export function itemGroup(name: string): MiscItem[] {
+export function itemGroup(name: string): Item[] {
   const group = ItemsLibrary.find(group => group.itemGroup === name);
   if (group === undefined) throw new Error(`Unknown item group: ${name}`);
 

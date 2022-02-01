@@ -39,4 +39,8 @@ export default class PlaygroundRepository {
   addItem(playground: Playground) {
     this.adapter.addItem(playground);
   }
+
+  positionItem(playground: Playground) {
+    this.adapter.positionItem(playground);
+  }
 }

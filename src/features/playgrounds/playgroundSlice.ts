@@ -34,10 +34,13 @@ export const playgroundSlice = createSlice({
     },
     addItem: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
       state.items = action.payload.items;
+    },
+    positionItem: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+      state.items = action.payload.items;
     }
   },
 });
 
-export const { update, resize, zoom, addItem } = playgroundSlice.actions;
+export const { update, resize, zoom, addItem, positionItem } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

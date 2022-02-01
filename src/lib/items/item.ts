@@ -1,8 +1,11 @@
-export interface Item {
-  name: string;
-  x: number;
-  y: number;
-  width: number;
-  length: number;
-  height: number | undefined;
-};
+import Growspace from './growspace';
+import GrowspaceItem from './growspaceItem';
+import MiscItem from './miscItem';
+import PlaceableItem from './placeableItem';
+import RoomItem from './roomItem';
+
+export type Item =
+| Growspace
+| GrowspaceItem
+| MiscItem
+| RoomItem
