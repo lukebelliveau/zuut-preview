@@ -22,9 +22,3 @@ export interface CreateItemProps {
 export interface PlaceableItem extends BaseItem {
   placeable: PlaceableState;
 }
-
-export const isPlaceable = (
-  item: BaseItem | PlaceableItem
-): item is PlaceableItem => {
-  return (item as PlaceableItem).placeable !== undefined;
-};

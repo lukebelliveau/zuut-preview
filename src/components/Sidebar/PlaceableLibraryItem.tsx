@@ -1,6 +1,6 @@
 import { useSelectPlanById } from '../../features/plans/planSelectors';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
-import { useItemsAdapter } from '../../lib/items/itemReduxAdapter';
+import { useItemsAdapter } from '../../lib/items/itemsAdapter';
 import { BaseItem } from '../../lib/items/itemTypes';
 import usePlanAdapter from '../../lib/plan/planAdapter';
 

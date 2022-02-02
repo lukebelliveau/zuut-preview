@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useSelectAllItems } from '../features/items/itemsSelectors';
-import { useItemsAdapter } from '../lib/items/itemReduxAdapter';
+import { useItemsAdapter } from '../lib/items/itemsAdapter';
 import { BaseItem } from '../lib/items/itemTypes';
 
 import { MISC_ITEM_TYPE } from '../lib/items/miscItem';

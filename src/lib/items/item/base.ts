@@ -13,6 +13,6 @@ export const createBaseItem = ({
     length,
     height,
     type,
-    placeable: { x: 0, y: 0 },
+    placeable: undefined,
   };
 };

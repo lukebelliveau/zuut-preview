@@ -1,6 +1,6 @@
 import { Rect } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { useItemsAdapter } from '../../lib/items/itemReduxAdapter';
+import { useItemsAdapter } from '../../lib/items/itemsAdapter';
 import { PlaceableItemState } from '../../features/items/itemState';
 
 type PlaygroundItemProps = {

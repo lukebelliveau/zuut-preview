@@ -17,7 +17,7 @@ import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
 import usePlaygroundAdapter from '../../lib/playground/playgroundAdapter';
-import useItemsAdapter from '../../lib/items/itemReduxAdapter';
+import useItemsAdapter from '../../lib/items/itemsAdapter';
 import { BaseItem } from '../../lib/items/itemTypes';
 
 export const playground_path = () => '/playgrounds/current';

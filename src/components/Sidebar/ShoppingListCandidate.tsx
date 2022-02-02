@@ -1,6 +1,6 @@
 import { useDrag } from 'react-dnd';
 
-import { useItemsAdapter } from '../../lib/items/itemReduxAdapter';
+import { useItemsAdapter } from '../../lib/items/itemsAdapter';
 import { BaseItem } from '../../lib/items/itemTypes';
 import { MISC_ITEM_TYPE } from '../../lib/items/miscItem';
 import ItemIcon from './ItemIcon';
