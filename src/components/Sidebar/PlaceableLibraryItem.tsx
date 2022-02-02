@@ -24,7 +24,7 @@ export default function PlaceableLibraryItem({ item }: PlaceableLibraryItemProps
     const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
     item.setPosition(playground.place());
     
-    dispatch(addOne(ItemReduxAdapter.itemToState(item)));
+    dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 
   return <ItemIcon item={item} onClick={placeItem} onKeyboard={placeItem} />;
