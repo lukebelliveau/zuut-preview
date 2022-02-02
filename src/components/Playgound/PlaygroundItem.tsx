@@ -9,7 +9,7 @@ type PlaygroundItemProps = {
 };
 
 export function PlaygroundItem({ item }: PlaygroundItemProps) {
-  const { updateLocation } = useItemsAdapter();
+  const { updatePlacement: updateLocation } = useItemsAdapter();
   const [image] = useImage(item.image ? item.image : '');
 
   function updatePlacement(

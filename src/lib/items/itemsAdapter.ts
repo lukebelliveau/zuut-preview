@@ -34,7 +34,7 @@ export const useItemsAdapter = () => {
     );
   };
 
-  const updateLocation = (
+  const updatePlacement = (
     item: PlaceableItemState | undefined,
     x: number,
     y: number
@@ -54,7 +54,7 @@ export const useItemsAdapter = () => {
     );
   };
 
-  return { addItem, addItemWithPosition, updateLocation };
+  return { addItem, addItemWithPosition, updatePlacement };
 };
 
 export default useItemsAdapter;
