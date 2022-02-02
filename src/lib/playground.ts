@@ -18,16 +18,15 @@ export default class Playground {
   centerX: number = 0;
   centerY: number = 0;
   plan: Plan | undefined;
-  items: PlaceableItem[];
+  items: PlaceableItem[] = [];
 
-  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0, items: PlaceableItem[] = []) {
+  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0) {
     this.displayWidth = displayWidth;
     this.displayHeight = displayHeight;
     this.plan = plan;
     this.scale = scale || this.initialScale();
     this.centerX = centerX;
     this.centerY = centerY;
-    this.items = items;
   }
 
   setDisplayDimensions(width: number, height: number) {
@@ -42,6 +41,13 @@ export default class Playground {
     } else {
       return 1;
     }
+  }
+
+  place(): Point {
+    return {
+      x: (this.plan?.room?.width || 0) / 2,
+      y: (this.plan?.room?.length || 0) / 2,
+    };
   }
 
   zoomIn(params: ZoomParams) {

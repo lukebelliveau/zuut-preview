@@ -23,7 +23,7 @@ const ItemsLibrary: IItemGroup[] = [
   },
   {
     itemGroup: 'structure',
-    items: [new Growspace('24x24x36 tent', undefined, undefined, undefined, 7315.2, 7315.2, 10972.8)]
+    items: [new Growspace('24x24x36 tent', undefined, undefined, undefined, 609.6, 609.6, 914.4)]
   },
   {
     itemGroup: 'misc',

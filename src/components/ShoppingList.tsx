@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelectAllItems } from '../features/items/itemsSelectors';
+import { addOne } from '../features/items/itemsSlice';
+import ItemReduxAdapter from '../lib/items/itemReduxAdapter';
 
-import MiscItem from '../lib/items/miscItem';
-import ShoppingListRepository from '../lib/shoppingList/shoppingListRepository';
+import MiscItem, { MISC_ITEM_TYPE } from '../lib/items/miscItem';
 
 import './ShoppingList.css';
 
@@ -11,14 +13,15 @@ import './ShoppingList.css';
 export default function ShoppingList() {
   const [hidden, setHidden] = useState(false);
   const className = hidden ? 'hidden' : undefined;
-  const shoppingListRepo = ShoppingListRepository.forReduxSelector(useSelector);
-  const shoppingListItems = shoppingListRepo.all();
+  const dispatch = useDispatch();
+  const itemStates = useSelectAllItems();
+
+  const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
 
   const [_, drop] = useDrop(() => ({
-    accept: 'Misc',
+    accept: MISC_ITEM_TYPE,
     drop: (item: MiscItem) => {
-      const repo = ShoppingListRepository.forRedux();
-      repo.create(item);
+      dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
     }
   }));
 
@@ -29,10 +32,10 @@ export default function ShoppingList() {
       </button>
     </h2>
     <div className="shopping-list-body">
-      {shoppingListItems.length > 0 ?
+      {items.length > 0 ?
         <ul>
-          {shoppingListItems.map(item => (
-            <li key={item.name}>
+          {items.map(item => (
+            <li key={item.id}>
               <input type="checkbox" />
               {item.name}
             </li>

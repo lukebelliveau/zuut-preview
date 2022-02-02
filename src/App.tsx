@@ -5,7 +5,11 @@ import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import RequireAuth from './components/RequireAuth';
+import { create } from './features/plans/planSlice';
+import { useSelectPlayground } from './features/playgrounds/playgroundSelector';
+import { update } from './features/playgrounds/playgroundSlice';
 import Plan from './lib/plan';
+import PlanReduxAdapter from './lib/plan/planReduxAdapter';
 import PlanRepository from './lib/plan/planRepository';
 import PlaygroundRepository from './lib/playground/playgroundRepository';
 import AccessDenied from './routes/AccessDenied';
@@ -21,19 +25,16 @@ const playgroundRepo = PlaygroundRepository.forRedux();
 function App() {
   const [firstLoad, setFirstLoad] = useState(true);
   const dispatch = useDispatch();
+  const playgroundState = useSelectPlayground();
 
   useEffect(() => {
     if (firstLoad) {
       const plan = Plan.sandbox();
-      planRepo.create(plan);
-
-      const playground = playgroundRepo.select();
-      playground.plan = plan;
-      playgroundRepo.update(playground);
-
+      dispatch(create(PlanReduxAdapter.planToState(plan)));
+      dispatch(update({ ...playgroundState, planId: plan.id }));
       setFirstLoad(false);
     }
-  }, [dispatch, firstLoad]);
+  }, [playgroundState, dispatch, firstLoad]);
 
   return (
     <DndProvider backend={HTML5Backend}>

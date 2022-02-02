@@ -6,24 +6,7 @@ import Plan from '../plan';
 import { PlanAdapter } from './planAdapter';
 
 export default class PlanReduxAdapter implements PlanAdapter {
-  selectById(id: string): Plan {
-    const planState = planSelectors.selectById(store.getState(), id);
-
-    return this.stateToPlan(planState);
-  }
-
-  create(plan: Plan) {
-    store.dispatch(create(this.planToState(plan)));
-  }
-
-  update(plan: Plan) {
-    store.dispatch(update({
-      id: plan.id,
-      changes: this.planToState(plan)
-    }));
-  }
-
-  private planToState(plan: Plan): PlanState {
+  public static planToState(plan: Plan): PlanState {
     return {
       id: plan.id,
       name: plan.name,
@@ -33,7 +16,7 @@ export default class PlanReduxAdapter implements PlanAdapter {
     };
   }
 
-  private stateToPlan(planState: PlanState | undefined) {
+  public static stateToPlan(planState: PlanState | undefined) {
     return new Plan(
       planState?.name,
       planState?.width,
@@ -41,5 +24,22 @@ export default class PlanReduxAdapter implements PlanAdapter {
       planState?.height,
       planState?.id,
     );
+  }
+
+  selectById(id: string): Plan {
+    const planState = planSelectors.selectById(store.getState(), id);
+
+    return PlanReduxAdapter.stateToPlan(planState);
+  }
+
+  create(plan: Plan) {
+    store.dispatch(create(PlanReduxAdapter.planToState(plan)));
+  }
+
+  update(plan: Plan) {
+    store.dispatch(update({
+      id: plan.id,
+      changes: PlanReduxAdapter.planToState(plan)
+    }));
   }
 }

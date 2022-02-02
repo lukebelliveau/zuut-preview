@@ -1,4 +1,4 @@
-import Room from './items/room';
+import Room from './room';
 
 export default class Plan {
   id: string;

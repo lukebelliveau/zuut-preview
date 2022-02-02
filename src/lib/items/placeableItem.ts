@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { Point } from '../point';
 
 export default class PlaceableItem {
   id: string;
@@ -20,11 +21,20 @@ export default class PlaceableItem {
     this.height = height;
   }
 
-  setStartingXPosition(x: number) {
-    this.x = x;
+  setPosition(position: Point) {
+    this.x = position.x;
+    this.y = position.y;
   }
 
-  setStartingYPosition(y: number) {
-    this.y = y;
+  copy(): PlaceableItem {
+    return new PlaceableItem(
+      this.name,
+      v4(),
+      this.x,
+      this.y,
+      this.width,
+      this.length,
+      this.height,
+    );
   }
 }
