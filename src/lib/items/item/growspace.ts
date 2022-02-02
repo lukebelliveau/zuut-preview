@@ -1,3 +1,4 @@
+import { defaultPlacementState } from '../itemsAdapter';
 import { CreateItemProps, PlaceableItem } from '../itemTypes';
 
 export const createGrowspaceItem = ({
@@ -12,7 +13,7 @@ export const createGrowspaceItem = ({
     length,
     height,
     type: 'Growspace',
-    placement: { x: 0, y: 0 },
+    placement: defaultPlacementState,
     image: undefined,
   };
 };

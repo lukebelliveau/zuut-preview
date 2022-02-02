@@ -1,5 +1,6 @@
 import { CreateItemProps, PlaceableItem } from '../itemTypes';
 import PotImage from '../../../images/items/pot.svg';
+import { defaultPlacementState } from '../itemsAdapter';
 
 export const createPotItem = ({
   name = '',
@@ -13,7 +14,7 @@ export const createPotItem = ({
     length,
     height,
     type: 'Pot',
-    placement: { x: 0, y: 0 },
+    placement: defaultPlacementState,
     image: PotImage,
   };
 };

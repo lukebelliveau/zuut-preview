@@ -7,6 +7,16 @@ import {
 } from '../../features/items/itemState';
 import { BaseItem } from './itemTypes';
 
+export const defaultPlacementState: PlacementState = {
+  x: 0,
+  y: 0,
+  collisionIds: [],
+  collisionState: {
+    status: 'GOOD',
+    errors: [],
+  },
+};
+
 export const useItemsAdapter = () => {
   const dispatch = useDispatch();
 
@@ -21,6 +31,7 @@ export const useItemsAdapter = () => {
 
   const addItemWithPosition = (item: BaseItem, x: number, y: number) => {
     const placement: PlacementState = {
+      ...defaultPlacementState,
       x,
       y,
     };
@@ -34,7 +45,7 @@ export const useItemsAdapter = () => {
     );
   };
 
-  const updatePlacement = (
+  const updatePlacementLocation = (
     item: PlaceableItemState | undefined,
     x: number,
     y: number
@@ -46,6 +57,7 @@ export const useItemsAdapter = () => {
         id: item.id,
         changes: {
           placement: {
+            ...item.placement,
             x,
             y,
           },
@@ -54,7 +66,11 @@ export const useItemsAdapter = () => {
     );
   };
 
-  return { addItem, addItemWithPosition, updatePlacement };
+  return {
+    addItem,
+    addItemWithPosition,
+    updatePlacement: updatePlacementLocation,
+  };
 };
 
 export default useItemsAdapter;

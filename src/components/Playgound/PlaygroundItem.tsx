@@ -3,6 +3,7 @@ import useImage from 'use-image';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { useItemsAdapter } from '../../lib/items/itemsAdapter';
 import { PlaceableItemState } from '../../features/items/itemState';
+import useInteractionsAdapter from '../../lib/interactions/interactionsAdapter';
 
 type PlaygroundItemProps = {
   item: PlaceableItemState;
@@ -11,14 +12,13 @@ type PlaygroundItemProps = {
 export function PlaygroundItem({ item }: PlaygroundItemProps) {
   const { updatePlacement: updateLocation } = useItemsAdapter();
   const [image] = useImage(item.image ? item.image : '');
+  const { updateMoveDrag } = useInteractionsAdapter();
 
-  function updatePlacement(
-    item: PlaceableItemState,
-    e: KonvaEventObject<DragEvent>
-  ) {
+  function dragItem(item: PlaceableItemState, e: KonvaEventObject<DragEvent>) {
     const { x, y } = { x: e.target.x(), y: e.target.y() };
 
     updateLocation(item, x, y);
+    updateMoveDrag(item, e);
   }
 
   if (image) {
@@ -29,7 +29,7 @@ export function PlaygroundItem({ item }: PlaygroundItemProps) {
         y={item.placement.y}
         height={item.length}
         width={item.width}
-        onDragEnd={(e) => updatePlacement(item, e)}
+        onDragEnd={(e) => dragItem(item, e)}
         // onMouseDown={(e) => onDragMove(e, item)}
         // onMouseUp={endDrag}
         // onDragMove={(e) => onDragMove(e, item)}
@@ -51,7 +51,7 @@ export function PlaygroundItem({ item }: PlaygroundItemProps) {
       stroke="black"
       strokeWidth={1}
       strokeScaleEnabled={false}
-      onDragEnd={(e) => updatePlacement(item, e)}
+      onDragEnd={(e) => dragItem(item, e)}
       draggable
     />
   );
