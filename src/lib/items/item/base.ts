@@ -14,5 +14,6 @@ export const createBaseItem = ({
     height,
     type,
     placeable: undefined,
+    image: undefined,
   };
 };

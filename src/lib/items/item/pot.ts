@@ -1,4 +1,5 @@
 import { CreateItemProps, PlaceableItem } from '../itemTypes';
+import PotImage from '../../../images/items/pot.svg';
 
 export const createPotItem = ({
   name = '',
@@ -13,5 +14,6 @@ export const createPotItem = ({
     height,
     type: 'Pot',
     placeable: { x: 0, y: 0 },
+    image: PotImage,
   };
 };

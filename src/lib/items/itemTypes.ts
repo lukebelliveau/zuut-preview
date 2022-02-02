@@ -9,6 +9,7 @@ export interface BaseItem {
   length: number;
   height: number | undefined;
   placeable: PlaceableState | undefined;
+  image: string | undefined;
 }
 
 export interface CreateItemProps {

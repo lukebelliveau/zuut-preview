@@ -13,5 +13,6 @@ export const createGrowspaceItem = ({
     height,
     type: 'Growspace',
     placeable: { x: 0, y: 0 },
+    image: undefined,
   };
 };
