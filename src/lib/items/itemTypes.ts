@@ -6,8 +6,8 @@ export interface BaseItem {
   name: string;
   type: ItemType;
   width: number;
-  length: number;
-  height: number | undefined;
+  length: number | undefined;
+  height: number;
   placement: PlacementState | undefined;
   image: string | undefined;
 }
