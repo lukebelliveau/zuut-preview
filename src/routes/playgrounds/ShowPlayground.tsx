@@ -2,15 +2,16 @@ import Konva from 'konva';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet';
-import { Layer, Rect, Stage, useStrictMode } from 'react-konva';
-import { useDispatch } from 'react-redux';
+import { Stage, useStrictMode } from 'react-konva';
+import { Provider, useDispatch } from 'react-redux';
+import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import ShoppingList from '../../components/ShoppingList';
 import MiscItem, { MISC_ITEM_TYPE } from '../../lib/items/miscItem';
 import createTestRoom from './createTestRoom';
-import { addOne, updateOne } from '../../features/items/itemsSlice';
+import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/items/itemReduxAdapter';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -18,11 +19,7 @@ import { useSelectPlanById } from '../../features/plans/planSelectors';
 import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
-import { useSelectAllItems } from '../../features/items/itemsSelectors';
-import { PlaygroundItem } from '../../components/Playgound/PlaygroundItem';
-import PlaceableItem from '../../lib/items/placeableItem';
-import { KonvaEventObject } from 'konva/lib/Node';
-import { v4 } from 'uuid';
+import { store } from '../../app/store';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -36,14 +33,12 @@ export default function ShowPlayground() {
   const playgroundState = useSelectPlayground();
   const planState = useSelectPlanById(playgroundState.planId);
   if (!planState) throw new Error('No plan found');
-  const itemStates = useSelectAllItems();
 
   const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
   const plan = playground.plan;
   if (!plan) throw new Error('No plan found');
   const room = plan.room;
   if (!room) throw new Error('No room found');
-  const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
 
   useEffect(() => {
     if (firstLoad) {
@@ -81,18 +76,9 @@ export default function ShowPlayground() {
       repo.zoom(playground);
     }
   }
-
-  function updatePlacement(item: PlaceableItem, e: KonvaEventObject<DragEvent>) {
-    item.setPosition({
-      x: e.target.x(),
-      y: e.target.y()
-    });
-    dispatch(updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) }));
-  }
   
   const scale = playground.scale;
 
-  // Unfortunately Konva somehow breaks react hooks so we can't have custom components for items/rooms
   return (<>
     <Helmet><title>Zuut - Design your grow</title></Helmet>
     <Layout>
@@ -108,33 +94,10 @@ export default function ShowPlayground() {
           scaleY={scale}
           onWheel={zoom}
           draggable>
-          {/* <PlaygroundRoom /> */}
-          <Layer>
-            <Rect
-              x={room.x}
-              y={room.y}
-              width={room.width}
-              height={room.length}
-              stroke="black"
-              strokeWidth={1}
-              strokeScaleEnabled={false}
-            />
-          </Layer>
-          {/* <PlaygroundItems /> */}
-          <Layer>
-            {items.placeable().map(item => <Rect
-                key={item.id}
-                x={item.x}
-                y={item.y}
-                width={item.width}
-                height={item.length}
-                stroke="black"
-                strokeWidth={1}
-                strokeScaleEnabled={false}
-                onDragEnd={e => updatePlacement(item, e)}
-                draggable
-              />)}
-          </Layer>
+            <Provider store={store}>
+              <PlaygroundRoom room={room} />
+              <PlaygroundItems />
+            </Provider>
         </Stage>
       </div>
     </Layout>
