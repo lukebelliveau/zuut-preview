@@ -1,7 +1,13 @@
-export type PlanState = {
+export interface PlanState {
   id: string;
   name: string | undefined;
-  width: number | undefined;
-  length: number | undefined;
+  room: RoomState | undefined;
+}
+
+export interface RoomState {
+  width: number;
+  length: number;
   height: number | undefined;
+  x: number;
+  y: number;
 }

@@ -1,12 +1,20 @@
-import PlaygroundRepository from '../../lib/playground/playgroundRepository';
+import usePlaygroundAdapter from '../../lib/playground/playgroundAdapter';
 
-export function resizePlaygroundOnWindowResize() {
-  const sandbox = window.document.getElementById('sandbox');
-  if (!sandbox) return;
+const usePlaygroundEffects = () => {
+  const playgroundAdapter = usePlaygroundAdapter();
+  const resizePlaygroundOnWindowResize = () => {
+    const sandbox = window.document.getElementById('sandbox');
+    if (!sandbox) return;
 
-  const playgroundRepo = PlaygroundRepository.forRedux();
-  const playground = playgroundRepo.select();
-  
-  playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
-  playgroundRepo.resize(playground);
-}
+    playgroundAdapter.setDisplayDimensions(
+      sandbox.offsetWidth,
+      sandbox.offsetHeight
+    );
+  };
+
+  return {
+    resizePlaygroundOnWindowResize,
+  };
+};
+
+export default usePlaygroundEffects;

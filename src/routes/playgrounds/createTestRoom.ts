@@ -1,31 +1,30 @@
+import { useSelectAllPlans } from '../../features/plans/planSelectors';
+import { PlanState } from '../../features/plans/planState';
 import { feetToMm } from '../../lib/conversions';
-import Plan from '../../lib/plan';
-import PlanRepository from '../../lib/plan/planRepository';
-import PlaygroundRepository from '../../lib/playground/playgroundRepository';
+import usePlanAdapter from '../../lib/plan/planAdapter';
+import usePlaygroundAdapter from '../../lib/playground/playgroundAdapter';
 
-const createTestRoom = (width: number, length: number) => {
-  const plan = Plan.sandbox();
-  const planRepo = PlanRepository.forRedux();
-  const playgroundRepo = PlaygroundRepository.forRedux();
+const useCreateTestRoomIfDev = (width: number, length: number) => {
+  const playgroundFunctions = usePlaygroundAdapter();
+  const planAdapter = usePlanAdapter();
+  const plans = useSelectAllPlans();
 
-  planRepo.create(plan);
+  if (!process.env.REACT_APP_TEST_PLAYGROUND || plans.length > 0) return;
 
-  const playground = playgroundRepo.select();
-  playground.plan = plan;
-  playgroundRepo.update(playground);
+  const testPlan: PlanState = {
+    name: 'Test Plan',
+    id: '0',
+    room: {
+      width: feetToMm(width),
+      length: feetToMm(length),
+      height: undefined,
+      x: 0,
+      y: 0,
+    },
+  };
 
-  const currentPlan = planRepo.default();
-  const newPlan = new Plan(
-    currentPlan?.name,
-    feetToMm(width),
-    feetToMm(length),
-    undefined,
-    currentPlan?.id
-  );
-
-  planRepo.update(newPlan);
+  planAdapter.create(testPlan);
+  playgroundFunctions.setPlan(testPlan);
 };
 
-export default createTestRoom;
-
-if (process.env.REACT_APP_TEST_PLAYGROUND) createTestRoom(20, 10);
+export default useCreateTestRoomIfDev;

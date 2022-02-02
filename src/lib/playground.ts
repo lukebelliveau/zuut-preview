@@ -1,90 +1,119 @@
-import PlaceableItem from './items/placeableItem';
-import Plan from './plan';
-import { Point } from './point';
-
-const SCALE_MODIFIER = 20;
+import { useAppDispatch } from '../app/hooks';
+import { useSelectPlanById } from '../features/plans/planSelectors';
+import { PlanState } from '../features/plans/planState';
+import { useSelectPlayground } from '../features/playgrounds/playgroundSelector';
+import { update } from '../features/playgrounds/playgroundSlice';
+import { PlaygroundState } from '../features/playgrounds/playgroundState';
 
 type ZoomParams = {
   mouseX: number;
   mouseY: number;
   stageX: number;
   stageY: number;
-}
+};
 
-export default class Playground {
-  displayWidth: number;
-  displayHeight: number;
-  scale: number;
-  centerX: number = 0;
-  centerY: number = 0;
-  plan: Plan | undefined;
-  items: PlaceableItem[] = [];
+const SCALE_MODIFIER = 20;
 
-  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0) {
-    this.displayWidth = displayWidth;
-    this.displayHeight = displayHeight;
-    this.plan = plan;
-    this.scale = scale || this.initialScale();
-    this.centerX = centerX;
-    this.centerY = centerY;
+const widthScaleFactor = (
+  playground: PlaygroundState,
+  plan: PlanState | undefined
+) => {
+  const width = plan?.room?.width || 10;
+  return width / (playground.displayWidth - SCALE_MODIFIER);
+};
+
+const lengthScaleFactor = (
+  playground: PlaygroundState,
+  plan: PlanState | undefined
+) => {
+  const length = plan?.room?.length || 10;
+  return length / (playground.displayHeight - SCALE_MODIFIER);
+};
+
+export const computeInitialScale = (
+  playground: PlaygroundState,
+  plan: PlanState | undefined
+) => {
+  if (plan?.room) {
+    return (
+      1 /
+      Math.max(
+        widthScaleFactor(playground, plan),
+        lengthScaleFactor(playground, plan)
+      )
+    );
+  } else {
+    return 1;
   }
+};
 
-  setDisplayDimensions(width: number, height: number) {
-    this.displayWidth = width;
-    this.displayHeight = height;
-    this.scale = this.initialScale();
-  }
+const usePlaygroundAdapter = () => {
+  const dispatch = useAppDispatch();
+  const playground = useSelectPlayground();
+  if (!playground.planId) throw new Error('No planId!');
+  const plan = useSelectPlanById(playground.planId);
 
-  initialScale(): number {
-    if (this.plan?.room) {
-      return 1 / Math.max(this.widthScaleFactor, this.lengthScaleFactor);
-    } else {
-      return 1;
-    }
-  }
+  const zoomIn = (params: ZoomParams) => {
+    zoom(params, 1.05);
+  };
 
-  place(): Point {
-    return {
-      x: (this.plan?.room?.width || 0) / 2,
-      y: (this.plan?.room?.length || 0) / 2,
+  const zoomOut = (params: ZoomParams) => {
+    zoom(params, 0.95);
+  };
+
+  const setPlan = (plan: PlanState) => {
+    const newPlayground = {
+      ...playground,
+      planId: plan.id,
     };
-  }
 
-  zoomIn(params: ZoomParams) {
-    this.zoom(params, 1.05);
-  }
+    dispatch(update(newPlayground));
+  };
 
-  zoomOut(params: ZoomParams) {
-    this.zoom(params, 0.95);
-  }
+  const setPlayground = (newPlayground: PlaygroundState) => {
+    dispatch(update(newPlayground));
+  };
 
-  get centerPosition(): Point {
-    const x = ((this.centerX / this.displayWidth) * (this.plan?.room?.width || 10)) / this.widthScaleFactor;
-    const y = ((this.centerY / this.displayHeight) * (this.plan?.room?.length || 10)) / this.lengthScaleFactor;
-    return { x, y };
-  }
-
-  private get widthScaleFactor(): number {
-    const width = this.plan?.room?.width || 10; 
-    return width / (this.displayWidth - SCALE_MODIFIER);
-  }
-
-  private get lengthScaleFactor(): number {
-    const length = this.plan?.room?.length || 10; 
-    return length / (this.displayHeight - SCALE_MODIFIER);
-  }
-
-  private zoom(params: ZoomParams, scaleFactor: number) {
-    const oldScale = this.scale;
-    const newScale = this.scale * scaleFactor;
+  const zoom = (params: ZoomParams, scaleFactor: number) => {
+    const oldScale = playground.scale;
+    const newScale = playground.scale * scaleFactor;
 
     const mousePointTo = {
       x: (params.mouseX - params.stageX) / oldScale,
       y: (params.mouseY - params.stageY) / oldScale,
     };
 
-    this.scale = newScale;
-    this.centerX = params.mouseX - mousePointTo.x * newScale;
-    this.centerY = params.mouseY - mousePointTo.y * newScale;
-  }
-}
+    const newPlayground = {
+      ...playground,
+      scale: newScale,
+      centerX: params.mouseX - mousePointTo.x * newScale,
+      centerY: params.mouseY - mousePointTo.y * newScale,
+    };
+
+    dispatch(update(newPlayground));
+  };
+
+  const setDisplayDimensions = (width: number, height: number) => {
+    const playgroundWithUpdatedDimensions = {
+      ...playground,
+      displayWidth: width,
+      displayHeight: height,
+    };
+
+    const initialScale = computeInitialScale(
+      playgroundWithUpdatedDimensions,
+      plan
+    );
+
+    const playgroundWithUpdatedScale = {
+      ...playgroundWithUpdatedDimensions,
+      scale: initialScale,
+    };
+
+    dispatch(update(playgroundWithUpdatedScale));
+  };
+
+  return { zoomIn, zoomOut, setPlan, setPlayground, setDisplayDimensions };
+};
+
+export default usePlaygroundAdapter;

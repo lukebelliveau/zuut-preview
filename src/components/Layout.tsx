@@ -5,15 +5,15 @@ import ZuutLogo from '../images/zuut-logo.svg';
 
 import LogoutButton from './LogoutButton';
 
-import PlanRepository from '../lib/plan/planRepository';
 import Sidebar from './Sidebar';
+import { useSelectDefaultPlan } from '../features/plans/planSelectors';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
 export default function Layout(props: LayoutProps) {
-  const plan = PlanRepository.forRedux().default();
+  const plan = useSelectDefaultPlan();
   if (!plan) return <></>;
 
   return (
@@ -32,9 +32,7 @@ export default function Layout(props: LayoutProps) {
       <div id="sidebar">
         <Sidebar />
       </div>
-      <div id="content">
-        {props.children}
-      </div>
+      <div id="content">{props.children}</div>
     </div>
   );
 }

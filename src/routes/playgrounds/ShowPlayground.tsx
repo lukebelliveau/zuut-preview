@@ -7,57 +7,55 @@ import { Provider, useDispatch } from 'react-redux';
 import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
-import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
+import usePlaygroundEffects from '../../features/playgrounds/playgroundEffects';
 import ShoppingList from '../../components/ShoppingList';
 import MiscItem, { MISC_ITEM_TYPE } from '../../lib/items/miscItem';
 import createTestRoom from './createTestRoom';
 import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/items/itemReduxAdapter';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
-import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
+import PlaygroundReduxAdapter from '../../lib/playground/playgroundAdapter';
 import { useSelectPlanById } from '../../features/plans/planSelectors';
-import PlaygroundRepository from '../../lib/playground/playgroundRepository';
 import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
+import usePlaygroundAdapter from '../../lib/playground/playgroundAdapter';
 
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
+  const { resizePlaygroundOnWindowResize } = usePlaygroundEffects();
   if (process.env.REACT_APP_TEST_PLAYGROUND) createTestRoom(20, 10);
   useStrictMode(true);
 
   const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();
-  const playgroundState = useSelectPlayground();
-  const planState = useSelectPlanById(playgroundState.planId);
-  if (!planState) throw new Error('No plan found');
-
-  const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
-  const plan = playground.plan;
+  const playground = useSelectPlayground();
+  if (!playground.planId) throw new Error('No planId in playground!');
+  const plan = useSelectPlanById(playground.planId);
   if (!plan) throw new Error('No plan found');
   const room = plan.room;
   if (!room) throw new Error('No room found');
+
+  const { zoomIn, zoomOut } = usePlaygroundAdapter();
 
   useEffect(() => {
     if (firstLoad) {
       resizePlaygroundOnWindowResize();
       setFirstLoad(false);
     }
-  }, [firstLoad]);
+  }, [firstLoad, resizePlaygroundOnWindowResize]);
 
   const [_, drop] = useDrop(() => ({
     accept: MISC_ITEM_TYPE,
     drop: (item: MiscItem) => {
       dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
-    }
+    },
   }));
 
   function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
     event.evt.preventDefault();
-    const repo = PlaygroundRepository.forRedux();
-  
     if (stageRef.current) {
       const { x, y } = stageRef.current.getPointerPosition();
       const zoomParams = {
@@ -66,41 +64,44 @@ export default function ShowPlayground() {
         stageX: stageRef.current.x(),
         stageY: stageRef.current.y(),
       };
-  
+
       if (event.evt.deltaY > 0) {
-        playground.zoomIn(zoomParams);
+        zoomIn(zoomParams);
       } else {
-        playground.zoomOut(zoomParams);
+        zoomOut(zoomParams);
       }
-  
-      repo.zoom(playground);
     }
   }
-  
+
   const scale = playground.scale;
 
-  return (<>
-    <Helmet><title>Zuut - Design your grow</title></Helmet>
-    <Layout>
-      <div id="sandbox" role="application" ref={drop}>
-        <Stage
-          key={v4()}
-          ref={stageRef}
-          width={playground.displayWidth}
-          height={playground.displayHeight}
-          x={playground.centerPosition.x}
-          y={playground.centerPosition.y}
-          scaleX={scale}
-          scaleY={scale}
-          onWheel={zoom}
-          draggable>
+  return (
+    <>
+      <Helmet>
+        <title>Zuut - Design your grow</title>
+      </Helmet>
+      <Layout>
+        <div id="sandbox" role="application" ref={drop}>
+          <Stage
+            key={v4()}
+            ref={stageRef}
+            width={playground.displayWidth}
+            height={playground.displayHeight}
+            x={playground.centerX}
+            y={playground.centerY}
+            scaleX={scale}
+            scaleY={scale}
+            onWheel={zoom}
+            draggable
+          >
             <Provider store={store}>
               <PlaygroundRoom room={room} />
               <PlaygroundItems />
             </Provider>
-        </Stage>
-      </div>
-    </Layout>
-    <ShoppingList />
-  </>);
+          </Stage>
+        </div>
+      </Layout>
+      <ShoppingList />
+    </>
+  );
 }

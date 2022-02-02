@@ -1,40 +1,65 @@
 import { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import RequireAuth from './components/RequireAuth';
-import { create } from './features/plans/planSlice';
-import { useSelectPlayground } from './features/playgrounds/playgroundSelector';
-import { update } from './features/playgrounds/playgroundSlice';
-import Plan from './lib/plan';
-import PlanReduxAdapter from './lib/plan/planReduxAdapter';
-import PlanRepository from './lib/plan/planRepository';
-import PlaygroundRepository from './lib/playground/playgroundRepository';
+import { PlanState } from './features/plans/planState';
+import usePlaygroundEffects from './features/playgrounds/playgroundEffects';
+import usePlanAdapter from './lib/plan/planAdapter';
+import usePlaygroundAdapter from './lib/playground';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
 import NotFound from './routes/NotFound';
-import NewPlayground, { new_playground_path } from './routes/playgrounds/NewPlayground';
-import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlayground';
+import NewPlayground, {
+  new_playground_path,
+} from './routes/playgrounds/NewPlayground';
+import ShowPlayground, {
+  playground_path,
+} from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
 
-const planRepo = PlanRepository.forRedux();
-const playgroundRepo = PlaygroundRepository.forRedux();
+export const sandboxPlan: PlanState = {
+  name: '',
+  id: '0',
+  room: undefined,
+};
 
-function App() {
+const useResizeEventListener = () => {
+  const { resizePlaygroundOnWindowResize } = usePlaygroundEffects();
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      resizePlaygroundOnWindowResize();
+    });
+  }, [resizePlaygroundOnWindowResize]);
+};
+
+const useResizeWindowAndCreatePlanOnFirstLoad = () => {
   const [firstLoad, setFirstLoad] = useState(true);
-  const dispatch = useDispatch();
-  const playgroundState = useSelectPlayground();
+  const { resizePlaygroundOnWindowResize } = usePlaygroundEffects();
+  const planAdapter = usePlanAdapter();
+  const playgroundAdapter = usePlaygroundAdapter();
 
   useEffect(() => {
     if (firstLoad) {
-      const plan = Plan.sandbox();
-      dispatch(create(PlanReduxAdapter.planToState(plan)));
-      dispatch(update({ ...playgroundState, planId: plan.id }));
+      const plan = sandboxPlan;
+      planAdapter.create(plan);
+      playgroundAdapter.setPlan(plan);
+      resizePlaygroundOnWindowResize();
       setFirstLoad(false);
     }
-  }, [playgroundState, dispatch, firstLoad]);
+  }, [
+    playgroundAdapter,
+    firstLoad,
+    planAdapter,
+    resizePlaygroundOnWindowResize,
+  ]);
+};
+
+function App() {
+  useResizeEventListener();
+  useResizeWindowAndCreatePlanOnFirstLoad();
 
   return (
     <DndProvider backend={HTML5Backend}>

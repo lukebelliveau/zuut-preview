@@ -5,25 +5,28 @@ import { useSelectPlanById } from '../../features/plans/planSelectors';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 import ItemReduxAdapter from '../../lib/items/itemReduxAdapter';
 import PlaceableItem from '../../lib/items/placeableItem';
-import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
+import usePlanAdapter from '../../lib/plan/planAdapter';
 
 import ItemIcon from './ItemIcon';
 
 type PlaceableLibraryItemProps = {
   item: PlaceableItem;
-}
+};
 
-export default function PlaceableLibraryItem({ item }: PlaceableLibraryItemProps) {
+export default function PlaceableLibraryItem({
+  item,
+}: PlaceableLibraryItemProps) {
   const dispatch = useDispatch();
   const playgroundState = useSelectPlayground();
-  const planState = useSelectPlanById(playgroundState.planId);
-  
-  function placeItem() {
-    if (!planState) throw new Error('No plan found');
+  if (!playgroundState.planId) throw new Error('No planId!');
+  const { getRoomCenter } = usePlanAdapter();
+  const plan = useSelectPlanById(playgroundState.planId);
 
-    const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
-    item.setPosition(playground.place());
-    
+  function placeItem() {
+    if (!plan) throw new Error('No plan found');
+
+    item.setPosition(getRoomCenter(plan));
+
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 

@@ -2,42 +2,43 @@ import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 import Section from './Section';
 import NextButton from './NextButton';
-import PlanRepository from '../../../lib/plan/planRepository';
+import usePlanAdapter from '../../../lib/plan/planAdapter';
+import { PlanState } from '../../../features/plans/planState';
 
 export const new_playground_path = () => '/playgrounds/new';
 
 type EnterNameProps = {
+  plan: PlanState;
   nextPage: () => void;
-}
+};
 
-const planRepo = PlanRepository.forRedux();
-
-export default function EnterName(props: EnterNameProps) {
-  const onChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const plan = planRepo.default();
-    plan.name = event.target.value;
-    planRepo.update(plan);
+export default function EnterName({ plan, nextPage }: EnterNameProps) {
+  const { updateName } = usePlanAdapter();
+  const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    updateName(plan, event.target.value);
   };
-  const onKeyDown: KeyboardEventHandler<HTMLInputElement> = event => {
+  const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === 'Enter') {
-      props.nextPage();
+      nextPage();
     }
   };
 
-  const plan = planRepo.default();
-
-  return (<>
-    <Section>
-      <h2>
-        <label htmlFor="name">Give your grow a name.</label>
-      </h2>
-      <input type="text" placeholder="type the name here"
-        name="name"
-        value={plan?.name}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-         />
-    </Section>
-    <NextButton nextPage={props.nextPage} />
-  </>);
+  return (
+    <>
+      <Section>
+        <h2>
+          <label htmlFor="name">Give your grow a name.</label>
+        </h2>
+        <input
+          type="text"
+          placeholder="type the name here"
+          name="name"
+          value={plan?.name}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+        />
+      </Section>
+      <NextButton nextPage={nextPage} />
+    </>
+  );
 }
