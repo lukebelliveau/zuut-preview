@@ -1,6 +1,5 @@
 import { PlanState } from '../../features/plans/planState';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
-import Playground from '../playground';
 
 export interface IPlaygroundAdapter {
   select(): PlaygroundState;

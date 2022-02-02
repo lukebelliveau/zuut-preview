@@ -15,13 +15,19 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    update: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+    update: (
+      state: PlaygroundState,
+      action: PayloadAction<PlaygroundState>
+    ) => {
       state.displayHeight = action.payload.displayHeight;
       state.displayWidth = action.payload.displayWidth;
       state.planId = action.payload.planId;
       state.scale = action.payload.scale;
     },
-    resize: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+    resize: (
+      state: PlaygroundState,
+      action: PayloadAction<PlaygroundState>
+    ) => {
       state.displayWidth = action.payload.displayWidth;
       state.displayHeight = action.payload.displayHeight;
       state.scale = action.payload.scale;

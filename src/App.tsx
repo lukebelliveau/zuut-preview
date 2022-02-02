@@ -7,7 +7,7 @@ import RequireAuth from './components/RequireAuth';
 import { PlanState } from './features/plans/planState';
 import usePlaygroundEffects from './features/playgrounds/playgroundEffects';
 import usePlanAdapter from './lib/plan/planAdapter';
-import usePlaygroundAdapter from './lib/playground';
+import usePlaygroundAdapter from './lib/playground/playgroundAdapter';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
 import NotFound from './routes/NotFound';

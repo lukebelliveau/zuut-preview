@@ -2,7 +2,10 @@ import { useAppDispatch } from '../../app/hooks';
 import { useSelectPlanById } from '../../features/plans/planSelectors';
 import { PlanState } from '../../features/plans/planState';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
-import { update } from '../../features/playgrounds/playgroundSlice';
+import {
+  update,
+  zoom as zoomAction,
+} from '../../features/playgrounds/playgroundSlice';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
 import { IPlaygroundAdapter } from './IPlaygroundAdapter';
 
@@ -80,6 +83,7 @@ const usePlaygroundAdapter = (): IPlaygroundAdapter => {
   };
 
   const zoom = (params: ZoomParams, scaleFactor: number) => {
+    console.log('ZOOM');
     const oldScale = playground.scale;
     const newScale = playground.scale * scaleFactor;
 
@@ -95,7 +99,7 @@ const usePlaygroundAdapter = (): IPlaygroundAdapter => {
       centerY: params.mouseY - mousePointTo.y * newScale,
     };
 
-    dispatch(update(newPlayground));
+    dispatch(zoomAction(newPlayground));
   };
 
   const setDisplayDimensions = (width: number, height: number) => {
