@@ -83,7 +83,6 @@ const usePlaygroundAdapter = (): IPlaygroundAdapter => {
   };
 
   const zoom = (params: ZoomParams, scaleFactor: number) => {
-    console.log('ZOOM');
     const oldScale = playground.scale;
     const newScale = playground.scale * scaleFactor;
 

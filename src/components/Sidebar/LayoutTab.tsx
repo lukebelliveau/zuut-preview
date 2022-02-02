@@ -1,19 +1,18 @@
-import MiscItem from '../../lib/items/miscItem';
-import RoomItem from '../../lib/items/roomItem';
+import { createBaseItem } from '../../lib/items/item/base';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
 
-const items = [
-  new RoomItem('window')
-];
+const items = [createBaseItem({ name: 'window' })];
 
 export default function LayoutTab() {
-  return <SidebarTab>
-    <MenuSection title="Layout">
-      {items.map(item => 
-        <PlaceableLibraryItem key={item.name} item={item} />
-      )}
-    </MenuSection>
-  </SidebarTab> ;
+  return (
+    <SidebarTab>
+      <MenuSection title="Layout">
+        {items.map((item) => (
+          <PlaceableLibraryItem key={item.name} item={item} />
+        ))}
+      </MenuSection>
+    </SidebarTab>
+  );
 }

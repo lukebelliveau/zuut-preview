@@ -1,26 +1,31 @@
 import { useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 
-import { addOne } from '../../features/items/itemsSlice';
-import ItemReduxAdapter from '../../lib/items/itemReduxAdapter';
-import MiscItem, { MISC_ITEM_TYPE } from '../../lib/items/miscItem';
+import { useItemsAdapter } from '../../lib/items/itemReduxAdapter';
+import { BaseItem } from '../../lib/items/itemTypes';
+import { MISC_ITEM_TYPE } from '../../lib/items/miscItem';
 import ItemIcon from './ItemIcon';
 
 type ShoppingListCandidateProps = {
-  item: MiscItem;
-}
+  item: BaseItem;
+};
 
-export default function ShoppingListCandidate({ item }: ShoppingListCandidateProps) {
-  const dispatch = useDispatch();
+export default function ShoppingListCandidate({
+  item,
+}: ShoppingListCandidateProps) {
+  const { addItem } = useItemsAdapter();
 
-  const [_, drag] = useDrag(() => ({
-    type: MISC_ITEM_TYPE,
-    item
-  }));
+  const [_, drag] = useDrag(() => {
+    return {
+      type: MISC_ITEM_TYPE,
+      item,
+    };
+  });
 
   function sendToShoppingList() {
-    dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
+    addItem(item);
   }
 
-  return <ItemIcon dragRef={drag} item={item} onKeyboard={sendToShoppingList} />;
+  return (
+    <ItemIcon dragRef={drag} item={item} onKeyboard={sendToShoppingList} />
+  );
 }

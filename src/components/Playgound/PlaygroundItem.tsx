@@ -1,38 +1,35 @@
 import { Rect } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { useDispatch } from 'react-redux';
-
-import PlaceableItem from '../../lib/items/placeableItem';
-import { updateOne } from '../../features/items/itemsSlice';
-import ItemReduxAdapter from '../../lib/items/itemReduxAdapter';
+import { useItemsAdapter } from '../../lib/items/itemReduxAdapter';
+import { PlaceableItemState } from '../../features/items/itemState';
 
 type PlaygroundItemProps = {
-  item: PlaceableItem;
-}
+  item: PlaceableItemState;
+};
 
 export function PlaygroundItem({ item }: PlaygroundItemProps) {
-  const dispatch = useDispatch();
+  const { updateLocation } = useItemsAdapter();
 
-  function updatePlacement(item: PlaceableItem, e: KonvaEventObject<DragEvent>) {
-    item.setPosition({
-      x: e.target.x(),
-      y: e.target.y()
-    });
-    dispatch(updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) }));
+  function updatePlacement(
+    item: PlaceableItemState,
+    e: KonvaEventObject<DragEvent>
+  ) {
+    const { x, y } = { x: e.target.x(), y: e.target.y() };
+
+    updateLocation(item, x, y);
   }
 
-  return <Rect
-    x={item.x}
-    y={item.y}
-    width={item.width}
-    height={item.length}
-    stroke="black"
-    strokeWidth={1}
-    strokeScaleEnabled={false}
-    onDragEnd={e => updatePlacement(item, e)}
-    draggable
-  />;
+  return (
+    <Rect
+      x={item.placeable.x}
+      y={item.placeable.y}
+      width={item.width}
+      height={item.length}
+      stroke="black"
+      strokeWidth={1}
+      strokeScaleEnabled={false}
+      onDragEnd={(e) => updatePlacement(item, e)}
+      draggable
+    />
+  );
 }
-// convertDistance(distance: number) {
-//   return distance * this.playground.scale;
-// }

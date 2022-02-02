@@ -1,52 +1,68 @@
-import { ItemState } from '../../features/items/itemState';
-import ItemList from '../itemList';
-import Growspace, { GROWSPACE_TYPE } from './growspace';
-import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
-import { isPlaceableItem, Item } from './item';
-import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
-import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
+import { useDispatch } from 'react-redux';
+import { v4 } from 'uuid';
+import { useSelectAllItems } from '../../features/items/itemsSelectors';
+import { addOne, updateOne } from '../../features/items/itemsSlice';
+import {
+  PlaceableItemState,
+  PlaceableState,
+} from '../../features/items/itemState';
+import { BaseItem } from './itemTypes';
 
-export default class ItemReduxAdapter {
-  public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
-    const items = new ItemList();
-    itemStates.forEach(itemState => items.push(ItemReduxAdapter.stateToItem(itemState)));
+export const useItemsAdapter = () => {
+  const dispatch = useDispatch();
+  const items = useSelectAllItems();
 
-    return items;
-  }
+  const addItem = (item: BaseItem) => {
+    dispatch(
+      addOne({
+        id: v4(),
+        ...item,
+      })
+    );
+  };
 
-  public static itemToState(item: Item): ItemState {
-    const baseItemState = {
-      id: item.id,
-      type: item.type,
-      name: item.name,
+  const addItemWithPosition = (item: BaseItem, x: number, y: number) => {
+    const placeable: PlaceableState = {
+      x,
+      y,
     };
 
-    if (isPlaceableItem(item)) {
-      return {
-        ...baseItemState,
-        x: item.x,
-        y: item.y,
-        width: item.width,
-        height: item.height,
-        length: item.length,
-      };
-    } else {
-      return baseItemState;
-    }
-  }
+    dispatch(
+      addOne({
+        id: v4(),
+        ...item,
+        placeable,
+      })
+    );
+  };
 
-  public static stateToItem(itemState: ItemState) {
-    switch(itemState.type) {
-      case GROWSPACE_TYPE:
-        return new Growspace(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height);
-      case GROWSPACE_ITEM_TYPE:
-        return new GrowspaceItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height);
-      case MISC_ITEM_TYPE:
-        return new MiscItem(itemState.name, itemState.id);
-      case ROOM_ITEM_TYPE:
-        return new RoomItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height);
-      default:
-        throw new Error(`Unknown item type: ${itemState.type}`);
-    }
-  }
-}
+  const selectPlaceableItems = (): PlaceableItemState[] => {
+    return items.filter(
+      (item) => item.placeable !== undefined
+    ) as PlaceableItemState[];
+  };
+
+  const updateLocation = (
+    item: PlaceableItemState | undefined,
+    x: number,
+    y: number
+  ) => {
+    if (!item) throw new Error('Called updateLocation without an item!');
+
+    dispatch(
+      updateOne({
+        id: item.id,
+        changes: {
+          placeable: {
+            x,
+            y,
+          },
+        },
+      })
+    );
+  };
+
+  return { addItem, addItemWithPosition, selectPlaceableItems, updateLocation };
+};
+
+export default useItemsAdapter;

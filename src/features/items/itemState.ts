@@ -1,10 +1,15 @@
-export type ItemState = {
+import { BaseItem } from '../../lib/items/itemTypes';
+
+export interface PlaceableState {
+  x: number;
+  y: number;
+}
+
+export interface ItemState extends BaseItem {
   id: string;
-  type: string;
-  name: string;
-  x?: number;
-  y?: number;
-  width?: number;
-  length?: number;
-  height?: number;
+  placeable: PlaceableState | undefined;
+}
+
+export interface PlaceableItemState extends ItemState {
+  placeable: PlaceableState;
 }
