@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import { addOne, updateOne } from '../../features/items/itemsSlice';
 import {
   PlaceableItemState,
-  PlaceableState,
+  PlacementState,
 } from '../../features/items/itemState';
 import { BaseItem } from './itemTypes';
 
@@ -20,7 +20,7 @@ export const useItemsAdapter = () => {
   };
 
   const addItemWithPosition = (item: BaseItem, x: number, y: number) => {
-    const placeable: PlaceableState = {
+    const placement: PlacementState = {
       x,
       y,
     };
@@ -29,7 +29,7 @@ export const useItemsAdapter = () => {
       addOne({
         id: v4(),
         ...item,
-        placeable,
+        placement,
       })
     );
   };
@@ -45,7 +45,7 @@ export const useItemsAdapter = () => {
       updateOne({
         id: item.id,
         changes: {
-          placeable: {
+          placement: {
             x,
             y,
           },

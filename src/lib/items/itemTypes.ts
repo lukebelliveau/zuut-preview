@@ -1,4 +1,4 @@
-import { PlaceableState } from '../../features/items/itemState';
+import { PlacementState } from '../../features/items/itemState';
 
 export type ItemType = 'Base' | 'Pot' | 'Growspace';
 
@@ -8,7 +8,7 @@ export interface BaseItem {
   width: number;
   length: number;
   height: number | undefined;
-  placeable: PlaceableState | undefined;
+  placement: PlacementState | undefined;
   image: string | undefined;
 }
 
@@ -21,5 +21,5 @@ export interface CreateItemProps {
 }
 
 export interface PlaceableItem extends BaseItem {
-  placeable: PlaceableState;
+  placement: PlacementState;
 }

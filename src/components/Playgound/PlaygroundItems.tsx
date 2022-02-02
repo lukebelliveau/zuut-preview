@@ -7,7 +7,7 @@ export default function PlaygroundItems() {
   const items = useSelectAllItems();
 
   const placeableItems: PlaceableItemState[] = items.filter(
-    (item): item is PlaceableItemState => item.placeable !== undefined
+    (item): item is PlaceableItemState => item.placement !== undefined
   );
 
   return (

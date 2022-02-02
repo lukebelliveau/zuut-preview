@@ -25,10 +25,11 @@ export function PlaygroundItem({ item }: PlaygroundItemProps) {
     return (
       <Image
         image={image}
-        x={item.placeable.x}
-        y={item.placeable.y}
+        x={item.placement.x}
+        y={item.placement.y}
         height={item.length}
         width={item.width}
+        onDragEnd={(e) => updatePlacement(item, e)}
         // onMouseDown={(e) => onDragMove(e, item)}
         // onMouseUp={endDrag}
         // onDragMove={(e) => onDragMove(e, item)}
@@ -43,8 +44,8 @@ export function PlaygroundItem({ item }: PlaygroundItemProps) {
 
   return (
     <Rect
-      x={item.placeable.x}
-      y={item.placeable.y}
+      x={item.placement.x}
+      y={item.placement.y}
       width={item.width}
       height={item.length}
       stroke="black"

@@ -13,7 +13,7 @@ export const createPotItem = ({
     length,
     height,
     type: 'Pot',
-    placeable: { x: 0, y: 0 },
+    placement: { x: 0, y: 0 },
     image: PotImage,
   };
 };
