@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet';
 import { Stage, useStrictMode } from 'react-konva';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
@@ -12,14 +12,13 @@ import ShoppingList from '../../components/ShoppingList';
 import { MISC_ITEM_TYPE } from '../../lib/items/miscItem';
 import createTestRoom from './createTestRoom';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
-import PlaygroundReduxAdapter from '../../lib/playground/playgroundAdapter';
 import { useSelectPlanById } from '../../features/plans/planSelectors';
 import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
 import usePlaygroundAdapter from '../../lib/playground/playgroundAdapter';
-import { ItemState } from '../../features/items/itemState';
 import useItemsAdapter from '../../lib/items/itemReduxAdapter';
+import { BaseItem } from '../../lib/items/itemTypes';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -31,7 +30,6 @@ export default function ShowPlayground() {
   const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
   const playground = useSelectPlayground();
-  const { addItem } = useItemsAdapter();
   if (!playground.planId) throw new Error('No planId in playground!');
   const plan = useSelectPlanById(playground.planId);
   if (!plan) throw new Error('No plan found');
@@ -47,9 +45,10 @@ export default function ShowPlayground() {
     }
   }, [firstLoad, resizePlaygroundOnWindowResize]);
 
+  const { addItem } = useItemsAdapter();
   const [_, drop] = useDrop(() => ({
     accept: MISC_ITEM_TYPE,
-    drop: (item: ItemState) => {
+    drop: (item: BaseItem) => {
       addItem(item);
     },
   }));

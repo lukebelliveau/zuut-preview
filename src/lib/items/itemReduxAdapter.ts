@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { v4 } from 'uuid';
-import { useSelectAllItems } from '../../features/items/itemsSelectors';
 import { addOne, updateOne } from '../../features/items/itemsSlice';
 import {
   PlaceableItemState,
@@ -10,7 +9,6 @@ import { BaseItem } from './itemTypes';
 
 export const useItemsAdapter = () => {
   const dispatch = useDispatch();
-  const items = useSelectAllItems();
 
   const addItem = (item: BaseItem) => {
     dispatch(
@@ -36,12 +34,6 @@ export const useItemsAdapter = () => {
     );
   };
 
-  const selectPlaceableItems = (): PlaceableItemState[] => {
-    return items.filter(
-      (item) => item.placeable !== undefined
-    ) as PlaceableItemState[];
-  };
-
   const updateLocation = (
     item: PlaceableItemState | undefined,
     x: number,
@@ -62,7 +54,7 @@ export const useItemsAdapter = () => {
     );
   };
 
-  return { addItem, addItemWithPosition, selectPlaceableItems, updateLocation };
+  return { addItem, addItemWithPosition, updateLocation };
 };
 
 export default useItemsAdapter;
