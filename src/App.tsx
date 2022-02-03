@@ -25,8 +25,10 @@ function App() {
   useEffect(() => {
     if (firstLoad) {
       const plan = Plan.sandbox();
-      dispatch(create(PlanReduxAdapter.planToState(plan)));
-      dispatch(update({ ...playgroundState, planId: plan.id }));
+      if (!process.env.REACT_APP_TEST_PLAYGROUND) {
+        dispatch(create(PlanReduxAdapter.planToState(plan)));
+        dispatch(update({ ...playgroundState, planId: plan.id }));
+      }
       setFirstLoad(false);
     }
   }, [playgroundState, dispatch, firstLoad]);
