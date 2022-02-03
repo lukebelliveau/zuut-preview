@@ -23,6 +23,7 @@ export default function PlaygroundItems() {
   return <Layer>
     {items.placeable().map(item => (
       <Rect
+        key={item.id}
         x={item.x}
         y={item.y}
         width={item.width}
