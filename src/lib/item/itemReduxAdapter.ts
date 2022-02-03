@@ -19,6 +19,7 @@ export default class ItemReduxAdapter {
       id: item.id,
       type: item.type,
       name: item.name,
+      isColliding: false,
     };
 
     if (isPlaceableItem(item)) {
@@ -29,6 +30,7 @@ export default class ItemReduxAdapter {
         width: item.width,
         height: item.height,
         length: item.length,
+        isColliding: item.isColliding,
       };
     } else {
       return baseItemState;
@@ -38,13 +40,13 @@ export default class ItemReduxAdapter {
   public static stateToItem(itemState: ItemState) {
     switch(itemState.type) {
       case GROWSPACE_TYPE:
-        return new Growspace(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height);
+        return new Growspace(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height, itemState.isColliding);
       case GROWSPACE_ITEM_TYPE:
-        return new GrowspaceItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height);
+        return new GrowspaceItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height, itemState.isColliding);
       case MISC_ITEM_TYPE:
         return new MiscItem(itemState.name, itemState.id);
       case ROOM_ITEM_TYPE:
-        return new RoomItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height);
+        return new RoomItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height, itemState.isColliding);
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);
     }

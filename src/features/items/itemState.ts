@@ -7,4 +7,5 @@ export type ItemState = {
   width?: number;
   length?: number;
   height?: number;
+  isColliding: boolean;
 }

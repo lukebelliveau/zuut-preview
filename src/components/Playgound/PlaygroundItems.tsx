@@ -1,15 +1,39 @@
-import { Layer } from 'react-konva';
+import { Layer, Rect } from 'react-konva';
+import { useDispatch } from 'react-redux';
 
-import { useSelectAllItems } from '../../features/items/itemsSelectors';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { PlaygroundItem } from './PlaygroundItem';
+import { updateOne } from '../../features/items/itemsSlice';
+import PlaceableItem from '../../lib/item/placeableItem';
+import { useBuildItemList } from '../../app/builderHooks';
 
 export default function PlaygroundItems() {
-  const itemStates = useSelectAllItems();
+  const dispatch = useDispatch();
+  const items = useBuildItemList();
 
-  const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
+  function updatePlacement(item: PlaceableItem, x: number, y: number) {
+    item.setPosition({ x, y }, items);
+    dispatch(updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) }));
+  }
+
+  function updateFinalPlacement(item: PlaceableItem, x: number, y: number) {
+    updatePlacement(item, x, y);
+    items.placeable().forEach(item => updatePlacement(item, item.x, item.y));
+  }
 
   return <Layer>
-    {items.placeable().map(item => <PlaygroundItem key={item.id} item={item} />)}
+    {items.placeable().map(item => (
+      <Rect
+        x={item.x}
+        y={item.y}
+        width={item.width}
+        height={item.length}
+        stroke={item.isColliding ? 'red' : 'black'}
+        strokeWidth={1}
+        strokeScaleEnabled={false}
+        onDragMove={e => updatePlacement(item, e.target.x(),  e.target.y())}
+        onDragEnd={e => updateFinalPlacement(item, e.target.x(),  e.target.y())}
+        draggable
+      />
+    ))}
   </Layer>;
 }

@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import ItemList from '../itemList';
 import { Point } from '../point';
 
 export default class PlaceableItem {
@@ -10,8 +11,9 @@ export default class PlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
+  isColliding: boolean = false;
 
-  constructor(name: string, id: string = v4(), x: number = 0, y: number = 0, width: number = 610, length: number = 610, height: number = 915) {
+  constructor(name: string, id: string = v4(), x: number = 0, y: number = 0, width: number = 610, length: number = 610, height: number = 915, isColliding: boolean = false) {
     this.id = id;
     this.name = name;
     this.x = x;
@@ -19,11 +21,24 @@ export default class PlaceableItem {
     this.width = width;
     this.length = length;
     this.height = height;
+    this.isColliding = isColliding;
   }
 
-  setPosition(position: Point) {
+  setPosition(position: Point, items: ItemList) {
     this.x = position.x;
     this.y = position.y;
+    this.isColliding = items.some(otherItem => this.isCollidingWith(otherItem));
+  }
+
+  isCollidingWith(otherItem: PlaceableItem): boolean {
+    if (otherItem.id === this.id) return false;
+
+    return !(
+      otherItem.x > this.x + this.width ||
+      otherItem.x + otherItem.width < this.x ||
+      otherItem.y > this.y + this.length ||
+      otherItem.y + otherItem.length < this.y
+    );
   }
 
   copy(): PlaceableItem {
