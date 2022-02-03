@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { isGrowspace } from '../item';
 import Growspace from './growspace';
 import PlaceableItem from './placeableItem';
 
@@ -17,5 +18,11 @@ export default class GrowspaceItem extends PlaceableItem {
       this.length,
       this.height,
     );
+  }
+
+  isCollidingWith(otherItem: PlaceableItem): boolean {
+    if (isGrowspace(otherItem)) return false;
+    
+    return super.isCollidingWith(otherItem);
   }
 }
