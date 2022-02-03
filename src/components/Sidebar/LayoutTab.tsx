@@ -9,25 +9,29 @@ import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
 
-const items = [
-  new RoomItem('window')
-];
+const layoutItems = [new RoomItem('Window')];
 
 export default function LayoutTab() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
-  const items = useBuildItemList();
-  
+  const allItems = useBuildItemList();
+
   function placeItem(item: PlaceableItem) {
-    item.setPosition(playground.place(), items);
+    item.setPosition(playground.place(), allItems);
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
-  
-  return <SidebarTab>
-    <MenuSection title="Layout">
-      {items.map(item => 
-        <PlaceableLibraryItem key={item.name} item={item} placeItem={placeItem} />
-      )}
-    </MenuSection>
-  </SidebarTab> ;
+
+  return (
+    <SidebarTab>
+      <MenuSection title="Layout">
+        {layoutItems.map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
+    </SidebarTab>
+  );
 }

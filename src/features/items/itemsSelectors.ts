@@ -2,7 +2,7 @@ import { useAppSelector } from '../../app/hooks';
 import { RootState } from '../../app/rootState';
 import itemsAdapter from './itemsEntityAdapter';
 
-const itemsSelectors = itemsAdapter.getSelectors<RootState>(
+export const itemsSelectors = itemsAdapter.getSelectors<RootState>(
   (state) => state.items
 );
 

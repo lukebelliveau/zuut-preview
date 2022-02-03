@@ -5,7 +5,7 @@ import itemsReducer from '../features/items/itemsSlice';
 import playgroundReducer from '../features/playgrounds/playgroundSlice';
 import plansReducer from '../features/plans/planSlice';
 
-export const createStore = () =>
+export const createAppStore = () =>
   configureStore({
     reducer: {
       items: itemsReducer,
@@ -15,6 +15,6 @@ export const createStore = () =>
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   });
 
-export const store = createStore();
+export const store = createAppStore();
 
 export type AppDispatch = typeof store.dispatch;

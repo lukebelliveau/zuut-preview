@@ -19,10 +19,12 @@ import { useSelectPlanById } from '../../features/plans/planSelectors';
 import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
+import { useDEBUGCreateTestRoomIfDev } from './useDEBUGCreateTestRoomIfDev';
 
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
+  useDEBUGCreateTestRoomIfDev(20, 10);
   const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();
@@ -30,7 +32,10 @@ export default function ShowPlayground() {
   const planState = useSelectPlanById(playgroundState.planId);
   if (!planState) throw new Error('No plan found');
 
-  const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
+  const playground = PlaygroundReduxAdapter.playgroundFromState(
+    planState,
+    playgroundState
+  );
   const plan = playground.plan;
   if (!plan) throw new Error('No plan found');
   const room = plan.room;
@@ -47,12 +52,12 @@ export default function ShowPlayground() {
     accept: MISC_ITEM_TYPE,
     drop: (item: MiscItem) => {
       dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
-    }
+    },
   }));
 
   function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
     event.evt.preventDefault();
-  
+
     if (stageRef.current) {
       const { x, y } = stageRef.current.getPointerPosition();
       const zoomParams = {
@@ -61,41 +66,48 @@ export default function ShowPlayground() {
         stageX: stageRef.current.x(),
         stageY: stageRef.current.y(),
       };
-  
+
       if (event.evt.deltaY > 0) {
         playground.zoomIn(zoomParams);
       } else {
         playground.zoomOut(zoomParams);
       }
-  
-      dispatch(zoomPlayground(PlaygroundReduxAdapter.playgroundToState(playground)));
+
+      dispatch(
+        zoomPlayground(PlaygroundReduxAdapter.playgroundToState(playground))
+      );
     }
   }
-  
+
   const scale = playground.scale;
 
-  return (<>
-    <Helmet><title>Zuut - Design your grow</title></Helmet>
-    <Layout>
-      <div id="sandbox" role="application" ref={drop}>
-        <Stage
-          key={v4()}
-          ref={stageRef}
-          width={playground.displayWidth}
-          height={playground.displayHeight}
-          x={playground.centerX}
-          y={playground.centerY}
-          scaleX={scale}
-          scaleY={scale}
-          onWheel={zoom}
-          draggable>
+  return (
+    <>
+      <Helmet>
+        <title>Zuut - Design your grow</title>
+      </Helmet>
+      <Layout>
+        <div id="sandbox" role="application" ref={drop}>
+          <Stage
+            key={v4()}
+            ref={stageRef}
+            width={playground.displayWidth}
+            height={playground.displayHeight}
+            x={playground.centerX}
+            y={playground.centerY}
+            scaleX={scale}
+            scaleY={scale}
+            onWheel={zoom}
+            draggable
+          >
             <Provider store={store}>
               <PlaygroundRoom room={room} />
               <PlaygroundItems />
             </Provider>
-        </Stage>
-      </div>
-    </Layout>
-    <ShoppingList />
-  </>);
+          </Stage>
+        </div>
+      </Layout>
+      <ShoppingList />
+    </>
+  );
 }
