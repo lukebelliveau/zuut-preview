@@ -1,20 +1,15 @@
 import { Layer } from 'react-konva';
+
 import { useSelectAllItems } from '../../features/items/itemsSelectors';
-import { PlaceableItemState } from '../../features/items/itemState';
+import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { PlaygroundItem } from './PlaygroundItem';
 
 export default function PlaygroundItems() {
-  const items = useSelectAllItems();
+  const itemStates = useSelectAllItems();
 
-  const placeableItems: PlaceableItemState[] = items.filter(
-    (item): item is PlaceableItemState => item.placement !== undefined
-  );
+  const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
 
-  return (
-    <Layer>
-      {placeableItems.map((item) => (
-        <PlaygroundItem key={item.id} item={item} />
-      ))}
-    </Layer>
-  );
+  return <Layer>
+    {items.placeable().map(item => <PlaygroundItem key={item.id} item={item} />)}
+  </Layer>;
 }

@@ -1,4 +1,4 @@
-interface ISidebarMenuPanelSections {
+type ISidebarMenuPanelSections = {
   children: React.ReactNode;
 };
 

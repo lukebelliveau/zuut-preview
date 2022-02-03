@@ -1,78 +1,54 @@
-import { feetToMm } from './conversions';
-import { createBaseItem } from './items/item/base';
-import { createGrowspaceItem } from './items/item/growspace';
-import { createPotItem } from './items/item/pot';
-import { BaseItem } from './items/itemTypes';
+import Growspace from './item/growspace';
+import GrowspaceItem from './item/growspaceItem';
+import { Item } from './item';
+import MiscItem from './item/miscItem';
+import RoomItem from './item/roomItem';
 
-export interface IItemGroup {
-  itemGroup: string;
-  items: BaseItem[];
+export type IItemGroup = {
+  itemGroup: string,
+  items: Item[]
 }
 
 const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'pots',
     items: [
-      createPotItem({
-        name: 'Pot 1x1',
-        width: feetToMm(1),
-        length: feetToMm(1),
-        height: feetToMm(1),
-      }),
-      createPotItem({
-        name: 'Pot 2x2',
-        width: feetToMm(2),
-        length: feetToMm(2),
-        height: feetToMm(2),
-      }),
-    ],
+      new GrowspaceItem('Pot 1', undefined, undefined, undefined, 304.8, 304.8, 304.8),
+      new GrowspaceItem('Pot 2', undefined, undefined, undefined, 304.8, 304.8, 304.8)
+    ]
   },
   {
     itemGroup: 'climate',
-    items: [
-      createBaseItem({
-        name: 'Climate',
-        width: feetToMm(2),
-        length: feetToMm(2),
-        height: feetToMm(2),
-      }),
-    ],
+    items: [new RoomItem('climate obj', undefined, undefined, undefined, 304.8, 304.8, 304.8)]
   },
   {
     itemGroup: 'structure',
-    items: [
-      createGrowspaceItem({
-        name: '36x36 tent',
-        width: feetToMm(3),
-        height: feetToMm(3),
-        length: feetToMm(3),
-      }),
-    ],
+    items: [new Growspace('24x24x36 tent', undefined, undefined, undefined, 609.6, 609.6, 914.4)]
   },
   {
     itemGroup: 'misc',
     items: [
-      createBaseItem({ name: 'Chip Bag Clips' }),
-      createBaseItem({ name: 'CO2 System' }),
-      createBaseItem({ name: 'Extension Cords' }),
-      createBaseItem({ name: 'Eye Protection' }),
-      createBaseItem({ name: 'Measuring Spoons' }),
-      createBaseItem({ name: 'Nutrients' }),
-      createBaseItem({ name: 'PH adjuster' }),
-      createBaseItem({ name: 'PH test' }),
-      createBaseItem({ name: 'Plant Twist Tie' }),
-      createBaseItem({ name: 'Plant yoyos' }),
-      createBaseItem({ name: 'Rope Ratchets' }),
-      createBaseItem({ name: 'Surge Protectors' }),
-      createBaseItem({ name: 'Syringes' }),
-      createBaseItem({ name: 'Timer' }),
-      createBaseItem({ name: 'Zip Ties' }),
-    ],
+      new MiscItem('Chip Bag Clips'),
+      new MiscItem('CO2 System'),
+      new MiscItem('Extension Cords'),
+      new MiscItem('Eye Protection'),
+      new MiscItem('Measuring Spoons'),
+      new MiscItem('Nutrients'),
+      new MiscItem('PH adjuster'),
+      new MiscItem('PH test'),
+      new MiscItem('Plant Twist Tie'),
+      new MiscItem('Plant yoyos'),
+      new MiscItem('Rope Ratchets'),
+      new MiscItem('Surge Protectors'),
+      new MiscItem('Syringes'),
+      new MiscItem('Timer'),
+      new MiscItem('Zip Ties'),
+    ]
   },
 ];
 
-export function itemGroup(name: string): BaseItem[] {
-  const group = ItemsLibrary.find((group) => group.itemGroup === name);
+export function itemGroup(name: string): Item[] {
+  const group = ItemsLibrary.find(group => group.itemGroup === name);
   if (group === undefined) throw new Error(`Unknown item group: ${name}`);
 
   return group.items;

@@ -1,20 +1,18 @@
-import usePlaygroundAdapter from '../../lib/playground/playgroundAdapter';
+import { store } from '../../app/store';
+import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
+import { selectDefaultPlan } from '../plans/planSelectors';
+import { selectPlaygroundState } from './playgroundSelector';
+import { resize } from './playgroundSlice';
 
-const usePlaygroundEffects = () => {
-  const playgroundAdapter = usePlaygroundAdapter();
-  const resizePlaygroundOnWindowResize = () => {
-    const sandbox = window.document.getElementById('sandbox');
-    if (!sandbox) return;
+export function resizePlaygroundOnWindowResize() {
+  const sandbox = window.document.getElementById('sandbox');
+  if (!sandbox) return;
 
-    playgroundAdapter.setDisplayDimensions(
-      sandbox.offsetWidth,
-      sandbox.offsetHeight
-    );
-  };
+  const playgroundState = selectPlaygroundState(store.getState());
+  const planState = selectDefaultPlan(store.getState());
+  const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
 
-  return {
-    resizePlaygroundOnWindowResize,
-  };
-};
+  playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
 
-export default usePlaygroundEffects;
+  store.dispatch(resize(PlaygroundReduxAdapter.playgroundToState(playground)));
+}
