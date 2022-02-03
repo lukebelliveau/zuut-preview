@@ -58,19 +58,13 @@ export default class Playground {
     this.zoom(params, 0.95);
   }
 
-  get centerPosition(): Point {
-    const x = ((this.centerX / this.displayWidth) * (this.plan?.room?.width || 10)) / this.widthScaleFactor;
-    const y = ((this.centerY / this.displayHeight) * (this.plan?.room?.length || 10)) / this.lengthScaleFactor;
-    return { x, y };
-  }
-
   private get widthScaleFactor(): number {
-    const width = this.plan?.room?.width || 10; 
+    const width = this.plan?.room?.width || 10;
     return width / (this.displayWidth - SCALE_MODIFIER);
   }
 
   private get lengthScaleFactor(): number {
-    const length = this.plan?.room?.length || 10; 
+    const length = this.plan?.room?.length || 10;
     return length / (this.displayHeight - SCALE_MODIFIER);
   }
 

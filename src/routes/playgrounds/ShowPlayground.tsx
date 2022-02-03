@@ -83,8 +83,8 @@ export default function ShowPlayground() {
           ref={stageRef}
           width={playground.displayWidth}
           height={playground.displayHeight}
-          x={playground.centerPosition.x}
-          y={playground.centerPosition.y}
+          x={playground.centerX}
+          y={playground.centerY}
           scaleX={scale}
           scaleY={scale}
           onWheel={zoom}
