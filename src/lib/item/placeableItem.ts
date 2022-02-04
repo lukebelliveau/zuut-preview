@@ -41,7 +41,7 @@ export default class PlaceableItem implements IPlaceableItem {
   }
 
   // /* eslint-disable @typescript-eslint/no-unused-vars */
-  setPosition(position: Point, items: ItemList, playground: Playground) {
+  setPosition(position: Point, items: ItemList) {
     this.x = position.x;
     this.y = position.y;
     this.isColliding = items.some((otherItem) =>
