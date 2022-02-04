@@ -1,4 +1,4 @@
-import PlaceableItem from "./placeableItem";
+import PlaceableItem from './placeableItem';
 
 describe('PlaceableItem', () => {
   describe('#isCollidingWith', () => {
