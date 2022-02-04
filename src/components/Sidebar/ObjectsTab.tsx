@@ -16,26 +16,44 @@ export default function LayoutTab() {
   const items = useBuildItemList();
 
   function placeItem(item: PlaceableItem) {
-    item.setPosition(playground.place(), items);
+    item.setPosition(playground.place(), items, playground);
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 
-  return <SidebarTab>
-    <MenuSection title="Pots">
-      {itemGroup('pots').map(item =>
-        <PlaceableLibraryItem key={item.name} item={item as PlaceableItem} placeItem={placeItem} />)}
-    </MenuSection>
-    <MenuSection title="Climate">
-      {itemGroup('climate').map(item =>
-        <PlaceableLibraryItem key={item.name} item={item as PlaceableItem} placeItem={placeItem} />)}
-    </MenuSection>
-    <MenuSection title="Structure">
-      {itemGroup('structure').map(item =>
-        <PlaceableLibraryItem key={item.name} item={item as PlaceableItem} placeItem={placeItem} />)}
-    </MenuSection>
-    <MenuSection title="Misc">
-      {itemGroup('misc').map(item =>
-        <ShoppingListCandidate key={item.name} item={item} />)}
-    </MenuSection>
-  </SidebarTab>;
+  return (
+    <SidebarTab>
+      <MenuSection title="Pots">
+        {itemGroup('pots').map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
+      <MenuSection title="Climate">
+        {itemGroup('climate').map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
+      <MenuSection title="Structure">
+        {itemGroup('structure').map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
+      <MenuSection title="Misc">
+        {itemGroup('misc').map((item) => (
+          <ShoppingListCandidate key={item.name} item={item} />
+        ))}
+      </MenuSection>
+    </SidebarTab>
+  );
 }
