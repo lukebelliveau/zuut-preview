@@ -12,7 +12,7 @@ export const createAppStore = () =>
       plans: plansReducer,
       playground: playgroundReducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   });
 
 export const store = createAppStore();

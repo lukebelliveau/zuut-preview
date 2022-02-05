@@ -20,6 +20,7 @@ import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
 import { useDEBUGCreateTestRoomIfDev } from './useDEBUGCreateTestRoomIfDev';
+import GridLines from '../../components/Playgound/GridLines';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -101,6 +102,7 @@ export default function ShowPlayground() {
             draggable
           >
             <Provider store={store}>
+              <GridLines />
               <PlaygroundRoom room={room} />
               <PlaygroundItems />
             </Provider>
