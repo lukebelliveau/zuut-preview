@@ -4,7 +4,7 @@ import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import PlaceableItem from '../../lib/item/placeableItem';
-import WindowItem from '../../lib/item/windowItem';
+import WindowItem from '../../lib/item/wallItem';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
@@ -17,7 +17,7 @@ export default function LayoutTab() {
   const allItems = useBuildItemList();
 
   function placeItem(item: PlaceableItem) {
-    item.setPosition(playground.place(), allItems, playground);
+    item.setPosition(playground.place(), allItems);
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 

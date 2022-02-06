@@ -5,7 +5,7 @@ import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
 import { isPlaceableItem, Item } from '../item';
 import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
-import WindowItem, { WINDOW_ITEM_TYPE } from './windowItem';
+import WallItem, { WALL_ITEM_TYPE } from './wallItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
@@ -78,8 +78,8 @@ export default class ItemReduxAdapter {
           itemState.isColliding
         );
 
-      case WINDOW_ITEM_TYPE:
-        return new WindowItem(
+      case WALL_ITEM_TYPE:
+        return new WallItem(
           itemState.name,
           itemState.id,
           itemState.x,

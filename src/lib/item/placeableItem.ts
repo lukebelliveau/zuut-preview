@@ -4,7 +4,7 @@ import Playground from '../playground';
 import { Point } from '../point';
 
 export interface IPlaceableItem {
-  setPosition(position: Point, items: ItemList, playground: Playground): void;
+  setPosition(position: Point, items: ItemList, playground?: Playground): void;
   isCollidingWith(otherItem: PlaceableItem): boolean;
   copy(): PlaceableItem;
 }
@@ -41,7 +41,7 @@ export default class PlaceableItem implements IPlaceableItem {
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  setPosition(position: Point, items: ItemList, playground: Playground) {
+  setPosition(position: Point, items: ItemList, playground?: Playground) {
     this.x = position.x;
     this.y = position.y;
     this.isColliding = items.some((otherItem) =>
@@ -58,6 +58,12 @@ export default class PlaceableItem implements IPlaceableItem {
       otherItem.y > this.y + this.length ||
       otherItem.y + otherItem.length < this.y
     );
+  }
+
+  rotate90Degrees() {
+    const { width, length } = this;
+    this.width = length;
+    this.length = width;
   }
 
   copy(): PlaceableItem {

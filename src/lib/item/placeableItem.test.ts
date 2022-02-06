@@ -33,4 +33,16 @@ describe('PlaceableItem', () => {
       expect(item.isCollidingWith(other)).toBe(true);
     });
   });
+
+  describe('#rotate90Degrees', () => {
+    it("flips item's length and width", () => {
+      // width=10, height=20
+      const item = new PlaceableItem('item', '1', 0, 0, 10, 20);
+
+      item.rotate90Degrees();
+
+      expect(item.width).toBe(20);
+      expect(item.length).toBe(10);
+    });
+  });
 });
