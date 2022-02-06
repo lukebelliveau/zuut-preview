@@ -16,7 +16,7 @@ export default function LayoutTab() {
   const items = useBuildItemList();
 
   function placeItem(item: PlaceableItem) {
-    item.setPosition(playground.place(), items);
+    item.setPosition(playground.place(), items, playground);
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 

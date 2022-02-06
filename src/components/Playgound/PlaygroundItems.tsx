@@ -12,7 +12,7 @@ export default function PlaygroundItems() {
   const items = useBuildItemList();
 
   function updatePlacement(item: PlaceableItem, x: number, y: number) {
-    item.setPosition({ x, y }, items);
+    item.setPosition({ x, y }, items, playground);
     dispatch(
       updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
     );

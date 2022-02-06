@@ -5,11 +5,14 @@ import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
 import { isPlaceableItem, Item } from '../item';
 import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
+import WindowItem, { WINDOW_ITEM_TYPE } from './windowItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
     const items = new ItemList();
-    itemStates.forEach(itemState => items.push(ItemReduxAdapter.stateToItem(itemState)));
+    itemStates.forEach((itemState) =>
+      items.push(ItemReduxAdapter.stateToItem(itemState))
+    );
 
     return items;
   }
@@ -38,15 +41,54 @@ export default class ItemReduxAdapter {
   }
 
   public static stateToItem(itemState: ItemState) {
-    switch(itemState.type) {
+    switch (itemState.type) {
       case GROWSPACE_TYPE:
-        return new Growspace(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height, itemState.isColliding);
+        return new Growspace(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.isColliding
+        );
       case GROWSPACE_ITEM_TYPE:
-        return new GrowspaceItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height, itemState.isColliding);
+        return new GrowspaceItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.isColliding
+        );
       case MISC_ITEM_TYPE:
         return new MiscItem(itemState.name, itemState.id);
       case ROOM_ITEM_TYPE:
-        return new RoomItem(itemState.name, itemState.id, itemState.x, itemState.y, itemState.width, itemState.length, itemState.height, itemState.isColliding);
+        return new RoomItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.isColliding
+        );
+
+      case WINDOW_ITEM_TYPE:
+        return new WindowItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.isColliding
+        );
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);
     }
