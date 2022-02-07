@@ -48,7 +48,15 @@ describe('PlaceableItem', () => {
   });
 
   describe('#drop', () => {
-    describe('when placement shadow present', () => {
+    it('sets location/dimensions to current position if no placementShadow', () => {
+      const item = new PlaceableItem('item', '1', 0, 0, 10, 10, 10, false);
+      item.drop({ x: 50, y: 60 }, new ItemList());
+
+      expect(item.x).toBe(50);
+      expect(item.y).toBe(60);
+    });
+
+    it('sets location/dimensions to that of placementShadow when present', () => {
       const placementShadow = {
         x: 999,
         y: 999,
@@ -56,22 +64,31 @@ describe('PlaceableItem', () => {
         height: 999,
         width: 999,
       };
+      const item = new PlaceableItem(
+        'item',
+        '1',
+        0,
+        0,
+        10,
+        10,
+        10,
+        false,
+        placementShadow
+      );
 
-      it('sets location/dimensions to that of placementShadow', () => {
-        const item = new PlaceableItem(
-          'item',
-          '1',
-          0,
-          0,
-          10,
-          10,
-          10,
-          false,
-          placementShadow
-        );
+      expect(item.x).not.toBe(placementShadow.x);
+      expect(item.y).not.toBe(placementShadow.y);
+      expect(item.length).not.toBe(placementShadow.length);
+      expect(item.width).not.toBe(placementShadow.width);
+      expect(item.height).not.toBe(placementShadow.height);
 
-        item.drop({ x: 50, y: 50 }, new ItemList());
-      });
+      item.drop({ x: 50, y: 50 }, new ItemList());
+
+      expect(item.x).toBe(placementShadow.x);
+      expect(item.y).toBe(placementShadow.y);
+      expect(item.length).toBe(placementShadow.length);
+      expect(item.width).toBe(placementShadow.width);
+      expect(item.height).toBe(placementShadow.height);
     });
   });
 });
