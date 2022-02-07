@@ -1,3 +1,4 @@
+import ItemList from '../itemList';
 import PlaceableItem from './placeableItem';
 
 describe('PlaceableItem', () => {
@@ -43,6 +44,34 @@ describe('PlaceableItem', () => {
 
       expect(item.width).toBe(20);
       expect(item.length).toBe(10);
+    });
+  });
+
+  describe('#drop', () => {
+    describe('when placement shadow present', () => {
+      const placementShadow = {
+        x: 999,
+        y: 999,
+        length: 999,
+        height: 999,
+        width: 999,
+      };
+
+      it('sets location/dimensions to that of placementShadow', () => {
+        const item = new PlaceableItem(
+          'item',
+          '1',
+          0,
+          0,
+          10,
+          10,
+          10,
+          false,
+          placementShadow
+        );
+
+        item.drop({ x: 50, y: 50 }, new ItemList());
+      });
     });
   });
 });

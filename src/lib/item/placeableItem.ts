@@ -1,10 +1,12 @@
 import { v4 } from 'uuid';
+import { GeometryObject, rotated90Degrees } from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 
 export interface IPlaceableItem {
   setPosition(position: Point, items: ItemList, playground?: Playground): void;
+  drop(position: Point, items: ItemList, playground?: Playground): void;
   isCollidingWith(otherItem: PlaceableItem): boolean;
   copy(): PlaceableItem;
 }
@@ -19,6 +21,7 @@ export default class PlaceableItem implements IPlaceableItem {
   length: number;
   height: number | undefined;
   isColliding: boolean = false;
+  placementShadow: GeometryObject | undefined;
 
   constructor(
     name: string,
@@ -28,7 +31,8 @@ export default class PlaceableItem implements IPlaceableItem {
     width: number = 610,
     length: number = 610,
     height: number = 915,
-    isColliding: boolean = false
+    isColliding: boolean = false,
+    placementShadow: GeometryObject | undefined = undefined
   ) {
     this.id = id;
     this.name = name;
@@ -38,15 +42,34 @@ export default class PlaceableItem implements IPlaceableItem {
     this.length = length;
     this.height = height;
     this.isColliding = isColliding;
+    this.placementShadow = placementShadow;
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   setPosition(position: Point, items: ItemList, playground?: Playground) {
     this.x = position.x;
     this.y = position.y;
+    this.detectCollisions(items);
+  }
+
+  detectCollisions(items: ItemList): void {
     this.isColliding = items.some((otherItem) =>
       this.isCollidingWith(otherItem)
     );
+  }
+
+  drop(position: Point, items: ItemList, playground?: Playground) {
+    if (this.placementShadow) {
+      this.x = this.placementShadow.x;
+      this.y = this.placementShadow.y;
+      this.length = this.placementShadow.length;
+      this.height = this.placementShadow.height;
+      this.width = this.placementShadow.width;
+      this.placementShadow = undefined;
+      this.detectCollisions(items);
+    } else {
+      this.setPosition(position, items, playground);
+    }
   }
 
   isCollidingWith(otherItem: PlaceableItem): boolean {
@@ -61,9 +84,9 @@ export default class PlaceableItem implements IPlaceableItem {
   }
 
   rotate90Degrees() {
-    const { width, length } = this;
-    this.width = length;
-    this.length = width;
+    const { width, length } = rotated90Degrees(this);
+    this.width = width;
+    this.length = length;
   }
 
   copy(): PlaceableItem {

@@ -9,6 +9,11 @@ import {
   itemIsAlignedWithTopWall,
   itemIsBetweenLeftAndRightWall,
   itemIsBetweenTopAndBottomWall,
+  placedOnBottomBoundary,
+  placedOnLeftBoundary,
+  placedOnRightBoundary,
+  placedOnTopBoundary,
+  rotated90Degrees,
 } from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
@@ -110,17 +115,26 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     );
   }
 
-  needsRotation(room: Room): boolean {
-    if (
-      this.isPlacedPerpendicularToBottomWall(room) ||
-      this.isPlacedPerpendicularToTopWall(room) ||
-      this.isPlacedPerpendicularToLeftWall(room) ||
-      this.isPlacedPerpendicularToRightWall(room)
-    ) {
-      return true;
+  handleRotation(room: Room): void {
+    if (this.isPlacedPerpendicularToBottomWall(room)) {
+      let rotatedShadow = rotated90Degrees(this);
+      let rotatedOnBottomBoundary = placedOnBottomBoundary(rotatedShadow, room);
+      this.placementShadow = rotatedOnBottomBoundary;
+    } else if (this.isPlacedPerpendicularToTopWall(room)) {
+      let rotatedShadow = rotated90Degrees(this);
+      let rotatedOnBottomBoundary = placedOnTopBoundary(rotatedShadow, room);
+      this.placementShadow = rotatedOnBottomBoundary;
+    } else if (this.isPlacedPerpendicularToLeftWall(room)) {
+      let rotatedShadow = rotated90Degrees(this);
+      let rotatedOnBottomBoundary = placedOnLeftBoundary(rotatedShadow, room);
+      this.placementShadow = rotatedOnBottomBoundary;
+    } else if (this.isPlacedPerpendicularToRightWall(room)) {
+      let rotatedShadow = rotated90Degrees(this);
+      let rotatedOnBottomBoundary = placedOnRightBoundary(rotatedShadow, room);
+      this.placementShadow = rotatedOnBottomBoundary;
+    } else {
+      this.placementShadow = undefined;
     }
-
-    return false;
   }
 
   setPosition(position: Point, items: ItemList, playground: Playground) {
@@ -133,9 +147,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     const room = playground.plan.room;
     if (!room) throw new Error('Playground missing room!');
 
-    if (this.needsRotation(room)) {
-      this.rotate90Degrees();
-    }
+    this.handleRotation(room);
 
     const collidingWithItems = items.some((otherItem) =>
       this.isCollidingWith(otherItem)

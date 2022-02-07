@@ -16,63 +16,65 @@ describe('WallItem', () => {
     });
   });
 
-  describe('needsRotation', () => {
+  describe('handleRotation', () => {
     const room = new Room(100, 100, 100);
-    it('returns false when horizontal inside Room and not colliding with any walls', () => {
-      // horizontally-oriented window, placed at { x: 5; y: 5 }
-      const window = new WallItem('Window', v4(), 5, 5, 20, 5);
-      expect(window.needsRotation(room)).toBe(false);
-    });
-    it('returns false when vertical inside Room and not colliding with any walls', () => {
-      // vertically-oriented window, placed at { x: 5; y: 5 }
-      const window = new WallItem('Window', v4(), 5, 5, 5, 20);
-      expect(window.needsRotation(room)).toBe(false);
-    });
-    it('returns false when horizontal outside Room and not colliding with any walls', () => {
-      // horizontally-oriented window, placed at { x: -30; y: -30 }
-      const window = new WallItem('Window', v4(), -30, -30, 20, 5);
-      expect(window.needsRotation(room)).toBe(false);
+    it('removes placementShadow if no invalid collisions', () => {
+      const item = new WallItem('Window', v4(), 50, 50, 10, 10, 10);
+      item.handleRotation(room);
+
+      expect(item.placementShadow).toBeUndefined();
     });
 
-    it("returns true when horizontal & colliding with the Room's left wall", () => {
-      // horizontally-oriented window, placed at { x: -5; y: 5 }
-      const window = new WallItem('Window', v4(), -5, 5, 20, 5);
-      expect(window.needsRotation(room)).toBe(true);
+    describe('perpendicular & colliding with bottom wall', () => {
+      // { x: 50, y: 90 width: 10, length: 50 }
+      const item = new WallItem('Window', v4(), 50, 90, 10, 50);
+      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+        item.handleRotation(room);
+
+        expect(item.placementShadow?.width).toBe(item.length);
+        expect(item.placementShadow?.length).toBe(item.width);
+        expect(item.placementShadow?.x).toBe(item.x);
+        expect(item.placementShadow?.y).toBe(95);
+      });
     });
-    it("returns true when horizontal & colliding with the Room's right wall", () => {
-      // horizontally-oriented window, placed at { x: 95; y: 5 }
-      const window = new WallItem('Window', v4(), 95, 5, 20, 5);
-      expect(window.needsRotation(room)).toBe(true);
+
+    describe('perpendicular & colliding with top wall', () => {
+      // { x: 50, y: -10 width: 10, length: 50 }
+      const item = new WallItem('Window', v4(), 50, -10, 10, 50);
+      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+        item.handleRotation(room);
+
+        expect(item.placementShadow?.width).toBe(item.length);
+        expect(item.placementShadow?.length).toBe(item.width);
+        expect(item.placementShadow?.x).toBe(item.x);
+        expect(item.placementShadow?.y).toBe(-5);
+      });
     });
-    it("returns true when vertical & colliding with the Room's bottom wall", () => {
-      // horizontally-oriented window, placed at { x: 5; y: 95 }
-      const window = new WallItem('Window', v4(), 5, 95, 5, 20);
-      expect(window.needsRotation(room)).toBe(true);
+
+    describe('perpendicular & colliding with left wall', () => {
+      // { x: 50, y: -10 width: 10, length: 50 }
+      const item = new WallItem('Window', v4(), -10, 10, 50, 10);
+      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+        item.handleRotation(room);
+
+        expect(item.placementShadow?.width).toBe(item.length);
+        expect(item.placementShadow?.length).toBe(item.width);
+        expect(item.placementShadow?.x).toBe(-5);
+        expect(item.placementShadow?.y).toBe(item.y);
+      });
     });
-    it("returns true when vertical & colliding with the Room's top wall", () => {
-      // horizontally-oriented window, placed at { x: 5; y: -5 }
-      const window = new WallItem('Window', v4(), 5, -5, 5, 20);
-      expect(window.needsRotation(room)).toBe(true);
-    });
-    it("returns false when vertical & colliding with the Room's left wall", () => {
-      // vertically-oriented window, placed at { x: -5; y: 5 }
-      const window = new WallItem('Window', v4(), -5, 5, 5, 20);
-      expect(window.needsRotation(room)).toBe(false);
-    });
-    it("returns false when vertical & colliding with the Room's right wall", () => {
-      // vertically-oriented window, placed at { x: 95; y: 5 }
-      const window = new WallItem('Window', v4(), 95, 5, 5, 20);
-      expect(window.needsRotation(room)).toBe(false);
-    });
-    it("returns false when horizontal & colliding with the Room's bottom wall", () => {
-      // horizontally-oriented window, placed at { x: 5; y: 95 }
-      const window = new WallItem('Window', v4(), 5, 95, 20, 5);
-      expect(window.needsRotation(room)).toBe(false);
-    });
-    it("returns false when horizontal & colliding with the Room's top wall", () => {
-      // horizontally-oriented window, placed at { x: 5; y: -5 }
-      const window = new WallItem('Window', v4(), 5, -5, 20, 5);
-      expect(window.needsRotation(room)).toBe(false);
+
+    describe('perpendicular & colliding with right wall', () => {
+      // { x: 50, y: -10 width: 10, length: 50 }
+      const item = new WallItem('Window', v4(), 90, 10, 50, 10);
+      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+        item.handleRotation(room);
+
+        expect(item.placementShadow?.width).toBe(item.length);
+        expect(item.placementShadow?.length).toBe(item.width);
+        expect(item.placementShadow?.x).toBe(95);
+        expect(item.placementShadow?.y).toBe(item.y);
+      });
     });
   });
 });

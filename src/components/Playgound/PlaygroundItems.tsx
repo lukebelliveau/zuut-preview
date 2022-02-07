@@ -18,30 +18,59 @@ export default function PlaygroundItems() {
     );
   }
 
+  function drop(item: PlaceableItem, x: number, y: number) {
+    item.drop({ x, y }, items, playground);
+    dispatch(
+      updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+    );
+  }
+
   function updateFinalPlacement(item: PlaceableItem, x: number, y: number) {
-    updatePlacement(item, x, y);
+    drop(item, x, y);
     items.placeable().forEach((item) => updatePlacement(item, item.x, item.y));
   }
 
   return (
     <Layer>
-      {items.placeable().map((item) => (
-        <Rect
-          key={item.id}
-          x={item.x}
-          y={item.y}
-          width={item.width}
-          height={item.length}
-          stroke={item.isColliding ? 'red' : 'black'}
-          strokeWidth={1}
-          strokeScaleEnabled={false}
-          onDragMove={(e) => updatePlacement(item, e.target.x(), e.target.y())}
-          onDragEnd={(e) =>
-            updateFinalPlacement(item, e.target.x(), e.target.y())
-          }
-          draggable
-        />
-      ))}
+      {items.placeable().map((item) => {
+        const { placementShadow } = item;
+
+        return (
+          <>
+            <Rect
+              key={item.id}
+              x={item.x}
+              y={item.y}
+              width={item.width}
+              height={item.length}
+              stroke={item.isColliding ? 'red' : 'black'}
+              strokeWidth={1}
+              strokeScaleEnabled={false}
+              onDragMove={(e) =>
+                updatePlacement(item, e.target.x(), e.target.y())
+              }
+              onDragEnd={(e) =>
+                updateFinalPlacement(item, e.target.x(), e.target.y())
+              }
+              draggable
+              opacity={0.5}
+            />
+            {placementShadow ? (
+              <Rect
+                key={`${item.id}-shadow`}
+                x={placementShadow.x}
+                y={placementShadow.y}
+                width={placementShadow.width}
+                height={placementShadow.length}
+                stroke={'black'}
+                strokeWidth={1}
+                strokeScaleEnabled={false}
+                draggable
+              />
+            ) : null}
+          </>
+        );
+      })}
     </Layer>
   );
 }

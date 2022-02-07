@@ -34,6 +34,7 @@ export default class ItemReduxAdapter {
         height: item.height,
         length: item.length,
         isColliding: item.isColliding,
+        placementShadow: item.placementShadow,
       };
     } else {
       return baseItemState;
@@ -51,7 +52,8 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding
+          itemState.isColliding,
+          itemState.placementShadow
         );
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem(
@@ -62,7 +64,8 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding
+          itemState.isColliding,
+          itemState.placementShadow
         );
       case MISC_ITEM_TYPE:
         return new MiscItem(itemState.name, itemState.id);
@@ -75,7 +78,8 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding
+          itemState.isColliding,
+          itemState.placementShadow
         );
 
       case WALL_ITEM_TYPE:
@@ -87,7 +91,8 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding
+          itemState.isColliding,
+          itemState.placementShadow
         );
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);

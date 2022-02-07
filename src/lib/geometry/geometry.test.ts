@@ -10,6 +10,11 @@ import {
   itemIsAlignedWithTopWall,
   itemIsBetweenLeftAndRightWall,
   itemIsBetweenTopAndBottomWall,
+  placedOnBottomBoundary,
+  placedOnLeftBoundary,
+  placedOnRightBoundary,
+  placedOnTopBoundary,
+  rotated90Degrees,
 } from './geometry';
 
 // 100x100x100 room, placed at { x: 0; y: 0 }
@@ -229,5 +234,119 @@ describe('itemIsBetweenTopAndBottomWall', () => {
     );
 
     expect(itemIsBetweenTopAndBottomWall(window, room)).toBe(false);
+  });
+});
+
+describe('rotated90Degrees', () => {
+  it('swaps length and width', () => {
+    const item = {
+      x: 5,
+      y: 10,
+      width: 20,
+      length: 30,
+      height: 40,
+    };
+
+    const rotated = rotated90Degrees(item);
+
+    expect(rotated).toStrictEqual({
+      x: 5,
+      y: 10,
+      width: 30,
+      length: 20,
+      height: 40,
+    });
+  });
+});
+
+describe('placeOnBottomBoundary', () => {
+  it('adjusts y-coordinate so first item straddles bottom boundary of second item', () => {
+    const item1 = {
+      x: 50,
+      y: 91,
+      length: 10,
+      height: 10,
+      width: 10,
+    };
+    const item2 = {
+      x: 0,
+      y: 0,
+      length: 100,
+      height: 100,
+      width: 100,
+    };
+
+    const placedOnBottom = placedOnBottomBoundary(item1, item2);
+
+    expect(placedOnBottom.y).toBe(95);
+  });
+});
+
+describe('placeOnTopBoundary', () => {
+  it('adjusts y-coordinate so first item straddles bottom boundary of second item', () => {
+    const item1 = {
+      x: 50,
+      y: -1,
+      length: 10,
+      height: 10,
+      width: 10,
+    };
+    const item2 = {
+      x: 0,
+      y: 0,
+      length: 100,
+      height: 100,
+      width: 100,
+    };
+
+    const placedOnBottom = placedOnTopBoundary(item1, item2);
+
+    expect(placedOnBottom.y).toBe(-5);
+  });
+});
+
+describe('placeOnLeftBoundary', () => {
+  it('adjusts x-coordinate so first item straddles left boundary of second item', () => {
+    const item1 = {
+      x: -2,
+      y: 50,
+      length: 10,
+      height: 10,
+      width: 10,
+    };
+    const item2 = {
+      x: 0,
+      y: 0,
+      length: 100,
+      height: 100,
+      width: 100,
+    };
+
+    const placedOnBottom = placedOnLeftBoundary(item1, item2);
+
+    expect(placedOnBottom.x).toBe(-5);
+  });
+});
+
+describe('placeOnRightBoundary', () => {
+  it('adjusts x-coordinate so first item straddles right boundary of second item', () => {
+    const item1 = {
+      x: 97,
+      y: 50,
+      length: 10,
+      height: 10,
+      width: 10,
+    };
+    const item2 = {
+      x: 0,
+      y: 0,
+      length: 100,
+      height: 100,
+      width: 100,
+    };
+
+    const placedOnBottom = placedOnRightBoundary(item1, item2);
+
+    expect(placedOnBottom.x).toBe(95);
   });
 });
