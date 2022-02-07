@@ -5,6 +5,7 @@ import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { updateOne } from '../../features/items/itemsSlice';
 import PlaceableItem from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
+import { Fragment } from 'react';
 
 export default function PlaygroundItems() {
   const dispatch = useDispatch();
@@ -36,9 +37,8 @@ export default function PlaygroundItems() {
         const { placementShadow } = item;
 
         return (
-          <>
+          <Fragment key={item.id}>
             <Rect
-              key={item.id}
               x={item.x}
               y={item.y}
               width={item.width}
@@ -57,7 +57,6 @@ export default function PlaygroundItems() {
             />
             {placementShadow ? (
               <Rect
-                key={`${item.id}-shadow`}
                 x={placementShadow.x}
                 y={placementShadow.y}
                 width={placementShadow.width}
@@ -68,7 +67,7 @@ export default function PlaygroundItems() {
                 draggable
               />
             ) : null}
-          </>
+          </Fragment>
         );
       })}
     </Layer>
