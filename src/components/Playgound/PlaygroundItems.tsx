@@ -6,29 +6,35 @@ import { updateOne } from '../../features/items/itemsSlice';
 import PlaceableItem from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment } from 'react';
+import { Point } from '../../lib/point';
 
 export default function PlaygroundItems() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const items = useBuildItemList();
+  const plan = playground.plan;
+  if (!plan) throw new Error('No plan found');
+  const grid = plan.grid;
 
-  function updatePlacement(item: PlaceableItem, x: number, y: number) {
-    item.setPosition({ x, y }, items, playground);
+  function drag(item: PlaceableItem, newPosition: Point) {
+    updatePlacement(item, newPosition);
+  }
+ 
+  function updatePlacement(item: PlaceableItem, newPosition: Point) {
+    item.setPosition(newPosition, items, playground);
     dispatch(
       updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
     );
   }
 
-  function drop(item: PlaceableItem, x: number, y: number) {
-    item.drop({ x, y }, items, playground);
+  function drop(item: PlaceableItem, position: Point): Point {
+    const snappedPosition = grid.snapPostition(position);
+    item.drop(snappedPosition, items, playground);
     dispatch(
       updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
     );
-  }
-
-  function updateFinalPlacement(item: PlaceableItem, x: number, y: number) {
-    drop(item, x, y);
-    items.placeable().forEach((item) => updatePlacement(item, item.x, item.y));
+    items.placeable().forEach((item) => updatePlacement(item, item));
+    return snappedPosition;
   }
 
   return (
@@ -39,6 +45,7 @@ export default function PlaygroundItems() {
         return (
           <Fragment key={item.id}>
             <Rect
+              key={item.id}
               x={item.x}
               y={item.y}
               width={item.width}
@@ -47,11 +54,15 @@ export default function PlaygroundItems() {
               strokeWidth={1}
               strokeScaleEnabled={false}
               onDragMove={(e) =>
-                updatePlacement(item, e.target.x(), e.target.y())
+                drag(item, { x: e.target.x(), y: e.target.y() })
               }
-              onDragEnd={(e) =>
-                updateFinalPlacement(item, e.target.x(), e.target.y())
-              }
+              onDragEnd={(e) => {
+                const newPosition = drop(item, { x: e.target.x(), y: e.target.y() });
+                e.target.to({
+                  ...newPosition,
+                  duration: 0.001,
+                });
+              }}
               draggable
               opacity={0.5}
             />

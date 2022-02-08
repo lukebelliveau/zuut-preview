@@ -1,9 +1,11 @@
+import Grid from './grid';
 import Room from './room';
 
 export default class Plan {
   id: string;
   name: string | undefined;
-  room: Room | undefined;
+  room: Room;
+  grid: Grid;
 
   public static sandbox() {
     return new Plan(undefined, undefined, undefined, undefined, '0');
@@ -14,6 +16,7 @@ export default class Plan {
     this.name = name;
 
     this.room = new Room(width, length, height);
+    this.grid = new Grid(width, length);
   }
 
   get width(): number | undefined {
