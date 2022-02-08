@@ -76,10 +76,10 @@ export default class PlaceableItem implements IPlaceableItem {
     if (otherItem.id === this.id) return false;
 
     return !(
-      otherItem.x > this.x + this.width ||
-      otherItem.x + otherItem.width < this.x ||
-      otherItem.y > this.y + this.length ||
-      otherItem.y + otherItem.length < this.y
+      Math.floor(otherItem.x)                    >= Math.floor(this.x + this.width) ||
+      Math.floor(otherItem.x + otherItem.width)  <= Math.floor(this.x) ||
+      Math.floor(otherItem.y)                    >= Math.floor(this.y + this.length) ||
+      Math.floor(otherItem.y + otherItem.length) <= Math.floor(this.y)
     );
   }
 

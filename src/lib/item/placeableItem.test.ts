@@ -13,6 +13,17 @@ describe('PlaceableItem', () => {
       const other = new PlaceableItem('', '2', 1001, 1001, 1001, 1001);
       expect(item.isCollidingWith(other)).toBe(false);
     });
+    it('returns false if only the borders overlap', () => {
+      const item = new PlaceableItem('', '1', 100, 100, 100, 100);
+      const otherRight = new PlaceableItem('', '2', 200, 100, 100, 100);
+      expect(item.isCollidingWith(otherRight)).toBe(false);
+      const otherBelow = new PlaceableItem('', '3', 100, 200, 100, 100);
+      expect(item.isCollidingWith(otherBelow)).toBe(false);
+      const otherLeft = new PlaceableItem('', '4', 0, 100, 100, 100);
+      expect(item.isCollidingWith(otherLeft)).toBe(false);
+      const otherTop = new PlaceableItem('', '5', 100, 0, 100, 100);
+      expect(item.isCollidingWith(otherTop)).toBe(false);
+    });
     it('returns true if other item is in the northeast corner', () => {
       const item = new PlaceableItem('', '1', 100, 100, 10, 10);
       const other = new PlaceableItem('', '2', 99, 91, 10, 10);
