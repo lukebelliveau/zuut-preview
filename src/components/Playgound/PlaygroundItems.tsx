@@ -53,14 +53,20 @@ export default function PlaygroundItems() {
               stroke={item.isColliding ? 'red' : 'black'}
               strokeWidth={1}
               strokeScaleEnabled={false}
-              onDragMove={(e) =>
-                drag(item, { x: e.target.x(), y: e.target.y() })
+              onDragMove={(e) =>{
+                  drag(item, { x: e.target.x(), y: e.target.y() });
+                  e.target.to({
+                    opacity: 0.5,
+                    duration: 0.001,
+                  });
+                }
               }
               onDragEnd={(e) => {
                 const newPosition = drop(item, { x: e.target.x(), y: e.target.y() });
                 e.target.to({
                   ...newPosition,
                   duration: 0.001,
+                  opacity: 1,
                 });
               }}
               draggable
