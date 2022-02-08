@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { FullPage, Slide } from 'react-full-page';
 
 import EnterName from './NewPlayground/EnterName';
@@ -14,15 +14,19 @@ export default function NewPlayground() {
     fullPageRef.current.scrollNext();
   }
 
-  return (<>
-    <Helmet><title>Zuut - Create a new grow</title></Helmet>
-    <FullPage ref={fullPageRef}>
-      <Slide>
-        <EnterName nextPage={nextPage} />
-      </Slide>
-      <Slide>
-        <EnterDimensions />
-      </Slide>
-    </FullPage>
-  </>);
+  return (
+    <>
+      <Helmet>
+        <title>Zuut - Create a new grow</title>
+      </Helmet>
+      <FullPage ref={fullPageRef}>
+        <Slide>
+          <EnterName nextPage={nextPage} />
+        </Slide>
+        <Slide>
+          <EnterDimensions />
+        </Slide>
+      </FullPage>
+    </>
+  );
 }

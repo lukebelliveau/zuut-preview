@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';
 import { Provider, useDispatch } from 'react-redux';
 import { v4 } from 'uuid';
