@@ -1,5 +1,4 @@
-import PlaceableItem from '../item/placeableItem';
-import Room from '../room';
+import { Point } from '../point';
 
 /**
  * Pure functions handy for checking the spatial relationship between two objects
@@ -137,23 +136,51 @@ export const closestToBottomWall = ({
   return bottom < left && bottom < right && bottom < top;
 };
 
+type WallOrientation = 'left' | 'right' | 'top' | 'bottom';
+
 export const findClosestWallPointToInteriorItem = (
   interiorItem: GeometryObject,
   exteriorItem: GeometryObject
-) => {
+): { stickingTo: WallOrientation; position: Point; distance: number } => {
   const left = distanceFromExteriorLeftWall(interiorItem, exteriorItem);
   const right = distanceFromExteriorRightWall(interiorItem, exteriorItem);
   const bottom = distanceFromExteriorBottomWall(interiorItem, exteriorItem);
   const top = distanceFromExteriorTopWall(interiorItem, exteriorItem);
 
   if (closestToLeftWall({ left, right, bottom, top })) {
-    return { x: exteriorItem.x, y: interiorItem.y };
+    const position = { x: exteriorItem.x, y: interiorItem.y };
+    return {
+      stickingTo: 'left',
+      position,
+      distance: left,
+    };
   } else if (closestToRightWall({ left, right, bottom, top })) {
-    return { x: exteriorItem.x + exteriorItem.width, y: interiorItem.y };
+    const position = {
+      x: exteriorItem.x + exteriorItem.width,
+      y: interiorItem.y,
+    };
+    return {
+      stickingTo: 'right',
+      position,
+      distance: right,
+    };
   } else if (closestToTopWall({ left, right, bottom, top })) {
-    return { x: interiorItem.x, y: exteriorItem.y };
-  } else if (closestToBottomWall({ left, right, bottom, top })) {
-    return { x: interiorItem.x, y: exteriorItem.y + exteriorItem.length };
+    const position = { x: interiorItem.x, y: exteriorItem.y };
+    return {
+      stickingTo: 'top',
+      position,
+      distance: top,
+    };
+  } else {
+    const position = {
+      x: interiorItem.x,
+      y: exteriorItem.y + exteriorItem.length,
+    };
+    return {
+      stickingTo: 'bottom',
+      position,
+      distance: bottom,
+    };
   }
 };
 

@@ -7,9 +7,10 @@ export const itemsSlice = createSlice({
   reducers: {
     addOne: itemsAdapter.addOne,
     updateOne: itemsAdapter.updateOne,
+    removeOne: itemsAdapter.removeOne,
   },
 });
 
-export const { addOne, updateOne } = itemsSlice.actions;
+export const { addOne, updateOne, removeOne } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

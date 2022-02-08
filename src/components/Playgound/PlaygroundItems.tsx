@@ -2,7 +2,7 @@ import { Layer, Rect } from 'react-konva';
 import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { updateOne } from '../../features/items/itemsSlice';
+import { removeOne, updateOne } from '../../features/items/itemsSlice';
 import PlaceableItem from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment } from 'react';
@@ -21,14 +21,22 @@ export default function PlaygroundItems() {
   }
 
   function dropAndUpdateItemCollisions(item: PlaceableItem): void {
-    item.drop(items, playground);
-    dispatch(
-      updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
-    );
-    items.placeable().forEach((item) => {
-      item.detectCollisions(items, playground);
+    const itemDroppedOnPlayground = item.drop(items, playground);
+    if (itemDroppedOnPlayground) {
       dispatch(
         updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+      );
+    } else {
+      dispatch(removeOne(item.id));
+    }
+
+    items.placeable().forEach((item) => {
+      item.updateCollisions(items, playground);
+      dispatch(
+        updateOne({
+          id: item.id,
+          changes: ItemReduxAdapter.itemToState(item),
+        })
       );
     });
   }

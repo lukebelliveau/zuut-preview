@@ -7,8 +7,7 @@ import { Point } from '../point';
 export interface IPlaceableItem {
   place(position: Point): void;
   drag(position: Point, items: ItemList, playground: Playground): void;
-  drop(items: ItemList, playground: Playground): void;
-  isCollidingWith(otherItem: PlaceableItem): boolean;
+  drop(items: ItemList, playground: Playground): boolean;
   copy(): PlaceableItem;
 }
 
@@ -71,12 +70,7 @@ export default class PlaceableItem implements IPlaceableItem {
       playground
     );
 
-    const { itemColliding, shadowColliding } = this.detectCollisions(
-      items,
-      playground
-    );
-    this.isColliding = itemColliding;
-    this.placementShadow.isColliding = shadowColliding;
+    this.updateCollisions(items, playground);
   }
 
   drop(items: ItemList, playground: Playground) {
@@ -88,8 +82,9 @@ export default class PlaceableItem implements IPlaceableItem {
       this.width = this.placementShadow.width;
       this.isColliding = this.detectCollisions(items, playground).itemColliding;
       this.placementShadow = undefined;
+      return true;
     } else {
-      throw new Error('Called item.drop() without placementShadow!');
+      return false;
     }
   }
 
@@ -113,8 +108,22 @@ export default class PlaceableItem implements IPlaceableItem {
     return placementShadow;
   }
 
+  updateCollisions(items: ItemList, playground: Playground) {
+    const { itemColliding, shadowColliding } = this.detectCollisions(
+      items,
+      playground
+    );
+
+    this.isColliding = itemColliding;
+    if (this.placementShadow)
+      this.placementShadow = {
+        ...this.placementShadow,
+        isColliding: shadowColliding,
+      };
+  }
+
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  detectCollisions(
+  protected detectCollisions(
     items: ItemList,
     playground: Playground
   ): {

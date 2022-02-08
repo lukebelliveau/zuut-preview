@@ -87,6 +87,26 @@ describe('PlaceableItem', () => {
     const plan = new Plan('square', 10_000, 10_000, 12);
     const playground = new Playground(1_000, 1_000, undefined, plan);
 
+    it('returns true when item has a placementShadow', () => {
+      const item = new PlaceableItem(
+        'item',
+        '1',
+        0,
+        0,
+        10,
+        10,
+        10,
+        false,
+        placementShadow
+      );
+      expect(item.drop(new ItemList(1), playground)).toBe(true);
+    });
+
+    it('returns false when item has no placementShadow', () => {
+      const item = new PlaceableItem('item', '1', 0, 0, 10, 10, 10, false);
+      expect(item.drop(new ItemList(1), playground)).toBe(false);
+    });
+
     it('sets current position/dimensions to placementShadow', () => {
       const item = new PlaceableItem(
         'item',
@@ -159,6 +179,90 @@ describe('PlaceableItem', () => {
       testItem.drop(new ItemList(), playground);
 
       expect(testItem.placementShadow).toBeUndefined();
+    });
+  });
+
+  describe('updateCollisions', () => {
+    const plan = new Plan('square', 10_000, 10_000, 12);
+    const playground = new Playground(1_000, 1_000, undefined, plan);
+    it('sets isColliding=true to item and item.placementShadow when collisions occur', () => {
+      const collisionItem = new PlaceableItem(
+        'collision item',
+        v4(),
+        0,
+        0,
+        1000,
+        1000
+      );
+      const placementShadow = {
+        x: 0,
+        y: 0,
+        width: 1000,
+        height: 1000,
+        length: 1000,
+        isColliding: false,
+      };
+      const testItem = new PlaceableItem(
+        'collision item',
+        v4(),
+        0,
+        0,
+        1000,
+        1000,
+        1000,
+        false,
+        placementShadow
+      );
+
+      const items = new ItemList();
+      items.push(collisionItem);
+      items.push(testItem);
+
+      expect(testItem.isColliding).toBe(false);
+      expect(testItem.placementShadow?.isColliding).toBe(false);
+      testItem.updateCollisions(items, playground);
+      expect(testItem.isColliding).toBe(true);
+      expect(testItem.placementShadow?.isColliding).toBe(true);
+    });
+
+    it('assigns isColliding=false to item and item.placementShadow when no collisions', () => {
+      const noCollisionItem = new PlaceableItem(
+        'collision item',
+        v4(),
+        2000,
+        2000,
+        1000,
+        1000
+      );
+      const placementShadow = {
+        x: 0,
+        y: 0,
+        width: 1000,
+        height: 1000,
+        length: 1000,
+        isColliding: true,
+      };
+      const testItem = new PlaceableItem(
+        'collision item',
+        v4(),
+        0,
+        0,
+        1000,
+        1000,
+        1000,
+        true,
+        placementShadow
+      );
+
+      const items = new ItemList();
+      items.push(noCollisionItem);
+      items.push(testItem);
+
+      expect(testItem.isColliding).toBe(true);
+      expect(testItem.placementShadow?.isColliding).toBe(true);
+      testItem.updateCollisions(items, playground);
+      expect(testItem.isColliding).toBe(false);
+      expect(testItem.placementShadow?.isColliding).toBe(false);
     });
   });
 
