@@ -12,29 +12,25 @@ export default function PlaygroundItems() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const items = useBuildItemList();
-  const plan = playground.plan;
-  if (!plan) throw new Error('No plan found');
-  const grid = plan.grid;
 
-  function drag(item: PlaceableItem, newPosition: Point) {
-    updatePlacement(item, newPosition);
-  }
- 
   function updatePlacement(item: PlaceableItem, newPosition: Point) {
-    item.setPosition(newPosition, items, playground);
+    item.drag(newPosition, items, playground);
     dispatch(
       updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
     );
   }
 
-  function drop(item: PlaceableItem, position: Point): Point {
-    const snappedPosition = grid.snapPostition(position);
-    item.drop(snappedPosition, items, playground);
+  function dropAndUpdateItemCollisions(item: PlaceableItem): void {
+    item.drop(items, playground);
     dispatch(
       updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
     );
-    items.placeable().forEach((item) => updatePlacement(item, item));
-    return snappedPosition;
+    items.placeable().forEach((item) => {
+      item.detectCollisions(items, playground);
+      dispatch(
+        updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+      );
+    });
   }
 
   return (
@@ -53,24 +49,12 @@ export default function PlaygroundItems() {
               stroke={item.isColliding ? 'red' : 'black'}
               strokeWidth={1}
               strokeScaleEnabled={false}
-              onDragMove={(e) =>{
-                  drag(item, { x: e.target.x(), y: e.target.y() });
-                  e.target.to({
-                    opacity: 0.5,
-                    duration: 0.001,
-                  });
-                }
-              }
-              onDragEnd={(e) => {
-                const newPosition = drop(item, { x: e.target.x(), y: e.target.y() });
-                e.target.to({
-                  ...newPosition,
-                  duration: 0.001,
-                  opacity: 1,
-                });
+              onDragMove={(e) => {
+                updatePlacement(item, { x: e.target.x(), y: e.target.y() });
               }}
+              onDragEnd={() => dropAndUpdateItemCollisions(item)}
               draggable
-              opacity={0.5}
+              opacity={placementShadow ? 0.2 : 1}
             />
             {placementShadow ? (
               <Rect
@@ -78,7 +62,7 @@ export default function PlaygroundItems() {
                 y={placementShadow.y}
                 width={placementShadow.width}
                 height={placementShadow.length}
-                stroke={'black'}
+                stroke={placementShadow.isColliding ? 'red' : 'black'}
                 strokeWidth={1}
                 strokeScaleEnabled={false}
                 draggable

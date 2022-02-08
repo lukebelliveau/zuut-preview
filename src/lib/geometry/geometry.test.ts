@@ -3,6 +3,7 @@ import PlaceableItem from '../item/placeableItem';
 
 import Room from '../room';
 import {
+  areColliding,
   itemHasVerticalOrientation,
   itemIsAlignedWithBottomWall,
   itemIsAlignedWithLeftWall,
@@ -348,5 +349,44 @@ describe('placeOnRightBoundary', () => {
     const placedOnBottom = placedOnRightBoundary(item1, item2);
 
     expect(placedOnBottom.x).toBe(95);
+  });
+});
+
+describe('areColliding', () => {
+  it('returns false if other item is outside of the current item', () => {
+    const item = new PlaceableItem('', '1', 100, 100, 100, 100);
+    const other = new PlaceableItem('', '2', 1001, 1001, 1001, 1001);
+    expect(areColliding(item, other)).toBe(false);
+  });
+  it('returns false if only the borders overlap', () => {
+    const item = new PlaceableItem('', '1', 100, 100, 100, 100);
+    const otherRight = new PlaceableItem('', '2', 200, 100, 100, 100);
+    expect(areColliding(item, otherRight)).toBe(false);
+    const otherBelow = new PlaceableItem('', '3', 100, 200, 100, 100);
+    expect(areColliding(item, otherBelow)).toBe(false);
+    const otherLeft = new PlaceableItem('', '4', 0, 100, 100, 100);
+    expect(areColliding(item, otherLeft)).toBe(false);
+    const otherTop = new PlaceableItem('', '5', 100, 0, 100, 100);
+    expect(areColliding(item, otherTop)).toBe(false);
+  });
+  it('returns true if other item is in the northeast corner', () => {
+    const item = new PlaceableItem('', '1', 100, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 99, 91, 10, 10);
+    expect(areColliding(item, other)).toBe(true);
+  });
+  it('returns true if other item is in the southeast corner', () => {
+    const item = new PlaceableItem('', '1', 100, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 99, 109, 10, 10);
+    expect(areColliding(item, other)).toBe(true);
+  });
+  it('returns true if other item is in the southwest corner', () => {
+    const item = new PlaceableItem('', '1', 100, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 91, 109, 10, 10);
+    expect(areColliding(item, other)).toBe(true);
+  });
+  it('returns true if other item is in the northwest corner', () => {
+    const item = new PlaceableItem('', '1', 100, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 91, 91, 10, 10);
+    expect(areColliding(item, other)).toBe(true);
   });
 });

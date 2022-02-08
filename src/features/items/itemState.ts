@@ -1,4 +1,4 @@
-import { GeometryObject } from '../../lib/geometry/geometry';
+import { PlacementShadow } from '../../lib/item/placeableItem';
 
 export type ItemState = {
   id: string;
@@ -10,5 +10,5 @@ export type ItemState = {
   length?: number;
   height?: number;
   isColliding: boolean;
-  placementShadow?: GeometryObject;
+  placementShadow?: PlacementShadow;
 };

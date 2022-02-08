@@ -13,10 +13,9 @@ import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 export default function LayoutTab() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
-  const items = useBuildItemList();
 
   function placeItem(item: PlaceableItem) {
-    item.setPosition(playground.place(), items);
+    item.place(playground.place());
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 

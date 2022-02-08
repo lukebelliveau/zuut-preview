@@ -1,14 +1,24 @@
 import { v4 } from 'uuid';
-import { GeometryObject, rotated90Degrees } from '../geometry/geometry';
+import { areColliding, rotated90Degrees } from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 
 export interface IPlaceableItem {
-  setPosition(position: Point, items: ItemList, playground?: Playground): void;
-  drop(position: Point, items: ItemList, playground?: Playground): void;
+  place(position: Point): void;
+  drag(position: Point, items: ItemList, playground: Playground): void;
+  drop(items: ItemList, playground: Playground): void;
   isCollidingWith(otherItem: PlaceableItem): boolean;
   copy(): PlaceableItem;
+}
+
+export interface PlacementShadow {
+  x: number;
+  y: number;
+  height: number | undefined;
+  width: number;
+  length: number;
+  isColliding: boolean;
 }
 
 export default class PlaceableItem implements IPlaceableItem {
@@ -21,7 +31,7 @@ export default class PlaceableItem implements IPlaceableItem {
   length: number;
   height: number | undefined;
   isColliding: boolean = false;
-  placementShadow: GeometryObject | undefined;
+  placementShadow: PlacementShadow | undefined;
 
   constructor(
     name: string,
@@ -32,7 +42,7 @@ export default class PlaceableItem implements IPlaceableItem {
     length: number = 610,
     height: number = 915,
     isColliding: boolean = false,
-    placementShadow: GeometryObject | undefined = undefined
+    placementShadow: PlacementShadow | undefined = undefined
   ) {
     this.id = id;
     this.name = name;
@@ -45,42 +55,96 @@ export default class PlaceableItem implements IPlaceableItem {
     this.placementShadow = placementShadow;
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  setPosition(position: Point, items: ItemList, playground?: Playground) {
+  place(position: Point) {
     this.x = position.x;
     this.y = position.y;
-    this.detectCollisions(items);
   }
 
-  detectCollisions(items: ItemList): void {
-    this.isColliding = items.some((otherItem) =>
-      this.isCollidingWith(otherItem)
+  drag(position: Point, items: ItemList, playground: Playground) {
+    if (!playground || !playground.plan || !playground.plan.grid)
+      throw new Error('Missing grid!');
+    this.x = position.x;
+    this.y = position.y;
+
+    this.placementShadow = this.createDefaultPlacementShadow(
+      position,
+      playground
     );
+
+    const { itemColliding, shadowColliding } = this.detectCollisions(
+      items,
+      playground
+    );
+    this.isColliding = itemColliding;
+    this.placementShadow.isColliding = shadowColliding;
   }
 
-  drop(position: Point, items: ItemList, playground?: Playground) {
+  drop(items: ItemList, playground: Playground) {
     if (this.placementShadow) {
       this.x = this.placementShadow.x;
       this.y = this.placementShadow.y;
       this.length = this.placementShadow.length;
       this.height = this.placementShadow.height;
       this.width = this.placementShadow.width;
+      this.isColliding = this.detectCollisions(items, playground).itemColliding;
       this.placementShadow = undefined;
-      this.detectCollisions(items);
     } else {
-      this.setPosition(position, items, playground);
+      throw new Error('Called item.drop() without placementShadow!');
     }
+  }
+
+  createDefaultPlacementShadow(
+    position: Point,
+    playground: Playground
+  ): PlacementShadow {
+    if (!playground || !playground.plan || !playground.plan.grid)
+      throw new Error('Missing grid!');
+
+    const snappedPosition = playground.plan.grid.snapPostition(position);
+    const placementShadow = {
+      x: snappedPosition.x,
+      y: snappedPosition.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      isColliding: false,
+    };
+
+    return placementShadow;
+  }
+
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  detectCollisions(
+    items: ItemList,
+    playground: Playground
+  ): {
+    itemColliding: boolean;
+    shadowColliding: boolean;
+  } {
+    let itemColliding = false;
+    let shadowColliding = false;
+    items.forEach((itemToCompare) => {
+      if (itemToCompare.id === this.id) return;
+      if (areColliding(this, itemToCompare)) itemColliding = true;
+
+      if (
+        this.placementShadow &&
+        areColliding(this.placementShadow, itemToCompare)
+      ) {
+        shadowColliding = true;
+      }
+    });
+
+    return {
+      itemColliding,
+      shadowColliding,
+    };
   }
 
   isCollidingWith(otherItem: PlaceableItem): boolean {
     if (otherItem.id === this.id) return false;
 
-    return !(
-      Math.floor(otherItem.x)                    >= Math.floor(this.x + this.width) ||
-      Math.floor(otherItem.x + otherItem.width)  <= Math.floor(this.x) ||
-      Math.floor(otherItem.y)                    >= Math.floor(this.y + this.length) ||
-      Math.floor(otherItem.y + otherItem.length) <= Math.floor(this.y)
-    );
+    return areColliding(this, otherItem);
   }
 
   rotate90Degrees() {

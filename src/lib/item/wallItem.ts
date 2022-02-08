@@ -115,39 +115,43 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     );
   }
 
-  handleRotation(room: Room): void {
+  handleRotation(playground: Playground): void {
+    if (!playground || !playground.plan || !playground.plan.room)
+      throw new Error('Missing room!');
+    const { room } = playground.plan;
+
     if (this.isPlacedPerpendicularToBottomWall(room)) {
       let rotatedShadow = rotated90Degrees(this);
       let rotatedOnBottomBoundary = placedOnBottomBoundary(rotatedShadow, room);
-      this.placementShadow = rotatedOnBottomBoundary;
+      this.placementShadow = { ...rotatedOnBottomBoundary, isColliding: false };
     } else if (this.isPlacedPerpendicularToTopWall(room)) {
       let rotatedShadow = rotated90Degrees(this);
-      let rotatedOnBottomBoundary = placedOnTopBoundary(rotatedShadow, room);
-      this.placementShadow = rotatedOnBottomBoundary;
+      let rotatedOnTopBoundary = placedOnTopBoundary(rotatedShadow, room);
+      this.placementShadow = { ...rotatedOnTopBoundary, isColliding: false };
     } else if (this.isPlacedPerpendicularToLeftWall(room)) {
       let rotatedShadow = rotated90Degrees(this);
-      let rotatedOnBottomBoundary = placedOnLeftBoundary(rotatedShadow, room);
-      this.placementShadow = rotatedOnBottomBoundary;
+      let rotatedOnLeftBoundary = placedOnLeftBoundary(rotatedShadow, room);
+      this.placementShadow = { ...rotatedOnLeftBoundary, isColliding: false };
     } else if (this.isPlacedPerpendicularToRightWall(room)) {
       let rotatedShadow = rotated90Degrees(this);
-      let rotatedOnBottomBoundary = placedOnRightBoundary(rotatedShadow, room);
-      this.placementShadow = rotatedOnBottomBoundary;
-    } else {
-      this.placementShadow = undefined;
+      let rotatedOnRightBoundary = placedOnRightBoundary(rotatedShadow, room);
+      this.placementShadow = { ...rotatedOnRightBoundary, isColliding: false };
     }
   }
 
-  setPosition(position: Point, items: ItemList, playground: Playground) {
-    if (!playground) return super.setPosition(position, items);
-
-    this.x = position.x;
-    this.y = position.y;
-
+  drag(position: Point, items: ItemList, playground: Playground) {
     if (!playground.plan) throw new Error('Playground missing plan!');
     const room = playground.plan.room;
     if (!room) throw new Error('Playground missing room!');
 
-    this.handleRotation(room);
+    this.x = position.x;
+    this.y = position.y;
+    this.placementShadow = this.createDefaultPlacementShadow(
+      position,
+      playground
+    );
+
+    this.handleRotation(playground);
 
     const collidingWithItems = items.some((otherItem) =>
       this.isCollidingWith(otherItem)

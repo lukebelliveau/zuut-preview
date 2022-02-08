@@ -14,10 +14,9 @@ const layoutItems = [new WindowItem('Window')];
 export default function LayoutTab() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
-  const allItems = useBuildItemList();
 
   function placeItem(item: PlaceableItem) {
-    item.setPosition(playground.place(), allItems);
+    item.place(playground.place());
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 

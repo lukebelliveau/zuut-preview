@@ -5,7 +5,13 @@ import Room from '../room';
  * Pure functions handy for checking the spatial relationship between two objects
  * and computing values based on these positions.
  */
-export type GeometryObject = PlaceableItem | Room;
+export type GeometryObject = {
+  x: number;
+  y: number;
+  height: number | undefined;
+  width: number;
+  length: number;
+};
 
 export const itemIsAlignedWithLeftWall = (
   item: GeometryObject,
@@ -49,6 +55,106 @@ export const rotated90Degrees = (item: GeometryObject): GeometryObject => {
     width: length,
     height: height,
   };
+};
+
+export const areColliding = (item1: GeometryObject, item2: GeometryObject) => {
+  return !(
+    Math.floor(item2.x) >= Math.floor(item1.x + item1.width) ||
+    Math.floor(item2.x + item2.width) <= Math.floor(item1.x) ||
+    Math.floor(item2.y) >= Math.floor(item1.y + item1.length) ||
+    Math.floor(item2.y + item2.length) <= Math.floor(item1.y)
+  );
+};
+
+const distanceFromExteriorLeftWall = (
+  interiorItem: GeometryObject,
+  exteriorItem: GeometryObject
+) => {
+  return interiorItem.x - exteriorItem.x;
+};
+const distanceFromExteriorRightWall = (
+  interiorItem: GeometryObject,
+  exteriorItem: GeometryObject
+) => {
+  return (
+    exteriorItem.x + exteriorItem.width - (interiorItem.x + interiorItem.width)
+  );
+};
+const distanceFromExteriorTopWall = (
+  interiorItem: GeometryObject,
+  exteriorItem: GeometryObject
+) => {
+  return interiorItem.y - exteriorItem.y;
+};
+const distanceFromExteriorBottomWall = (
+  interiorItem: GeometryObject,
+  exteriorItem: GeometryObject
+) => {
+  return (
+    exteriorItem.y +
+    exteriorItem.length -
+    (interiorItem.y + interiorItem.length)
+  );
+};
+
+interface WallDistances {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+}
+
+export const closestToLeftWall = ({
+  left,
+  right,
+  top,
+  bottom,
+}: WallDistances) => {
+  return left < right && left < top && left < bottom;
+};
+export const closestToRightWall = ({
+  left,
+  right,
+  top,
+  bottom,
+}: WallDistances) => {
+  return right < left && right < top && right < bottom;
+};
+export const closestToTopWall = ({
+  left,
+  right,
+  top,
+  bottom,
+}: WallDistances) => {
+  return top < left && top < right && top < bottom;
+};
+export const closestToBottomWall = ({
+  left,
+  right,
+  top,
+  bottom,
+}: WallDistances) => {
+  return bottom < left && bottom < right && bottom < top;
+};
+
+export const findClosestWallPointToInteriorItem = (
+  interiorItem: GeometryObject,
+  exteriorItem: GeometryObject
+) => {
+  const left = distanceFromExteriorLeftWall(interiorItem, exteriorItem);
+  const right = distanceFromExteriorRightWall(interiorItem, exteriorItem);
+  const bottom = distanceFromExteriorBottomWall(interiorItem, exteriorItem);
+  const top = distanceFromExteriorTopWall(interiorItem, exteriorItem);
+
+  if (closestToLeftWall({ left, right, bottom, top })) {
+    return { x: exteriorItem.x, y: interiorItem.y };
+  } else if (closestToRightWall({ left, right, bottom, top })) {
+    return { x: exteriorItem.x + exteriorItem.width, y: interiorItem.y };
+  } else if (closestToTopWall({ left, right, bottom, top })) {
+    return { x: interiorItem.x, y: exteriorItem.y };
+  } else if (closestToBottomWall({ left, right, bottom, top })) {
+    return { x: interiorItem.x, y: exteriorItem.y + exteriorItem.length };
+  }
 };
 
 /**

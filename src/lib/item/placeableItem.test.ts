@@ -1,7 +1,167 @@
+import { v4 } from 'uuid';
+import { feetToMm } from '../conversions';
 import ItemList from '../itemList';
+import Plan from '../plan';
+import Playground from '../playground';
 import PlaceableItem from './placeableItem';
 
 describe('PlaceableItem', () => {
+  describe('place', () => {
+    it("sets an item's position", () => {
+      const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
+      item.place({ x: 99, y: 99 });
+
+      expect(item.x).toBe(99);
+      expect(item.y).toBe(99);
+    });
+  });
+
+  describe('drag', () => {
+    const plan = new Plan('square', 10_000, 10_000, 12);
+    const playground = new Playground(1_000, 1_000, undefined, plan);
+
+    it("sets an item's position", () => {
+      const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
+      item.drag({ x: 99, y: 99 }, new ItemList(), playground);
+
+      expect(item.x).toBe(99);
+      expect(item.y).toBe(99);
+    });
+
+    it('creates a placement shadow based on snapped position and item dimensions', () => {
+      const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
+      item.drag({ x: 300, y: 600 }, new ItemList(), playground);
+
+      const { placementShadow } = item;
+      expect(placementShadow).not.toBeUndefined();
+      expect(placementShadow?.x).toBe(feetToMm(1));
+      expect(placementShadow?.y).toBe(feetToMm(2));
+      expect(placementShadow?.height).toBe(item.height);
+      expect(placementShadow?.length).toBe(item.length);
+      expect(placementShadow?.width).toBe(item.width);
+    });
+
+    it('detects collisions based on location of placement shadow', () => {
+      const otherItem = new PlaceableItem(
+        'collidingItem',
+        v4(),
+        600,
+        600,
+        10,
+        10,
+        10,
+        false
+      );
+      const testItem = new PlaceableItem(
+        'testItem',
+        v4(),
+        0,
+        0,
+        10,
+        10,
+        10,
+        false
+      );
+
+      const itemList = new ItemList();
+      itemList.push(testItem);
+      itemList.push(otherItem);
+
+      // will collide with otherItem once this drag occurs
+      testItem.drag({ x: 600, y: 600 }, itemList, playground);
+
+      expect(testItem.isColliding).toBe(true);
+      expect(testItem.placementShadow?.isColliding).toBe(true);
+    });
+  });
+
+  describe('drop', () => {
+    const placementShadow = {
+      x: 90,
+      y: 90,
+      width: 10,
+      height: 10,
+      length: 10,
+      isColliding: false,
+    };
+    const plan = new Plan('square', 10_000, 10_000, 12);
+    const playground = new Playground(1_000, 1_000, undefined, plan);
+
+    it('sets current position/dimensions to placementShadow', () => {
+      const item = new PlaceableItem(
+        'item',
+        '1',
+        0,
+        0,
+        10,
+        10,
+        10,
+        false,
+        placementShadow
+      );
+      item.drop(new ItemList(1), playground);
+
+      expect(item.x).toBe(placementShadow.x);
+      expect(item.x).toBe(placementShadow.x);
+      expect(item.y).toBe(placementShadow.y);
+      expect(item.width).toBe(placementShadow.width);
+      expect(item.height).toBe(placementShadow.height);
+      expect(item.length).toBe(placementShadow.length);
+    });
+
+    it('detects collisions after placing item on placementShadow', () => {
+      // collides with placementShadow
+      const collidingItem = new PlaceableItem(
+        'collidingItem',
+        v4(),
+        85,
+        85,
+        10,
+        10,
+        10,
+        false
+      );
+      // does not currently collide with collidingItem, but has a placementShadow that does
+      const testItem = new PlaceableItem(
+        'testItem',
+        v4(),
+        0,
+        0,
+        10,
+        10,
+        10,
+        false,
+        placementShadow
+      );
+
+      const itemList = new ItemList();
+      itemList.push(testItem);
+      itemList.push(collidingItem);
+
+      testItem.drop(itemList, playground);
+
+      expect(testItem.isColliding).toBe(true);
+    });
+
+    it('removes placementShadow from item on drop', () => {
+      const testItem = new PlaceableItem(
+        'testItem',
+        v4(),
+        0,
+        0,
+        10,
+        10,
+        10,
+        false,
+        placementShadow
+      );
+
+      testItem.drop(new ItemList(), playground);
+
+      expect(testItem.placementShadow).toBeUndefined();
+    });
+  });
+
   describe('#isCollidingWith', () => {
     it('returns false if the other item is actually the current item', () => {
       const item = new PlaceableItem('', '1', 100, 100, 100, 100);
@@ -58,48 +218,22 @@ describe('PlaceableItem', () => {
     });
   });
 
-  describe('#drop', () => {
-    it('sets location/dimensions to current position if no placementShadow', () => {
-      const item = new PlaceableItem('item', '1', 0, 0, 10, 10, 10, false);
-      item.drop({ x: 50, y: 60 }, new ItemList());
+  describe('#createDefaultPlacementShadow', () => {
+    it("creates a placementShadow with the item's dimensions and snapped coordinates", () => {
+      const plan = new Plan('square', 10_000, 10_000, 12);
+      const playground = new Playground(1_000, 1_000, undefined, plan);
+      const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
 
-      expect(item.x).toBe(50);
-      expect(item.y).toBe(60);
-    });
-
-    it('sets location/dimensions to that of placementShadow when present', () => {
-      const placementShadow = {
-        x: 999,
-        y: 999,
-        length: 999,
-        height: 999,
-        width: 999,
-      };
-      const item = new PlaceableItem(
-        'item',
-        '1',
-        0,
-        0,
-        10,
-        10,
-        10,
-        false,
-        placementShadow
+      const placementShadow = item.createDefaultPlacementShadow(
+        { x: 300, y: 600 },
+        playground
       );
 
-      expect(item.x).not.toBe(placementShadow.x);
-      expect(item.y).not.toBe(placementShadow.y);
-      expect(item.length).not.toBe(placementShadow.length);
-      expect(item.width).not.toBe(placementShadow.width);
-      expect(item.height).not.toBe(placementShadow.height);
-
-      item.drop({ x: 50, y: 50 }, new ItemList());
-
-      expect(item.x).toBe(placementShadow.x);
-      expect(item.y).toBe(placementShadow.y);
-      expect(item.length).toBe(placementShadow.length);
-      expect(item.width).toBe(placementShadow.width);
-      expect(item.height).toBe(placementShadow.height);
+      expect(placementShadow.x).toBe(feetToMm(1));
+      expect(placementShadow.y).toBe(feetToMm(2));
+      expect(placementShadow.height).toBe(item.height);
+      expect(placementShadow.length).toBe(item.length);
+      expect(placementShadow.width).toBe(item.width);
     });
   });
 });
