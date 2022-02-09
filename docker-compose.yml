@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - 3000
+    command: npm run dev:noauth
+  
+  taiko:
+    build: .
+    platform: "linux/amd64"
+    depends_on:
+      - app
+    command: npm run taiko-test

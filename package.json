@@ -1,110 +1,15 @@
 {
   "name": "zuut",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@auth0/auth0-react": "^1.8.0",
-    "@babel/preset-typescript": "^7.16.7",
-    "@getgauge/cli": "latest",
-    "@reduxjs/toolkit": "^1.7.1",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^24.9.1",
-    "@types/jest-axe": "^3.5.3",
-    "@types/node": "^12.20.38",
-    "@types/react": "^16.14.21",
-    "@types/react-dom": "^16.9.14",
-    "@types/react-helmet": "6.1.5",
-    "@types/react-redux": "^7.1.21",
-    "@types/redux-logger": "^3.0.9",
-    "@types/uuid": "^8.3.3",
-    "@typescript-eslint/eslint-plugin": "^5.8.0",
-    "@typescript-eslint/parser": "^5.8.0",
-    "eslint": "^8.5.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^25.3.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "jest-axe": "^5.0.1",
-    "jest-junit": "^13.0.0",
-    "konva": "^8.3.2",
-    "prettier": "^2.5.1",
-    "react": "^17.0.2",
-    "react-dnd": "^14.0.5",
-    "react-dnd-html5-backend": "^14.1.0",
-    "react-dom": "^17.0.2",
-    "react-full-page": "^0.1.12",
-    "react-helmet-async": "^1.2.2",
-    "react-hook-form": "^7.22.5",
-    "react-konva": "^17.0.2-5",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "redux-logger": "^3.0.6",
-    "taiko": "latest",
-    "typescript": "~4.1.5",
-    "use-image": "^1.0.8",
-    "uuid": "^8.3.2",
-    "web-vitals": "^2.1.2"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "format": "eslint --fix src",
-    "lint": "tsc --noEmit && eslint src",
-    "prepush": "npm run lint -- --max-warnings=0 && CI=true npm test && npm run taiko-test",
-    "start": "react-scripts start",
-    "test": "react-scripts test",
-    "taiko-test": "gauge run specs",
-    "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start",
-    "dev": "REACT_APP_DISABLE_AUTH=true REACT_APP_TEST_PLAYGROUND=true npm start"
+    "dev": "nf start"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:jsx-a11y/recommended",
-      "prettier"
-    ],
-    "rules": {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "varsIgnorePattern": ".*"
-        }
-      ],
-      "quotes": [
-        "error",
-        "single",
-        "avoid-escape"
-      ],
-      "semi": [
-        "error",
-        "always"
-      ],
-      "testing-library/prefer-screen-queries": "off"
-    },
-    "ignorePatterns": [
-      "**/*.js"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@testing-library/react-hooks": "^7.0.2",
-    "eslint-config-prettier": "^8.3.0"
+  "keywords": [],
+  "author": "Zuut",
+  "dependencies": {
+    "foreman": "^3.0.1"
   }
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import './Home.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 import LoginButton from '../components/LoginButton';
+import { Link } from 'react-router-dom';
 
 export const homePath = () => '/';
 
@@ -27,7 +28,7 @@ function Home() {
             plan your grow while maximizing yields &amp;
             minimizing costs.
           </p>
-          <a className="button go" href="/playgrounds/new">Get started</a>
+          <Link className="button go" to="/playgrounds/new">Get started</Link>
         </section>
       </div>
     </div>
