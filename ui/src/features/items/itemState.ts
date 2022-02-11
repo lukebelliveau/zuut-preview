@@ -1,4 +1,4 @@
-import { PlacementShadow } from '../../lib/item/placeableItem';
+import { CollisionState, PlacementShadow } from '../../lib/item/placeableItem';
 
 export type ItemState = {
   id: string;
@@ -9,6 +9,6 @@ export type ItemState = {
   width?: number;
   length?: number;
   height?: number;
-  isColliding: boolean;
+  collisionState?: CollisionState;
   placementShadow?: PlacementShadow;
 };

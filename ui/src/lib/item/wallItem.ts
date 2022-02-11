@@ -9,6 +9,7 @@ import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 import PlaceableItem, {
+  CollisionState,
   IPlaceableItem,
   PlacementShadow,
 } from './placeableItem';
@@ -56,7 +57,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.width,
           height: this.height,
           length: this.length,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         };
       } else {
         return {
@@ -65,7 +66,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.length,
           height: this.height,
           length: this.width,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         };
       }
     } else {
@@ -76,7 +77,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.width,
           height: this.height,
           length: this.length,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         };
       } else {
         return {
@@ -85,7 +86,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.length,
           height: this.height,
           length: this.width,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         };
       }
     }

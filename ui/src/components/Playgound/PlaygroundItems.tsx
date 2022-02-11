@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { removeOne, updateOne } from '../../features/items/itemsSlice';
-import { IPlaceableItem } from '../../lib/item/placeableItem';
+import { CollisionState, IPlaceableItem } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment } from 'react';
 import { Point } from '../../lib/point';
@@ -54,7 +54,9 @@ export default function PlaygroundItems() {
               y={item.y}
               width={item.width}
               height={item.length}
-              stroke={item.isColliding ? 'red' : 'black'}
+              stroke={
+                item.collisionState === CollisionState.BAD ? 'red' : 'black'
+              }
               strokeWidth={1}
               strokeScaleEnabled={false}
               onDragMove={(e) => {
@@ -70,7 +72,11 @@ export default function PlaygroundItems() {
                 y={placementShadow.y}
                 width={placementShadow.width}
                 height={placementShadow.length}
-                stroke={placementShadow.isColliding ? 'red' : 'black'}
+                stroke={
+                  placementShadow.collisionState === CollisionState.BAD
+                    ? 'red'
+                    : 'black'
+                }
                 strokeWidth={1}
                 strokeScaleEnabled={false}
                 draggable

@@ -4,6 +4,20 @@ import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 
+export interface PlacementShadow {
+  x: number;
+  y: number;
+  height: number | undefined;
+  width: number;
+  length: number;
+  collisionState: CollisionState;
+}
+
+export enum CollisionState {
+  GOOD,
+  BAD,
+}
+
 export interface IPlaceableItem {
   place(position: Point): void;
   drag(position: Point, items: ItemList, playground: Playground): void;
@@ -19,16 +33,7 @@ export interface IPlaceableItem {
   length: number;
   height: number | undefined;
   placementShadow: PlacementShadow | undefined;
-  isColliding: boolean;
-}
-
-export interface PlacementShadow {
-  x: number;
-  y: number;
-  height: number | undefined;
-  width: number;
-  length: number;
-  isColliding: boolean;
+  collisionState: CollisionState;
 }
 
 export default class PlaceableItem implements IPlaceableItem {
@@ -40,7 +45,7 @@ export default class PlaceableItem implements IPlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
-  isColliding: boolean;
+  collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
 
   constructor(
@@ -51,7 +56,7 @@ export default class PlaceableItem implements IPlaceableItem {
     width: number = 610,
     length: number = 610,
     height: number = 915,
-    isColliding: boolean = false,
+    collisionState: CollisionState = CollisionState.GOOD,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
     this.id = id;
@@ -61,7 +66,7 @@ export default class PlaceableItem implements IPlaceableItem {
     this.width = width;
     this.length = length;
     this.height = height;
-    this.isColliding = isColliding;
+    this.collisionState = collisionState;
     this.placementShadow = placementShadow;
   }
 
@@ -113,19 +118,19 @@ export default class PlaceableItem implements IPlaceableItem {
       width: this.width,
       length: this.length,
       height: this.height,
-      isColliding: false,
+      collisionState: CollisionState.GOOD,
     };
 
     return placementShadow;
   }
 
   updateCollisions(items: ItemList, playground: Playground) {
-    const { collidingWithItem, collidingWithShadow } = this.detectCollisions(
+    const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
       items,
       playground
     );
 
-    const isColliding = collidingWithItem.some((collidingItem) => {
+    const itemIsColliding = collidingWithItem.some((collidingItem) => {
       if (this.id === collidingItem.id) return false;
       if (this.isCollidingWith(this, collidingItem)) {
         return true;
@@ -142,16 +147,21 @@ export default class PlaceableItem implements IPlaceableItem {
       return false;
     });
 
-    this.isColliding = isColliding;
+    this.collisionState = itemIsColliding
+      ? CollisionState.BAD
+      : CollisionState.GOOD;
+
     if (this.placementShadow)
       this.placementShadow = {
         ...this.placementShadow,
-        isColliding: shadowIsColliding,
+        collisionState: shadowIsColliding
+          ? CollisionState.BAD
+          : CollisionState.GOOD,
       };
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  protected detectCollisions(
+  protected detectOverlaps(
     items: ItemList,
     playground: Playground
   ): {

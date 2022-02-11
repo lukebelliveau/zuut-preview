@@ -6,6 +6,7 @@ import { isPlaceableItem, Item } from '../item';
 import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
 import WallItem, { WALL_ITEM_TYPE } from './wallItem';
+import { CollisionState } from './placeableItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
@@ -22,7 +23,7 @@ export default class ItemReduxAdapter {
       id: item.id,
       type: item.type,
       name: item.name,
-      isColliding: false,
+      collisionState: CollisionState.GOOD,
     };
 
     if (isPlaceableItem(item)) {
@@ -33,7 +34,7 @@ export default class ItemReduxAdapter {
         width: item.width,
         height: item.height,
         length: item.length,
-        isColliding: item.isColliding,
+        collisionState: item.collisionState,
         placementShadow: item.placementShadow,
       };
     } else {
@@ -52,7 +53,7 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding,
+          itemState.collisionState,
           itemState.placementShadow
         );
       case GROWSPACE_ITEM_TYPE:
@@ -64,7 +65,7 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding,
+          itemState.collisionState,
           itemState.placementShadow
         );
       case MISC_ITEM_TYPE:
@@ -78,7 +79,7 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding,
+          itemState.collisionState,
           itemState.placementShadow
         );
 
@@ -91,7 +92,7 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
-          itemState.isColliding,
+          itemState.collisionState,
           itemState.placementShadow
         );
       default:

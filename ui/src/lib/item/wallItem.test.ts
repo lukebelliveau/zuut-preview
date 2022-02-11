@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 import ItemList from '../itemList';
 import Plan from '../plan';
 import Playground from '../playground';
-import PlaceableItem from './placeableItem';
+import PlaceableItem, { CollisionState } from './placeableItem';
 import WallItem from './wallItem';
 
 describe('WallItem', () => {
@@ -25,7 +25,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.width,
           width: horizontalWallItem.length,
           height: horizontalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
 
@@ -41,7 +41,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.width,
           width: horizontalWallItem.length,
           height: horizontalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
 
@@ -57,7 +57,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.length,
           width: horizontalWallItem.width,
           height: horizontalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
 
@@ -73,7 +73,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.length,
           width: horizontalWallItem.width,
           height: horizontalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
     });
@@ -93,7 +93,7 @@ describe('WallItem', () => {
           length: verticalWallItem.length,
           width: verticalWallItem.width,
           height: verticalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
 
@@ -109,7 +109,7 @@ describe('WallItem', () => {
           length: verticalWallItem.length,
           width: verticalWallItem.width,
           height: verticalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
 
@@ -125,7 +125,7 @@ describe('WallItem', () => {
           length: verticalWallItem.width,
           width: verticalWallItem.length,
           height: verticalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
 
@@ -141,7 +141,7 @@ describe('WallItem', () => {
           length: verticalWallItem.width,
           width: verticalWallItem.length,
           height: verticalWallItem.height,
-          isColliding: false,
+          collisionState: CollisionState.GOOD,
         });
       });
     });
