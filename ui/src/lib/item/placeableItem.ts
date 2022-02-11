@@ -9,9 +9,17 @@ export interface IPlaceableItem {
   drag(position: Point, items: ItemList, playground: Playground): void;
   drop(items: ItemList, playground: Playground): boolean;
   copy(): PlaceableItem;
+  updateCollisions(items: ItemList, playground: Playground): void;
   id: string;
   type: string;
   name: string;
+  x: number;
+  y: number;
+  width: number;
+  length: number;
+  height: number | undefined;
+  placementShadow: PlacementShadow | undefined;
+  isColliding: boolean;
 }
 
 export interface PlacementShadow {

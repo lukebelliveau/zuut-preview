@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { removeOne, updateOne } from '../../features/items/itemsSlice';
-import PlaceableItem from '../../lib/item/placeableItem';
+import { IPlaceableItem } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment } from 'react';
 import { Point } from '../../lib/point';
@@ -13,14 +13,14 @@ export default function PlaygroundItems() {
   const playground = useBuildPlayground();
   const items = useBuildItemList();
 
-  function updatePlacement(item: PlaceableItem, newPosition: Point) {
+  function updatePlacement(item: IPlaceableItem, newPosition: Point) {
     item.drag(newPosition, items, playground);
     dispatch(
       updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
     );
   }
 
-  function dropAndUpdateItemCollisions(item: PlaceableItem): void {
+  function dropAndUpdateItemCollisions(item: IPlaceableItem): void {
     const itemDroppedOnPlayground = item.drop(items, playground);
     if (itemDroppedOnPlayground) {
       dispatch(
