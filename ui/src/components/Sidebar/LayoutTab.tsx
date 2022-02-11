@@ -4,12 +4,14 @@ import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import PlaceableItem from '../../lib/item/placeableItem';
-import WindowItem from '../../lib/item/wallItem';
+import WallItem from '../../lib/item/wallItem';
+import WindowItem from '../../lib/item/windowitem';
+
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
 
-const layoutItems = [new WindowItem('Window')];
+const layoutItems = [new WindowItem('Window'), new WallItem('Door')];
 
 export default function LayoutTab() {
   const dispatch = useDispatch();
