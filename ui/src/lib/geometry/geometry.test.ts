@@ -4,6 +4,7 @@ import PlaceableItem from '../item/placeableItem';
 import Room from '../room';
 import {
   areColliding,
+  isStraddlingBoundary,
   itemHasVerticalOrientation,
   itemIsAlignedWithBottomWall,
   itemIsAlignedWithLeftWall,
@@ -388,5 +389,98 @@ describe('areColliding', () => {
     const item = new PlaceableItem('', '1', 100, 100, 10, 10);
     const other = new PlaceableItem('', '2', 91, 91, 10, 10);
     expect(areColliding(item, other)).toBe(true);
+  });
+});
+
+describe('isStraddlingBoundary', () => {
+  it('returns false if item is enclosed inside other item', () => {
+    const item = new PlaceableItem('', '1', 50, 50, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(false);
+  });
+  it('returns false if item is outside other item', () => {
+    const item = new PlaceableItem('', '1', 150, 150, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(false);
+  });
+  it('returns true if item straddles left boundary', () => {
+    const item = new PlaceableItem('', '1', -5, -5, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles right boundary', () => {
+    const item = new PlaceableItem('', '1', 95, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles top boundary', () => {
+    const item = new PlaceableItem('', '1', 50, -5, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles bottom boundary', () => {
+    const item = new PlaceableItem('', '1', 50, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles northeast corner', () => {
+    const item = new PlaceableItem('', '1', 95, -5, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles northwest corner', () => {
+    const item = new PlaceableItem('', '1', -5, -5, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles southeast corner', () => {
+    const item = new PlaceableItem('', '1', 95, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles southwest corner', () => {
+    const item = new PlaceableItem('', '1', -5, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles left wall and shares a top boundary with other item', () => {
+    const item = new PlaceableItem('', '1', -5, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles left wall and shares a bottom boundary with other item', () => {
+    const item = new PlaceableItem('', '1', -5, 90, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles right wall and shares a top boundary with other item', () => {
+    const item = new PlaceableItem('', '1', 95, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles right wall and shares a bottom boundary with other item', () => {
+    const item = new PlaceableItem('', '1', 95, 90, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles top wall and shares a left boundary with other item', () => {
+    const item = new PlaceableItem('', '1', 0, -5, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles top wall and shares a right boundary with other item', () => {
+    const item = new PlaceableItem('', '1', 90, -5, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles bottom wall and shares a left boundary with other item', () => {
+    const item = new PlaceableItem('', '1', 0, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
+  });
+  it('returns true if item straddles bottom wall and shares a right boundary with other item', () => {
+    const item = new PlaceableItem('', '1', 90, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    expect(isStraddlingBoundary(item, other)).toBe(true);
   });
 });

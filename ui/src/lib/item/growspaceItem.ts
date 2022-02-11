@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { isStraddlingBoundary } from '../geometry/geometry';
 import { isGrowspace } from '../item';
 import PlaceableItem, { PlacementShadow } from './placeableItem';
 
@@ -23,7 +24,9 @@ export default class GrowspaceItem extends PlaceableItem {
     item: PlaceableItem | PlacementShadow,
     otherItem: PlaceableItem
   ): boolean {
-    if (isGrowspace(otherItem)) return false;
+    if (isGrowspace(otherItem)) {
+      return isStraddlingBoundary(item, otherItem);
+    }
 
     return super.isCollidingWith(this, otherItem);
   }

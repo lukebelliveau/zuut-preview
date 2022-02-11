@@ -12,6 +12,40 @@ export type GeometryObject = {
   length: number;
 };
 
+export const isStraddlingBoundary = (
+  item1: GeometryObject,
+  item2: GeometryObject
+) => {
+  const isBetweenTopAndBottom = itemIsBetweenTopAndBottomWall(item1, item2);
+  const isBetweenLeftAndRight = itemIsBetweenLeftAndRightWall(item1, item2);
+  const isAlignedWithLeftWall = itemIsAlignedWithLeftWall(item1, item2);
+  const isAlignedWithRightWall = itemIsAlignedWithRightWall(item1, item2);
+  const isAlignedWithBottomWall = itemIsAlignedWithBottomWall(item1, item2);
+  const isAlignedWithTopWall = itemIsAlignedWithTopWall(item1, item2);
+  if (isAlignedWithLeftWall || isAlignedWithRightWall) {
+    if (
+      isBetweenTopAndBottom ||
+      isAlignedWithTopWall ||
+      isAlignedWithBottomWall ||
+      item1.y === item2.y ||
+      item1.y + item1.length === item2.y + item2.length
+    ) {
+      return true;
+    }
+  } else if (isAlignedWithTopWall || isAlignedWithBottomWall) {
+    if (
+      isBetweenLeftAndRight ||
+      isAlignedWithLeftWall ||
+      isAlignedWithRightWall ||
+      item1.x === item2.x ||
+      item1.x + item1.width === item2.x + item2.width
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const itemIsAlignedWithLeftWall = (
   item: GeometryObject,
   room: GeometryObject
