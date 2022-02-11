@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "nf -p 3000 start"
+    "dev": "nf -p 3000 start",
+    "prepush": "cd backend && npm test && cd ../ui && npm run prepush"
   },
   "keywords": [],
   "author": "Zuut",
