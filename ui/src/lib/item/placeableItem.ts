@@ -9,6 +9,9 @@ export interface IPlaceableItem {
   drag(position: Point, items: ItemList, playground: Playground): void;
   drop(items: ItemList, playground: Playground): boolean;
   copy(): PlaceableItem;
+  id: string;
+  type: string;
+  name: string;
 }
 
 export interface PlacementShadow {
@@ -29,7 +32,7 @@ export default class PlaceableItem implements IPlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
-  isColliding: boolean = false;
+  isColliding: boolean;
   placementShadow: PlacementShadow | undefined;
 
   constructor(
@@ -80,7 +83,7 @@ export default class PlaceableItem implements IPlaceableItem {
       this.length = this.placementShadow.length;
       this.height = this.placementShadow.height;
       this.width = this.placementShadow.width;
-      this.isColliding = this.detectCollisions(items, playground).itemColliding;
+      this.updateCollisions(items, playground);
       this.placementShadow = undefined;
       return true;
     } else {
@@ -96,7 +99,7 @@ export default class PlaceableItem implements IPlaceableItem {
       throw new Error('Missing grid!');
 
     const snappedPosition = playground.plan.grid.snapPostition(position);
-    const placementShadow = {
+    const placementShadow: PlacementShadow = {
       x: snappedPosition.x,
       y: snappedPosition.y,
       width: this.width,
@@ -109,16 +112,33 @@ export default class PlaceableItem implements IPlaceableItem {
   }
 
   updateCollisions(items: ItemList, playground: Playground) {
-    const { itemColliding, shadowColliding } = this.detectCollisions(
+    const { collidingWithItem, collidingWithShadow } = this.detectCollisions(
       items,
       playground
     );
 
-    this.isColliding = itemColliding;
+    const isColliding = collidingWithItem.some((collidingItem) => {
+      if (this.id === collidingItem.id) return false;
+      if (this.isCollidingWith(this, collidingItem)) {
+        return true;
+      }
+      return false;
+    });
+    const shadowIsColliding = collidingWithShadow.some((collidingItem) => {
+      if (
+        this.placementShadow &&
+        this.isCollidingWith(this.placementShadow, collidingItem)
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    this.isColliding = isColliding;
     if (this.placementShadow)
       this.placementShadow = {
         ...this.placementShadow,
-        isColliding: shadowColliding,
+        isColliding: shadowIsColliding,
       };
   }
 
@@ -127,33 +147,37 @@ export default class PlaceableItem implements IPlaceableItem {
     items: ItemList,
     playground: Playground
   ): {
-    itemColliding: boolean;
-    shadowColliding: boolean;
+    collidingWithItem: PlaceableItem[];
+    collidingWithShadow: PlaceableItem[];
   } {
-    let itemColliding = false;
-    let shadowColliding = false;
+    let collidingWithItem: PlaceableItem[] = [];
+    let collidingWithShadow: PlaceableItem[] = [];
+
     items.forEach((itemToCompare) => {
       if (itemToCompare.id === this.id) return;
-      if (areColliding(this, itemToCompare)) itemColliding = true;
+      if (areColliding(this, itemToCompare))
+        collidingWithItem.push(itemToCompare);
 
       if (
         this.placementShadow &&
         areColliding(this.placementShadow, itemToCompare)
       ) {
-        shadowColliding = true;
+        collidingWithShadow.push(itemToCompare);
       }
     });
 
     return {
-      itemColliding,
-      shadowColliding,
+      collidingWithItem: collidingWithItem,
+      collidingWithShadow: collidingWithShadow,
     };
   }
 
-  isCollidingWith(otherItem: PlaceableItem): boolean {
-    if (otherItem.id === this.id) return false;
-
-    return areColliding(this, otherItem);
+  isCollidingWith(
+    item: PlaceableItem | PlacementShadow,
+    otherItem: PlaceableItem
+  ): boolean {
+    // default to "bad" collision state if any items are colliding
+    return areColliding(item, otherItem);
   }
 
   rotate90Degrees() {

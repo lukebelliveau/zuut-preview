@@ -38,12 +38,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     this.x = position.x;
     this.y = position.y;
     this.placementShadow = this.createPlacementShadowOnClosestWall(playground);
-    const { shadowColliding } = this.detectCollisions(items, playground);
-
-    this.placementShadow = {
-      ...this.placementShadow,
-      isColliding: shadowColliding,
-    };
+    this.updateCollisions(items, playground);
   }
 
   createPlacementShadowOnClosestWall(playground: Playground): PlacementShadow {

@@ -21,9 +21,7 @@ export default class Grid {
   get verticalLines(): number[][] {
     const lines = [];
     for (let i = 0; i < this.width / SNAP_INTERVAL; i++) {
-      lines.push(
-        [i * SNAP_INTERVAL, 0, i * SNAP_INTERVAL, this.length]
-      );
+      lines.push([i * SNAP_INTERVAL, 0, i * SNAP_INTERVAL, this.length]);
     }
     return lines;
   }
@@ -31,9 +29,7 @@ export default class Grid {
   get horizontalLines(): number[][] {
     const lines = [];
     for (let i = 0; i < this.length / SNAP_INTERVAL; i++) {
-      lines.push(
-        [0, i * SNAP_INTERVAL, this.width, i * SNAP_INTERVAL]
-      );
+      lines.push([0, i * SNAP_INTERVAL, this.width, i * SNAP_INTERVAL]);
     }
     return lines;
   }
