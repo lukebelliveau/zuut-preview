@@ -1,4 +1,4 @@
-import { Layer, Rect } from 'react-konva';
+import { Layer, Rect, Image } from 'react-konva';
 import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
@@ -7,6 +7,7 @@ import { CollisionState, IPlaceableItem } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment } from 'react';
 import { Point } from '../../lib/point';
+import useImage from 'use-image';
 
 export default function PlaygroundItems() {
   const dispatch = useDispatch();
@@ -44,28 +45,38 @@ export default function PlaygroundItems() {
   return (
     <Layer>
       {items.placeable().map((item) => {
-        const { placementShadow } = item;
+        const { placementShadow, image } = item;
+
+        const itemElement = image ? (
+          <ImageItem
+            item={item}
+            updatePlacement={updatePlacement}
+            dropAndUpdateItemCollisions={dropAndUpdateItemCollisions}
+          />
+        ) : (
+          <Rect
+            key={item.id}
+            x={item.x}
+            y={item.y}
+            width={item.width}
+            height={item.length}
+            stroke={
+              item.collisionState === CollisionState.BAD ? 'red' : 'black'
+            }
+            strokeWidth={1}
+            strokeScaleEnabled={false}
+            onDragMove={(e) => {
+              updatePlacement(item, { x: e.target.x(), y: e.target.y() });
+            }}
+            onDragEnd={() => dropAndUpdateItemCollisions(item)}
+            draggable
+            opacity={placementShadow ? 0.2 : 1}
+          />
+        );
 
         return (
           <Fragment key={item.id}>
-            <Rect
-              key={item.id}
-              x={item.x}
-              y={item.y}
-              width={item.width}
-              height={item.length}
-              stroke={
-                item.collisionState === CollisionState.BAD ? 'red' : 'black'
-              }
-              strokeWidth={1}
-              strokeScaleEnabled={false}
-              onDragMove={(e) => {
-                updatePlacement(item, { x: e.target.x(), y: e.target.y() });
-              }}
-              onDragEnd={() => dropAndUpdateItemCollisions(item)}
-              draggable
-              opacity={placementShadow ? 0.2 : 1}
-            />
+            {itemElement}
             {placementShadow ? (
               <Rect
                 x={placementShadow.x}
@@ -88,3 +99,35 @@ export default function PlaygroundItems() {
     </Layer>
   );
 }
+
+const ImageItem = ({
+  item,
+  updatePlacement,
+  dropAndUpdateItemCollisions,
+}: {
+  item: IPlaceableItem;
+  updatePlacement: (item: IPlaceableItem, newPosition: Point) => void;
+  dropAndUpdateItemCollisions: (item: IPlaceableItem) => void;
+}) => {
+  if (!item.image) throw new Error('Image not found in ImageItem component');
+  const [fetchedImage] = useImage(item.image);
+  return (
+    <Image
+      key={item.id}
+      x={item.x}
+      y={item.y}
+      width={item.width}
+      height={item.length}
+      stroke={item.collisionState === CollisionState.BAD ? 'red' : 'black'}
+      strokeWidth={1}
+      strokeScaleEnabled={false}
+      onDragMove={(e) => {
+        updatePlacement(item, { x: e.target.x(), y: e.target.y() });
+      }}
+      onDragEnd={() => dropAndUpdateItemCollisions(item)}
+      draggable
+      opacity={item.placementShadow ? 0.2 : 1}
+      image={fetchedImage}
+    />
+  );
+};

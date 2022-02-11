@@ -62,6 +62,7 @@
     "test": "react-scripts test",
     "taiko-test": "gauge run specs",
     "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start",
+    "dev:testplayground": "REACT_APP_DISABLE_AUTH=true REACT_APP_TEST_PLAYGROUND=true npm start",
     "dev": "npm start"
   },
   "eslintConfig": {

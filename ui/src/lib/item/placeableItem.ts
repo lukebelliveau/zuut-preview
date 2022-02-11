@@ -32,6 +32,7 @@ export interface IPlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
+  image: string | undefined;
   placementShadow: PlacementShadow | undefined;
   collisionState: CollisionState;
 }
@@ -45,6 +46,7 @@ export default class PlaceableItem implements IPlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
+  image: string | undefined;
   collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
 
