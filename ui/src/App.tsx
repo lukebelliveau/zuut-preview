@@ -1,15 +1,8 @@
-import { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import RequireAuth from './components/RequireAuth';
-import { create } from './features/plans/planSlice';
-import { useSelectPlayground } from './features/playgrounds/playgroundSelector';
-import { update } from './features/playgrounds/playgroundSlice';
-import Plan from './lib/plan';
-import PlanReduxAdapter from './lib/plan/planReduxAdapter';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
 import NotFound from './routes/NotFound';
@@ -18,21 +11,6 @@ import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlaygr
 import Workplace from './routes/Workplace';
 
 function App() {
-  const [firstLoad, setFirstLoad] = useState(true);
-  const dispatch = useDispatch();
-  const playgroundState = useSelectPlayground();
-
-  useEffect(() => {
-    if (firstLoad) {
-      const plan = Plan.sandbox();
-      if (!process.env.REACT_APP_TEST_PLAYGROUND) {
-        dispatch(create(PlanReduxAdapter.planToState(plan)));
-        dispatch(update({ ...playgroundState, planId: plan.id }));
-      }
-      setFirstLoad(false);
-    }
-  }, [playgroundState, dispatch, firstLoad]);
-
   return (
     <DndProvider backend={HTML5Backend}>
       <Router>

@@ -27,7 +27,6 @@ export default function EnterDimensions() {
   const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
 
   const plan = PlanReduxAdapter.stateToPlan(useSelectDefaultPlan());
-  if (!plan) return <></>;
 
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = data => {
     const newPlan = new Plan(

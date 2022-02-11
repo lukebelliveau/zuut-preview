@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "nf start"
+    "dev": "nf -p 3000 start"
   },
   "keywords": [],
   "author": "Zuut",
