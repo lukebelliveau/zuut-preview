@@ -3,27 +3,65 @@ import GrowspaceItem from './item/growspaceItem';
 import { Item } from './item';
 import MiscItem from './item/miscItem';
 import RoomItem from './item/roomItem';
+import PotItem from './item/potItem';
+import { feetToMm } from './conversions';
 
 export type IItemGroup = {
-  itemGroup: string,
-  items: Item[]
-}
+  itemGroup: string;
+  items: Item[];
+};
 
 const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'pots',
     items: [
-      new GrowspaceItem('Pot 1', undefined, undefined, undefined, 304.8, 304.8, 304.8),
-      new GrowspaceItem('Pot 2', undefined, undefined, undefined, 304.8, 304.8, 304.8)
-    ]
+      new PotItem(
+        'Pot 1x1',
+        undefined,
+        undefined,
+        undefined,
+        feetToMm(1),
+        feetToMm(1),
+        feetToMm(1)
+      ),
+      new PotItem(
+        'Pot 2x2',
+        undefined,
+        undefined,
+        undefined,
+        feetToMm(2),
+        feetToMm(2),
+        feetToMm(2)
+      ),
+    ],
   },
   {
     itemGroup: 'climate',
-    items: [new RoomItem('climate obj', undefined, undefined, undefined, 304.8, 304.8, 304.8)]
+    items: [
+      new RoomItem(
+        'climate obj',
+        undefined,
+        undefined,
+        undefined,
+        304.8,
+        304.8,
+        304.8
+      ),
+    ],
   },
   {
     itemGroup: 'structure',
-    items: [new Growspace('24x24x36 tent', undefined, undefined, undefined, 609.6, 609.6, 914.4)]
+    items: [
+      new Growspace(
+        '24x24x36 tent',
+        undefined,
+        undefined,
+        undefined,
+        609.6,
+        609.6,
+        914.4
+      ),
+    ],
   },
   {
     itemGroup: 'misc',
@@ -43,12 +81,12 @@ const ItemsLibrary: IItemGroup[] = [
       new MiscItem('Syringes'),
       new MiscItem('Timer'),
       new MiscItem('Zip Ties'),
-    ]
+    ],
   },
 ];
 
 export function itemGroup(name: string): Item[] {
-  const group = ItemsLibrary.find(group => group.itemGroup === name);
+  const group = ItemsLibrary.find((group) => group.itemGroup === name);
   if (group === undefined) throw new Error(`Unknown item group: ${name}`);
 
   return group.items;

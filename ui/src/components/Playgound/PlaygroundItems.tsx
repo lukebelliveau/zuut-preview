@@ -119,7 +119,7 @@ const ImageItem = ({
       width={item.width}
       height={item.length}
       stroke={item.collisionState === CollisionState.BAD ? 'red' : 'black'}
-      strokeWidth={1}
+      strokeWidth={item.collisionState === CollisionState.BAD ? 1 : 0}
       strokeScaleEnabled={false}
       onDragMove={(e) => {
         updatePlacement(item, { x: e.target.x(), y: e.target.y() });

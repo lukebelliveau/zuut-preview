@@ -7,6 +7,8 @@ import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
 import WallItem, { WALL_ITEM_TYPE } from './wallItem';
 import { CollisionState } from './placeableItem';
+import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
+import PotItem, { POT_ITEM_TYPE } from './potItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
@@ -85,6 +87,30 @@ export default class ItemReduxAdapter {
 
       case WALL_ITEM_TYPE:
         return new WallItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case WINDOW_ITEM_TYPE:
+        return new WindowItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case POT_ITEM_TYPE:
+        return new PotItem(
           itemState.name,
           itemState.id,
           itemState.x,
