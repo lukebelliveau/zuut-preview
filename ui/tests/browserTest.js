@@ -15,8 +15,8 @@ const {
   textBox,
 } = require('taiko');
 const assert = require('assert');
-// const headless = process.env.headless_chrome.toLowerCase() === 'true';
-const headless = false;
+const headless = process.env.headless_chrome.toLowerCase() === 'true';
+// const headless = false;
 
 beforeSuite(async () => {
   await openBrowser({ headless: headless });
