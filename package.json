@@ -5,10 +5,9 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "cd ui && npm start",
+    "start": "nf -p 3000 start",
     "dev": "nf -p 3000 start",
-    "prepush": "cd backend && npm test && cd ../ui && npm run prepush",
-    "preinstall": "cd ui && npm install"
+    "prepush": "cd backend && npm test && cd ../ui && npm run prepush"
   },
   "keywords": [],
   "author": "Zuut",
