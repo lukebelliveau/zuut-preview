@@ -7,7 +7,6 @@ import { CollisionState, IPlaceableItem } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment } from 'react';
 import { Point } from '../../lib/point';
-import useImage from 'use-image';
 
 export default function PlaygroundItems() {
   const dispatch = useDispatch();
