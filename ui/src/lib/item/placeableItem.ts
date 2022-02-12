@@ -3,6 +3,7 @@ import { areColliding, rotated90Degrees } from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
+import RectangleImage from '../../images/items/rectangle.svg';
 
 export interface PlacementShadow {
   x: number;
@@ -32,7 +33,7 @@ export interface IPlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
-  image: string | undefined;
+  image: string;
   placementShadow: PlacementShadow | undefined;
   collisionState: CollisionState;
 }
@@ -46,7 +47,7 @@ export default class PlaceableItem implements IPlaceableItem {
   width: number;
   length: number;
   height: number | undefined;
-  image: string | undefined;
+  image: string = RectangleImage;
   collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
 
