@@ -8,19 +8,23 @@ import ItemIcon from './ItemIcon';
 
 type ShoppingListCandidateProps = {
   item: MiscItem;
-}
+};
 
-export default function ShoppingListCandidate({ item }: ShoppingListCandidateProps) {
+export default function ShoppingListCandidate({
+  item,
+}: ShoppingListCandidateProps) {
   const dispatch = useDispatch();
 
   const [_, drag] = useDrag(() => ({
     type: MISC_ITEM_TYPE,
-    item
+    item,
   }));
 
   function sendToShoppingList() {
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 
-  return <ItemIcon dragRef={drag} item={item} onKeyboard={sendToShoppingList} />;
+  return (
+    <ItemIcon dragRef={drag} item={item} onKeyboard={sendToShoppingList} />
+  );
 }
