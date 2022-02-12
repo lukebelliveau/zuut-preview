@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 
 import SidebarTabTitle from './SidebarTabTitle';
 import LayoutTab from './LayoutTab';
@@ -6,31 +6,32 @@ import ObjectsTab from './ObjectsTab';
 
 import './SidebarTabs.css';
 
+export const DRAGGABLE_SIDEBAR_ITEM = 'DRAGGABLE_SIDEBAR_ITEM';
+
 function SidebarTabs() {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  return (<>
-    <div className="sidebar-menu-tabs" role="tablist"> 
-      <SidebarTabTitle
-        title="Layout"
-        index={0}
-        setSelectedTab={setSelectedTab}
-        active={selectedTab === 0}
-        id="layout"
-      />
-      <SidebarTabTitle
-        title="Objects"
-        index={1}
-        setSelectedTab={setSelectedTab}
-        active={selectedTab === 1}
-        id="objects"
-      />
-    </div>
-    {[
-      <LayoutTab />,
-      <ObjectsTab />
-    ][selectedTab]}
-  </>);
+  return (
+    <>
+      <div className="sidebar-menu-tabs" role="tablist">
+        <SidebarTabTitle
+          title="Layout"
+          index={0}
+          setSelectedTab={setSelectedTab}
+          active={selectedTab === 0}
+          id="layout"
+        />
+        <SidebarTabTitle
+          title="Objects"
+          index={1}
+          setSelectedTab={setSelectedTab}
+          active={selectedTab === 1}
+          id="objects"
+        />
+      </div>
+      {[<LayoutTab />, <ObjectsTab />][selectedTab]}
+    </>
+  );
 }
 
 export default SidebarTabs;

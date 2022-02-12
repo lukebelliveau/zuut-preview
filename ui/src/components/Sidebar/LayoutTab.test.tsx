@@ -1,7 +1,6 @@
-import { EnhancedStore } from '@reduxjs/toolkit';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
+import { renderWithContext } from '../../../tests/renderWithContext';
 import { createAppStore } from '../../app/store';
 import { itemsSelectors } from '../../features/items/itemsSelectors';
 import LayoutTab from './LayoutTab';
@@ -26,9 +25,3 @@ describe('LayoutTab', () => {
     expect(items[0].name).toBe('Window');
   });
 });
-
-const renderWithContext = (children: JSX.Element, store?: EnhancedStore) => {
-  const testStore = store ? store : createAppStore();
-
-  return render(<Provider store={testStore}>{children}</Provider>);
-};

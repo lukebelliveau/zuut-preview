@@ -9,7 +9,6 @@ import { v4 } from 'uuid';
 import Layout from '../../components/Layout';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import ShoppingList from '../../components/ShoppingList';
-import MiscItem, { MISC_ITEM_TYPE } from '../../lib/item/miscItem';
 import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
@@ -22,6 +21,8 @@ import { store } from '../../app/store';
 import { useDEBUGCreateTestRoomIfDev } from './useDEBUGCreateTestRoomIfDev';
 import GridLines from '../../components/Playgound/GridLines';
 import ControlPanel from '../../components/ControlPanel/ControlPanel';
+import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/Sidebar/SidebarTabs';
+import { isPlaceableItem, Item } from '../../lib/item';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -51,8 +52,11 @@ export default function ShowPlayground() {
   }, [firstLoad]);
 
   const [_, drop] = useDrop(() => ({
-    accept: MISC_ITEM_TYPE,
-    drop: (item: MiscItem) => {
+    accept: [DRAGGABLE_SIDEBAR_ITEM],
+    drop: (item: Item) => {
+      if (isPlaceableItem(item)) {
+        item.place(playground.place());
+      }
       dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
     },
   }));
