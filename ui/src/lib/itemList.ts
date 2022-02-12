@@ -6,3 +6,26 @@ export default class ItemList extends Array {
     return this.filter((item) => isPlaceableItem(item));
   }
 }
+
+/**
+ * If an item is selected, place it at the end of the array so Konva renders it on top.
+ */
+export const sortSelectedToLast = (
+  items: ItemList,
+  idOfSelectedItem: string | undefined
+): ItemList => {
+  if (!idOfSelectedItem) return items;
+  const itemsCopy = [...items];
+
+  const indexOfSelected = itemsCopy.findIndex(
+    (item) => item.id === idOfSelectedItem
+  );
+  const [selectedItem] = itemsCopy.splice(indexOfSelected, 1);
+
+  const sortedItems = new ItemList();
+
+  itemsCopy.forEach((item) => sortedItems.push(item));
+  sortedItems.push(selectedItem);
+
+  return sortedItems;
+};

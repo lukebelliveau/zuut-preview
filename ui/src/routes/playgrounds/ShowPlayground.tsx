@@ -21,6 +21,7 @@ import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
 import { useDEBUGCreateTestRoomIfDev } from './useDEBUGCreateTestRoomIfDev';
 import GridLines from '../../components/Playgound/GridLines';
+import ControlPanel from '../../components/ControlPanel/ControlPanel';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -110,6 +111,7 @@ export default function ShowPlayground() {
         </div>
       </Layout>
       <ShoppingList />
+      <ControlPanel />
     </>
   );
 }

@@ -1,20 +1,20 @@
-#shopping-list {
+#control-panel {
   height: 80%;
   width: 14.063rem;
   position: absolute;
-  right: 0.5rem;
+  right: 15rem;
   top: 10%;
   transition: all 1s;
 }
-#shopping-list.hidden {
+#control-panel.hidden {
   top: 95%;
   transition: all 1s;
 }
-#shopping-list.hidden .shopping-list-body {
+#control-panel.hidden .shopping-list-body {
   visibility: hidden;
 }
 
-#shopping-list h2 {
+#control-panel h2 {
   background-color: var(--purple-1);
   border: 0.063rem solid var(--black);
   border-bottom: 0;
@@ -28,11 +28,11 @@
   text-align: center;
   text-transform: uppercase;
 }
-#shopping-list h2::after {
+#control-panel h2::after {
   margin-left: 1rem;
-  content: url('../images/triangle-upside-down.svg');
+  content: url('../../images/triangle-upside-down.svg');
 }
-#shopping-list h2 button {
+#control-panel h2 button {
   background-color: var(--purple-1);
   border: 0;
   color: var(--primary-white);
@@ -44,8 +44,8 @@
   text-align: center;
   text-transform: uppercase;
 }
-#shopping-list.hidden h2::after {
-  content: url('../images/triangle.svg');
+#control-panel.hidden h2::after {
+  content: url('../../images/triangle.svg');
 }
 
 .shopping-list-body {
@@ -57,28 +57,20 @@
   padding: 0.5rem;
 }
 
-#shopping-list ul {
+#control-panel ul {
   margin: 0;
 }
 
-#shopping-list ul {
+#control-panel ul {
   padding: 0 0 0 0.5rem;
 }
-#shopping-list li {
+#control-panel li {
   list-style-type: none;
 }
-#shopping-list li input[type='checkbox'] {
+#control-panel li input[type='checkbox'] {
   margin: 0 0.5rem 0.625rem 0;
   height: 1rem;
   width: 1rem;
   border-radius: 0.313rem;
   border: 0.063rem solid var(--black);
-}
-
-#shopping-list span {
-  cursor: pointer;
-}
-
-#shopping-list span.selected {
-  font-weight: bold;
 }
