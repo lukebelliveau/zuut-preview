@@ -110,7 +110,12 @@ const ImageItem = ({
   dropAndUpdateItemCollisions: (item: IPlaceableItem) => void;
 }) => {
   if (!item.image) throw new Error('Image not found in ImageItem component');
-  const [fetchedImage] = useImage(item.image);
+
+  // create manually instead of using Konva's `use-image` package.
+  // useImage() asynchronously loads the image every time the component mounts, causing flickering on zoom (because children of the Stage re-mount).
+  const imageObj = new window.Image();
+  imageObj.src = item.image;
+
   return (
     <Image
       key={item.id}
@@ -127,7 +132,7 @@ const ImageItem = ({
       onDragEnd={() => dropAndUpdateItemCollisions(item)}
       draggable
       opacity={item.placementShadow ? 0.2 : 1}
-      image={fetchedImage}
+      image={imageObj}
     />
   );
 };
