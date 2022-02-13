@@ -4,6 +4,9 @@ import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
 import { existsSync, readFileSync } from 'fs';
 import http from 'http';
+import winston from 'winston';
+import expressWinston from 'express-winston';
+
 import { getEnv } from './env';
 import { UI_BUILD_DIR } from './paths';
 import { createServer } from './server';
@@ -18,6 +21,16 @@ const indexHtml = existsSync(indexHtmlPath) ? readFileSync(indexHtmlPath) : '';
 async function listen(port: number) {
   const app = express();
   const httpServer = http.createServer(app);
+
+  app.use(expressWinston.logger({
+    transports: [
+      new winston.transports.Console()
+    ],
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.json()
+    ),
+  }));
 
   app.use('/graphql', jwt({
     secret: jwksRsa.expressJwtSecret({
