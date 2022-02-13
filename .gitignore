@@ -31,5 +31,7 @@ junit.xml
 logs
 reports
 
+.env
 backend/dist
 db
+
