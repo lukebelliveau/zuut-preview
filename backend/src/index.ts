@@ -21,7 +21,7 @@ const indexHtml = existsSync(indexHtmlPath) ? readFileSync(indexHtmlPath) : '';
 async function listen(port: number) {
   const app = express();
   const httpServer = http.createServer(app);
-
+                    
   app.use(expressWinston.logger({
     transports: [
       new winston.transports.Console()
@@ -29,7 +29,7 @@ async function listen(port: number) {
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.json()
-    ),
+    ),    
   }));
 
   app.use('/graphql', jwt({
