@@ -1,0 +1,12 @@
+type Plan {
+  id: ID!
+  name: String
+}
+
+type Query {
+  plans: [Plan]
+}
+
+type Mutation {
+  createPlan(id: ID!, name: String): ID
+}

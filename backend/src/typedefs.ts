@@ -1,17 +1,4 @@
-import { gql } from 'apollo-server-core';
+import { readFileSync } from 'fs';
+import { GRAPHQL_TYPES } from './paths';
 
-export const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Plan {
-    name: String
-  }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    plans: [Plan]
-  }
-`;
+export const typeDefs = readFileSync(GRAPHQL_TYPES, { encoding: 'utf-8' });

@@ -1,17 +1,16 @@
-import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import express from 'express';
 import proxy from 'express-http-proxy';
 import jwt from 'express-jwt';
+import jwksRsa from 'jwks-rsa';
 import { existsSync, readFileSync } from 'fs';
 import http from 'http';
-
-import { typeDefs } from './typedefs';
-import { resolvers } from './resolvers';
+import { getEnv } from './env';
+import { UI_BUILD_DIR } from './paths';
+import { createServer } from './server';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PORT = parseInt(process.env.PORT || '4000');
-const UI_BUILD_DIR = `${__dirname}/../../ui/build`;
+const PORT = parseInt(process.env.PORT || '3000');
+const JWKS_URL = getEnv('JWKS_URL');
 
 const indexHtmlPath = `${UI_BUILD_DIR}/index.html`;
 const indexHtml = existsSync(indexHtmlPath) ? readFileSync(indexHtmlPath) : '';
@@ -21,19 +20,18 @@ async function listen(port: number) {
   const httpServer = http.createServer(app);
 
   app.use('/graphql', jwt({
-    secret: process.env.AUTH0_SECRET || '',
-    algorithms: ['HS256']
+    secret: jwksRsa.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: JWKS_URL,
+    }),
+    // audience: 'urn:my-resource-server',
+    // issuer: 'https://my-authz-server/',
+    algorithms: [ 'RS256' ]
   }));
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: ({ req }) => {
-      return { user: req.user };  // req.user comes from express-jwt
-    },
-  });
-  await server.start();
+  const server = await createServer(httpServer);
 
   if (NODE_ENV !== 'development') {
     app.use('/', express.static(UI_BUILD_DIR));
