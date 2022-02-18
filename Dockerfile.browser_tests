@@ -49,3 +49,5 @@ RUN npm install -g @getgauge/cli \
   && gauge install \
   && gauge install screenshot \
   && gauge config check_updates false
+
+CMD Xvfb :99 -screen 0 1024x768x16 & npm run taiko-test

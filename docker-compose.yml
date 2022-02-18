@@ -28,4 +28,3 @@ services:
       START_URL: http://app:3000/
       TAIKO_USERNAME: taiko@ericascape.com
       TAIKO_PASSWORD: Q799UuJ4rD5KYhu
-    command: npm run taiko-test
