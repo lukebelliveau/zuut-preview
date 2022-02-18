@@ -1,3 +1,11 @@
 node_modules
 backend/node_modules
 ui/node_modules
+
+Dockerfile
+Dockerfile.browser_tests
+docker-compose.yml
+heroku.yml
+mongod.conf
+Procfile
+README.md

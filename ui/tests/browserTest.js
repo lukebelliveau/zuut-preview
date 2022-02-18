@@ -15,11 +15,15 @@ const {
   textBox,
 } = require('taiko');
 const assert = require('assert');
-const headless = process.env.headless_chrome.toLowerCase() === 'true';
-// const headless = false;
+// const headless = process.env.headless_chrome.toLowerCase() === 'true';
+const headless = false;
+
+const startUrl = process.env.START_URL || 'http://localhost:3000/';
+const userName = process.env.TAIKO_USERNAME;
+const password = process.env.TAIKO_PASSWORD;
 
 beforeSuite(async () => {
-  await openBrowser({ headless: headless });
+  await openBrowser({ headless });
 });
 
 afterSuite(async () => {
@@ -27,9 +31,13 @@ afterSuite(async () => {
 });
 
 step('Create a grow', async () => {
-  await goto('http://localhost:3000/');
+  await goto(startUrl);
 
   await click('Get started');
+
+  await write(userName, into(textBox('Email address')));
+  await write(password, into(textBox('Password')));
+  await click('Continue');
 
   await write('Taiko Time', into(textBox({ 'aria-label': 'name' })));
   await press('Enter');

@@ -1,15 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import planAdapter from './planEntityAdapter';
-import { PlanState } from './planState';
-
-export const createPlan = createAsyncThunk(
-  'plans/createPlan',
-  async (planState: PlanState, { dispatch }): Promise<PlanState> => {
-    dispatch(planSlice.actions.create(planState));
-    return planState;
-  }
-);
 
 export const planSlice = createSlice({
   name: 'plan',

@@ -13,7 +13,6 @@ import { createServer } from './server';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PORT = parseInt(process.env.PORT || '3000');
-const JWKS_URL = getEnv('JWKS_URL');
 
 const indexHtmlPath = `${UI_BUILD_DIR}/index.html`;
 const indexHtml = existsSync(indexHtmlPath) ? readFileSync(indexHtmlPath) : '';
@@ -37,11 +36,11 @@ async function listen(port: number) {
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: JWKS_URL,
+      jwksUri: getEnv('JWKS_URL'),
     }),
-    // audience: 'urn:my-resource-server',
-    // issuer: 'https://my-authz-server/',
-    algorithms: [ 'RS256' ]
+    audience: getEnv('AUTH0_AUDIENCE'),
+    issuer: getEnv('AUTH0_ISSUER'),
+    algorithms: [ 'RS256' ],
   }));
 
   const server = await createServer(httpServer);

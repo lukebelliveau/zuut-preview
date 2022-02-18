@@ -5,11 +5,27 @@ services:
     build: .
     ports:
       - 3000
-    command: npm run dev:noauth
+    environment:
+      AUTH0_AUDIENCE: ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid
+      AUTH0_ISSUER: https://dev-baqlbrdt.us.auth0.com/
+      JWKS_URL: https://dev-baqlbrdt.us.auth0.com/.well-known/jwks.json
+      MONGODB_URL: mongodb://monbodb/dev?retryWrites=true&w=majority
+      PORT: 3000
+    depends_on:
+      - mongodb
   
-  taiko:
-    build: .
+  mongodb:
+    image: mongo
+  
+  browser_tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.browser_tests
     platform: "linux/amd64"
     depends_on:
       - app
+    environment:
+      START_URL: http://app:3000/
+      TAIKO_USERNAME: taiko@ericascape.com
+      TAIKO_PASSWORD: Q799UuJ4rD5KYhu
     command: npm run taiko-test

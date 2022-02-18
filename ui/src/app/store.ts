@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import logger from 'redux-logger';
+import logger from 'redux-logger';
 
 import itemsReducer from '../features/items/itemsSlice';
 import playgroundReducer from '../features/playgrounds/playgroundSlice';
@@ -16,7 +16,7 @@ export const createAppStore = () =>
       interactions: interactionsReducer,
       user: userReducer,
     },
-    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   });
 
 export const store = createAppStore();

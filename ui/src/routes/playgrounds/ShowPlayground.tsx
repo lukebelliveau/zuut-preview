@@ -18,7 +18,6 @@ import { useSelectPlanById } from '../../features/plans/planSelectors';
 import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
 import { store } from '../../app/store';
-import { useDEBUGCreateTestRoomIfDev } from './useDEBUGCreateTestRoomIfDev';
 import GridLines from '../../components/Playgound/GridLines';
 import ControlPanel from '../../components/ControlPanel/ControlPanel';
 import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/Sidebar/SidebarTabs';
@@ -27,7 +26,6 @@ import { isPlaceableItem, Item } from '../../lib/item';
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
-  useDEBUGCreateTestRoomIfDev(20, 10);
   const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();

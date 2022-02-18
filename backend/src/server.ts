@@ -15,7 +15,9 @@ type Jwt = {
 }
 
 export type GraphqlContext = {
-  plans: Plans,
+  dataSources: {
+    plans: Plans,
+  },
   user: Jwt,
 }
 

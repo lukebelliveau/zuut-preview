@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.5.8",
+    "@apollo/client": "^3.5.9",
     "@auth0/auth0-react": "^1.8.0",
     "@babel/preset-typescript": "^7.16.7",
     "@getgauge/cli": "latest",
@@ -61,8 +61,6 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "taiko-test": "gauge run specs",
-    "dev:noauth": "REACT_APP_DISABLE_AUTH=true npm start",
-    "dev:testplayground": "REACT_APP_DISABLE_AUTH=true REACT_APP_TEST_PLAYGROUND=true npm start",
     "dev": "npm start"
   },
   "eslintConfig": {

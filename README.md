@@ -39,6 +39,22 @@ Anytime you update the schema in `graphql/*.graphql`, you should run `npm run co
 `backend/src/graphql.ts` and `ui/src/graphql.ts`. In the backend this gives us type definitions for all our resolvers. In the
 UI this gives us function signatures for queries and mutations.
 
+## Browser tests
+
+The browser tests require a valid account to log in with. You can use the zuutheroku@gmail.com user:
+
+```bash
+export TAIKO_USERNAME=zuutheroku@gmail.com
+export TAIKO_PASSWORD=Q799UuJ4rD5KYhu
+```
+
+Then start the dev servers, then run:
+
+```bash
+cd ui
+npm run taiko-test
+```
+
 ## In production
 
 The app is built with docker which runs the backend server. When `NODE_ENV=production`, the backend will not use a proxy,

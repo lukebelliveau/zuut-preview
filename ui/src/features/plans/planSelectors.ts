@@ -15,7 +15,7 @@ export const useSelectPlanById = (id: string) => {
 
 export const useSelectAllPlans = () => useAppSelector(planSelectors.selectAll);
 
-export const selectDefaultPlan = createSelector([(state: RootState) => planSelectors.selectById(state, DEFAULT_PLAN_ID)], state => state);
+export const selectDefaultPlan = createSelector([(state: RootState) => planSelectors.selectAll(state)[0]], state => state);
 
 export const useSelectDefaultPlan = () => {
   return useAppSelector(selectDefaultPlan);

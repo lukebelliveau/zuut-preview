@@ -1,19 +1,30 @@
-FROM node:16-alpine AS build
+FROM node:16-alpine AS dev
 
 WORKDIR /app/backend
 
 ADD backend/package.json backend/package-lock.json /app/backend/
 RUN npm ci
 COPY backend /app/backend/
-RUN npm run build
 
 WORKDIR /app/ui
 
 ADD ui/package.json ui/package-lock.json /app/ui/
 RUN npm ci
 COPY ui /app/ui/
+
+WORKDIR /app
+
+FROM node:16-alpine AS build
+
+WORKDIR /app/backend
+COPY --from=dev /app/backend /app/backend
 RUN npm run build
 
+WORKDIR /app/ui
+COPY --from=dev /app/ui /app/ui
+RUN npm run build
+
+WORKDIR /app
 
 FROM node:16-alpine AS prod
 
