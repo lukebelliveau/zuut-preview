@@ -1,5 +1,5 @@
 import { isPlaceableItem } from './item';
-import PlaceableItem, { IPlaceableItem } from './item/placeableItem';
+import { IPlaceableItem } from './item/placeableItem';
 
 export default class ItemList extends Array {
   placeable(): IPlaceableItem[] {
@@ -14,7 +14,10 @@ export const sortSelectedToLast = (
   items: ItemList,
   idOfSelectedItem: string | undefined
 ): ItemList => {
-  if (!idOfSelectedItem) return items;
+  if (!idOfSelectedItem || items.length === 0) {
+    return items;
+  }
+
   const itemsCopy = [...items];
 
   const indexOfSelected = itemsCopy.findIndex(

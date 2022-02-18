@@ -9,7 +9,7 @@ import {
   PlacementShadow,
 } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Point } from '../../lib/point';
 
 import { selectSelectedItemId } from '../../features/interactions/interactionsSelectors';
@@ -19,6 +19,27 @@ import {
   toggleSelect,
 } from '../../features/interactions/interactionsSlice';
 import { sortSelectedToLast } from '../../lib/itemList';
+
+const useTrackCollisions = () => {
+  const dispatch = useDispatch();
+  const playground = useBuildPlayground();
+  const items = useBuildItemList();
+
+  useEffect(() => {
+    items.placeable().forEach((item) => {
+      const oldCollisionState = item.collisionState;
+      item.updateCollisions(items, playground);
+      if (oldCollisionState !== item.collisionState) {
+        dispatch(
+          updateOne({
+            id: item.id,
+            changes: ItemReduxAdapter.itemToState(item),
+          })
+        );
+      }
+    });
+  }, [items, playground, dispatch]);
+};
 
 export default function PlaygroundItems() {
   const dispatch = useDispatch();
@@ -43,17 +64,9 @@ export default function PlaygroundItems() {
     } else {
       dispatch(removeOne(item.id));
     }
-
-    items.placeable().forEach((item) => {
-      item.updateCollisions(items, playground);
-      dispatch(
-        updateOne({
-          id: item.id,
-          changes: ItemReduxAdapter.itemToState(item),
-        })
-      );
-    });
   }
+
+  useTrackCollisions();
 
   return (
     <Layer>

@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/tabindex-no-positive */
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import Konva from 'konva';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
@@ -9,7 +12,7 @@ import { v4 } from 'uuid';
 import Layout from '../../components/Layout';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import ShoppingList from '../../components/ShoppingList';
-import { addOne } from '../../features/items/itemsSlice';
+import { addOne, removeOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { loadSavedPlayground, zoom as zoomPlayground } from '../../features/playgrounds/playgroundSlice';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -23,6 +26,8 @@ import { isPlaceableItem, Item } from '../../lib/item';
 import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
+import { EntityId } from '@reduxjs/toolkit';
+import { toggleSelect } from '../../features/interactions/interactionsSlice';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -84,13 +89,21 @@ export default function ShowPlayground() {
 
   const scale = playground.scale;
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+    const selectedItemId = store.getState().interactions.selected;
+    if ((e.key === 'Backspace' || 'Delete') && selectedItemId) {
+      dispatch(removeOne(selectedItemId as EntityId));
+      dispatch(toggleSelect(selectedItemId));
+    }
+  };
+
   return (
     <>
       <Helmet>
         <title>Zuut - Design your grow</title>
       </Helmet>
       <Layout>
-        <div id="sandbox" role="application" ref={drop}>
+        <div id="sandbox" role="application" ref={drop} tabIndex={1} onKeyDown={handleKeyDown}>
           <Stage
             key={v4()}
             ref={stageRef}

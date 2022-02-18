@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
+import { useBuildPlayground } from '../../app/builderHooks';
 import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import PlaceableItem from '../../lib/item/placeableItem';

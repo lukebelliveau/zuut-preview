@@ -10,6 +10,13 @@ describe('sortSelectedToLast', () => {
   itemList.push(item1);
   itemList.push(item2);
 
+  it('returns empty list if items is of length 0', () => {
+    const emptyItemList = new ItemList();
+    const sortedItems = sortSelectedToLast(emptyItemList, 'id');
+
+    expect(sortedItems).toEqual([]);
+  });
+
   it('returns a list without mutating original list if idOfSelectedItem is undefined', () => {
     const sortedItems = sortSelectedToLast(itemList, undefined);
     expect(itemList[0]).toBe(item0);
