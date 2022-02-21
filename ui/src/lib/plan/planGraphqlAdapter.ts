@@ -7,13 +7,9 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { PlanState } from '../../features/plans/planState';
-
-const CREATE_PLAN = gql`
-  mutation CreatePlan($id: ID!, $name: String) {
-    createPlan(id: $id, name: $name)
-  }
-`;
+import { Query } from '../../graphql';
+import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
+import Plan from '../plan';
 
 export default class PlanGraphqlAdapter {
   client: ApolloClient<NormalizedCacheObject>;
@@ -32,12 +28,51 @@ export default class PlanGraphqlAdapter {
     });
   }
 
-  save(plan: PlanState) {
+  async current(): Promise<Plan> {
+    const result = await this.client.query({
+      query: gql`
+        {
+          plans {
+            id
+            name
+            room {
+              width
+              length
+            }
+          }
+        }
+      `,
+    });
+    const query = result.data as Query;
+    const gqlPlans = query.plans;
+    if (!gqlPlans || gqlPlans?.length === 0) throw new Error('No plans returned');
+    const gqlPlan = unwrapOrError(gqlPlans[0]);
+
+    return new Plan(
+      unwrapOrUndefined(gqlPlan.name),
+      gqlPlan.room?.width,
+      gqlPlan.room?.length,
+      undefined,
+      gqlPlan.id,
+    );
+  }
+
+  create(plan: Plan) {
     return this.client.mutate({
-      mutation: CREATE_PLAN,
+      mutation: gql`
+        mutation CreatePlan($plan: PlanInput!) {
+          createPlan(plan: $plan)
+        }
+      `,
       variables: {
-        id: plan.id,
-        name: plan.name,
+        plan: {
+          id: plan.id,
+          name: plan.name,
+          room: {
+            width: plan.room.width,
+            length: plan.room.length,
+          }
+        }
       }
     });
   }

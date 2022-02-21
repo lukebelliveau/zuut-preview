@@ -4,17 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import LayoutIcon from '../../../images/glyphs/layout.svg';
 import './EnterDimensions.css';
 
-import Plan from '../../../lib/plan';
 import PillInput from '../../../components/PillInput';
 import { playground_path } from '../ShowPlayground';
 import Section from './Section';
 import { feetToMm } from '../../../lib/conversions';
-import { update } from '../../../features/plans/planSlice';
-import PlanReduxAdapter from '../../../lib/plan/planReduxAdapter';
+import { setDimentions } from '../../../features/plans/planSlice';
 import { useDispatch } from 'react-redux';
-import { useSelectDefaultPlan } from '../../../features/plans/planSelectors';
-
-export const new_playground_path = () => '/playgrounds/new';
 
 type CreateLayoutFormParams = {
   width: number;
@@ -26,20 +21,12 @@ export default function EnterDimensions() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
 
-  const plan = PlanReduxAdapter.stateToPlan(useSelectDefaultPlan());
-
   const onSubmit: SubmitHandler<CreateLayoutFormParams> = (data) => {
-    const newPlan = new Plan(
-      plan?.name,
-      feetToMm(data.width),
-      feetToMm(data.length),
-      undefined,
-      plan?.id
-    );
+    dispatch(setDimentions({
+      width: feetToMm(data.width),
+      length: feetToMm(data.length),
+    }));
 
-    dispatch(
-      update({ id: plan.id, changes: PlanReduxAdapter.planToState(newPlan) })
-    );
     navigate(playground_path());
   };
 

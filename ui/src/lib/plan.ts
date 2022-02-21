@@ -1,10 +1,16 @@
 import { v4 } from 'uuid';
 import Grid from './grid';
-import Room from './room';
+import Room, { IRoom } from './room';
 
-export default class Plan {
+export interface IPlan {
   id: string;
-  name: string | undefined;
+  name?: string;
+  room: IRoom;
+}
+
+export default class Plan implements IPlan {
+  id: string;
+  name?: string;
   room: Room;
   grid: Grid;
 
@@ -13,6 +19,11 @@ export default class Plan {
     this.name = name;
 
     this.room = new Room(width, length, height);
+    this.grid = new Grid(width, length);
+  }
+
+  setDimensions(width: number, length: number) {
+    this.room = new Room(width, length);
     this.grid = new Grid(width, length);
   }
 

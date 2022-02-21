@@ -1,9 +1,15 @@
-export default class Room {
+export interface IRoom {
+  width?: number;
+  length?: number;
+  height?: number;
+}
+
+export default class Room implements IRoom {
   width: number;
   length: number;
-  height: number | undefined;
+  height?: number;
 
-  constructor(width: number, length: number, height: number | undefined) {
+  constructor(width: number, length: number, height?: number) {
     this.width = width;
     this.length = length;
     this.height = height;

@@ -5,9 +5,7 @@ import Section from './Section';
 import NextButton from './NextButton';
 import { update } from '../../../features/plans/planSlice';
 import PlanReduxAdapter from '../../../lib/plan/planReduxAdapter';
-import { useSelectDefaultPlan } from '../../../features/plans/planSelectors';
-
-export const new_playground_path = () => '/playgrounds/new';
+import { useBuildPlayground } from '../../../app/builderHooks';
 
 type EnterNameProps = {
   nextPage: () => void;
@@ -15,8 +13,10 @@ type EnterNameProps = {
 
 export default function EnterName(props: EnterNameProps) {
   const dispatch = useDispatch();
-  const planState = useSelectDefaultPlan();
-  const plan = PlanReduxAdapter.stateToPlan(planState);
+  const playground = useBuildPlayground();
+
+  const plan = playground.plan;
+  if (!plan) return <></>;
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     plan.name = event.target.value;

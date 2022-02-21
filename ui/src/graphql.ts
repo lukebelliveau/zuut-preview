@@ -20,17 +20,34 @@ export type Mutation = {
 
 
 export type MutationCreatePlanArgs = {
-  id: Scalars['ID'];
-  name?: InputMaybe<Scalars['String']>;
+  plan: PlanInput;
 };
 
 export type Plan = {
   __typename?: 'Plan';
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
+  room?: Maybe<Room>;
+};
+
+export type PlanInput = {
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  room: RoomInput;
 };
 
 export type Query = {
   __typename?: 'Query';
   plans?: Maybe<Array<Maybe<Plan>>>;
+};
+
+export type Room = {
+  __typename?: 'Room';
+  length: Scalars['Float'];
+  width: Scalars['Float'];
+};
+
+export type RoomInput = {
+  length: Scalars['Float'];
+  width: Scalars['Float'];
 };

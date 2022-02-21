@@ -1,5 +1,5 @@
 overwrite: true
-schema: "http://localhost:3000/graphql"
+schema: ./graphql/**/*.graphql
 generates:
   backend/src/graphql.ts:
     plugins:
@@ -11,6 +11,3 @@ generates:
     plugins:
       - "typescript"
       - "typescript-react-apollo"
-  ./graphql/schema.json:
-    plugins:
-      - "introspection"

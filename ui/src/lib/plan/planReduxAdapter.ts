@@ -1,8 +1,9 @@
-import { PlanState } from '../../features/plans/planState';
-import Plan from '../plan';
+import { PlanPayload } from '../../features/plans/planPayload';
+import { assertDefined } from '../assert';
+import Plan, { IPlan } from '../plan';
 
 export default class PlanReduxAdapter {
-  public static planToState(plan: Plan): PlanState {
+  public static planToState(plan: Plan): IPlan {
     return {
       id: plan.id,
       name: plan.name,
@@ -14,7 +15,7 @@ export default class PlanReduxAdapter {
     };
   }
 
-  public static stateToPlan(planState: PlanState | undefined) {
+  public static stateToPlan(planState: IPlan | undefined) {
     return new Plan(
       planState?.name,
       planState?.room?.width,

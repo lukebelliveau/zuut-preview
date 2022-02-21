@@ -1,12 +1,29 @@
+type Room {
+  width: Float!
+  length: Float!
+}
+
 type Plan {
   id: ID!
   name: String
+  room: Room
 }
 
 type Query {
   plans: [Plan]
 }
 
+input RoomInput {
+  width: Float!
+  length: Float!
+}
+
+input PlanInput {
+  id: ID!
+  name: String
+  room: RoomInput!
+}
+
 type Mutation {
-  createPlan(id: ID!, name: String): ID
+  createPlan(plan: PlanInput!): ID
 }

@@ -4,12 +4,14 @@ import { GraphqlContext } from "./server";
 
 export const resolvers: Resolvers<GraphqlContext> = {
   Query: {
-    plans: () => [],
+    plans: (_, __, { dataSources }) => {
+      return dataSources.plans.all();
+    },
   },
   Mutation: {
-    async createPlan(_, { id, name }, { dataSources }) {
-      dataSources.plans.create(id, unwrapOrUndefined(name));
-      return id;
+    createPlan(_, planInput, { dataSources }) {
+      dataSources.plans.create(planInput.plan);
+      return planInput.plan.id;
     }
   },
 };

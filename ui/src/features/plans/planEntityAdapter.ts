@@ -1,7 +1,7 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
-import { PlanState } from './planState';
+import { IPlan } from '../../lib/plan';
 
-const planEntityAdapter = createEntityAdapter<PlanState>({
+const planEntityAdapter = createEntityAdapter<IPlan>({
   sortComparer: (a, b) => {
     if (a.name && b.name)
       return a.name.localeCompare(b.name);

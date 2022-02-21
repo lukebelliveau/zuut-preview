@@ -1,6 +1,5 @@
-import { PlanState } from '../../features/plans/planState';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
-import Plan from '../plan';
+import { IPlan } from '../plan';
 import PlanReduxAdapter from '../plan/planReduxAdapter';
 import Playground from '../playground';
 
@@ -16,8 +15,8 @@ export default class PlaygroundReduxAdapter {
     };
   }
 
-  public static playgroundFromState(planState: PlanState | undefined, playgroundState: PlaygroundState): Playground {
-    const plan = planState ? PlanReduxAdapter.stateToPlan(planState) : new Plan();
+  public static playgroundFromState(planState: IPlan | undefined, playgroundState: PlaygroundState): Playground {
+    const plan = planState ? PlanReduxAdapter.stateToPlan(planState) : undefined;
     return new Playground(
       playgroundState.displayWidth,
       playgroundState.displayHeight,

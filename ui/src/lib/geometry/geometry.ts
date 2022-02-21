@@ -7,7 +7,7 @@ import { Point } from '../point';
 export type GeometryObject = {
   x: number;
   y: number;
-  height: number | undefined;
+  height?: number;
   width: number;
   length: number;
 };

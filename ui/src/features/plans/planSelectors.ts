@@ -3,8 +3,6 @@ import { useAppSelector } from '../../app/hooks';
 import { RootState } from '../../app/rootState';
 import planEntityAdapter from './planEntityAdapter';
 
-const DEFAULT_PLAN_ID = '0';
-
 export const planSelectors = planEntityAdapter.getSelectors<RootState>(
   (state) => state.plans
 );

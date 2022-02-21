@@ -3,8 +3,10 @@ import { RootState } from '../../app/rootState';
 import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
+import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
+import { selectDefaultPlan } from '../plans/planSelectors';
 import { create } from '../plans/planSlice';
-import { PlanState } from '../plans/planState';
+import { selectPlaygroundState } from './playgroundSelector';
 
 import { PlaygroundState } from './playgroundState';
 
@@ -19,18 +21,40 @@ const initialState: PlaygroundState = {
 
 export const setupInitialPLayground = createAsyncThunk(
   'playground/setupInitialPlayground',
-  async (jwt: string, { dispatch, getState }) => {
-    const state: RootState = getState() as RootState;
-    if (!state.playground.planId) return;
-  
+  async (jwt: string, { dispatch }) => {
     const plan = new Plan();
     const planState = PlanReduxAdapter.planToState(plan);
 
     dispatch(create(planState));
     dispatch(setPlan(plan.id));
+  }
+);
 
+export const loadSavedPlayground = createAsyncThunk(
+  'playground/loadSavedPlayground',
+  async (jwt: string, { dispatch }) => {
     const adapter = new PlanGraphqlAdapter(jwt);
-    return adapter.save(planState);
+    const plan = await adapter.current();
+
+    dispatch(create(PlanReduxAdapter.planToState(plan)));
+    dispatch(setPlan(plan.id));
+    dispatch(resizePlayground());
+  }
+);
+
+export const resizePlayground = createAsyncThunk(
+  'playground/resizePlayground',
+  async (_, { dispatch, getState }) => {
+    const sandbox = window.document.getElementById('sandbox');
+    if (!sandbox) return;
+
+    const playgroundState = selectPlaygroundState(getState() as RootState);
+    const planState = selectDefaultPlan(getState() as RootState);
+    const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
+
+    playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
+
+    dispatch(playgroundSlice.actions.resize(PlaygroundReduxAdapter.playgroundToState(playground)));
   }
 );
 
@@ -69,6 +93,6 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const { update, resize, setPlan, zoom } = playgroundSlice.actions;
+export const { update, setPlan, zoom } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

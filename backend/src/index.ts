@@ -28,7 +28,7 @@ async function listen(port: number) {
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.json()
-    ),    
+    ),
   }));
 
   app.use('/graphql', jwt({
@@ -41,6 +41,8 @@ async function listen(port: number) {
     audience: getEnv('AUTH0_AUDIENCE'),
     issuer: getEnv('AUTH0_ISSUER'),
     algorithms: [ 'RS256' ],
+  }).unless({
+    method: 'GET'
   }));
 
   const server = await createServer(httpServer);

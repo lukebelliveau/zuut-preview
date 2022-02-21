@@ -1,13 +1,16 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import './Home.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 import LoginButton from '../components/LoginButton';
-import { Link } from 'react-router-dom';
+import { playground_path } from './playgrounds/ShowPlayground';
 
 export const homePath = () => '/';
 
 function Home() {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <div className="home-wrapper">
       <header>

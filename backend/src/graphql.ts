@@ -26,19 +26,36 @@ export type Mutation = {
 
 
 export type MutationCreatePlanArgs = {
-  id: Scalars['ID'];
-  name?: InputMaybe<Scalars['String']>;
+  plan: PlanInput;
 };
 
 export type Plan = {
   __typename?: 'Plan';
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
+  room?: Maybe<Room>;
+};
+
+export type PlanInput = {
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  room: RoomInput;
 };
 
 export type Query = {
   __typename?: 'Query';
   plans?: Maybe<Array<Maybe<Plan>>>;
+};
+
+export type Room = {
+  __typename?: 'Room';
+  length: Scalars['Float'];
+  width: Scalars['Float'];
+};
+
+export type RoomInput = {
+  length: Scalars['Float'];
+  width: Scalars['Float'];
 };
 
 
@@ -115,7 +132,11 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Plan: ResolverTypeWrapper<Plan>;
+  PlanInput: PlanInput;
   Query: ResolverTypeWrapper<{}>;
+  Room: ResolverTypeWrapper<Room>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  RoomInput: RoomInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -126,7 +147,11 @@ export type ResolversParentTypes = {
   Mutation: {};
   ID: Scalars['ID'];
   Plan: Plan;
+  PlanInput: PlanInput;
   Query: {};
+  Room: Room;
+  Float: Scalars['Float'];
+  RoomInput: RoomInput;
   Boolean: Scalars['Boolean'];
 };
 
@@ -178,12 +203,13 @@ export type MapDirectiveArgs = {
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createPlan?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationCreatePlanArgs, 'id'>>;
+  createPlan?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationCreatePlanArgs, 'plan'>>;
 };
 
 export type PlanResolvers<ContextType = any, ParentType extends ResolversParentTypes['Plan'] = ResolversParentTypes['Plan']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -191,10 +217,17 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   plans?: Resolver<Maybe<Array<Maybe<ResolversTypes['Plan']>>>, ParentType, ContextType>;
 };
 
+export type RoomResolvers<ContextType = any, ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']> = {
+  length?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  width?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Plan?: PlanResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Room?: RoomResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {

@@ -1,6 +1,4 @@
-import { IdToken } from '@auth0/auth0-react';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setupInitialPLayground } from '../playgrounds/playgroundSlice';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserState } from './userState';
 
 const initialState: UserState = {};
@@ -9,25 +7,15 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    set: (
+    setUser: (
       state: UserState,
-      action: PayloadAction<UserState>,
+      action: PayloadAction<string>,
     ) => {
-      state.jwt = action.payload.jwt;
+      state.jwt = action.payload;
     }
   }
 });
 
-// TODO: make this less implicit, consider redux-saga
-export const setUser = createAsyncThunk(
-  'user/setUser',
-  async (idToken: IdToken, { dispatch }) => {
-    const jwt = idToken.__raw;
-    dispatch(userSlice.actions.set({
-      jwt,
-    }));
-    dispatch(setupInitialPLayground(jwt));
-  }
-);
+ export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
