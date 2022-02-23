@@ -44,8 +44,8 @@ UI this gives us function signatures for queries and mutations.
 The browser tests require a valid account to log in with. You can use the zuutheroku@gmail.com user:
 
 ```bash
-export TAIKO_USERNAME=zuutheroku@gmail.com
-export TAIKO_PASSWORD=Q799UuJ4rD5KYhu
+export TAIKO_USERNAME=zuuttestuser@gmail.com
+export TAIKO_PASSWORD=ZUUTtester123!
 ```
 
 Then start the dev servers, then run:

@@ -13,10 +13,10 @@ services:
       PORT: 3000
     depends_on:
       - mongodb
-  
+
   mongodb:
     image: mongo
-  
+
   browser_tests:
     build:
       context: .
@@ -26,5 +26,5 @@ services:
       - app
     environment:
       START_URL: http://app:3000/
-      TAIKO_USERNAME: taiko@ericascape.com
-      TAIKO_PASSWORD: Q799UuJ4rD5KYhu
+      TAIKO_USERNAME: zuuttestuser@gmail.com
+      TAIKO_PASSWORD: ZUUTtester123!
