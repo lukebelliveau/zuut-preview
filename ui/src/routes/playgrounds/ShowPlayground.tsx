@@ -19,10 +19,10 @@ import {
   zoom as zoomPlayground,
 } from '../../features/playgrounds/playgroundSlice';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
-import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
-import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
+import PlaygroundRoom from '../../components/Playground/PlaygroundRoom';
+import PlaygroundItems from '../../components/Playground/PlaygroundItems';
 import { store } from '../../app/store';
-import GridLines from '../../components/Playgound/GridLines';
+import GridLines from '../../components/Playground/GridLines';
 import ControlPanel from '../../components/ControlPanel/ControlPanel';
 import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/Sidebar/SidebarTabs';
 import { isPlaceableItem, Item } from '../../lib/item';

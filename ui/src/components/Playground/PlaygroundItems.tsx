@@ -19,6 +19,7 @@ import {
   toggleSelect,
 } from '../../features/interactions/interactionsSlice';
 import { sortSelectedToLast } from '../../lib/itemList';
+import { KonvaEventObject } from 'konva/lib/Node';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -107,6 +108,30 @@ const Item = ({
 
   const selectedItemId = useAppSelector(selectSelectedItemId);
 
+  const setContainerCursor = (
+    cursor: string,
+    e: KonvaEventObject<MouseEvent>
+  ) => {
+    if (e.target.getStage()?.container()) {
+      const container = e.target?.getStage()?.container();
+      if (container) {
+        container.style.cursor = cursor;
+      }
+    }
+  };
+
+  const handleDragMove = (e: KonvaEventObject<MouseEvent>) => {
+    updatePlacement(item, { x: e.target.x(), y: e.target.y() });
+
+    setContainerCursor('grabbing', e);
+  };
+
+  const handleDragEnd = (e: KonvaEventObject<MouseEvent>) => {
+    dropAndUpdateItemCollisions(item);
+
+    setContainerCursor('grab', e);
+  };
+
   return (
     <Image
       key={item.id}
@@ -117,14 +142,14 @@ const Item = ({
       stroke={item.collisionState === CollisionState.BAD ? 'red' : 'black'}
       strokeWidth={item.id === selectedItemId ? 2 : 1}
       strokeScaleEnabled={false}
-      onDragMove={(e) => {
-        updatePlacement(item, { x: e.target.x(), y: e.target.y() });
-      }}
-      onDragEnd={() => dropAndUpdateItemCollisions(item)}
       draggable
       opacity={item.placementShadow ? 0.2 : 1}
       image={imageObj}
       onClick={() => dispatch(toggleSelect(item.id))}
+      onDragMove={handleDragMove}
+      onDragEnd={handleDragEnd}
+      onMouseEnter={(e) => setContainerCursor('grab', e)}
+      onMouseLeave={(e) => setContainerCursor('auto', e)}
     />
   );
 };
