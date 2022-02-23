@@ -94,7 +94,7 @@ export default function ShowPlayground() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     const selectedItemId = store.getState().interactions.selected;
-    if ((e.key === 'Backspace' || 'Delete') && selectedItemId) {
+    if ((e.key === 'Backspace' || e.key === 'Delete') && selectedItemId) {
       dispatch(removeOne(selectedItemId as EntityId));
       dispatch(unselect());
     }
