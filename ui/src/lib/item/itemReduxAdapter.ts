@@ -44,7 +44,7 @@ export default class ItemReduxAdapter {
     }
   }
 
-  public static stateToItem(itemState: ItemState) {
+  public static stateToItem(itemState: ItemState): Item {
     switch (itemState.type) {
       case GROWSPACE_TYPE:
         return new Growspace(

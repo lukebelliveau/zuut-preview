@@ -7,8 +7,9 @@
   transition: all 1s;
 }
 #shopping-list.hidden {
-  top: 95%;
+  top: 90%;
   transition: all 1s;
+  height: 0px;
 }
 #shopping-list.hidden .shopping-list-body {
   visibility: hidden;

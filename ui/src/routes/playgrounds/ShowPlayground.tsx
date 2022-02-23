@@ -14,7 +14,10 @@ import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playg
 import ShoppingList from '../../components/ShoppingList';
 import { addOne, removeOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { loadSavedPlayground, zoom as zoomPlayground } from '../../features/playgrounds/playgroundSlice';
+import {
+  loadSavedPlayground,
+  zoom as zoomPlayground,
+} from '../../features/playgrounds/playgroundSlice';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
 import PlaygroundRoom from '../../components/Playgound/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playgound/PlaygroundItems';
@@ -27,7 +30,7 @@ import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
 import { EntityId } from '@reduxjs/toolkit';
-import { toggleSelect } from '../../features/interactions/interactionsSlice';
+import { unselect } from '../../features/interactions/interactionsSlice';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -54,9 +57,9 @@ export default function ShowPlayground() {
       dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
     },
   }));
-  
+
   if (!playground.plan || !jwt) {
-    if(jwt) dispatch(loadSavedPlayground(jwt));
+    if (jwt) dispatch(loadSavedPlayground(jwt));
     return <Loading />;
   }
 
@@ -93,7 +96,7 @@ export default function ShowPlayground() {
     const selectedItemId = store.getState().interactions.selected;
     if ((e.key === 'Backspace' || 'Delete') && selectedItemId) {
       dispatch(removeOne(selectedItemId as EntityId));
-      dispatch(toggleSelect(selectedItemId));
+      dispatch(unselect());
     }
   };
 
@@ -103,7 +106,13 @@ export default function ShowPlayground() {
         <title>Zuut - Design your grow</title>
       </Helmet>
       <Layout>
-        <div id="sandbox" role="application" ref={drop} tabIndex={1} onKeyDown={handleKeyDown}>
+        <div
+          id="sandbox"
+          role="application"
+          ref={drop}
+          tabIndex={1}
+          onKeyDown={handleKeyDown}
+        >
           <Stage
             key={v4()}
             ref={stageRef}

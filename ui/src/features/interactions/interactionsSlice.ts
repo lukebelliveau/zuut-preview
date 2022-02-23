@@ -19,8 +19,11 @@ export const interactionsSlice = createSlice({
         state.selected = action.payload;
       }
     },
+    unselect: (state: InteractionsState) => {
+      state.selected = undefined;
+    },
   },
 });
 
-export const { select, toggleSelect } = interactionsSlice.actions;
+export const { select, toggleSelect, unselect } = interactionsSlice.actions;
 export default interactionsSlice.reducer;
