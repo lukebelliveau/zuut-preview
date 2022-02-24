@@ -1,4 +1,4 @@
-import { RootState } from '../../app/rootState';
+import { RootState } from '../../app/store';
 
 export const interactionsState = (state: RootState) => state.interactions;
 

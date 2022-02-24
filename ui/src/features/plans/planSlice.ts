@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/rootState';
+import { RootState } from '../../app/store';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import { selectJwt } from '../users/userSelector';
@@ -13,7 +13,7 @@ export const planSlice = createSlice({
   reducers: {
     create: planAdapter.addOne,
     update: planAdapter.updateOne,
-  }
+  },
 });
 
 export const { create, update } = planSlice.actions;
@@ -32,7 +32,9 @@ export const setDimentions = createAsyncThunk(
     const plan = PlanReduxAdapter.stateToPlan(planState);
     plan.setDimensions(args.width, args.length);
 
-    dispatch(update({ id: plan.id, changes: PlanReduxAdapter.planToState(plan) }));
+    dispatch(
+      update({ id: plan.id, changes: PlanReduxAdapter.planToState(plan) })
+    );
 
     const adapter = new PlanGraphqlAdapter(jwt);
     return adapter.create(plan);

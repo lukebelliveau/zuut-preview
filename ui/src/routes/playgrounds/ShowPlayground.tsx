@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';
@@ -7,7 +7,7 @@ import { Provider, useDispatch, useStore } from 'react-redux';
 import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
-import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
+import { useResizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import Inventory from '../../components/Inventory';
 import { addOne, removeOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
@@ -30,19 +30,13 @@ import { handleDeleteOnKeyDown } from '../../app/interactionHandlers';
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
-  const [firstLoad, setFirstLoad] = useState(true);
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const jwt = useJwt();
   const store = useStore();
 
-  useEffect(() => {
-    if (firstLoad) {
-      resizePlaygroundOnWindowResize();
-      setFirstLoad(false);
-    }
-  }, [firstLoad]);
+  useResizePlaygroundOnWindowResize();
 
   const [_, drop] = useDrop(() => ({
     accept: [DRAGGABLE_SIDEBAR_ITEM],

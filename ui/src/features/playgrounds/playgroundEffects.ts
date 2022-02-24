@@ -1,6 +1,15 @@
-import { store } from '../../app/store';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { resizePlayground } from './playgroundSlice';
 
-export function resizePlaygroundOnWindowResize() {
-  store.dispatch(resizePlayground());
-}
+export const useResizePlaygroundOnWindowResize = () => {
+  const [firstLoad, setFirstLoad] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (firstLoad) {
+      dispatch(resizePlayground());
+      setFirstLoad(false);
+    }
+  }, [firstLoad, dispatch]);
+};

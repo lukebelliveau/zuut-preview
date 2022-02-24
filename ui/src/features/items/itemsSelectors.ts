@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../app/hooks';
-import { RootState } from '../../app/rootState';
+import { RootState } from '../../app/store';
 import itemsAdapter from './itemsEntityAdapter';
 
 export const itemsSelectors = itemsAdapter.getSelectors<RootState>(

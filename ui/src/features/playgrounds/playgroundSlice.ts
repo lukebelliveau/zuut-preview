@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/rootState';
+import { RootState } from '../../app/store';
 import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
@@ -50,11 +50,18 @@ export const resizePlayground = createAsyncThunk(
 
     const playgroundState = selectPlaygroundState(getState() as RootState);
     const planState = selectDefaultPlan(getState() as RootState);
-    const playground = PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
+    const playground = PlaygroundReduxAdapter.playgroundFromState(
+      planState,
+      playgroundState
+    );
 
     playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
 
-    dispatch(playgroundSlice.actions.resize(PlaygroundReduxAdapter.playgroundToState(playground)));
+    dispatch(
+      playgroundSlice.actions.resize(
+        PlaygroundReduxAdapter.playgroundToState(playground)
+      )
+    );
   }
 );
 
@@ -79,10 +86,7 @@ export const playgroundSlice = createSlice({
       state.displayHeight = action.payload.displayHeight;
       state.scale = action.payload.scale;
     },
-    setPlan: (
-      state: PlaygroundState,
-      action: PayloadAction<string>
-    ) => {
+    setPlan: (state: PlaygroundState, action: PayloadAction<string>) => {
       state.planId = action.payload;
     },
     zoom: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {

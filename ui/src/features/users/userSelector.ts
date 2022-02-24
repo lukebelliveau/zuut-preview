@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../app/hooks';
-import { RootState } from '../../app/rootState';
+import { RootState } from '../../app/store';
 
 export function selectJwt(state: RootState): string {
   const jwt = state.user.jwt;

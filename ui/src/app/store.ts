@@ -19,8 +19,7 @@ export const createAppStore = () =>
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   });
 
-export const store = createAppStore();
-
-export type AppDispatch = typeof store.dispatch;
-
+const typedStore = createAppStore();
+export type AppDispatch = typeof typedStore.dispatch;
+export type RootState = ReturnType<typeof typedStore.getState>;
 export type AppStore = ReturnType<typeof createAppStore>;
