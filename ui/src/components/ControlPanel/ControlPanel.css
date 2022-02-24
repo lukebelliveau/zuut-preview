@@ -15,7 +15,7 @@
   top: 95%;
   transition: all 1s;
 }
-#control-panel.hidden .shopping-list-body {
+#control-panel.hidden .control-panel-body {
   visibility: hidden;
 }
 

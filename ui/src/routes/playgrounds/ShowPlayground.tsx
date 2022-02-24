@@ -8,7 +8,7 @@ import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
-import ShoppingList from '../../components/Inventory';
+import Inventory from '../../components/Inventory';
 import { addOne, removeOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import {
@@ -131,7 +131,7 @@ export default function ShowPlayground() {
           </Stage>
         </div>
       </Layout>
-      <ShoppingList />
+      <Inventory />
       <ControlPanel />
     </>
   );

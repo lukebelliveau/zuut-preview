@@ -1,4 +1,4 @@
-#shopping-list {
+#inventory-list {
   height: 80%;
   width: 14.063rem;
   position: absolute;
@@ -6,16 +6,16 @@
   top: 10%;
   transition: all 1s;
 }
-#shopping-list.hidden {
+#inventory-list.hidden {
   top: 90%;
   transition: all 1s;
   height: 0px;
 }
-#shopping-list.hidden .shopping-list-body {
+#inventory-list.hidden .inventory-list-body {
   visibility: hidden;
 }
 
-#shopping-list h2 {
+#inventory-list h2 {
   background-color: var(--purple-1);
   border: 0.063rem solid var(--black);
   border-bottom: 0;
@@ -29,11 +29,11 @@
   text-align: center;
   text-transform: uppercase;
 }
-#shopping-list h2::after {
+#inventory-list h2::after {
   margin-left: 1rem;
   content: url('../images/triangle-upside-down.svg');
 }
-#shopping-list h2 button {
+#inventory-list h2 button {
   background-color: var(--purple-1);
   border: 0;
   color: var(--primary-white);
@@ -45,11 +45,11 @@
   text-align: center;
   text-transform: uppercase;
 }
-#shopping-list.hidden h2::after {
+#inventory-list.hidden h2::after {
   content: url('../images/triangle.svg');
 }
 
-.shopping-list-body {
+.inventory-list-body {
   background-color: var(--primary-white);
   border: 0.063rem solid var(--black);
   border-top: 0;
@@ -58,17 +58,17 @@
   padding: 0.5rem;
 }
 
-#shopping-list ul {
+#inventory-list ul {
   margin: 0;
 }
 
-#shopping-list ul {
+#inventory-list ul {
   padding: 0 0 0 0.5rem;
 }
-#shopping-list li {
+#inventory-list li {
   list-style-type: none;
 }
-#shopping-list li input[type='checkbox'] {
+#inventory-list li input[type='checkbox'] {
   margin: 0 0.5rem 0.625rem 0;
   height: 1rem;
   width: 1rem;
@@ -76,10 +76,10 @@
   border: 0.063rem solid var(--black);
 }
 
-#shopping-list span {
+#inventory-list span {
   cursor: pointer;
 }
 
-#shopping-list span.selected {
+#inventory-list span.selected {
   font-weight: bold;
 }

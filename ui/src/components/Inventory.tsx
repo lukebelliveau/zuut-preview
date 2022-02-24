@@ -13,7 +13,7 @@ import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
 import './Inventory.css';
 import { toggleSelect } from '../features/interactions/interactionsSlice';
 
-export default function ShoppingList() {
+export default function Inventory() {
   const [hidden, setHidden] = useState(false);
   const className = hidden ? 'hidden' : undefined;
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export default function ShoppingList() {
   }));
 
   return (
-    <section ref={drop} id="shopping-list" className={className}>
+    <section ref={drop} id="inventory-list" className={className}>
       <h2>
         <button
           onClick={() => setHidden(!hidden)}
@@ -38,10 +38,10 @@ export default function ShoppingList() {
             if (e.key === 'Return') setHidden(!hidden);
           }}
         >
-          Shopping List
+          Inventory
         </button>
       </h2>
-      <div className="shopping-list-body">
+      <div className="inventory-list-body">
         {items.length > 0 ? (
           <ul>
             {items.map((item) => (

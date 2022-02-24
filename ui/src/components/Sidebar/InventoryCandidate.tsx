@@ -7,13 +7,11 @@ import MiscItem from '../../lib/item/miscItem';
 import ItemIcon from './ItemIcon';
 import { DRAGGABLE_SIDEBAR_ITEM } from './SidebarTabs';
 
-type ShoppingListCandidateProps = {
+type InventoryCandidateProps = {
   item: MiscItem;
 };
 
-export default function ShoppingListCandidate({
-  item,
-}: ShoppingListCandidateProps) {
+export default function InventoryCandidate({ item }: InventoryCandidateProps) {
   const dispatch = useDispatch();
 
   const [_, drag] = useDrag(() => ({
@@ -21,7 +19,7 @@ export default function ShoppingListCandidate({
     item,
   }));
 
-  function sendToShoppingList() {
+  function sendToInventory() {
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
   }
 
@@ -29,8 +27,8 @@ export default function ShoppingListCandidate({
     <ItemIcon
       dragRef={drag}
       item={item}
-      onClick={sendToShoppingList}
-      onKeyboard={sendToShoppingList}
+      onClick={sendToInventory}
+      onKeyboard={sendToInventory}
     />
   );
 }
