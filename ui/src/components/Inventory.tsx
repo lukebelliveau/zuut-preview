@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
 import { useAppSelector } from '../app/hooks';
 import { selectSelectedItemId } from '../features/interactions/interactionsSelectors';
 import clsx from 'clsx';
@@ -12,6 +12,8 @@ import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
 
 import './Inventory.css';
 import { toggleSelect } from '../features/interactions/interactionsSlice';
+import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
+import { Item } from '../lib/item';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -19,6 +21,7 @@ export default function Inventory() {
   const dispatch = useDispatch();
   const itemStates = useSelectAllItems();
   const selectedId = useAppSelector(selectSelectedItemId);
+  const store = useStore();
 
   const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
 
@@ -28,6 +31,17 @@ export default function Inventory() {
       dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
     },
   }));
+
+  const handleItemKeyDown = (
+    e: React.KeyboardEvent<HTMLSpanElement>,
+    item: Item
+  ) => {
+    if (e.key === 'Enter' || e.key === 'Return') {
+      dispatch(toggleSelect(item.id));
+    } else if (selectedId === item.id) {
+      handleDeleteOnKeyDown(e, store);
+    }
+  };
 
   return (
     <section ref={drop} id="inventory-list" className={className}>
@@ -50,11 +64,7 @@ export default function Inventory() {
                 <span
                   role="menuitem"
                   onClick={() => dispatch(toggleSelect(item.id))}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      dispatch(toggleSelect(item.id));
-                    }
-                  }}
+                  onKeyDown={(e) => handleItemKeyDown(e, item)}
                   tabIndex={0}
                   className={clsx({ selected: item.id === selectedId })}
                 >

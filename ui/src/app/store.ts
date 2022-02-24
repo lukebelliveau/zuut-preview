@@ -22,3 +22,5 @@ export const createAppStore = () =>
 export const store = createAppStore();
 
 export type AppDispatch = typeof store.dispatch;
+
+export type AppStore = ReturnType<typeof createAppStore>;

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider, useDispatch, useStore } from 'react-redux';
 import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
@@ -18,7 +18,6 @@ import {
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
 import PlaygroundRoom from '../../components/Playground/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playground/PlaygroundItems';
-import { store } from '../../app/store';
 import GridLines from '../../components/Playground/GridLines';
 import ControlPanel from '../../components/ControlPanel/ControlPanel';
 import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/Sidebar/SidebarTabs';
@@ -26,8 +25,7 @@ import { isPlaceableItem, Item } from '../../lib/item';
 import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
-import { EntityId } from '@reduxjs/toolkit';
-import { unselect } from '../../features/interactions/interactionsSlice';
+import { handleDeleteOnKeyDown } from '../../app/interactionHandlers';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -37,6 +35,7 @@ export default function ShowPlayground() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const jwt = useJwt();
+  const store = useStore();
 
   useEffect(() => {
     if (firstLoad) {
@@ -90,11 +89,7 @@ export default function ShowPlayground() {
   const scale = playground.scale;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    const selectedItemId = store.getState().interactions.selected;
-    if ((e.key === 'Backspace' || e.key === 'Delete') && selectedItemId) {
-      dispatch(removeOne(selectedItemId as EntityId));
-      dispatch(unselect());
-    }
+    handleDeleteOnKeyDown(e, store);
   };
 
   return (

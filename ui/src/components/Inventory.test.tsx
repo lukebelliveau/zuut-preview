@@ -29,4 +29,38 @@ describe('Inventory', () => {
     fireEvent.click(itemElement);
     expect(itemElement.className.includes('selected')).toBe(false);
   });
+
+  it('deletes an item with Delete key', async () => {
+    const store = createAppStore();
+    const item = new GrowspaceItem('testItem');
+    store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
+
+    renderWithContext(<Inventory />, store);
+
+    const testItem = screen.getByText('testItem');
+
+    // select item
+    fireEvent.keyDown(testItem, { key: 'Enter' });
+    await waitFor(() => store.getState().interactions.selected === item.id);
+    fireEvent.keyDown(testItem, { key: 'Delete' });
+
+    await waitFor(() => expect(store.getState().items.ids.length).toBe(0));
+  });
+
+  it('deletes an item with Backspace key', async () => {
+    const store = createAppStore();
+    const item = new GrowspaceItem('testItem');
+    store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
+
+    renderWithContext(<Inventory />, store);
+
+    const testItem = screen.getByText('testItem');
+
+    // select item
+    fireEvent.keyDown(testItem, { key: 'Enter' });
+    // delete item
+    fireEvent.keyDown(testItem, { key: 'Backspace' });
+
+    await waitFor(() => expect(store.getState().items.ids.length).toBe(0));
+  });
 });
