@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/tabindex-no-positive */
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import Konva from 'konva';
 import { useEffect, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
@@ -108,9 +105,10 @@ export default function ShowPlayground() {
       <Layout>
         <div
           id="sandbox"
-          role="application"
+          role="presentation"
           ref={drop}
-          tabIndex={1}
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={0}
           onKeyDown={handleKeyDown}
         >
           <Stage
