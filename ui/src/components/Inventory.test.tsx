@@ -4,17 +4,17 @@ import { createAppStore } from '../app/store';
 import { addOne } from '../features/items/itemsSlice';
 import GrowspaceItem from '../lib/item/growspaceItem';
 import ItemReduxAdapter from '../lib/item/itemReduxAdapter';
-import ShoppingList from './ShoppingList';
+import Inventory from './Inventory';
 
 import { renderWithContext } from '../../tests/renderWithContext';
 
-describe('ShoppingList', () => {
+describe('Inventory', () => {
   it('toggles item selection with keyboard and mouse', async () => {
     const store = createAppStore();
     const item = new GrowspaceItem('testItem');
     store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
 
-    renderWithContext(<ShoppingList />, store);
+    renderWithContext(<Inventory />, store);
 
     const itemElement = screen.getByText('testItem');
     expect(itemElement.className.includes('selected')).toBe(false);

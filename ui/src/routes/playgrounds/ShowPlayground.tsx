@@ -8,7 +8,7 @@ import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
 import { resizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
-import ShoppingList from '../../components/ShoppingList';
+import ShoppingList from '../../components/Inventory';
 import { addOne, removeOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import {

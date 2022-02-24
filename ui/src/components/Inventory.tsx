@@ -10,7 +10,7 @@ import { addOne } from '../features/items/itemsSlice';
 import ItemReduxAdapter from '../lib/item/itemReduxAdapter';
 import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
 
-import './ShoppingList.css';
+import './Inventory.css';
 import { toggleSelect } from '../features/interactions/interactionsSlice';
 
 export default function ShoppingList() {

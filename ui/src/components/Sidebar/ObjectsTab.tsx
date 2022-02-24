@@ -5,7 +5,7 @@ import PlaceableItem from '../../lib/item/placeableItem';
 import { itemGroup } from '../../lib/itemsLibrary';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
-import ShoppingListCandidate from './ShoppingListCandidate';
+import InventoryCandidate from './InventoryCandidate';
 import SidebarTab from './SidebarTab';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
@@ -50,7 +50,7 @@ export default function LayoutTab() {
       </MenuSection>
       <MenuSection title="Misc">
         {itemGroup('misc').map((item) => (
-          <ShoppingListCandidate key={item.name} item={item} />
+          <InventoryCandidate key={item.name} item={item} />
         ))}
       </MenuSection>
     </SidebarTab>
