@@ -55,6 +55,21 @@ cd ui
 npm run taiko-test
 ```
 
+## Cypress tests
+To run cypress tests locally, start the app locally then run
+
+```bash
+cd ui
+npm run cypress:local
+```
+
+You will need a `ui/cypress.env.json` file that specifies the following Auth0 values:
+- `auth_audience`
+- `auth_url`
+- `auth_client_id`
+- `auth_client_secret`
+- `auth_username`
+- `auth_password`
 ## In production
 
 The app is built with docker which runs the backend server. When `NODE_ENV=production`, the backend will not use a proxy,
