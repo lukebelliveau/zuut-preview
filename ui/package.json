@@ -107,5 +107,10 @@
   "devDependencies": {
     "@testing-library/react-hooks": "^7.0.2",
     "eslint-config-prettier": "^8.3.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!konva)"
+    ]
   }
 }
