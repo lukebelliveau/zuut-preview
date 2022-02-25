@@ -22,26 +22,12 @@ jobs:
         run: npm test -- --reporters=default --reporters=jest-junit
         working-directory: ./ui
 
-    # browser_tests:
-    #   runs-on: ubuntu-18.04
-    #   steps:
-    #     - uses: actions/checkout@v2
-    #     - run: docker-compose build
-    #     - run: docker-compose run browser_tests
-
-  cypress-run:
-    runs-on: ubuntu-latest
+  browser_tests:
+    runs-on: ubuntu-18.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - run: docker-compose build
       - run: docker-compose run browser_tests
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm run dev
 
   backend_unit_test:
     runs-on: ubuntu-18.04

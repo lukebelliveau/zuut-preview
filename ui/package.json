@@ -64,7 +64,7 @@
     "taiko-test": "gauge run specs",
     "dev": "npm start",
     "cypress:open": "cypress open",
-    "cypress:local": "CYPRESS_baseUrl=http://localhost:3000 TEST_USERNAME=zuuttestuser@gmail.com TEST_PASSWORD=ZUUTtester123! cypress open"
+    "cypress:local": "CYPRESS_baseUrl=http://localhost:3000 cypress open"
   },
   "eslintConfig": {
     "extends": [
