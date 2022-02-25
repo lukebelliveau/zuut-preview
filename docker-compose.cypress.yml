@@ -20,11 +20,17 @@ services:
   browser_tests:
     build:
       context: .
-      dockerfile: Dockerfile.browser_tests
+      # dockerfile: Dockerfile.browser_tests
     platform: "linux/amd64"
     depends_on:
       - app
     environment:
       START_URL: http://app:3000/
-      TAIKO_USERNAME: zuuttestuser@gmail.com
-      TAIKO_PASSWORD: ZUUTtester123!
+      # TAIKO_USERNAME: zuuttestuser@gmail.com
+      # TAIKO_PASSWORD: ZUUTtester123!
+      CYPRESS_auth_username: zuuttestuser@gmail.com
+      CYPRESS_auth_password: ZUUTtester123!
+      CYPRESS_auth_audience: https://dev-baqlbrdt.us.auth0.com/api/v2/
+      CYPRESS_auth_url: https://dev-baqlbrdt.us.auth0.com/oauth/token
+      CYPRESS_auth_client_id: ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid
+      JWKS_URL: https://dev-baqlbrdt.us.auth0.com/.well-known/jwks.json
