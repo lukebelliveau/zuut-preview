@@ -41,11 +41,11 @@ UI this gives us function signatures for queries and mutations.
 
 ## Browser tests
 
-The browser tests require a valid account to log in with. You can use the zuutheroku@gmail.com user:
+The browser tests require a valid account to log in with. You can use the zuuttestuser@gmail.com user:
 
 ```bash
-export TAIKO_USERNAME=zuuttestuser@gmail.com
-export TAIKO_PASSWORD=ZUUTtester123!
+export TEST_USERNAME=zuuttestuser@gmail.com
+export TEST_PASSWORD=ZUUTtester123!
 ```
 
 Then start the dev servers, then run:

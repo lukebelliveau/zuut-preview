@@ -19,6 +19,7 @@
     "@types/react-helmet": "6.1.5",
     "@types/react-redux": "^7.1.21",
     "@types/redux-logger": "^3.0.9",
+    "@types/testing-library__cypress": "^5.0.9",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
@@ -61,7 +62,9 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "taiko-test": "gauge run specs",
-    "dev": "npm start"
+    "dev": "npm start",
+    "cypress:open": "cypress open",
+    "cypress:local": "CYPRESS_baseUrl=http://localhost:3000 TEST_USERNAME=zuuttestuser@gmail.com TEST_PASSWORD=ZUUTtester123! cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -105,7 +108,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
     "@testing-library/react-hooks": "^7.0.2",
+    "cypress": "^9.5.0",
     "eslint-config-prettier": "^8.3.0"
   },
   "jest": {
