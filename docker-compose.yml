@@ -33,3 +33,4 @@ services:
       CYPRESS_auth_audience: https://dev-baqlbrdt.us.auth0.com/api/v2/
       CYPRESS_auth_url: https://dev-baqlbrdt.us.auth0.com/oauth/token
       CYPRESS_auth_client_id: ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid
+      JWKS_URL: https://dev-baqlbrdt.us.auth0.com/.well-known/jwks.json
