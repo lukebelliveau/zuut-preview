@@ -39,6 +39,25 @@ Anytime you update the schema in `graphql/*.graphql`, you should run `npm run co
 `backend/src/graphql.ts` and `ui/src/graphql.ts`. In the backend this gives us type definitions for all our resolvers. In the
 UI this gives us function signatures for queries and mutations.
 
+## Jest UI tests
+Run our jest tests with `$ npm test` from the `/ui` folder.
+We use `react-konva` for our interactive playground. 
+
+Konva requires the `canvas` package to run in a NodeJS environment such as Jest tests.
+
+On certain architectures (such as Apple Silicon), `canvas` has to compile on the system, 
+which requires extra dependencies. Instructions for installing these dependencies can be found
+[here](https://github.com/Automattic/node-canvas#compiling)
+
+For example, on an M1 Mac, the command `$ npm install canvas` fails.
+
+From the instructions found [here](https://github.com/Automattic/node-canvas#compiling), we can do the following:
+
+`$ brew install pkg-config cairo pango libpng jpeg giflib librsvg`
+
+Following installation of these Homebrew packages, npm should be able to install `canvas`.
+
+
 ## Browser tests
 
 The browser tests require a valid account to log in with. You can use the zuuttestuser@gmail.com user:
