@@ -1,7 +1,9 @@
+import { ConnectedRouter } from 'connected-react-router';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route } from 'react-router';
 
+import { browserHistory } from './app/store';
 import RequireAuth from './components/RequireAuth';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
@@ -13,37 +15,26 @@ import Workplace from './routes/Workplace';
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <Router>
-        <Routes>
-          <Route path={homePath()} element={<Home />} />
-          <Route
-            path={new_playground_path()}
-            element={
-              <RequireAuth>
-                <NewPlayground />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path={playground_path()}
-            element={
-              <RequireAuth>
-                <ShowPlayground />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/workplace"
-            element={
-              <RequireAuth>
-                <Workplace />
-              </RequireAuth>
-            }
-          />
-          <Route path="/access-denied" element={<AccessDenied />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+      <ConnectedRouter history={browserHistory}>
+        <Route exact path={homePath()}><Home /></Route>
+        <Route path={new_playground_path()}>
+          <RequireAuth>
+            <NewPlayground />
+          </RequireAuth>
+        </Route>
+        <Route path={playground_path()}>
+          <RequireAuth>
+            <ShowPlayground />
+          </RequireAuth>
+        </Route>
+        <Route path="/workplace">
+          <RequireAuth>
+            <Workplace />
+          </RequireAuth>
+        </Route>
+        <Route path="/access-denied"><AccessDenied /></Route>
+        {/* <Route path="*"><NotFound /></Route> */}
+      </ConnectedRouter>
     </DndProvider>
   );
 }

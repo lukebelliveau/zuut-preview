@@ -3,14 +3,26 @@ type Room {
   length: Float!
 }
 
+interface Item {
+  id: ID!
+  name: String!
+  type: String
+  x: Float
+  y: Float
+  width: Float
+  length: Float
+  height: Float
+}
+
 type Plan {
   id: ID!
   name: String
   room: Room
+  items: [Item!]!
 }
 
 type Query {
-  plans: [Plan]
+  plans: [Plan!]
 }
 
 input RoomInput {
@@ -18,12 +30,25 @@ input RoomInput {
   length: Float!
 }
 
-input PlanInput {
+input ItemInput {
   id: ID!
+  name: String!
+  type: String!
+  x: Float
+  y: Float
+  width: Float
+  length: Float
+  height: Float
+}
+
+input PlanInput {
+  id: ID
   name: String
   room: RoomInput!
+  items: [ItemInput!]!
 }
 
 type Mutation {
-  createPlan(plan: PlanInput!): ID
+  createPlan(plan: PlanInput!): ID!
+  updatePlan(plan: PlanInput!): Plan!
 }

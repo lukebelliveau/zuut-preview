@@ -19,9 +19,32 @@ export type AdditionalEntityFields = {
   type?: InputMaybe<Scalars['String']>;
 };
 
+export type Item = {
+  height?: Maybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  length?: Maybe<Scalars['Float']>;
+  name: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
+  x?: Maybe<Scalars['Float']>;
+  y?: Maybe<Scalars['Float']>;
+};
+
+export type ItemInput = {
+  height?: InputMaybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  length?: InputMaybe<Scalars['Float']>;
+  name: Scalars['String'];
+  type: Scalars['String'];
+  width?: InputMaybe<Scalars['Float']>;
+  x?: InputMaybe<Scalars['Float']>;
+  y?: InputMaybe<Scalars['Float']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  createPlan?: Maybe<Scalars['ID']>;
+  createPlan: Scalars['ID'];
+  updatePlan: Plan;
 };
 
 
@@ -29,22 +52,29 @@ export type MutationCreatePlanArgs = {
   plan: PlanInput;
 };
 
+
+export type MutationUpdatePlanArgs = {
+  plan: PlanInput;
+};
+
 export type Plan = {
   __typename?: 'Plan';
   id: Scalars['ID'];
+  items: Array<Item>;
   name?: Maybe<Scalars['String']>;
   room?: Maybe<Room>;
 };
 
 export type PlanInput = {
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
+  items: Array<ItemInput>;
   name?: InputMaybe<Scalars['String']>;
   room: RoomInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  plans?: Maybe<Array<Maybe<Plan>>>;
+  plans?: Maybe<Array<Plan>>;
 };
 
 export type Room = {
@@ -129,13 +159,15 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Mutation: ResolverTypeWrapper<{}>;
+  Item: never;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  ItemInput: ItemInput;
+  Mutation: ResolverTypeWrapper<{}>;
   Plan: ResolverTypeWrapper<Plan>;
   PlanInput: PlanInput;
   Query: ResolverTypeWrapper<{}>;
   Room: ResolverTypeWrapper<Room>;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
   RoomInput: RoomInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
@@ -144,13 +176,15 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: Scalars['String'];
-  Mutation: {};
+  Item: never;
+  Float: Scalars['Float'];
   ID: Scalars['ID'];
+  ItemInput: ItemInput;
+  Mutation: {};
   Plan: Plan;
   PlanInput: PlanInput;
   Query: {};
   Room: Room;
-  Float: Scalars['Float'];
   RoomInput: RoomInput;
   Boolean: Scalars['Boolean'];
 };
@@ -202,19 +236,33 @@ export type MapDirectiveArgs = {
 
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
+export type ItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  height?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  length?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  width?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  x?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  y?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createPlan?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationCreatePlanArgs, 'plan'>>;
+  createPlan?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationCreatePlanArgs, 'plan'>>;
+  updatePlan?: Resolver<ResolversTypes['Plan'], ParentType, ContextType, RequireFields<MutationUpdatePlanArgs, 'plan'>>;
 };
 
 export type PlanResolvers<ContextType = any, ParentType extends ResolversParentTypes['Plan'] = ResolversParentTypes['Plan']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  items?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  plans?: Resolver<Maybe<Array<Maybe<ResolversTypes['Plan']>>>, ParentType, ContextType>;
+  plans?: Resolver<Maybe<Array<ResolversTypes['Plan']>>, ParentType, ContextType>;
 };
 
 export type RoomResolvers<ContextType = any, ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']> = {
@@ -224,6 +272,7 @@ export type RoomResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type Resolvers<ContextType = any> = {
+  Item?: ItemResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Plan?: PlanResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

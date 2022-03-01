@@ -168,17 +168,16 @@ export default class PlaceableItem implements IPlaceableItem {
     items: ItemList,
     playground: Playground
   ): {
-    collidingWithItem: PlaceableItem[];
-    collidingWithShadow: PlaceableItem[];
+    collidingWithItem: IPlaceableItem[];
+    collidingWithShadow: IPlaceableItem[];
   } {
-    let collidingWithItem: PlaceableItem[] = [];
-    let collidingWithShadow: PlaceableItem[] = [];
+    let collidingWithItem: IPlaceableItem[] = [];
+    let collidingWithShadow: IPlaceableItem[] = [];
 
-    items.forEach((itemToCompare) => {
+    items.placeable().forEach((itemToCompare) => {
       if (itemToCompare.id === this.id) return;
       if (areColliding(this, itemToCompare))
         collidingWithItem.push(itemToCompare);
-
       if (
         this.placementShadow &&
         areColliding(this.placementShadow, itemToCompare)
@@ -194,8 +193,8 @@ export default class PlaceableItem implements IPlaceableItem {
   }
 
   isCollidingWith(
-    item: PlaceableItem | PlacementShadow,
-    otherItem: PlaceableItem
+    item: IPlaceableItem | PlacementShadow,
+    otherItem: IPlaceableItem
   ): boolean {
     // default to "bad" collision state if any items are colliding
     return areColliding(item, otherItem);

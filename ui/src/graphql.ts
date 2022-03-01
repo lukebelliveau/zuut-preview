@@ -13,9 +13,32 @@ export type Scalars = {
   Float: number;
 };
 
+export type Item = {
+  height?: Maybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  length?: Maybe<Scalars['Float']>;
+  name: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
+  x?: Maybe<Scalars['Float']>;
+  y?: Maybe<Scalars['Float']>;
+};
+
+export type ItemInput = {
+  height?: InputMaybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  length?: InputMaybe<Scalars['Float']>;
+  name: Scalars['String'];
+  type: Scalars['String'];
+  width?: InputMaybe<Scalars['Float']>;
+  x?: InputMaybe<Scalars['Float']>;
+  y?: InputMaybe<Scalars['Float']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  createPlan?: Maybe<Scalars['ID']>;
+  createPlan: Scalars['ID'];
+  updatePlan: Plan;
 };
 
 
@@ -23,22 +46,29 @@ export type MutationCreatePlanArgs = {
   plan: PlanInput;
 };
 
+
+export type MutationUpdatePlanArgs = {
+  plan: PlanInput;
+};
+
 export type Plan = {
   __typename?: 'Plan';
   id: Scalars['ID'];
+  items: Array<Item>;
   name?: Maybe<Scalars['String']>;
   room?: Maybe<Room>;
 };
 
 export type PlanInput = {
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
+  items: Array<ItemInput>;
   name?: InputMaybe<Scalars['String']>;
   room: RoomInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  plans?: Maybe<Array<Maybe<Plan>>>;
+  plans?: Maybe<Array<Plan>>;
 };
 
 export type Room = {

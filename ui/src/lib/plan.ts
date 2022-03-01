@@ -1,5 +1,8 @@
 import { v4 } from 'uuid';
+
 import Grid from './grid';
+import { Item } from './item';
+import ItemList from './itemList';
 import Room, { IRoom } from './room';
 
 export interface IPlan {
@@ -13,6 +16,7 @@ export default class Plan implements IPlan {
   name?: string;
   room: Room;
   grid: Grid;
+  items: ItemList = new ItemList();
 
   constructor(name?: string, width: number = 0, length: number = 0, height?: number, id: string = v4()) {
     this.id = id;
@@ -20,6 +24,10 @@ export default class Plan implements IPlan {
 
     this.room = new Room(width, length, height);
     this.grid = new Grid(width, length);
+  }
+
+  addItem(item: Item) {
+    this.items.push(item);
   }
 
   setDimensions(width: number, length: number) {

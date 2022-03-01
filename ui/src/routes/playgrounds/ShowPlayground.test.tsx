@@ -4,7 +4,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { createAppStore } from '../../app/store';
 import { create } from '../../features/plans/planSlice';
@@ -70,11 +69,7 @@ const renderWithContext = (children: JSX.Element, store?: EnhancedStore) => {
     <HelmetProvider>
       <Provider store={testStore}>
         <DndProvider backend={HTML5Backend}>
-          <MemoryRouter initialEntries={[playground_path()]}>
-            <Routes>
-              <Route path={playground_path()} element={<ShowPlayground />} />
-            </Routes>
-          </MemoryRouter>
+          {children}
         </DndProvider>
       </Provider>
     </HelmetProvider>

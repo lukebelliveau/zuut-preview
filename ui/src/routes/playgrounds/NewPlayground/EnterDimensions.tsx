@@ -1,34 +1,18 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm, UseFormRegisterReturn } from 'react-hook-form';
 
 import LayoutIcon from '../../../images/glyphs/layout.svg';
 import './EnterDimensions.css';
 
 import PillInput from '../../../components/PillInput';
-import { playground_path } from '../ShowPlayground';
 import Section from './Section';
-import { feetToMm } from '../../../lib/conversions';
-import { setDimentions } from '../../../features/plans/planSlice';
-import { useDispatch } from 'react-redux';
 
-type CreateLayoutFormParams = {
-  width: number;
-  length: number;
-};
+interface EnterDimensionsProps {
+  width: UseFormRegisterReturn;
+  length: UseFormRegisterReturn;
+  onSubmit: (data: any) => void;
+}
 
-export default function EnterDimensions() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<CreateLayoutFormParams>();
-
-  const onSubmit: SubmitHandler<CreateLayoutFormParams> = (data) => {
-    dispatch(setDimentions({
-      width: feetToMm(data.width),
-      length: feetToMm(data.length),
-    }));
-
-    navigate(playground_path());
-  };
+export default function EnterDimensions({ width, length, onSubmit }: EnterDimensionsProps) {
 
   return (
     <>
@@ -39,7 +23,7 @@ export default function EnterDimensions() {
             name="length"
             aria-label="length"
             label="room length"
-            registrationOptions={register('length', { required: true })}
+            registrationOptions={length}
             description="ft"
           />
         </div>
@@ -48,12 +32,12 @@ export default function EnterDimensions() {
             name="width"
             aria-label="width"
             label="room width"
-            registrationOptions={register('width', { required: true })}
+            registrationOptions={width}
             description="ft"
           />
         </div>
         <div className="create-button">
-          <button className="primary" onClick={handleSubmit(onSubmit)}>
+          <button className="primary" onClick={onSubmit}>
             <img alt="Layout icon" src={LayoutIcon} aria-hidden="true" />
             <span>Create new layout</span>
           </button>

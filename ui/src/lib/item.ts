@@ -4,6 +4,18 @@ import MiscItem from './item/miscItem';
 import PlaceableItem from './item/placeableItem';
 import RoomItem from './item/roomItem';
 
+// TODO: eventually this can replace our union type below?
+export interface IItem {
+  id: string;
+  type: string;
+  name: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  length?: number;
+  height?: number;
+}
+
 export type Item =
   | Growspace
   | GrowspaceItem

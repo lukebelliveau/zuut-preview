@@ -7,8 +7,9 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { Query } from '../../graphql';
+import { Mutation, Query } from '../../graphql';
 import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
+import ItemGraphqlAdapter from '../item/itemGraphqlAdapter';
 import Plan from '../plan';
 
 export default class PlanGraphqlAdapter {
@@ -57,11 +58,35 @@ export default class PlanGraphqlAdapter {
     );
   }
 
-  create(plan: Plan) {
-    return this.client.mutate({
+  async create(plan: Plan): Promise<string> {
+    const result = await this.client.mutate({
       mutation: gql`
         mutation CreatePlan($plan: PlanInput!) {
           createPlan(plan: $plan)
+        }
+      `,
+      variables: {
+        plan: {
+          name: plan.name,
+          room: {
+            width: plan.room.width,
+            length: plan.room.length,
+          },
+          items: plan.items
+        }
+      }
+    });
+
+    return result.data.createPlan;
+  }
+
+  update(plan: Plan) {
+    return this.client.mutate({
+      mutation: gql`
+        mutation UpdatePlan($plan: PlanInput!) {
+          updatePlan(plan: $plan) {
+            id
+          }
         }
       `,
       variables: {
@@ -71,7 +96,8 @@ export default class PlanGraphqlAdapter {
           room: {
             width: plan.room.width,
             length: plan.room.length,
-          }
+          },
+          items: plan.items.map(ItemGraphqlAdapter.itemToGraphql)
         }
       }
     });

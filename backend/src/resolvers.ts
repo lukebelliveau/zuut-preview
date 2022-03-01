@@ -9,9 +9,12 @@ export const resolvers: Resolvers<GraphqlContext> = {
     },
   },
   Mutation: {
-    createPlan(_, planInput, { dataSources }) {
-      dataSources.plans.create(planInput.plan);
-      return planInput.plan.id;
+    async createPlan(_, planInput, { dataSources }) {
+      return dataSources.plans.create(planInput.plan);
+    },
+
+    updatePlan(_, planInput, { dataSources }) {
+      return dataSources.plans.update(planInput.plan);
     }
   },
 };

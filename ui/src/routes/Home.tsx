@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import './Home.css';
 import ZuutLogo from '../images/zuut-logo.svg';
 import LoginButton from '../components/LoginButton';
-import { playground_path } from './playgrounds/ShowPlayground';
+// import { playground_path } from './playgrounds/ShowPlayground';
+import Link from '../components/Link';
+import { new_playground_path } from './playgrounds/NewPlayground';
 
 export const homePath = () => '/';
 
@@ -31,7 +32,7 @@ function Home() {
             plan your grow while maximizing yields &amp;
             minimizing costs.
           </p>
-          <Link className="button go" to="/playgrounds/new">Get started</Link>
+          <Link className="button go" to={new_playground_path()}>Get started</Link>
         </section>
       </div>
     </div>

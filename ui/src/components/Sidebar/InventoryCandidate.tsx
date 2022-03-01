@@ -1,7 +1,7 @@
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 
-import { addOne } from '../../features/items/itemsSlice';
+import { addItem } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import MiscItem from '../../lib/item/miscItem';
 import ItemIcon from './ItemIcon';
@@ -20,7 +20,7 @@ export default function InventoryCandidate({ item }: InventoryCandidateProps) {
   }));
 
   function sendToInventory() {
-    dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
+    dispatch(addItem(ItemReduxAdapter.itemToState(item.copy())));
   }
 
   return (

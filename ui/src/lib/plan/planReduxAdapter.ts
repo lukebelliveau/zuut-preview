@@ -1,5 +1,5 @@
-import { PlanPayload } from '../../features/plans/planPayload';
-import { assertDefined } from '../assert';
+import { ItemState } from '../../features/items/itemState';
+import ItemReduxAdapter from '../item/itemReduxAdapter';
 import Plan, { IPlan } from '../plan';
 
 export default class PlanReduxAdapter {
@@ -15,13 +15,22 @@ export default class PlanReduxAdapter {
     };
   }
 
-  public static stateToPlan(planState: IPlan | undefined) {
-    return new Plan(
-      planState?.name,
-      planState?.room?.width,
-      planState?.room?.length,
-      planState?.room?.height,
-      planState?.id,
+  public static stateToPlan(planState: IPlan, itemStateList?: ItemState[]): Plan {
+    const plan = new Plan(
+      planState.name,
+      planState.room?.width,
+      planState.room?.length,
+      planState.room?.height,
+      planState.id,
     );
+
+    if (itemStateList) {
+      itemStateList.forEach(itemState => {
+        const item = ItemReduxAdapter.stateToItem(itemState);
+        plan.addItem(item);
+      });
+    }
+
+    return plan;
   }
 }

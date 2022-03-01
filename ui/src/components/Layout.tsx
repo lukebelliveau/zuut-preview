@@ -7,7 +7,7 @@ import LogoutButton from './LogoutButton';
 
 import Sidebar from './Sidebar';
 import { useSelectDefaultPlan } from '../features/plans/planSelectors';
-import { Link } from 'react-router-dom';
+import Link from './Link';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ export default function Layout(props: LayoutProps) {
     <div className="wrapper">
       <header>
         <div id="header-logo">
-          <Link to='/' ><img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" /></Link>
+          <Link to='/'><img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" /></Link>
         </div>
         <div id="header-name">
           <h1>Name: {plan.name}</h1>

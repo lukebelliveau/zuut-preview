@@ -6,7 +6,7 @@ import { selectSelectedItemId } from '../features/interactions/interactionsSelec
 import clsx from 'clsx';
 
 import { useSelectAllItems } from '../features/items/itemsSelectors';
-import { addOne } from '../features/items/itemsSlice';
+import { addItem } from '../features/items/itemsSlice';
 import ItemReduxAdapter from '../lib/item/itemReduxAdapter';
 import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
 
@@ -28,7 +28,7 @@ export default function Inventory() {
   const [_, drop] = useDrop(() => ({
     accept: MISC_ITEM_TYPE,
     drop: (item: MiscItem) => {
-      dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
+      dispatch(addItem(ItemReduxAdapter.itemToState(item.copy())));
     },
   }));
 

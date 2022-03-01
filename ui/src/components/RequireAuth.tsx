@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { push } from 'connected-react-router';
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import { setUser } from '../features/users/userSlice';
 import Loading from './Loading';
 
@@ -25,7 +25,7 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
 
   if (error) {
     console.debug('Error authenticating: ', error);
-    return <Navigate to="/access-denied" />;
+    dispatch(push('/access-denied'));
   }
 
   if (!isAuthenticated) loginWithRedirect({

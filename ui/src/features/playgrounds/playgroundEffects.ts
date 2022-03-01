@@ -6,6 +6,10 @@ export const useResizePlaygroundOnWindowResize = () => {
   const [firstLoad, setFirstLoad] = useState(true);
   const dispatch = useDispatch();
 
+  window.onresize = function() {
+    dispatch(resizePlayground());
+  };
+
   useEffect(() => {
     if (firstLoad) {
       dispatch(resizePlayground());

@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { push } from 'connected-react-router';
 import { RootState } from '../../app/store';
+
+import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
+import { playground_path } from '../../routes/playgrounds/ShowPlayground';
+import { setPlan } from '../playgrounds/playgroundSlice';
 import { selectJwt } from '../users/userSelector';
-
 import planAdapter from './planEntityAdapter';
-import { selectDefaultPlan } from './planSelectors';
 
 export const planSlice = createSlice({
   name: 'plan',
@@ -18,26 +21,24 @@ export const planSlice = createSlice({
 
 export const { create, update } = planSlice.actions;
 
-interface SetDimensionsPayload {
+interface CreatePlanPayload {
+  name: string;
   width: number;
   length: number;
 }
 
-export const setDimentions = createAsyncThunk(
-  'plan/setDimensions',
-  async (args: SetDimensionsPayload, { dispatch, getState }) => {
+export const createPlan = createAsyncThunk(
+  'plan/createPlan',
+  async (args: CreatePlanPayload, { dispatch, getState }) => {
     const jwt = selectJwt(getState() as RootState);
-    const planState = selectDefaultPlan(getState() as RootState);
-
-    const plan = PlanReduxAdapter.stateToPlan(planState);
-    plan.setDimensions(args.width, args.length);
-
-    dispatch(
-      update({ id: plan.id, changes: PlanReduxAdapter.planToState(plan) })
-    );
-
     const adapter = new PlanGraphqlAdapter(jwt);
-    return adapter.create(plan);
+
+    const plan = new Plan(args.name, args.width, args.length);
+    const id = await adapter.create(plan);
+    plan.id = id;
+    dispatch(create(PlanReduxAdapter.planToState(plan)));
+    dispatch(setPlan(plan.id));
+    dispatch(push(playground_path()));
   }
 );
 

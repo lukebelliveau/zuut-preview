@@ -19,17 +19,6 @@ const initialState: PlaygroundState = {
   scale: 1,
 };
 
-export const setupInitialPLayground = createAsyncThunk(
-  'playground/setupInitialPlayground',
-  async (jwt: string, { dispatch }) => {
-    const plan = new Plan();
-    const planState = PlanReduxAdapter.planToState(plan);
-
-    dispatch(create(planState));
-    dispatch(setPlan(plan.id));
-  }
-);
-
 export const loadSavedPlayground = createAsyncThunk(
   'playground/loadSavedPlayground',
   async (jwt: string, { dispatch }) => {

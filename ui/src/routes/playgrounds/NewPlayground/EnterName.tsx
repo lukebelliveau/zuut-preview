@@ -1,32 +1,18 @@
-import { ChangeEventHandler, KeyboardEventHandler } from 'react';
-import { useDispatch } from 'react-redux';
+import { KeyboardEventHandler } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 import Section from './Section';
 import NextButton from './NextButton';
-import { update } from '../../../features/plans/planSlice';
-import PlanReduxAdapter from '../../../lib/plan/planReduxAdapter';
-import { useBuildPlayground } from '../../../app/builderHooks';
 
 type EnterNameProps = {
+  name: UseFormRegisterReturn;
   nextPage: () => void;
 };
 
-export default function EnterName(props: EnterNameProps) {
-  const dispatch = useDispatch();
-  const playground = useBuildPlayground();
-
-  const plan = playground.plan;
-  if (!plan) return <></>;
-
-  const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    plan.name = event.target.value;
-    dispatch(
-      update({ id: plan.id, changes: PlanReduxAdapter.planToState(plan) })
-    );
-  };
+export default function EnterName({ name, nextPage }: EnterNameProps) {
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === 'Enter') {
-      props.nextPage();
+      nextPage();
     }
   };
 
@@ -39,13 +25,12 @@ export default function EnterName(props: EnterNameProps) {
         <input
           type="text"
           placeholder="type the name here"
-          name="name"
-          onChange={onChange}
           onKeyDown={onKeyDown}
           aria-label="name"
+          {...name}
         />
       </Section>
-      <NextButton nextPage={props.nextPage} />
+      <NextButton nextPage={nextPage} />
     </>
   );
 }

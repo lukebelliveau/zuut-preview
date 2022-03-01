@@ -1,58 +1,45 @@
 import { MongoDataSource } from "apollo-datasource-mongodb";
-import { ObjectId } from 'mongodb';
+import { ObjectId } from "mongodb";
+
 import { Plan, PlanInput } from "../graphql";
+import { assertDefined } from "../graphqlInput";
 import { GraphqlContext } from "../server";
-
-interface PlanDocument {
-  _id: ObjectId
-  userId: string | undefined
-  name: string | undefined
-  room: Room
-}
-
-interface Room {
-  width: number
-  length: number
-}
+import { PlanDocument, planDocumentFromGraphql, planDocumentToGraphql } from "./plans/planDocument";
 
 export default class Plans extends MongoDataSource<PlanDocument, GraphqlContext> {
   async all(): Promise<Plan[]> {
     const list = await this.findByFields({
-      userId: this.userId || '0'
+      userId: this.userId
     });
 
-    const filteredList: PlanDocument[] = [];
-    list.forEach(item => item ? filteredList.push(item) : undefined);
+    const filteredList: PlanDocument[] = list.map(assertDefined);
     
-    return filteredList.map(planDocument => ({
-      id: planDocument._id.toString(),
-      name: planDocument.name,
-      room: {
-        width: planDocument.room.width,
-        length: planDocument.room.length,
-      }
-    }));
+    return filteredList.map(planDocumentToGraphql);
   }
 
-  getPlan(id: string) {
-    return this.findOneById(id);
+  async getPlan(id: string) {
+    const planDocument = assertDefined(await this.findOneById(id));
+
+    return planDocumentToGraphql(planDocument);
   }
 
-  async create(planInput: PlanInput) {
-    return this.collection.insertOne(
-      {
-        _id: planInput.id,
-        userId: this.userId,
-        name: planInput.name,
-        room: {
-          width: planInput.room.width,
-          length: planInput.room.length,
-        }
-      }
-    )
+  async create(planInput: PlanInput): Promise<string> {
+    const planDocument = planDocumentFromGraphql(planInput, this.userId);
+    const result = await this.collection.insertOne(planDocument);
+    return result.insertedId.toString();
+  }
+
+  async update(planInput: PlanInput): Promise<Plan> {
+    const planId = assertDefined(planInput.id);
+    await this.collection.replaceOne({
+      _id: new ObjectId(planId),
+      userId: this.userId,
+    }, planDocumentFromGraphql(planInput, this.userId));
+    
+    return this.getPlan(planId);
   }
 
   get userId() {
-    return this.context.user.sub;
+    return assertDefined(this.context.user.sub);
   }
 }
