@@ -22,34 +22,5 @@
     "@graphql-codegen/typescript-operations": "2.3.0",
     "@graphql-codegen/typescript-react-apollo": "3.2.5",
     "@graphql-codegen/typescript-resolvers": "2.5.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:jsx-a11y/recommended",
-      "prettier"
-    ],
-    "rules": {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "varsIgnorePattern": ".*"
-        }
-      ],
-      "quotes": [
-        "error",
-        "single",
-        "avoid-escape"
-      ],
-      "semi": [
-        "error",
-        "always"
-      ],
-      "testing-library/prefer-screen-queries": "off"
-    },
-    "ignorePatterns": [
-      "**/*.js"
-    ]
   }
 }
