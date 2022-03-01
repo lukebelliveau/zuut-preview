@@ -66,35 +66,6 @@
     "cypress:open": "cypress open",
     "cypress:local": "CYPRESS_baseUrl=http://localhost:3000 cypress open"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:jsx-a11y/recommended",
-      "prettier"
-    ],
-    "rules": {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "varsIgnorePattern": ".*"
-        }
-      ],
-      "quotes": [
-        "error",
-        "single",
-        "avoid-escape"
-      ],
-      "semi": [
-        "error",
-        "always"
-      ],
-      "testing-library/prefer-screen-queries": "off"
-    },
-    "ignorePatterns": [
-      "**/*.js"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

@@ -7,9 +7,9 @@ import http from 'http';
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
-import { getEnv } from './env';
-import { UI_BUILD_DIR } from './paths';
-import { createServer } from './server';
+import { getEnv } from './src/env';
+import { UI_BUILD_DIR } from './src/paths';
+import { createServer } from './src/server';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PORT = parseInt(process.env.PORT || '3000');
@@ -20,30 +20,33 @@ const indexHtml = existsSync(indexHtmlPath) ? readFileSync(indexHtmlPath) : '';
 async function listen(port: number) {
   const app = express();
   const httpServer = http.createServer(app);
-                    
-  app.use(expressWinston.logger({
-    transports: [
-      new winston.transports.Console()
-    ],
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.json()
-    ),
-  }));
 
-  app.use('/graphql', jwt({
-    secret: jwksRsa.expressJwtSecret({
-      cache: true,
-      rateLimit: true,
-      jwksRequestsPerMinute: 5,
-      jwksUri: getEnv('JWKS_URL'),
-    }),
-    audience: getEnv('AUTH0_AUDIENCE'),
-    issuer: getEnv('AUTH0_ISSUER'),
-    algorithms: [ 'RS256' ],
-  }).unless({
-    method: 'GET'
-  }));
+  app.use(
+    expressWinston.logger({
+      transports: [new winston.transports.Console()],
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.json()
+      ),
+    })
+  );
+
+  app.use(
+    '/graphql',
+    jwt({
+      secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: getEnv('JWKS_URL'),
+      }),
+      audience: getEnv('AUTH0_AUDIENCE'),
+      issuer: getEnv('AUTH0_ISSUER'),
+      algorithms: ['RS256'],
+    }).unless({
+      method: 'GET',
+    })
+  );
 
   const server = await createServer(httpServer);
 
@@ -54,8 +57,8 @@ async function listen(port: number) {
   server.applyMiddleware({ app });
 
   if (NODE_ENV === 'development') {
-    const proxyUrl = `http://localhost:${(PORT + 100)}`;
-    console.log(`Proxying web requests to ${proxyUrl}`)
+    const proxyUrl = `http://localhost:${PORT + 100}`;
+    console.log(`Proxying web requests to ${proxyUrl}`);
     app.use('/', proxy(proxyUrl));
   } else {
     app.use('/*', (_, res) => {
