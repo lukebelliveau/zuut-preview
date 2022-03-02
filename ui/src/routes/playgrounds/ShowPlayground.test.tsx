@@ -14,6 +14,24 @@ import Plan from '../../lib/plan';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import ShowPlayground, { playground_path } from './ShowPlayground';
 
+/**
+ * the react-konva stage prints a faulty error about react-dom's act() when rendered in a test.
+ * if this specific error appears, from this specific place, in this specific file, silence it.
+ */
+const originalWarn = console.error.bind(console.error);
+beforeAll(() => {
+  console.error = (msg: string) =>
+    !msg
+      .toString()
+      .includes(
+        'Be sure to use the matching version of act() corresponding to your renderer:'
+      ) &&
+    !msg
+      .toString()
+      .includes('at node_modules/react-konva/lib/ReactKonvaCore.js:82:21') &&
+    originalWarn(msg);
+});
+
 describe('ShowPlayground', () => {
   it('creates, selects, and deletes an item', async () => {
     const store = createAppStore();
