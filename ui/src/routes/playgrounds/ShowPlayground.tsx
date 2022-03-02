@@ -94,7 +94,6 @@ export default function ShowPlayground() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      style={{ width: '100%', height: '100%' }}
       className="playground-wrapper"
     >
       <Helmet>
