@@ -87,19 +87,17 @@ export default function ShowPlayground() {
   };
 
   return (
-    <>
+    <div
+      role="presentation"
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
       <Helmet>
         <title>Zuut - Design your grow</title>
       </Helmet>
       <Layout>
-        <div
-          id="sandbox"
-          role="presentation"
-          ref={drop}
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-          tabIndex={0}
-          onKeyDown={handleKeyDown}
-        >
+        <div id="sandbox" ref={drop}>
           <Stage
             key={v4()}
             ref={stageRef}
@@ -122,6 +120,6 @@ export default function ShowPlayground() {
       </Layout>
       <Inventory />
       <ControlPanel />
-    </>
+    </div>
   );
 }
