@@ -27,6 +27,8 @@ import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
 import { handleDeleteOnKeyDown } from '../../app/interactionHandlers';
 
+import './ShowPlayground.css';
+
 export const playground_path = () => '/playgrounds/current';
 
 export default function ShowPlayground() {
@@ -92,6 +94,8 @@ export default function ShowPlayground() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      style={{ width: '100%', height: '100%' }}
+      className="playground-wrapper"
     >
       <Helmet>
         <title>Zuut - Design your grow</title>
