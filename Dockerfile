@@ -8,7 +8,6 @@ COPY backend /app/backend/
 
 WORKDIR /app/ui
 # python required to install node-canvas npm dependency
-RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 RUN apk add --update --no-cache \
     make \
     g++ \
