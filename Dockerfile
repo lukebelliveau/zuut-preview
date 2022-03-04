@@ -5,7 +5,6 @@ WORKDIR /app/backend
 ADD backend/package.json backend/package-lock.json /app/backend/
 RUN npm ci
 COPY backend /app/backend/
-COPY graphql /app/graphql/
 
 WORKDIR /app/ui
 # deps required to install node-canvas
@@ -38,9 +37,6 @@ WORKDIR /app/ui
 COPY --from=dev /app/ui /app/ui
 RUN npm run build
 
-WORKDIR /app/graphql
-COPY --from=dev /app/graphql /app/graphql
-
 WORKDIR /app
 
 FROM node:16-alpine AS prod
@@ -55,8 +51,7 @@ WORKDIR /app
 COPY --from=build /app/backend/dist /app/backend/dist
 COPY --from=build /app/backend/package.json /app/backend/package.json
 COPY --from=build /app/backend/package-lock.json /app/backend/package-lock.json
-COPY --from=build /app/graphql /app/backend/graphql
-# COPY ./graphql /app/graphql/
+COPY ./graphql /app/graphql/
 WORKDIR /app/backend
 RUN npm ci
 
