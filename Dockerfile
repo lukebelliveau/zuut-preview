@@ -7,7 +7,10 @@ RUN npm ci
 COPY backend /app/backend/
 
 WORKDIR /app/ui
-# python required to install node-canvas npm dependency
+# deps required to install node-canvas
+# which is required to render react-konva components in Jest tests
+# https://github.com/Automattic/node-canvas#compiling
+# https://stackoverflow.com/a/66692565/3124493
 RUN apk add --update --no-cache \
     make \
     g++ \
