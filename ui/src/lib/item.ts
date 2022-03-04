@@ -1,3 +1,4 @@
+import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
 import Growspace, { GROWSPACE_TYPE } from './item/growspace';
 import GrowspaceItem from './item/growspaceItem';
 import MiscItem, { MISC_ITEM_TYPE } from './item/miscItem';
@@ -34,6 +35,11 @@ export function isGrowspace(item: Item): item is Growspace {
 export function isGrowspaceItem(item: Item): item is GrowspaceItem {
   // returns true if GrowspaceItem *or* subclass of GrowspaceItem
   return item instanceof GrowspaceItem;
+}
+export function isCeilingGrowspaceItem(
+  item: Item
+): item is CeilingGrowspaceItem {
+  return item instanceof CeilingGrowspaceItem;
 }
 
 export function isMiscItem(item: Item): item is MiscItem {

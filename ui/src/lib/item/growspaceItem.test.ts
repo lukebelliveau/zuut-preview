@@ -1,3 +1,4 @@
+import CeilingGrowspaceItem from './ceilingGrowspaceItem';
 import Growspace from './growspace';
 import GrowspaceItem from './growspaceItem';
 
@@ -7,6 +8,11 @@ describe('GrowspaceItem', () => {
       const item = new GrowspaceItem('', '1', 100, 100, 100, 100);
       const other = new GrowspaceItem('', '2', 100, 100, 100, 100);
       expect(item.isCollidingWith(item, other)).toBe(true);
+    });
+    it('does not collide with CeilingGrowspaceItems', () => {
+      const item = new GrowspaceItem('', '1', 100, 100, 100, 100);
+      const other = new CeilingGrowspaceItem('', '2', 100, 100, 100, 100);
+      expect(item.isCollidingWith(item, other)).toBe(false);
     });
     it('does not collide with growspaces', () => {
       const item = new Growspace('', '1', 100, 100, 100, 100);

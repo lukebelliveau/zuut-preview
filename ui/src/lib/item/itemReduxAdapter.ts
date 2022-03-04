@@ -9,6 +9,10 @@ import WallItem, { WALL_ITEM_TYPE } from './wallItem';
 import { CollisionState } from './placeableItem';
 import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 import PotItem, { POT_ITEM_TYPE } from './potItem';
+import CeilingGrowspaceItem, {
+  CEILING_GROWSPACE_ITEM_TYPE,
+} from './ceilingGrowspaceItem';
+import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
@@ -111,6 +115,30 @@ export default class ItemReduxAdapter {
         );
       case POT_ITEM_TYPE:
         return new PotItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case CEILING_GROWSPACE_ITEM_TYPE:
+        return new CeilingGrowspaceItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case LIGHT_ITEM_TYPE:
+        return new LightItem(
           itemState.name,
           itemState.id,
           itemState.x,

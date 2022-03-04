@@ -19,6 +19,12 @@ export enum CollisionState {
   BAD,
 }
 
+export enum Layer {
+  FLOOR,
+  CEILING,
+  BOTH,
+}
+
 export interface IPlaceableItem {
   place(position: Point): void;
   drag(position: Point, items: ItemList, playground: Playground): void;
@@ -36,6 +42,7 @@ export interface IPlaceableItem {
   image: string;
   placementShadow: PlacementShadow | undefined;
   collisionState: CollisionState;
+  layer: Layer;
 }
 
 export default class PlaceableItem implements IPlaceableItem {
@@ -50,6 +57,7 @@ export default class PlaceableItem implements IPlaceableItem {
   image: string = RectangleImage;
   collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
+  layer: Layer;
 
   constructor(
     name: string,
@@ -60,7 +68,8 @@ export default class PlaceableItem implements IPlaceableItem {
     length: number = 610,
     height: number = 915,
     collisionState: CollisionState = CollisionState.GOOD,
-    placementShadow: PlacementShadow | undefined = undefined
+    placementShadow: PlacementShadow | undefined = undefined,
+    layer: Layer = Layer.FLOOR
   ) {
     this.id = id;
     this.name = name;
@@ -71,6 +80,7 @@ export default class PlaceableItem implements IPlaceableItem {
     this.height = height;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
+    this.layer = layer;
   }
 
   place(position: Point) {

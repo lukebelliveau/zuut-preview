@@ -1,10 +1,10 @@
 import Growspace from './item/growspace';
-import GrowspaceItem from './item/growspaceItem';
 import { Item } from './item';
 import MiscItem from './item/miscItem';
 import RoomItem from './item/roomItem';
 import PotItem from './item/potItem';
 import { feetToMm } from './conversions';
+import LightItem from './item/lightItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -26,6 +26,29 @@ const ItemsLibrary: IItemGroup[] = [
       ),
       new PotItem(
         'Pot 2x2',
+        undefined,
+        undefined,
+        undefined,
+        feetToMm(2),
+        feetToMm(2),
+        feetToMm(2)
+      ),
+    ],
+  },
+  {
+    itemGroup: 'lights',
+    items: [
+      new LightItem(
+        'Light 1x1',
+        undefined,
+        undefined,
+        undefined,
+        feetToMm(1),
+        feetToMm(1),
+        feetToMm(1)
+      ),
+      new LightItem(
+        'Light 2x2',
         undefined,
         undefined,
         undefined,

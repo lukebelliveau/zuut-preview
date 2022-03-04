@@ -30,6 +30,15 @@ export default function LayoutTab() {
           />
         ))}
       </MenuSection>
+      <MenuSection title="Lights">
+        {itemGroup('lights').map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
       <MenuSection title="Climate">
         {itemGroup('climate').map((item) => (
           <PlaceableLibraryItem

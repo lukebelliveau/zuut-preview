@@ -1,15 +1,16 @@
+import PlaceableItem, { Layer, PlacementShadow } from './placeableItem';
 import { v4 } from 'uuid';
+import { isGrowspace, isGrowspaceItem } from '../item';
 import { isStraddlingBoundary } from '../geometry/geometry';
-import { isCeilingGrowspaceItem, isGrowspace } from '../item';
-import PlaceableItem, { PlacementShadow } from './placeableItem';
 
-export const GROWSPACE_ITEM_TYPE = 'GrowspaceItem';
+export const CEILING_GROWSPACE_ITEM_TYPE = 'CeilingGrowspaceItem';
 
-export default class GrowspaceItem extends PlaceableItem {
-  type: string = GROWSPACE_ITEM_TYPE;
+export default class CeilingGrowspaceItem extends PlaceableItem {
+  type = CEILING_GROWSPACE_ITEM_TYPE;
+  layer = Layer.CEILING;
 
-  copy(): GrowspaceItem {
-    return new GrowspaceItem(
+  copy(): CeilingGrowspaceItem {
+    return new CeilingGrowspaceItem(
       this.name,
       v4(),
       this.x,
@@ -26,10 +27,9 @@ export default class GrowspaceItem extends PlaceableItem {
   ): boolean {
     if (isGrowspace(otherItem)) {
       return isStraddlingBoundary(item, otherItem);
-    } else if (isCeilingGrowspaceItem(otherItem)) {
+    } else if (isGrowspaceItem(otherItem)) {
       return false;
     }
-
     return super.isCollidingWith(this, otherItem);
   }
 }
