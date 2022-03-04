@@ -7,10 +7,19 @@ RUN npm ci
 COPY backend /app/backend/
 
 WORKDIR /app/ui
-
-ADD ui/package.json ui/package-lock.json /app/ui/
 # python required to install node-canvas npm dependency
 RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
+RUN apk add --update --no-cache \
+    make \
+    g++ \
+    jpeg-dev \
+    cairo-dev \
+    giflib-dev \
+    pango-dev \
+    libtool \
+    autoconf \
+    automake
+ADD ui/package.json ui/package-lock.json /app/ui/
 RUN npm ci
 COPY ui /app/ui/
 
