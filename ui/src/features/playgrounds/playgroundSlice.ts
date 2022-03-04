@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
+import { loadItems } from '../items/itemsSlice';
 import { selectDefaultPlan } from '../plans/planSelectors';
 import { create } from '../plans/planSlice';
 import { selectPlaygroundState } from './playgroundSelector';
@@ -26,6 +28,7 @@ export const loadSavedPlayground = createAsyncThunk(
     const plan = await adapter.current();
 
     dispatch(create(PlanReduxAdapter.planToState(plan)));
+    dispatch(loadItems(plan.items.map(ItemReduxAdapter.itemToState)));
     dispatch(setPlan(plan.id));
     dispatch(resizePlayground());
   }

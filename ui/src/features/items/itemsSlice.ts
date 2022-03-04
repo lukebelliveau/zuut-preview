@@ -36,4 +36,11 @@ export const addItem = createAsyncThunk(
   }
 );
 
+export const loadItems = createAsyncThunk(
+  'items/loadItems',
+  async (items: ItemState[], { dispatch }) => {
+    items.forEach(itemState => dispatch(addOne(itemState)));
+  }
+);
+
 export default itemsSlice.reducer;
