@@ -1,5 +1,12 @@
-import { IItem } from '../item';
+import { IItem, Item } from '../item';
 import { Item as GraphqlItem } from '../../graphql';
+import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
+import Growspace, { GROWSPACE_TYPE } from './growspace';
+import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
+import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
+import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
+import WallItem, { WALL_ITEM_TYPE } from './wallItem';
+import PotItem, { POT_ITEM_TYPE } from './potItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -13,5 +20,33 @@ export default class ItemGraphqlAdapter {
       length: item.length,
       height: item.height,
     };
+  }
+
+  public static graphqlToItem(gqlItem: GraphqlItem): Item {
+    const itemAttrs: [string, string, number | undefined, number | undefined, number | undefined, number | undefined, number | undefined] = [
+      gqlItem.name,
+      gqlItem.id,
+      unwrapOrUndefined(gqlItem.x),
+      unwrapOrUndefined(gqlItem.y),
+      unwrapOrUndefined(gqlItem.width),
+      unwrapOrUndefined(gqlItem.length),
+      unwrapOrUndefined(gqlItem.height),
+    ];
+    switch (unwrapOrError(gqlItem.type)) {
+      case GROWSPACE_TYPE:
+        return new Growspace(...itemAttrs);
+      case GROWSPACE_ITEM_TYPE:
+        return new GrowspaceItem(...itemAttrs);
+      case MISC_ITEM_TYPE:
+        return new MiscItem(gqlItem.name, gqlItem.id);
+      case POT_ITEM_TYPE:
+        return new PotItem(...itemAttrs);
+      case ROOM_ITEM_TYPE:
+        return new RoomItem(...itemAttrs);
+      case WALL_ITEM_TYPE:
+        return new WallItem(...itemAttrs);
+      default:
+        throw new Error(`Unknown item type: ${gqlItem.type}`);
+    }
   }
 }

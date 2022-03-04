@@ -20,6 +20,7 @@ export type AdditionalEntityFields = {
 };
 
 export type Item = {
+  __typename?: 'Item';
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   length?: Maybe<Scalars['Float']>;
@@ -159,7 +160,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Item: never;
+  Item: ResolverTypeWrapper<Item>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   ItemInput: ItemInput;
@@ -176,7 +177,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: Scalars['String'];
-  Item: never;
+  Item: Item;
   Float: Scalars['Float'];
   ID: Scalars['ID'];
   ItemInput: ItemInput;
@@ -237,7 +238,6 @@ export type MapDirectiveArgs = {
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type ItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
   height?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   length?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
@@ -246,6 +246,7 @@ export type ItemResolvers<ContextType = any, ParentType extends ResolversParentT
   width?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   x?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   y?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

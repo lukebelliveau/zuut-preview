@@ -7,7 +7,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { Mutation, Query } from '../../graphql';
+import { Query } from '../../graphql';
 import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
 import ItemGraphqlAdapter from '../item/itemGraphqlAdapter';
 import Plan from '../plan';
@@ -40,6 +40,16 @@ export default class PlanGraphqlAdapter {
               width
               length
             }
+            items {
+              id
+              name
+              type
+              x
+              y
+              width
+              length
+              height
+            }
           }
         }
       `,
@@ -49,13 +59,16 @@ export default class PlanGraphqlAdapter {
     if (!gqlPlans || gqlPlans?.length === 0) throw new Error('No plans returned');
     const gqlPlan = unwrapOrError(gqlPlans[0]);
 
-    return new Plan(
+    const plan = new Plan(
       unwrapOrUndefined(gqlPlan.name),
       gqlPlan.room?.width,
       gqlPlan.room?.length,
       undefined,
       gqlPlan.id,
     );
+    gqlPlan.items.forEach(gqlItem => plan.addItem(ItemGraphqlAdapter.graphqlToItem(gqlItem)));
+
+    return plan;
   }
 
   async create(plan: Plan): Promise<string> {

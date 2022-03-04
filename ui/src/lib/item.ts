@@ -1,8 +1,10 @@
 import Growspace, { GROWSPACE_TYPE } from './item/growspace';
-import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './item/growspaceItem';
-import MiscItem from './item/miscItem';
+import GrowspaceItem from './item/growspaceItem';
+import MiscItem, { MISC_ITEM_TYPE } from './item/miscItem';
 import PlaceableItem from './item/placeableItem';
-import RoomItem from './item/roomItem';
+import PotItem, { POT_ITEM_TYPE } from './item/potItem';
+import RoomItem, { ROOM_ITEM_TYPE } from './item/roomItem';
+import WallItem, { WALL_ITEM_TYPE } from './item/wallItem';
 
 // TODO: eventually this can replace our union type below?
 export interface IItem {
@@ -32,4 +34,20 @@ export function isGrowspace(item: Item): item is Growspace {
 export function isGrowspaceItem(item: Item): item is GrowspaceItem {
   // returns true if GrowspaceItem *or* subclass of GrowspaceItem
   return item instanceof GrowspaceItem;
+}
+
+export function isMiscItem(item: Item): item is MiscItem {
+  return (item as MiscItem).type === MISC_ITEM_TYPE;
+}
+
+export function isRoomItem(item: Item): item is RoomItem {
+  return (item as RoomItem).type === ROOM_ITEM_TYPE;
+}
+
+export function isWallItem(item: Item): item is WallItem {
+  return (item as WallItem).type === WALL_ITEM_TYPE;
+}
+
+export function isPotItem(item: Item): item is PotItem {
+  return (item as PotItem).type === POT_ITEM_TYPE;
 }

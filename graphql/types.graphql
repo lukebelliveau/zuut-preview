@@ -3,7 +3,7 @@ type Room {
   length: Float!
 }
 
-interface Item {
+type Item {
   id: ID!
   name: String!
   type: String
