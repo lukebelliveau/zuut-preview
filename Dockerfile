@@ -55,7 +55,7 @@ WORKDIR /app
 COPY --from=build /app/backend/dist /app/backend/dist
 COPY --from=build /app/backend/package.json /app/backend/package.json
 COPY --from=build /app/backend/package-lock.json /app/backend/package-lock.json
-COPY --from=build /app/graphql /app/graphql
+COPY --from=build /app/graphql /app/backend/graphql
 # COPY ./graphql /app/graphql/
 WORKDIR /app/backend
 RUN npm ci
