@@ -5,6 +5,7 @@ WORKDIR /app/backend
 ADD backend/package.json backend/package-lock.json /app/backend/
 RUN npm ci
 COPY backend /app/backend/
+COPY graphql /app/graphql/
 
 WORKDIR /app/ui
 # deps required to install node-canvas
