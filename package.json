@@ -21,6 +21,7 @@
     "@graphql-codegen/typescript-mongodb": "2.3.1",
     "@graphql-codegen/typescript-operations": "2.3.0",
     "@graphql-codegen/typescript-react-apollo": "3.2.5",
-    "@graphql-codegen/typescript-resolvers": "2.5.0"
+    "@graphql-codegen/typescript-resolvers": "2.5.0",
+    "graphql": "^16.3.0"
   }
 }
