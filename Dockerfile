@@ -1,12 +1,4 @@
 FROM node:16-alpine AS dev
-
-WORKDIR /app/backend
-
-ADD backend/package.json backend/package-lock.json /app/backend/
-RUN npm ci
-COPY backend /app/backend/
-
-WORKDIR /app/ui
 # deps required to install node-canvas
 # which is required to render react-konva components in Jest tests
 # https://github.com/Automattic/node-canvas#compiling
@@ -21,6 +13,15 @@ RUN apk add --update --no-cache \
     libtool \
     autoconf \
     automake
+
+WORKDIR /app/backend
+
+ADD backend/package.json backend/package-lock.json /app/backend/
+RUN npm ci
+COPY backend /app/backend/
+
+WORKDIR /app/ui
+
 ADD ui/package.json ui/package-lock.json /app/ui/
 RUN npm ci
 COPY ui /app/ui/
