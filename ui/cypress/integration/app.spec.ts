@@ -7,18 +7,18 @@ describe('app', () => {
   it('creates a grow', () => {
     cy.visit('/');
 
-    cy.login();
+    // cy.login();
 
-    // cy.findByText('Log in').click();
+    cy.findByText('Log in').click();
 
     // /**
     //  * this block is testing Auth0 UI code and there is a better way to do this
     //  * https://auth0.com/blog/end-to-end-testing-with-cypress-and-auth0/
     //  * https://github.com/cypress-io/cypress/issues/1342#issuecomment-366747803
     //  */
-    // cy.findByLabelText('Email address').type(Cypress.env('auth_username'));
-    // cy.findByLabelText('Password').type(Cypress.env('auth_password'));
-    // cy.findByText('Continue').click();
+    cy.findByLabelText('Email address').type(Cypress.env('auth_username'));
+    cy.findByLabelText('Password').type(Cypress.env('auth_password'));
+    cy.findByText('Continue').click();
 
     cy.visit('/playgrounds/new');
 

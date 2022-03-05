@@ -1,3 +1,4 @@
 {
-  "projectId": "n3vsrd"
+  "projectId": "n3vsrd",
+  "chromeWebSecurity": false
 }
