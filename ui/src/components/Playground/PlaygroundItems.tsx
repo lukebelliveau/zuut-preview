@@ -2,7 +2,7 @@ import { Layer, Rect, Image } from 'react-konva';
 import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { removeOne, updateOne } from '../../features/items/itemsSlice';
+import { removeItem, updateOne } from '../../features/items/itemsSlice';
 import {
   CollisionState,
   IPlaceableItem,
@@ -20,6 +20,7 @@ import {
 } from '../../features/interactions/interactionsSlice';
 import { sortSelectedToLast } from '../../lib/itemList';
 import { KonvaEventObject } from 'konva/lib/Node';
+import { useDispatchDropItem } from '../../features/items/itemsHooks';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ export default function PlaygroundItems() {
   const playground = useBuildPlayground();
   const items = useBuildItemList();
   const selectedItemId = useAppSelector(selectSelectedItemId);
+  const dispatchDropItem = useDispatchDropItem();
 
   function updatePlacement(item: IPlaceableItem, newPosition: Point) {
     dispatch(select(item.id));
@@ -59,11 +61,9 @@ export default function PlaygroundItems() {
   function dropAndUpdateItemCollisions(item: IPlaceableItem): void {
     const itemDroppedOnPlayground = item.drop(items, playground);
     if (itemDroppedOnPlayground) {
-      dispatch(
-        updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
-      );
+      dispatchDropItem(item);
     } else {
-      dispatch(removeOne(item.id));
+      dispatch(removeItem(item.id));
     }
   }
 

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
+import PlanService from '../../lib/plan/planService';
 import { selectDefaultPlan } from '../plans/planSelectors';
 import { selectJwt } from '../users/userSelector';
 import itemsAdapter from './itemsEntityAdapter';
@@ -18,21 +19,38 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const { addOne, updateOne, removeOne } = itemsSlice.actions;
+export const { addOne, updateOne } = itemsSlice.actions;
 
 export const addItem = createAsyncThunk(
   'items/addItem',
   async (item: ItemState, { dispatch, getState }) => {
     dispatch(addOne(item));
-    
-    const state = getState() as RootState;
-    const jwt = selectJwt(state);
-    const planState = selectDefaultPlan(state);
-    const itemListState = itemsSelectors.selectAll(state);
-    const plan = PlanReduxAdapter.stateToPlan(planState, itemListState);
 
-    const adapter = new PlanGraphqlAdapter(jwt);
-    return adapter.update(plan);
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
+export const dropItem = createAsyncThunk(
+  'items/dropItem',
+  async (item: ItemState, { dispatch, getState }) => {
+    dispatch(updateOne({ id: item.id, changes: item }));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
+export const removeItem = createAsyncThunk(
+  'items/removeItem',
+  async (id: string, { dispatch, getState }) => {
+    dispatch(itemsSlice.actions.removeOne(id));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
   }
 );
 

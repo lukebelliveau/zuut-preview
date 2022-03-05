@@ -9,8 +9,6 @@ import { v4 } from 'uuid';
 import Layout from '../../components/Layout';
 import { useResizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import Inventory from '../../components/Inventory';
-import { addOne, removeOne } from '../../features/items/itemsSlice';
-import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import {
   loadSavedPlayground,
   zoom as zoomPlayground,
@@ -26,6 +24,7 @@ import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
 import { handleDeleteOnKeyDown } from '../../app/interactionHandlers';
+import { useDispatchAddItem } from '../../features/items/itemsHooks';
 
 import './ShowPlayground.css';
 
@@ -37,6 +36,8 @@ export default function ShowPlayground() {
   const playground = useBuildPlayground();
   const jwt = useJwt();
   const store = useStore();
+  const dispatchAddItem = useDispatchAddItem();
+
 
   useResizePlaygroundOnWindowResize();
 
@@ -46,7 +47,7 @@ export default function ShowPlayground() {
       if (isPlaceableItem(item)) {
         item.place(playground.place());
       }
-      dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
+      dispatchAddItem(item.copy());
     },
   }));
 

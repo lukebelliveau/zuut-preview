@@ -1,4 +1,7 @@
+import { RootState } from '../../app/store';
+import { itemsSelectors } from '../../features/items/itemsSelectors';
 import { ItemState } from '../../features/items/itemState';
+import { selectDefaultPlan } from '../../features/plans/planSelectors';
 import ItemReduxAdapter from '../item/itemReduxAdapter';
 import Plan, { IPlan } from '../plan';
 
@@ -32,5 +35,17 @@ export default class PlanReduxAdapter {
     }
 
     return plan;
+  }
+
+  state: RootState;
+
+  constructor(state: RootState) {
+    this.state = state;
+  }
+
+  current(): Plan {
+    const planState = selectDefaultPlan(this.state);
+    const itemListState = itemsSelectors.selectAll(this.state);
+    return PlanReduxAdapter.stateToPlan(planState, itemListState);
   }
 }

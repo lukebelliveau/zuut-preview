@@ -9,7 +9,7 @@ import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import './ControlPanel.css';
 import RectangleImage from '../../images/items/rectangle.svg';
 import DeleteIcon from '../../images/delete.png';
-import { removeOne } from '../../features/items/itemsSlice';
+import { removeItem } from '../../features/items/itemsSlice';
 import { unselect } from '../../features/interactions/interactionsSlice';
 
 type ControlPanelState = 'show' | 'hide' | 'minimize';
@@ -66,7 +66,7 @@ const ItemControls = ({ item: itemState }: { item?: ItemState }) => {
   const item = ItemReduxAdapter.stateToItem(itemState);
 
   const deleteItem = () => {
-    dispatch(removeOne(item.id));
+    dispatch(removeItem(item.id));
     dispatch(unselect());
   };
 
@@ -74,7 +74,7 @@ const ItemControls = ({ item: itemState }: { item?: ItemState }) => {
     e
   ) => {
     if (e.key === 'Return' || e.key === 'Enter') {
-      dispatch(removeOne(item.id));
+      dispatch(removeItem(item.id));
     }
   };
 
