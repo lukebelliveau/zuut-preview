@@ -21,7 +21,11 @@ export type GraphqlContext = {
   user: Jwt,
 }
 
+const client = new MongoClient(getEnv('MONGODB_URL'));
+
 export async function createServer(httpServer: http.Server) {
+  client.connect();
+
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -30,15 +34,9 @@ export async function createServer(httpServer: http.Server) {
       return { user: req.user };  // req.user comes from express-jwt
     },
     dataSources: () => {
-      if (!db) {
-        const client = new MongoClient(getEnv('MONGODB_URL'));
-        client.connect();
-        db = client.db();
-      }
-
       return {
-        plans: new Plans(db.collection('plans')),
-      }
+        plans: new Plans(client.db().collection('plans')),
+      };
     },
   });
   await server.start();

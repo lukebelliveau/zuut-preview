@@ -6,8 +6,9 @@
   "type": "commonjs",
   "scripts": {
     "dev": "nf -p 3000 start",
-    "prepush": "cd backend && npm test && cd ../ui && npm run prepush",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "prepush": "cd backend && npm test && cd ../ui && npm run prepush && cd .. && npm run e2e",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "e2e": "dotenv -- bash -c 'cd e2e; CYPRESS_BASE_URL=http://localhost:3000 npm test'"
   },
   "keywords": [],
   "author": "Zuut",
@@ -22,6 +23,7 @@
     "@graphql-codegen/typescript-operations": "2.3.0",
     "@graphql-codegen/typescript-react-apollo": "3.2.5",
     "@graphql-codegen/typescript-resolvers": "2.5.0",
+    "dotenv-cli": "^5.0.0",
     "graphql": "^16.3.0"
   }
 }

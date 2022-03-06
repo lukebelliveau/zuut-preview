@@ -6,7 +6,6 @@
     "@apollo/client": "^3.5.9",
     "@auth0/auth0-react": "^1.8.0",
     "@babel/preset-typescript": "^7.16.7",
-    "@getgauge/cli": "latest",
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -20,7 +19,6 @@
     "@types/react-redux": "^7.1.21",
     "@types/react-router": "^5.1.18",
     "@types/redux-logger": "^3.0.9",
-    "@types/testing-library__cypress": "^5.0.9",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
@@ -50,7 +48,6 @@
     "react-router": "^5.2.0",
     "react-scripts": "5.0.0",
     "redux-logger": "^3.0.6",
-    "taiko": "latest",
     "typescript": "~4.1.5",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.2"
@@ -60,13 +57,10 @@
     "eject": "react-scripts eject",
     "format": "eslint --fix src",
     "lint": "tsc --noEmit && eslint src",
-    "prepush": "npm run lint -- --max-warnings=0 && CI=true npm test && npm run taiko-test",
+    "prepush": "npm run lint -- --max-warnings=0 && CI=true npm test",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "taiko-test": "gauge run specs",
-    "dev": "npm start",
-    "cypress:open": "cypress open",
-    "cypress:local": "CYPRESS_baseUrl=http://localhost:3000 cypress open"
+    "dev": "npm start"
   },
   "browserslist": {
     "production": [
@@ -81,9 +75,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/cypress": "^8.0.2",
     "@testing-library/react-hooks": "^7.0.2",
-    "cypress": "^9.5.0",
     "eslint-config-prettier": "^8.3.0",
     "canvas": "^2.9.0"
   },

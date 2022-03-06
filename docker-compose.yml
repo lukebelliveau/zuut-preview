@@ -4,12 +4,13 @@ services:
   app:
     build: .
     ports:
-      - 3000
+      # - 3000
+      - "3000:3000"
     environment:
       AUTH0_AUDIENCE: ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid
       AUTH0_ISSUER: https://dev-baqlbrdt.us.auth0.com/
       JWKS_URL: https://dev-baqlbrdt.us.auth0.com/.well-known/jwks.json
-      MONGODB_URL: mongodb://monbodb/dev?retryWrites=true&w=majority
+      MONGODB_URL: mongodb://mongodb/dev?retryWrites=true&w=majority
       PORT: 3000
     depends_on:
       - mongodb
@@ -17,14 +18,14 @@ services:
   mongodb:
     image: mongo
 
-  browser_tests:
-    build:
-      context: .
-      dockerfile: Dockerfile.browser_tests
-    platform: "linux/amd64"
-    depends_on:
-      - app
-    environment:
-      START_URL: http://app:3000/
-      TAIKO_USERNAME: zuuttestuser@gmail.com
-      TAIKO_PASSWORD: ZUUTtester123!
+  #browser_tests:
+    #image: cypress
+    #build: ./e2e
+    #container_name: cypress
+    #platform: "linux/amd64"
+    #depends_on:
+      #- app
+    #environment:
+      #CYPRESS_BASE_URL: http://app:3000/
+      #CYPRESS_AUTH_USERNAME: zuuttestuser@gmail.com
+      #CYPRESS_AUTH_PASSWORD: ZUUTtester123!

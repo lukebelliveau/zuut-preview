@@ -1,21 +1,24 @@
 /// <reference types="cypress" />
 import '../support/commands';
 
-const login = () => {
-  cy.logout();
-  cy.visit('/');
-
-  cy.findByText('Log in').click();
-
-  cy.findByLabelText('Email address').type(Cypress.env('auth_username'));
-  cy.findByLabelText('Password').type(Cypress.env('auth_password'));
-  cy.findByText('Continue').click();
-};
-
 describe('app', () => {
   it('creates a grow', () => {
-    login();
-    cy.visit('/playgrounds/new');
+    cy.logout();
+    cy.visit('/');
+
+    cy.findByText('Get started').click();
+
+    /**
+     * this block is testing Auth0 UI code which makes the test more brittle
+     * but unfortunately there is no way to programmatically log in a user
+     * with `useAuth0`. The only known hack involves using localStorage
+     * for the JWT but this is a higher security risk as it exposes the 
+     * token details to the user.
+     * https://github.com/auth0/auth0-react/issues/234
+     */
+    cy.findByLabelText('Email address').type(Cypress.env('AUTH_USERNAME'));
+    cy.findByLabelText('Password').type(Cypress.env('AUTH_PASSWORD'));
+    cy.findByText('Continue').click();
 
     cy.findByLabelText('name').type('Test Grow').type('{enter}');
     cy.findByLabelText('length').type('20');
@@ -23,9 +26,8 @@ describe('app', () => {
     cy.findByText('Create new layout').click();
 
     cy.findByText('Name: Test Grow').should('exist');
-  });
 
-  it('creates, selects, and deletes an item', () => {
+
     cy.findByText('Objects').click();
 
     // add item

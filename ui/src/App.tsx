@@ -7,7 +7,6 @@ import { browserHistory } from './app/store';
 import RequireAuth from './components/RequireAuth';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
-import NotFound from './routes/NotFound';
 import NewPlayground, { new_playground_path } from './routes/playgrounds/NewPlayground';
 import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
@@ -33,7 +32,6 @@ function App() {
           </RequireAuth>
         </Route>
         <Route path="/access-denied"><AccessDenied /></Route>
-        {/* <Route path="*"><NotFound /></Route> */}
       </ConnectedRouter>
     </DndProvider>
   );

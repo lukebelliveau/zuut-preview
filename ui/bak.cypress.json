@@ -1,4 +1,0 @@
-{
-  "chromeWebSecurity": false,
-  "comment": "the 'chromeWebSecurity:false' option allows us to navigate to auth0 site to login, which is not optimal"
-}

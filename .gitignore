@@ -27,7 +27,6 @@ junit.xml
 # VSCode history
 .history/
 
-.gauge
 logs
 reports
 
@@ -35,4 +34,4 @@ reports
 backend/dist
 db
 
-./ui/cypress.env.json
+e2e/cypress/videos
