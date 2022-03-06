@@ -31,15 +31,23 @@ declare global {
     interface Chainable<Subject> {
       generateToken({ secret }): void;
 
-      /**
-       * This will log user in
-       * @param email string
-       * @param password string
-       */
       login(): void;
+      logout(): void;
     }
   }
 }
+
+Cypress.Commands.add('logout', () => {
+  Cypress.log({
+    name: 'logoutViaAuth0',
+  });
+
+  const options = {
+    method: 'GET',
+    url: 'https://dev-baqlbrdt.us.auth0.com/v2/logout',
+  };
+  cy.request(options);
+});
 
 /**
  * Programmatically generate a JWT token instead of
