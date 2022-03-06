@@ -144,7 +144,10 @@ const Item = ({
       strokeScaleEnabled={false}
       draggable
       opacity={item.placementShadow ? 0.2 : 1}
-      image={imageObj}
+      /**
+       * don't use imageObj in tests, because there is no window.Image() in tests
+       */
+      image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
       onClick={() => dispatch(toggleSelect(item.id))}
       onDragMove={handleDragMove}
       onDragEnd={handleDragEnd}
