@@ -18,14 +18,14 @@ services:
   mongodb:
     image: mongo
 
-  #browser_tests:
-    #image: cypress
-    #build: ./e2e
-    #container_name: cypress
-    #platform: "linux/amd64"
-    #depends_on:
-      #- app
-    #environment:
-      #CYPRESS_BASE_URL: http://app:3000/
-      #CYPRESS_AUTH_USERNAME: zuuttestuser@gmail.com
-      #CYPRESS_AUTH_PASSWORD: ZUUTtester123!
+  browser_tests:
+    image: cypress
+    build: ./e2e
+    container_name: cypress
+    platform: "linux/amd64"
+    depends_on:
+      - app
+    environment:
+      CYPRESS_BASE_URL: http://app:3000/
+      CYPRESS_AUTH_USERNAME: zuuttestuser@gmail.com
+      CYPRESS_AUTH_PASSWORD: ZUUTtester123!
