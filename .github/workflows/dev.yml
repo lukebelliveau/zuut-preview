@@ -7,14 +7,14 @@ jobs:
   ui_unit_test:
     runs-on: ubuntu-18.04
     env:
-      CI: "true"
+      CI: 'true'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "15.14.0"
-          cache: "npm"
+          node-version: '15.14.0'
+          cache: 'npm'
       - run: npm ci
         working-directory: ./ui
 
@@ -26,20 +26,28 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: docker-compose build
-      - run: docker-compose run browser_tests
+      - name: browser-tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+      - run: cd e2e && npm ci && npx cypress verify
+      - run: docker compose build
+      - run: docker compose up -d
+      - run: npm run e2e
 
   backend_unit_test:
     runs-on: ubuntu-18.04
     env:
-      CI: "true"
+      CI: 'true'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "15.14.0"
-          cache: "npm"
+          node-version: '15.14.0'
+          cache: 'npm'
       - run: npm ci
         working-directory: ./backend
 
@@ -59,8 +67,8 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "zuut-dev" #Must be unique in Heroku
-          heroku_email: "zuutheroku@gmail.com"
+          heroku_app_name: 'zuut-dev' #Must be unique in Heroku
+          heroku_email: 'zuutheroku@gmail.com'
           #healthcheck: true // save for later
           #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
         env:
