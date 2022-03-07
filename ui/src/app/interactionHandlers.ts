@@ -1,6 +1,9 @@
-import { ActionCreators } from 'redux-undo';
 import { unselect } from '../features/interactions/interactionsSlice';
-import { removeItem } from '../features/items/itemsSlice';
+import {
+  redoItemAction,
+  removeItem,
+  undoItemAction,
+} from '../features/items/itemsSlice';
 import { AppStore } from './store';
 
 export const handleDeleteOnKeyDown = (
@@ -23,9 +26,9 @@ export const handleUndoRedoOnKeyDown = (
     (e.metaKey && e.shiftKey && e.key === 'z') ||
     (e.metaKey && e.key === 'y' && getOS() === 'windows')
   ) {
-    store.dispatch(ActionCreators.redo());
+    store.dispatch(redoItemAction());
   } else if (e.metaKey && e.key === 'z') {
-    store.dispatch(ActionCreators.undo());
+    store.dispatch(undoItemAction());
   }
 };
 

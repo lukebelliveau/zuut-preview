@@ -1,19 +1,22 @@
-import { useStore } from 'react-redux';
-import { ActionCreators } from 'redux-undo';
+import { useDispatch } from 'react-redux';
+import {
+  undoItemAction,
+  redoItemAction,
+} from '../../features/items/itemsSlice';
 import UndoIcon from '../../images/glyphs/undo.png';
 import RedoIcon from '../../images/glyphs/redo.png';
 
 import './Toolbar.css';
 
 const Toolbar = () => {
-  const store = useStore();
+  const dispatch = useDispatch();
 
   const undo = () => {
-    store.dispatch(ActionCreators.undo());
+    dispatch(undoItemAction());
   };
 
   const redo = () => {
-    store.dispatch(ActionCreators.redo());
+    dispatch(redoItemAction());
   };
 
   const doIfEnter = (

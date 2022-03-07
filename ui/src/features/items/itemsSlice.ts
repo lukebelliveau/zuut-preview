@@ -1,3 +1,4 @@
+import { ActionCreators } from 'redux-undo';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import PlanService from '../../lib/plan/planService';
@@ -44,6 +45,28 @@ export const removeItem = createAsyncThunk(
   'items/removeItem',
   async (id: string, { dispatch, getState }) => {
     dispatch(removeOne(id));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
+export const undoItemAction = createAsyncThunk(
+  'items/undoItems',
+  async (_, { dispatch, getState }) => {
+    dispatch(ActionCreators.undo());
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
+export const redoItemAction = createAsyncThunk(
+  'items/redoItems',
+  async (_, { dispatch, getState }) => {
+    dispatch(ActionCreators.redo());
 
     const state = getState() as RootState;
     const planService = new PlanService(state);
