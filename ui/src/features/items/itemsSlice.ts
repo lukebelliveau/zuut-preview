@@ -10,11 +10,13 @@ export const itemsSlice = createSlice({
   reducers: {
     addOne: itemsAdapter.addOne,
     updateOne: itemsAdapter.updateOne,
+    updateOneWithoutHistory: itemsAdapter.updateOne,
     removeOne: itemsAdapter.removeOne,
   },
 });
 
-export const { addOne, updateOne, removeOne } = itemsSlice.actions;
+export const { addOne, updateOne, updateOneWithoutHistory, removeOne } =
+  itemsSlice.actions;
 
 export const addItem = createAsyncThunk(
   'items/addItem',

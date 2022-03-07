@@ -2,7 +2,11 @@ import { Layer, Rect, Image } from 'react-konva';
 import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { removeItem, updateOne } from '../../features/items/itemsSlice';
+import {
+  removeItem,
+  updateOne,
+  updateOneWithoutHistory,
+} from '../../features/items/itemsSlice';
 import {
   CollisionState,
   IPlaceableItem,
@@ -54,7 +58,10 @@ export default function PlaygroundItems() {
     dispatch(select(item.id));
     item.drag(newPosition, items, playground);
     dispatch(
-      updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+      updateOneWithoutHistory({
+        id: item.id,
+        changes: ItemReduxAdapter.itemToState(item),
+      })
     );
   }
 

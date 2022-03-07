@@ -120,7 +120,7 @@
   cursor: pointer;
 }
 
-.delete-button {
+.control-panel-section button {
   all: unset;
   display: inline-block;
 }

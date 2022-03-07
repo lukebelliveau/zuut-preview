@@ -94,7 +94,6 @@ const ItemControls = ({ item: itemState }: { item?: ItemState }) => {
         <div className="control-panel-section transform">
           <h4>Transform</h4>
           <button
-            className="delete-button"
             onClick={deleteItem}
             onKeyDown={handleKeyDownDeleteItem}
             aria-label="delete item"

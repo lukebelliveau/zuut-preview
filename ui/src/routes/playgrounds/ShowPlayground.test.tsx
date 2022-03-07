@@ -65,7 +65,63 @@ describe('ShowPlayground', () => {
     fireEvent.keyDown(item, { key: 'Delete' });
     expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
   });
+
+  it('can undo and redo', async () => {
+    const store = createAppStore();
+    const plan = new Plan();
+    const planState = PlanReduxAdapter.planToState(plan);
+    store.dispatch(create(planState));
+    store.dispatch(setPlan(plan.id));
+    store.dispatch(setUser('jwt'));
+
+    renderWithContext(<ShowPlayground />, store);
+
+    const objectsTab = screen.getByText('Objects');
+    fireEvent.click(objectsTab);
+
+    const addPotButton = screen.getByRole('button', { name: /Pot 2x2/i });
+    fireEvent.click(addPotButton);
+
+    // item created, shows in inventory list
+    screen.getByRole('menuitem', { name: /Pot 2x2/i });
+
+    const playgroundContainer = screen.getByTestId('playground-container');
+
+    fireKeyboardUndoOn(playgroundContainer);
+    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+
+    fireKeyboardRedoOn(playgroundContainer);
+    expect(
+      screen.getByRole('menuitem', { name: /Pot 2x2/i })
+    ).toBeInTheDocument();
+
+    const undoButton = screen.getByLabelText('undo');
+    const redoButton = screen.getByLabelText('redo');
+
+    fireEvent.click(undoButton);
+    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+
+    fireEvent.click(redoButton);
+    expect(
+      screen.getByRole('menuitem', { name: /Pot 2x2/i })
+    ).toBeInTheDocument();
+  });
 });
+
+const fireKeyboardRedoOn = (container: HTMLElement) => {
+  fireEvent.keyDown(container, {
+    key: 'z',
+    metaKey: true,
+    shiftKey: true,
+  });
+};
+
+const fireKeyboardUndoOn = (container: HTMLElement) => {
+  fireEvent.keyDown(container, {
+    key: 'z',
+    metaKey: true,
+  });
+};
 
 const renderWithContext = (children: JSX.Element, store?: EnhancedStore) => {
   const testStore = store ? store : createAppStore();

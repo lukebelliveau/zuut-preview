@@ -1,0 +1,9 @@
+#toolbar {
+  border: 0.063rem solid var(--black);
+}
+
+#toolbar button {
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+}

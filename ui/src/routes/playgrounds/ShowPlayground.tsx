@@ -23,10 +23,14 @@ import { isPlaceableItem, Item } from '../../lib/item';
 import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
-import { handleDeleteOnKeyDown } from '../../app/interactionHandlers';
+import {
+  handleDeleteOnKeyDown,
+  handleUndoRedoOnKeyDown,
+} from '../../app/interactionHandlers';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';
 
 import './ShowPlayground.css';
+import Toolbar from '../../components/Toolbar/Toolbar';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -37,7 +41,6 @@ export default function ShowPlayground() {
   const jwt = useJwt();
   const store = useStore();
   const dispatchAddItem = useDispatchAddItem();
-
 
   useResizePlaygroundOnWindowResize();
 
@@ -87,6 +90,7 @@ export default function ShowPlayground() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     handleDeleteOnKeyDown(e, store);
+    handleUndoRedoOnKeyDown(e, store);
   };
 
   return (
@@ -96,12 +100,14 @@ export default function ShowPlayground() {
       tabIndex={0}
       onKeyDown={handleKeyDown}
       className="playground-wrapper"
+      data-testid="playground-container"
     >
       <Helmet>
         <title>Zuut - Design your grow</title>
       </Helmet>
       <Layout>
         <div id="sandbox" ref={drop}>
+          <Toolbar />
           <Stage
             key={v4()}
             ref={stageRef}
