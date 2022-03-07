@@ -11,7 +11,7 @@ import interactionsReducer from '../features/interactions/interactionsSlice';
 import userReducer from '../features/users/userSlice';
 
 export const browserHistory = createBrowserHistory<unknown>();
-const reduxLoggerEnabled = true;
+const reduxLoggerEnabled = false;
 
 const errorHandlerMiddleware = createThunkErrorHandlerMiddleware({ onError: console.error });
 

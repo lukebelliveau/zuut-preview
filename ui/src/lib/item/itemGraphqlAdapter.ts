@@ -7,6 +7,8 @@ import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
 import WallItem, { WALL_ITEM_TYPE } from './wallItem';
 import PotItem, { POT_ITEM_TYPE } from './potItem';
+import CeilingGrowspaceItem, { CEILING_GROWSPACE_ITEM_TYPE } from './ceilingGrowspaceItem';
+import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -33,10 +35,14 @@ export default class ItemGraphqlAdapter {
       unwrapOrUndefined(gqlItem.height),
     ];
     switch (unwrapOrError(gqlItem.type)) {
+      case CEILING_GROWSPACE_ITEM_TYPE:
+        return new CeilingGrowspaceItem(...itemAttrs);
       case GROWSPACE_TYPE:
         return new Growspace(...itemAttrs);
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem(...itemAttrs);
+      case LIGHT_ITEM_TYPE:
+        return new LightItem(...itemAttrs);
       case MISC_ITEM_TYPE:
         return new MiscItem(gqlItem.name, gqlItem.id);
       case POT_ITEM_TYPE:
