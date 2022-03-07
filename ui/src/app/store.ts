@@ -1,7 +1,8 @@
 import { connectRouter, routerMiddleware, RouterState } from 'connected-react-router';
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import { createBrowserHistory, History } from 'history';
+import { createBrowserHistory } from 'history';
+import createThunkErrorHandlerMiddleware from 'redux-thunk-error-handler';
 
 import itemsReducer from '../features/items/itemsSlice';
 import playgroundReducer from '../features/playgrounds/playgroundSlice';
@@ -11,6 +12,8 @@ import userReducer from '../features/users/userSlice';
 
 export const browserHistory = createBrowserHistory<unknown>();
 const reduxLoggerEnabled = false;
+
+const errorHandlerMiddleware = createThunkErrorHandlerMiddleware({ onError: console.error });
 
 export function createAppStore() {
   return configureStore({
@@ -27,7 +30,7 @@ export function createAppStore() {
     middleware: (getDefaultMiddleware) => {
       let middlewares = getDefaultMiddleware();
       if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
-      return middlewares.concat(routerMiddleware(browserHistory));
+      return middlewares.concat(routerMiddleware(browserHistory)).concat(errorHandlerMiddleware);
     }
   });
 };
