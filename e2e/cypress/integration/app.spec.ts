@@ -19,6 +19,7 @@ describe('app', () => {
     cy.findByLabelText('Email address').type(Cypress.env('AUTH_USERNAME'));
     cy.findByLabelText('Password').type(Cypress.env('AUTH_PASSWORD'));
     cy.findByText('Continue').click();
+    cy.findByText('Accept').click();
 
     cy.findByLabelText('name').type('Test Grow').type('{enter}');
     cy.findByLabelText('length').type('20');
