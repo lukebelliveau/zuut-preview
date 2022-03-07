@@ -40,6 +40,6 @@ describe('ControlPanel', () => {
     fireEvent.click(deleteButton);
 
     expect(store.getState().interactions.selected).toBeUndefined();
-    expect(store.getState().items.ids).toHaveLength(0);
+    expect(store.getState().items.present.ids).toHaveLength(0);
   });
 });

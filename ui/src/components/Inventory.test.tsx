@@ -44,7 +44,9 @@ describe('Inventory', () => {
     await waitFor(() => store.getState().interactions.selected === item.id);
     fireEvent.keyDown(testItem, { key: 'Delete' });
 
-    await waitFor(() => expect(store.getState().items.ids.length).toBe(0));
+    await waitFor(() =>
+      expect(store.getState().items.present.ids.length).toBe(0)
+    );
   });
 
   it('deletes an item with Backspace key', async () => {
@@ -61,6 +63,8 @@ describe('Inventory', () => {
     // delete item
     fireEvent.keyDown(testItem, { key: 'Backspace' });
 
-    await waitFor(() => expect(store.getState().items.ids.length).toBe(0));
+    await waitFor(() =>
+      expect(store.getState().items.present.ids.length).toBe(0)
+    );
   });
 });

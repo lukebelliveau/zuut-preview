@@ -3,7 +3,7 @@ import { RootState } from '../../app/store';
 import itemsAdapter from './itemsEntityAdapter';
 
 export const itemsSelectors = itemsAdapter.getSelectors<RootState>(
-  (state) => state.items
+  (state) => state.items.present
 );
 
 export const useSelectAllItems = () => useAppSelector(itemsSelectors.selectAll);

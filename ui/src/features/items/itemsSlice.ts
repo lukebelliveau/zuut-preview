@@ -1,12 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
-import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlanService from '../../lib/plan/planService';
-import { selectDefaultPlan } from '../plans/planSelectors';
-import { selectJwt } from '../users/userSelector';
 import itemsAdapter from './itemsEntityAdapter';
-import { itemsSelectors } from './itemsSelectors';
 import { ItemState } from './itemState';
 
 export const itemsSlice = createSlice({
@@ -19,7 +14,7 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const { addOne, updateOne } = itemsSlice.actions;
+export const { addOne, updateOne, removeOne } = itemsSlice.actions;
 
 export const addItem = createAsyncThunk(
   'items/addItem',
@@ -46,7 +41,7 @@ export const dropItem = createAsyncThunk(
 export const removeItem = createAsyncThunk(
   'items/removeItem',
   async (id: string, { dispatch, getState }) => {
-    dispatch(itemsSlice.actions.removeOne(id));
+    dispatch(removeOne(id));
 
     const state = getState() as RootState;
     const planService = new PlanService(state);
@@ -57,7 +52,7 @@ export const removeItem = createAsyncThunk(
 export const loadItems = createAsyncThunk(
   'items/loadItems',
   async (items: ItemState[], { dispatch }) => {
-    items.forEach(itemState => dispatch(addOne(itemState)));
+    items.forEach((itemState) => dispatch(addOne(itemState)));
   }
 );
 
