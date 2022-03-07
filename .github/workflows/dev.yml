@@ -36,6 +36,9 @@ jobs:
       - run: docker compose build
       - run: docker compose up -d
       - run: npm run e2e
+        env:
+          CYPRESS_AUTH_USERNAME: ${{ secrets.CYPRESS_AUTH_USERNAME }}
+          CYPRESS_AUTH_PASSWORD: ${{ secrets.CYPRESS_AUTH_PASSWORD }}
 
   backend_unit_test:
     runs-on: ubuntu-18.04
