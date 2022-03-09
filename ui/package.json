@@ -60,7 +60,7 @@
     "format": "eslint --fix src",
     "lint": "tsc --noEmit && eslint src",
     "prepush": "npm run lint -- --max-warnings=0 && CI=true npm test",
-    "start": "react-scripts start",
+    "start": "env BROWSER=none react-scripts start",
     "test": "react-scripts test",
     "dev": "npm start"
   },
