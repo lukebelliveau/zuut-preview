@@ -7,13 +7,19 @@ interface LinkProps {
   className?: string;
   to: string;
   children: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
 }
 
-export default function Link({ children, className, id, to }: LinkProps) {
+export default function Link({ children, className, id, to, onClick }: LinkProps) {
   const dispatch = useDispatch();
 
+  function defaultOnClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    dispatch(push(to));
+  }
+
   return (
-    <a id={id} className={className} href={to} onClick={ (e) => { e.preventDefault(); dispatch(push(to)); } }>
+    <a id={id} className={className} href={to} onClick={onClick || defaultOnClick}>
       {children}
     </a>
   );

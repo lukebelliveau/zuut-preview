@@ -1,16 +1,32 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 
 import './Home.css';
 import ZuutLogo from '../images/zuut-logo.svg';
+
 import LoginButton from '../components/LoginButton';
-// import { playground_path } from './playgrounds/ShowPlayground';
 import Link from '../components/Link';
 import { new_playground_path } from './playgrounds/NewPlayground';
+import { playground_path } from './playgrounds/ShowPlayground';
 
 export const homePath = () => '/';
 
 function Home() {
-  const { isAuthenticated } = useAuth0();
+  const { getIdTokenClaims } = useAuth0();
+  const dispatch = useDispatch();
+
+  async function onGetStartedClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    const jwt = await getIdTokenClaims();
+
+    if (jwt) {
+      dispatch(push(playground_path()));
+    } else {
+      dispatch(push(new_playground_path()));
+    }
+  }
 
   return (
     <div className="home-wrapper">
@@ -32,7 +48,7 @@ function Home() {
             plan your grow while maximizing yields &amp;
             minimizing costs.
           </p>
-          <Link className="button go" to={new_playground_path()}>Get started</Link>
+          <Link className="button go" to={new_playground_path()} onClick={onGetStartedClick}>Get started</Link>
         </section>
       </div>
     </div>

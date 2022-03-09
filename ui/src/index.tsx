@@ -20,6 +20,7 @@ ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <Auth0Provider
+        cacheLocation="localstorage"
         domain={AUTH0_DOMAIN}
         clientId={AUTH0_CLIENT_ID}
         redirectUri={`${window.location.origin}${new_playground_path()}`}
