@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 
@@ -14,7 +14,7 @@ import { playground_path } from './playgrounds/ShowPlayground';
 export const homePath = () => '/';
 
 function Home() {
-  const { getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const dispatch = useDispatch();
 
   async function onGetStartedClick(event: React.MouseEvent<HTMLAnchorElement>) {
@@ -35,7 +35,10 @@ function Home() {
           <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
         </div>
         <div id="header-auth">
-          <LoginButton />
+          {isAuthenticated ? 
+            <Link to={playground_path()}>Playground</Link> :
+            <LoginButton />
+          }
         </div>
       </header>
       <div id="content">

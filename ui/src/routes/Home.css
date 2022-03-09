@@ -46,6 +46,16 @@
   height: 2.25rem;
 }
 
+.home-wrapper #header-auth a {
+  margin: 2.313rem 7.375rem auto auto;
+  float: right;
+  height: 2.25rem;
+
+  color: var(--black);
+  text-decoration: none;
+  font-weight: 700;
+}
+
 .home-wrapper #content {
   width: 100%;
 
