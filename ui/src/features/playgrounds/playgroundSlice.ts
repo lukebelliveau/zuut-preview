@@ -1,9 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { push } from 'connected-react-router';
 import { RootState } from '../../app/store';
+import { assertDefined } from '../../lib/assert';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
+import { loadJwt } from '../../lib/jwt';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
+import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
+import { playground_path } from '../../routes/playgrounds/ShowPlayground';
 import { loadItems } from '../items/itemsSlice';
 import { selectDefaultPlan } from '../plans/planSelectors';
 import { create } from '../plans/planSlice';
@@ -20,11 +25,53 @@ const initialState: PlaygroundState = {
   scale: 1,
 };
 
+export const getStarted = createAsyncThunk(
+  'playground/getStarted',
+  async (_: boolean, { dispatch, getState }) => {
+    const state = getState() as RootState;
+    const jwt = state.user.jwt || loadJwt();
+
+    if (!jwt) {
+      dispatch(push(new_playground_path()));
+      return;
+    }
+
+    const adapter = new PlanGraphqlAdapter(jwt);
+    const plan = await adapter.current();
+
+    if (plan) {
+      dispatch(push(playground_path()));
+    } else {
+      dispatch(push(new_playground_path()));
+    }
+  }
+);
+
+export const loadCurrentPlaygroundIfPresent = createAsyncThunk(
+  'playground/loadCurrentPlaygroundIfPresent',
+  async (_: boolean, { dispatch, getState }) => {
+    const state = getState() as RootState;
+    const jwt = state.user.jwt || loadJwt();
+
+    if (!jwt) {
+      dispatch(push(new_playground_path()));
+      return;
+    }
+
+    const adapter = new PlanGraphqlAdapter(jwt);
+    const plan = await adapter.current();
+
+    if (plan) {
+      dispatch(push(playground_path()));
+    }
+  }
+);
+
 export const loadSavedPlayground = createAsyncThunk(
   'playground/loadSavedPlayground',
   async (jwt: string, { dispatch }) => {
     const adapter = new PlanGraphqlAdapter(jwt);
-    const plan = await adapter.current();
+    const plan = assertDefined(await adapter.current());
 
     dispatch(create(PlanReduxAdapter.planToState(plan)));
     dispatch(loadItems(plan.items.map(ItemReduxAdapter.itemToState)));

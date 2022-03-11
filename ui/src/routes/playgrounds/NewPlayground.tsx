@@ -1,5 +1,6 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { push } from 'connected-react-router';
-import { createRef } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { FullPage, Slide } from 'react-full-page';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch } from 'react-redux';
@@ -12,14 +13,23 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { createPlan } from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
 import { playground_path } from './ShowPlayground';
+import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playgroundSlice';
 
 export const new_playground_path = () => '/playgrounds/new';
 
 export default function NewPlayground() {
   let fullPageRef = createRef<any>();
   const dispatch = useDispatch();
-  const jwt = useJwt();
+  const { isAuthenticated } = useAuth0();
   const { register, handleSubmit } = useForm<FormParams>();
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
+
+  useEffect(() => {
+    if (!isFirstLoad) {
+      dispatch(loadCurrentPlaygroundIfPresent(true));
+      setIsFirstLoad(true);
+    }
+  }, [isFirstLoad, setIsFirstLoad, dispatch]);
 
   type FormParams = {
     name: string;
@@ -37,7 +47,7 @@ export default function NewPlayground() {
     push(playground_path());
   };
 
-  if (!jwt) {
+  if (!isAuthenticated) {
     return <Loading />;
   }
 

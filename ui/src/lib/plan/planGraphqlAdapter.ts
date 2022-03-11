@@ -29,7 +29,7 @@ export default class PlanGraphqlAdapter {
     });
   }
 
-  async current(): Promise<Plan> {
+  async current(): Promise<Plan | undefined> {
     const result = await this.client.query({
       query: gql`
         {
@@ -56,8 +56,9 @@ export default class PlanGraphqlAdapter {
     });
     const query = result.data as Query;
     const gqlPlans = query.plans;
-    if (!gqlPlans || gqlPlans?.length === 0) throw new Error('No plans returned');
-    const gqlPlan = unwrapOrError(gqlPlans[0]);
+    if (!gqlPlans || gqlPlans?.length === 0) return;
+    const gqlPlan = gqlPlans[0];
+    if (!gqlPlan) return;
 
     const plan = new Plan(
       unwrapOrUndefined(gqlPlan.name),

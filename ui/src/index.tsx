@@ -20,6 +20,7 @@ ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <Auth0Provider
+        useRefreshTokens={true}
         cacheLocation="localstorage"
         domain={AUTH0_DOMAIN}
         clientId={AUTH0_CLIENT_ID}

@@ -1,7 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
+import React, { useEffect, useState } from 'react';
 
 import './Home.css';
 import ZuutLogo from '../images/zuut-logo.svg';
@@ -10,22 +8,18 @@ import LoginButton from '../components/LoginButton';
 import Link from '../components/Link';
 import { new_playground_path } from './playgrounds/NewPlayground';
 import { playground_path } from './playgrounds/ShowPlayground';
+import { getStarted } from '../features/playgrounds/playgroundSlice';
+import { useDispatch } from 'react-redux';
 
 export const homePath = () => '/';
 
 function Home() {
-  const { isAuthenticated, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
 
-  async function onGetStartedClick(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault();
-    const jwt = await getIdTokenClaims();
-
-    if (jwt) {
-      dispatch(push(playground_path()));
-    } else {
-      dispatch(push(new_playground_path()));
-    }
+  function onGetStarted(e: React.MouseEvent) {
+    e.preventDefault();
+    dispatch(getStarted(true));
   }
 
   return (
@@ -36,7 +30,7 @@ function Home() {
         </div>
         <div id="header-auth">
           {isAuthenticated ? 
-            <Link to={playground_path()}>Playground</Link> :
+            <Link to={playground_path()} onClick={onGetStarted}>Playground</Link> :
             <LoginButton />
           }
         </div>
@@ -51,7 +45,7 @@ function Home() {
             plan your grow while maximizing yields &amp;
             minimizing costs.
           </p>
-          <Link className="button go" to={new_playground_path()} onClick={onGetStartedClick}>Get started</Link>
+          <Link className="button go" to={new_playground_path()} onClick={onGetStarted}>Get started</Link>
         </section>
       </div>
     </div>
