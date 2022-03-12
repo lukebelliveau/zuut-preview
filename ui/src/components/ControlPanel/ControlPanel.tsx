@@ -1,16 +1,20 @@
 import { KeyboardEventHandler, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import './ControlPanel.css';
+import RectangleImage from '../../images/items/rectangle.svg';
+import DeleteIcon from '../../images/delete.png';
+import RotateIcon from '../../images/rotate.png';
+
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedItemId } from '../../features/interactions/interactionsSelectors';
 import { useSelectItemById } from '../../features/items/itemsSelectors';
 import { ItemState } from '../../features/items/itemState';
 import { isPlaceableItem, Item } from '../../lib/item';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import './ControlPanel.css';
-import RectangleImage from '../../images/items/rectangle.svg';
-import DeleteIcon from '../../images/delete.png';
 import { removeItem } from '../../features/items/itemsSlice';
 import { unselect } from '../../features/interactions/interactionsSlice';
+import { onReturnKey } from '../../lib/interactions/keyboard';
 
 type ControlPanelState = 'show' | 'hide' | 'minimize';
 
@@ -41,16 +45,10 @@ const ControlPanel = () => {
     }
   };
 
-  const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (e) => {
-    if (e.key === 'Return' || e.key === 'Enter') {
-      toggleDisplayControlPanel();
-    }
-  };
-
   return (
     <div id="control-panel" className={controlPanelState}>
       <h2>
-        <button onClick={toggleDisplayControlPanel} onKeyDown={handleKeyDown}>
+        <button onClick={toggleDisplayControlPanel} onKeyDown={onReturnKey(toggleDisplayControlPanel)}>
           Control Panel
         </button>
       </h2>
@@ -70,14 +68,6 @@ const ItemControls = ({ item: itemState }: { item?: ItemState }) => {
     dispatch(unselect());
   };
 
-  const handleKeyDownDeleteItem: KeyboardEventHandler<HTMLButtonElement> = (
-    e
-  ) => {
-    if (e.key === 'Return' || e.key === 'Enter') {
-      dispatch(removeItem(item.id));
-    }
-  };
-
   return (
     <>
       <div className="control-panel-body">
@@ -95,8 +85,9 @@ const ItemControls = ({ item: itemState }: { item?: ItemState }) => {
           <h4>Transform</h4>
           <button
             onClick={deleteItem}
-            onKeyDown={handleKeyDownDeleteItem}
+            onKeyDown={onReturnKey(deleteItem)}
             aria-label="delete item"
+            tabIndex={-1}
           >
             <img src={DeleteIcon} alt="delete item" />
           </button>

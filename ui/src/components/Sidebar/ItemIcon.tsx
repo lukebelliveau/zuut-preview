@@ -1,3 +1,4 @@
+import { onReturnKey } from '../../lib/interactions/keyboard';
 import { Item } from '../../lib/item';
 
 import './ItemIcon.css';
@@ -15,10 +16,6 @@ export default function ItemIcon({
   onClick,
   onKeyboard,
 }: ItemIconProps) {
-  function onEnterOrReturn(e: any): void {
-    if (onKeyboard && (e.key === 'Return' || e.key === 'Enter')) onKeyboard();
-  }
-
   return (
     <button
       draggable={true}
@@ -26,7 +23,7 @@ export default function ItemIcon({
       tabIndex={0}
       className="item-icon"
       onClick={onClick}
-      onKeyUp={onEnterOrReturn}
+      onKeyUp={onKeyboard && onReturnKey(onKeyboard)}
     >
       {item.name}
     </button>

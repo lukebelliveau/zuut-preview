@@ -14,6 +14,7 @@ import './Inventory.css';
 import { toggleSelect } from '../features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
 import { Item } from '../lib/item';
+import { onReturnKey } from '../lib/interactions/keyboard';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -48,9 +49,7 @@ export default function Inventory() {
       <h2>
         <button
           onClick={() => setHidden(!hidden)}
-          onKeyDown={(e) => {
-            if (e.key === 'Return') setHidden(!hidden);
-          }}
+          onKeyDown={onReturnKey(() => { setHidden(!hidden); })}
         >
           Inventory
         </button>
