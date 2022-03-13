@@ -1,20 +1,12 @@
-import { KeyboardEventHandler, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import './ControlPanel.css';
-import RectangleImage from '../../images/items/rectangle.svg';
-import DeleteIcon from '../../images/delete.png';
-import RotateIcon from '../../images/rotate.png';
 
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedItemId } from '../../features/interactions/interactionsSelectors';
 import { useSelectItemById } from '../../features/items/itemsSelectors';
-import { ItemState } from '../../features/items/itemState';
-import { isPlaceableItem, Item } from '../../lib/item';
-import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { removeItem } from '../../features/items/itemsSlice';
-import { unselect } from '../../features/interactions/interactionsSlice';
 import { onReturnKey } from '../../lib/interactions/keyboard';
+import { ItemControls } from './ItemControls';
 
 type ControlPanelState = 'show' | 'hide' | 'minimize';
 
@@ -55,54 +47,6 @@ const ControlPanel = () => {
       {controlPanelState === 'show' ? <ItemControls item={item} /> : null}
     </div>
   );
-};
-
-const ItemControls = ({ item: itemState }: { item?: ItemState }) => {
-  const dispatch = useDispatch();
-  if (!itemState) return null;
-
-  const item = ItemReduxAdapter.stateToItem(itemState);
-
-  const deleteItem = () => {
-    dispatch(removeItem(item.id));
-    dispatch(unselect());
-  };
-
-  return (
-    <>
-      <div className="control-panel-body">
-        <div className="control-panel-section">
-          <h4>Description</h4>
-          <div className="item-description">
-            <ItemImage item={item} />
-            <div>
-              <h3>{item.name}</h3>
-              <p>Lorem ipsum product details and description body</p>
-            </div>
-          </div>
-        </div>
-        <div className="control-panel-section transform">
-          <h4>Transform</h4>
-          <button
-            onClick={deleteItem}
-            onKeyDown={onReturnKey(deleteItem)}
-            aria-label="delete item"
-            tabIndex={-1}
-          >
-            <img src={DeleteIcon} alt="delete item" />
-          </button>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const ItemImage = ({ item }: { item: Item }) => {
-  if (isPlaceableItem(item)) {
-    return <img src={item.image} alt={item.name} />;
-  } else {
-    return <img src={RectangleImage} alt={item.name} />;
-  }
 };
 
 export default ControlPanel;

@@ -12,11 +12,13 @@ export default class PlanService {
     this.jwt = selectJwt(state);
   }
 
-  syncCurrent() {
+  get plan() {
     const reduxAdapter = new PlanReduxAdapter(this.state);
-    const plan = reduxAdapter.current();
-    
+    return reduxAdapter.current();
+  }
+
+  syncCurrent() {
     const graphQLAdapter = new PlanGraphqlAdapter(this.jwt);
-    return graphQLAdapter.update(plan);
+    return graphQLAdapter.update(this.plan);
   }
 }

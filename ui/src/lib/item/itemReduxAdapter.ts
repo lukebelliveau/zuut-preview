@@ -2,11 +2,11 @@ import { ItemState } from '../../features/items/itemState';
 import ItemList from '../itemList';
 import Growspace, { GROWSPACE_TYPE } from './growspace';
 import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
-import { isPlaceableItem, Item } from '../item';
+import { IItem, Item } from '../item';
 import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
 import WallItem, { WALL_ITEM_TYPE } from './wallItem';
-import { CollisionState } from './placeableItem';
+import { CollisionState, isPlaceableItem } from './placeableItem';
 import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 import PotItem, { POT_ITEM_TYPE } from './potItem';
 import CeilingGrowspaceItem, {
@@ -48,7 +48,7 @@ export default class ItemReduxAdapter {
     }
   }
 
-  public static stateToItem(itemState: ItemState): Item {
+  public static stateToItem(itemState: ItemState): IItem {
     switch (itemState.type) {
       case GROWSPACE_TYPE:
         return new Growspace(

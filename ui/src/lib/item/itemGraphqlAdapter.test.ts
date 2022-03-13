@@ -1,13 +1,12 @@
-import { isCeilingGrowspaceItem, isGrowspace, isGrowspaceItem, isMiscItem, isPotItem, isRoomItem, isWallItem } from '../item';
-import { CEILING_GROWSPACE_ITEM_TYPE } from './ceilingGrowspaceItem';
-import { GROWSPACE_TYPE } from './growspace';
-import { GROWSPACE_ITEM_TYPE } from './growspaceItem';
+import { CEILING_GROWSPACE_ITEM_TYPE, isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
+import { GROWSPACE_TYPE, isGrowspace } from './growspace';
+import { GROWSPACE_ITEM_TYPE, isGrowspaceItem } from './growspaceItem';
 import ItemGraphqlAdapter from './itemGraphqlAdapter';
 import { isLightItem, LIGHT_ITEM_TYPE } from './lightItem';
-import { MISC_ITEM_TYPE } from './miscItem';
-import { POT_ITEM_TYPE } from './potItem';
-import { ROOM_ITEM_TYPE } from './roomItem';
-import { WALL_ITEM_TYPE } from './wallItem';
+import { isMiscItem, MISC_ITEM_TYPE } from './miscItem';
+import { isPotItem, POT_ITEM_TYPE } from './potItem';
+import { isRoomItem, ROOM_ITEM_TYPE } from './roomItem';
+import { isWallItem, WALL_ITEM_TYPE } from './wallItem';
 
 describe('ItemGraphqlAdapter', () => {
   describe('#graphqlToItem', () => {

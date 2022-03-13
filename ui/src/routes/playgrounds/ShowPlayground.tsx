@@ -19,7 +19,6 @@ import PlaygroundItems from '../../components/Playground/PlaygroundItems';
 import GridLines from '../../components/Playground/GridLines';
 import ControlPanel from '../../components/ControlPanel/ControlPanel';
 import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/Sidebar/SidebarTabs';
-import { isPlaceableItem, Item } from '../../lib/item';
 import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
@@ -31,6 +30,7 @@ import { useDispatchAddItem } from '../../features/items/itemsHooks';
 
 import './ShowPlayground.css';
 import Toolbar from '../../components/Toolbar/Toolbar';
+import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -46,7 +46,7 @@ export default function ShowPlayground() {
 
   const [_, drop] = useDrop(() => ({
     accept: [DRAGGABLE_SIDEBAR_ITEM],
-    drop: (item: Item) => {
+    drop: (item: PlaceableItem) => {
       if (isPlaceableItem(item)) {
         item.place(playground.place());
       }

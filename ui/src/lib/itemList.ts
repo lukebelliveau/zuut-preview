@@ -1,7 +1,7 @@
-import { isPlaceableItem, Item } from './item';
-import { IPlaceableItem } from './item/placeableItem';
+import { IItem } from './item';
+import { IPlaceableItem, isPlaceableItem } from './item/placeableItem';
 
-export default class ItemList extends Array<Item> {
+export default class ItemList extends Array<IItem> {
   placeable(): IPlaceableItem[] {
     return this.filter((item) => isPlaceableItem(item)) as IPlaceableItem[];
   }

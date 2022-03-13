@@ -1,6 +1,12 @@
 import { v4 } from 'uuid';
 
+import { Item } from '../item';
+
 export const MISC_ITEM_TYPE = 'MiscItem';
+
+export function isMiscItem(item: Item): item is MiscItem {
+  return (item as MiscItem).type === MISC_ITEM_TYPE;
+}
 
 export default class MiscItem {
   id: string;

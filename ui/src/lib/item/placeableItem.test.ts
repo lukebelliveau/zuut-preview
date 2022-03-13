@@ -318,18 +318,6 @@ describe('PlaceableItem', () => {
     });
   });
 
-  describe('#rotate90Degrees', () => {
-    it("flips item's length and width", () => {
-      // width=10, height=20
-      const item = new PlaceableItem('item', '1', 0, 0, 10, 20);
-
-      item.rotate90Degrees();
-
-      expect(item.width).toBe(20);
-      expect(item.length).toBe(10);
-    });
-  });
-
   describe('#createDefaultPlacementShadow', () => {
     it("creates a placementShadow with the item's dimensions and snapped coordinates", () => {
       const plan = new Plan('square', 10_000, 10_000, 12);

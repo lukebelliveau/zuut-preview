@@ -16,7 +16,6 @@ import {
   placedOnLeftBoundary,
   placedOnRightBoundary,
   placedOnTopBoundary,
-  rotated90Degrees,
 } from './geometry';
 
 // 100x100x100 room, placed at { x: 0; y: 0 }
@@ -236,28 +235,6 @@ describe('itemIsBetweenTopAndBottomWall', () => {
     );
 
     expect(itemIsBetweenTopAndBottomWall(window, room)).toBe(false);
-  });
-});
-
-describe('rotated90Degrees', () => {
-  it('swaps length and width', () => {
-    const item = {
-      x: 5,
-      y: 10,
-      width: 20,
-      length: 30,
-      height: 40,
-    };
-
-    const rotated = rotated90Degrees(item);
-
-    expect(rotated).toStrictEqual({
-      x: 5,
-      y: 10,
-      width: 30,
-      length: 20,
-      height: 40,
-    });
   });
 });
 

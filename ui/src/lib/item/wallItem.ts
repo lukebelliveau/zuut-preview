@@ -5,6 +5,7 @@ import {
   itemHasHorizontalOrientation,
   itemHasVerticalOrientation,
 } from '../geometry/geometry';
+import { Item } from '../item';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
@@ -15,6 +16,10 @@ import PlaceableItem, {
 } from './placeableItem';
 
 export const WALL_ITEM_TYPE = 'WallItem';
+
+export function isWallItem(item: Item): item is WallItem {
+  return (item as WallItem).type === WALL_ITEM_TYPE;
+}
 
 export default class WallItem extends PlaceableItem implements IPlaceableItem {
   type: string = WALL_ITEM_TYPE;

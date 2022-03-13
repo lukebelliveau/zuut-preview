@@ -1,9 +1,12 @@
 import { v4 } from 'uuid';
-import { areColliding, rotated90Degrees } from '../geometry/geometry';
+
+import RectangleImage from '../../images/items/rectangle.svg';
+
+import { areColliding } from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
-import RectangleImage from '../../images/items/rectangle.svg';
+import { IItem, Item } from '../item';
 
 export interface PlacementShadow {
   x: number;
@@ -25,15 +28,11 @@ export enum Layer {
   BOTH,
 }
 
-export interface IPlaceableItem {
+export interface IPlaceableItem extends IItem {
   place(position: Point): void;
   drag(position: Point, items: ItemList, playground: Playground): void;
   drop(items: ItemList, playground: Playground): boolean;
-  copy(): PlaceableItem;
   updateCollisions(items: ItemList, playground: Playground): void;
-  id: string;
-  type: string;
-  name: string;
   x: number;
   y: number;
   width: number;
@@ -45,10 +44,11 @@ export interface IPlaceableItem {
   layer: Layer;
 }
 
-export default class PlaceableItem implements IPlaceableItem {
-  id: string;
-  type: string = 'PlaceableItem';
-  name: string;
+export function isPlaceableItem(item: Item): item is PlaceableItem {
+  return (item as PlaceableItem).x !== undefined;
+}
+
+export default class PlaceableItem extends Item implements IPlaceableItem {
   x: number;
   y: number;
   width: number;
@@ -71,8 +71,7 @@ export default class PlaceableItem implements IPlaceableItem {
     placementShadow: PlacementShadow | undefined = undefined,
     layer: Layer = Layer.FLOOR
   ) {
-    this.id = id;
-    this.name = name;
+    super(name, id);
     this.x = x;
     this.y = y;
     this.width = width;
@@ -208,12 +207,6 @@ export default class PlaceableItem implements IPlaceableItem {
   ): boolean {
     // default to "bad" collision state if any items are colliding
     return areColliding(item, otherItem);
-  }
-
-  rotate90Degrees() {
-    const { width, length } = rotated90Degrees(this);
-    this.width = width;
-    this.length = length;
   }
 
   copy(): PlaceableItem {

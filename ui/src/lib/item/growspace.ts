@@ -1,9 +1,16 @@
 import { v4 } from 'uuid';
+
 import { isStraddlingBoundary } from '../geometry/geometry';
-import { isCeilingGrowspaceItem, isGrowspaceItem } from '../item';
 import PlaceableItem, { Layer, PlacementShadow } from './placeableItem';
+import { Item } from '../item';
+import { isGrowspaceItem } from './growspaceItem';
+import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 
 export const GROWSPACE_TYPE = 'Growspace';
+
+export function isGrowspace(item: Item): item is Growspace {
+  return (item as Growspace).type === GROWSPACE_TYPE;
+}
 
 export default class Growspace extends PlaceableItem {
   type: string = GROWSPACE_TYPE;

@@ -9,19 +9,28 @@ import WallItem, { WALL_ITEM_TYPE } from './wallItem';
 import PotItem, { POT_ITEM_TYPE } from './potItem';
 import CeilingGrowspaceItem, { CEILING_GROWSPACE_ITEM_TYPE } from './ceilingGrowspaceItem';
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
+import { isPlaceableItem } from './placeableItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
-    return {
-      id: item.id,
-      type: item.type,
-      name: item.name,
-      x: item.x,
-      y: item.y,
-      width: item.width,
-      length: item.length,
-      height: item.height,
-    };
+    if (isPlaceableItem(item)) {
+      return {
+        id: item.id,
+        type: item.type,
+        name: item.name,
+        x: item.x,
+        y: item.y,
+        width: item.width,
+        length: item.length,
+        height: item.height,
+      };
+    } else {
+      return {
+        id: item.id,
+        type: item.type,
+        name: item.name,
+      };
+    }
   }
 
   public static graphqlToItem(gqlItem: GraphqlItem): Item {

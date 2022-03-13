@@ -78,18 +78,6 @@ export const itemHasVerticalOrientation = (item: GeometryObject) =>
 export const itemHasHorizontalOrientation = (item: GeometryObject) =>
   !itemHasVerticalOrientation(item);
 
-export const rotated90Degrees = (item: GeometryObject): GeometryObject => {
-  const { width, length, height } = item;
-
-  return {
-    x: item.x,
-    y: item.y,
-    length: width,
-    width: length,
-    height: height,
-  };
-};
-
 export const areColliding = (item1: GeometryObject, item2: GeometryObject) => {
   return !(
     Math.floor(item2.x) >= Math.floor(item1.x + item1.width) ||
