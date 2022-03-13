@@ -45,7 +45,7 @@ export function createAppStore() {
   });
 }
 
-const typedStore = createAppStore();
-export type AppDispatch = typeof typedStore.dispatch;
-export type RootState = ReturnType<typeof typedStore.getState>;
+export const store = createAppStore();
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppStore = ReturnType<typeof createAppStore>;
