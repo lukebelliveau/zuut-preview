@@ -6,6 +6,12 @@ export const itemsSelectors = itemsAdapter.getSelectors<RootState>(
   (state) => state.items.present
 );
 
+export const useSelectUndoStack = () =>
+  useAppSelector((state) => state.items.past);
+
+export const useSelectRedoStack = () =>
+  useAppSelector((state) => state.items.future);
+
 export const useSelectAllItems = () => useAppSelector(itemsSelectors.selectAll);
 
 export const useSelectAllItemEntities = () =>

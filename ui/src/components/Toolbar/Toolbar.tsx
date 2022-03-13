@@ -3,10 +3,14 @@ import {
   undoItemAction,
   redoItemAction,
 } from '../../features/items/itemsSlice';
-import UndoIcon from '../../images/glyphs/undo.png';
-import RedoIcon from '../../images/glyphs/redo.png';
 
 import './Toolbar.css';
+import {
+  useSelectRedoStack,
+  useSelectUndoStack,
+} from '../../features/items/itemsSelectors';
+import UndoIcon from './UndoIcon';
+import RedoIcon from './RedoIcon';
 
 const Toolbar = () => {
   const dispatch = useDispatch();
@@ -28,6 +32,9 @@ const Toolbar = () => {
     }
   };
 
+  const undoStack = useSelectUndoStack();
+  const redoStack = useSelectRedoStack();
+
   return (
     <div id="toolbar">
       <button
@@ -35,16 +42,18 @@ const Toolbar = () => {
         onClick={undo}
         onKeyDown={(e) => doIfEnter(e, undo)}
         aria-label="undo"
+        disabled={undoStack.length === 0}
       >
-        <img src={UndoIcon} alt="undo" />
+        <UndoIcon />
       </button>
       <button
         tabIndex={0}
         onClick={redo}
         onKeyDown={(e) => doIfEnter(e, redo)}
         aria-label="redo"
+        disabled={redoStack.length === 0}
       >
-        <img src={RedoIcon} alt="redo" />
+        <RedoIcon />
       </button>
     </div>
   );

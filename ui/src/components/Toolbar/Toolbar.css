@@ -1,9 +1,24 @@
 #toolbar {
   border: 0.063rem solid var(--black);
+  padding: 5px 10px;
 }
 
 #toolbar button {
   all: unset;
   display: inline-block;
   cursor: pointer;
+  padding: 5px;
+}
+
+#toolbar button:hover {
+  background-color: var(--gray-4);
+}
+
+#toolbar button:disabled {
+  background-color: #ffffff;
+  cursor: default;
+}
+
+#toolbar button:disabled svg path {
+  fill: var(--gray-2);
 }
