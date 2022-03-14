@@ -5,6 +5,7 @@ import RoomItem from './item/roomItem';
 import PotItem from './item/potItem';
 import { feetToMm } from './conversions';
 import LightItem from './item/lightItem';
+import DuctItem from './item/ductItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -83,6 +84,15 @@ const ItemsLibrary: IItemGroup[] = [
         609.6,
         609.6,
         914.4
+      ),
+      new DuctItem(
+        'duct',
+        undefined,
+        undefined,
+        undefined,
+        feetToMm(1),
+        feetToMm(1),
+        feetToMm(1)
       ),
     ],
   },

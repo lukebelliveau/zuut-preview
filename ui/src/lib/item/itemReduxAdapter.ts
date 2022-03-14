@@ -13,6 +13,7 @@ import CeilingGrowspaceItem, {
   CEILING_GROWSPACE_ITEM_TYPE,
 } from './ceilingGrowspaceItem';
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
+import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
@@ -139,6 +140,18 @@ export default class ItemReduxAdapter {
         );
       case LIGHT_ITEM_TYPE:
         return new LightItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case DUCT_ITEM_TYPE:
+        return new DuctItem(
           itemState.name,
           itemState.id,
           itemState.x,
