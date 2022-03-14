@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 
 import RectangleImage from '../../images/items/rectangle.svg';
 
-import { areColliding } from '../geometry/geometry';
+import { areColliding, areExactlySharingBorder } from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
@@ -137,13 +137,8 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     return placementShadow;
   }
 
-  updateCollisions(items: ItemList, playground: Playground) {
-    const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
-      items,
-      playground
-    );
-
-    const itemHasConflicts = collidingWithItem.some((collidingItem) => {
+  protected itemHasConflicts(collidingWithItem: IPlaceableItem[]): boolean {
+    return collidingWithItem.some((collidingItem) => {
       if (
         this.collisionStateBetween(this, collidingItem) ===
         CollisionState.CONFLICTED
@@ -152,8 +147,15 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       }
       return false;
     });
+  }
 
-    if (itemHasConflicts) {
+  updateCollisions(items: ItemList, playground: Playground) {
+    const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
+      items,
+      playground
+    );
+
+    if (this.itemHasConflicts(collidingWithItem)) {
       this.collisionState = CollisionState.CONFLICTED;
     } else {
       const itemHasConnections = collidingWithItem.some((collidingItem) => {
@@ -243,6 +245,31 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     return {
       collidingWithItem: collidingWithItem,
       collidingWithShadow: collidingWithShadow,
+    };
+  }
+
+  protected detectSharingBorders(items: ItemList): {
+    sharingBorderWithItem: IPlaceableItem[];
+    sharingBorderWithShadow: IPlaceableItem[];
+  } {
+    let sharingBorderWithItem: IPlaceableItem[] = [];
+    let sharingBorderWithShadow: IPlaceableItem[] = [];
+
+    items.placeable().forEach((itemToCompare) => {
+      if (itemToCompare.id === this.id) return;
+      if (areExactlySharingBorder(this, itemToCompare))
+        sharingBorderWithItem.push(itemToCompare);
+      if (
+        this.placementShadow &&
+        areExactlySharingBorder(this.placementShadow, itemToCompare)
+      ) {
+        sharingBorderWithShadow.push(itemToCompare);
+      }
+    });
+
+    return {
+      sharingBorderWithItem: sharingBorderWithItem,
+      sharingBorderWithShadow: sharingBorderWithShadow,
     };
   }
 

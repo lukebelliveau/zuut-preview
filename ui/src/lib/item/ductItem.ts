@@ -12,6 +12,7 @@ import CeilingPlaceableItem from './ceilingPlaceableItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import ItemList from '../itemList';
 import Playground from '../playground';
+import { areExactlySharingBorder } from '../geometry/geometry';
 
 export const DUCT_ITEM_TYPE = 'DuctItem';
 
@@ -42,7 +43,26 @@ export default class DuctItem extends CeilingPlaceableItem {
       playground
     );
 
-    if (collidingWithItem.length < 1 && collidingWithShadow.length < 1) {
+    const { sharingBorderWithItem, sharingBorderWithShadow } =
+      this.detectSharingBorders(items);
+
+    /**
+     * ducts must be attached to something
+     */
+    if (
+      collidingWithItem.length < 1 &&
+      collidingWithShadow.length < 1 &&
+      sharingBorderWithItem.length < 1 &&
+      sharingBorderWithShadow.length < 1
+    ) {
+      this.collisionState = CollisionState.CONFLICTED;
+      if (this.placementShadow) {
+        this.placementShadow = {
+          ...this.placementShadow,
+          collisionState: CollisionState.CONFLICTED,
+        };
+      }
+    } else if (this.itemHasConflicts(collidingWithItem)) {
       this.collisionState = CollisionState.CONFLICTED;
       if (this.placementShadow) {
         this.placementShadow = {
@@ -51,7 +71,29 @@ export default class DuctItem extends CeilingPlaceableItem {
         };
       }
     } else {
-      super.updateCollisions(items, playground);
+      const itemHasConnectionsWithSharedBorder = sharingBorderWithItem.some(
+        (collidingItem) => {
+          if (
+            this.collisionStateBetween(this, collidingItem) ===
+            CollisionState.CONNECTED
+          ) {
+            return true;
+          }
+          return false;
+        }
+      );
+
+      if (itemHasConnectionsWithSharedBorder) {
+        this.collisionState = CollisionState.CONNECTED;
+        if (this.placementShadow) {
+          this.placementShadow = {
+            ...this.placementShadow,
+            collisionState: CollisionState.CONNECTED,
+          };
+        }
+      } else {
+        super.updateCollisions(items, playground);
+      }
     }
   }
 
@@ -62,9 +104,14 @@ export default class DuctItem extends CeilingPlaceableItem {
     if (isCeilingGrowspaceItem(otherItem)) {
       return CollisionState.CONFLICTED;
     } else if (isDuctItem(otherItem)) {
-      if (otherItem.collisionState === CollisionState.CONNECTED)
+      if (
+        otherItem.collisionState === CollisionState.CONNECTED &&
+        areExactlySharingBorder(item, otherItem)
+      ) {
         return CollisionState.CONNECTED;
-      return CollisionState.CONFLICTED;
+      } else {
+        return CollisionState.CONFLICTED;
+      }
     } else if (isWindowItem(otherItem)) {
       return CollisionState.CONNECTED;
     }
