@@ -3,7 +3,7 @@ import GrowspaceItem from './growspaceItem';
 import { CollisionState } from './placeableItem';
 
 describe('Growspace', () => {
-  describe.only('#collisionStateBetween', () => {
+  describe('#collisionStateBetween', () => {
     it('conflicts with other growspaces', () => {
       const growspace = new Growspace('', '1', 100, 100, 100, 100);
       const other = new Growspace('', '2', 100, 100, 100, 100);
