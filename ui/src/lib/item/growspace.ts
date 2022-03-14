@@ -1,7 +1,11 @@
 import { v4 } from 'uuid';
 
 import { isStraddlingBoundary } from '../geometry/geometry';
-import PlaceableItem, { Layer, PlacementShadow } from './placeableItem';
+import PlaceableItem, {
+  CollisionState,
+  Layer,
+  PlacementShadow,
+} from './placeableItem';
 import { Item } from '../item';
 import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
@@ -28,14 +32,16 @@ export default class Growspace extends PlaceableItem {
     );
   }
 
-  isCollidingWith(
+  collisionStateBetween(
     item: PlaceableItem | PlacementShadow,
     otherItem: PlaceableItem
-  ): boolean {
+  ): CollisionState {
     if (isGrowspaceItem(otherItem) || isCeilingGrowspaceItem(otherItem)) {
-      return isStraddlingBoundary(otherItem, item);
+      return isStraddlingBoundary(otherItem, item)
+        ? CollisionState.CONFLICTED
+        : CollisionState.NEUTRAL;
     }
 
-    return super.isCollidingWith(this, otherItem);
+    return super.collisionStateBetween(this, otherItem);
   }
 }

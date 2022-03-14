@@ -30,7 +30,7 @@ export default class ItemReduxAdapter {
       id: item.id,
       type: item.type,
       name: item.name,
-      collisionState: CollisionState.GOOD,
+      collisionState: CollisionState.NEUTRAL,
     };
 
     if (isPlaceableItem(item)) {

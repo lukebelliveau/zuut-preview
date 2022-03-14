@@ -146,7 +146,7 @@ const Item = ({
       y={item.y}
       width={item.width}
       height={item.length}
-      stroke={item.collisionState === CollisionState.BAD ? 'red' : 'black'}
+      stroke={getCollisionColor(item.collisionState)}
       strokeWidth={item.id === selectedItemId ? 2 : 1}
       strokeScaleEnabled={false}
       draggable
@@ -164,6 +164,17 @@ const Item = ({
   );
 };
 
+const getCollisionColor = (collisionState: CollisionState) => {
+  switch (collisionState) {
+    case CollisionState.CONFLICTED:
+      return 'red';
+    case CollisionState.NEUTRAL:
+      return 'black';
+    case CollisionState.CONNECTED:
+      return 'green';
+  }
+};
+
 const Shadow = ({ shadow }: { shadow?: PlacementShadow }) => {
   if (!shadow) return null;
 
@@ -173,7 +184,7 @@ const Shadow = ({ shadow }: { shadow?: PlacementShadow }) => {
       y={shadow.y}
       width={shadow.width}
       height={shadow.length}
-      stroke={shadow.collisionState === CollisionState.BAD ? 'red' : 'black'}
+      stroke={getCollisionColor(shadow.collisionState)}
       strokeWidth={1}
       strokeScaleEnabled={false}
       draggable

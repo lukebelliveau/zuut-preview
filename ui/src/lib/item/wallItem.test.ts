@@ -25,7 +25,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.width,
           width: horizontalWallItem.length,
           height: horizontalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
 
@@ -41,7 +41,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.width,
           width: horizontalWallItem.length,
           height: horizontalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
 
@@ -57,7 +57,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.length,
           width: horizontalWallItem.width,
           height: horizontalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
 
@@ -73,7 +73,7 @@ describe('WallItem', () => {
           length: horizontalWallItem.length,
           width: horizontalWallItem.width,
           height: horizontalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
     });
@@ -93,7 +93,7 @@ describe('WallItem', () => {
           length: verticalWallItem.length,
           width: verticalWallItem.width,
           height: verticalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
 
@@ -109,7 +109,7 @@ describe('WallItem', () => {
           length: verticalWallItem.length,
           width: verticalWallItem.width,
           height: verticalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
 
@@ -125,7 +125,7 @@ describe('WallItem', () => {
           length: verticalWallItem.width,
           width: verticalWallItem.length,
           height: verticalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
 
@@ -141,7 +141,7 @@ describe('WallItem', () => {
           length: verticalWallItem.width,
           width: verticalWallItem.length,
           height: verticalWallItem.height,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         });
       });
     });

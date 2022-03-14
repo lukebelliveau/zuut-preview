@@ -5,4 +5,10 @@ describe('WindowItem', () => {
     const window = new WindowItem('window');
     expect(window.type).toEqual(WINDOW_ITEM_TYPE);
   });
+
+  it('copies into a new WindowItem', () => {
+    const window = new WindowItem('window');
+    const copy = window.copy();
+    expect(copy instanceof WindowItem).toBe(true);
+  });
 });

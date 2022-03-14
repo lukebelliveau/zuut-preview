@@ -62,7 +62,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.width,
           height: this.height,
           length: this.length,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         };
       } else {
         return {
@@ -71,7 +71,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.length,
           height: this.height,
           length: this.width,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         };
       }
     } else {
@@ -82,7 +82,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.width,
           height: this.height,
           length: this.length,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         };
       } else {
         return {
@@ -91,7 +91,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           width: this.length,
           height: this.height,
           length: this.width,
-          collisionState: CollisionState.GOOD,
+          collisionState: CollisionState.NEUTRAL,
         };
       }
     }

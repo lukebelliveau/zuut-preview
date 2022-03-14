@@ -2,9 +2,12 @@ import { v4 } from 'uuid';
 
 import { isStraddlingBoundary } from '../geometry/geometry';
 import { Item } from '../item';
-import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
+import { isCeilingPlaceableItem } from './ceilingPlaceableItem';
 import { isGrowspace } from './growspace';
-import PlaceableItem, { PlacementShadow } from './placeableItem';
+import PlaceableItem, {
+  CollisionState,
+  PlacementShadow,
+} from './placeableItem';
 
 export const GROWSPACE_ITEM_TYPE = 'GrowspaceItem';
 
@@ -28,16 +31,18 @@ export default class GrowspaceItem extends PlaceableItem {
     );
   }
 
-  isCollidingWith(
+  collisionStateBetween(
     item: PlaceableItem | PlacementShadow,
     otherItem: PlaceableItem
-  ): boolean {
+  ): CollisionState {
     if (isGrowspace(otherItem)) {
-      return isStraddlingBoundary(item, otherItem);
-    } else if (isCeilingGrowspaceItem(otherItem)) {
-      return false;
+      return isStraddlingBoundary(item, otherItem)
+        ? CollisionState.CONFLICTED
+        : CollisionState.NEUTRAL;
+    } else if (isCeilingPlaceableItem(otherItem)) {
+      return CollisionState.NEUTRAL;
     }
 
-    return super.isCollidingWith(this, otherItem);
+    return super.collisionStateBetween(this, otherItem);
   }
 }

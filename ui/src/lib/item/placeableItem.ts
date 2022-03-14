@@ -18,8 +18,9 @@ export interface PlacementShadow {
 }
 
 export enum CollisionState {
-  GOOD,
-  BAD,
+  NEUTRAL,
+  CONFLICTED,
+  CONNECTED,
 }
 
 export enum Layer {
@@ -67,7 +68,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     width: number = 610,
     length: number = 610,
     height: number = 915,
-    collisionState: CollisionState = CollisionState.GOOD,
+    collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined,
     layer: Layer = Layer.FLOOR
   ) {
@@ -130,7 +131,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       width: this.width,
       length: this.length,
       height: this.height,
-      collisionState: CollisionState.GOOD,
+      collisionState: CollisionState.NEUTRAL,
     };
 
     return placementShadow;
@@ -142,34 +143,78 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       playground
     );
 
-    const itemIsColliding = collidingWithItem.some((collidingItem) => {
-      if (this.id === collidingItem.id) return false;
-      if (this.isCollidingWith(this, collidingItem)) {
-        return true;
-      }
-      return false;
-    });
-    const shadowIsColliding = collidingWithShadow.some((collidingItem) => {
+    const itemHasConflicts = collidingWithItem.some((collidingItem) => {
       if (
-        this.placementShadow &&
-        this.isCollidingWith(this.placementShadow, collidingItem)
+        this.collisionStateBetween(this, collidingItem) ===
+        CollisionState.CONFLICTED
       ) {
         return true;
       }
       return false;
     });
 
-    this.collisionState = itemIsColliding
-      ? CollisionState.BAD
-      : CollisionState.GOOD;
+    if (itemHasConflicts) {
+      this.collisionState = CollisionState.CONFLICTED;
+    } else {
+      const itemHasConnections = collidingWithItem.some((collidingItem) => {
+        if (
+          this.collisionStateBetween(this, collidingItem) ===
+          CollisionState.CONNECTED
+        ) {
+          return true;
+        }
+        return false;
+      });
 
-    if (this.placementShadow)
-      this.placementShadow = {
-        ...this.placementShadow,
-        collisionState: shadowIsColliding
-          ? CollisionState.BAD
-          : CollisionState.GOOD,
-      };
+      if (itemHasConnections) this.collisionState = CollisionState.CONNECTED;
+      else this.collisionState = CollisionState.NEUTRAL;
+    }
+
+    if (this.placementShadow) {
+      const shadowHasConflicts = collidingWithShadow.some((collidingShadow) => {
+        if (
+          this.placementShadow &&
+          this.collisionStateBetween(this.placementShadow, collidingShadow) ===
+            CollisionState.CONFLICTED
+        ) {
+          return true;
+        }
+        return false;
+      });
+
+      if (shadowHasConflicts) {
+        this.placementShadow = {
+          ...this.placementShadow,
+          collisionState: CollisionState.CONFLICTED,
+        };
+      } else {
+        const shadowHasConnections = collidingWithShadow.some(
+          (collidingShadow) => {
+            if (
+              this.placementShadow &&
+              this.collisionStateBetween(
+                this.placementShadow,
+                collidingShadow
+              ) === CollisionState.CONNECTED
+            ) {
+              return true;
+            }
+            return false;
+          }
+        );
+
+        if (shadowHasConnections)
+          this.placementShadow = {
+            ...this.placementShadow,
+            collisionState: CollisionState.CONNECTED,
+          };
+        else
+          this.placementShadow = {
+            ...this.placementShadow,
+            collisionState: CollisionState.NEUTRAL,
+          };
+      }
+    }
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -201,15 +246,17 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     };
   }
 
-  isCollidingWith(
+  collisionStateBetween(
     item: IPlaceableItem | PlacementShadow,
     otherItem: IPlaceableItem
-  ): boolean {
+  ): CollisionState {
     // default to "bad" collision state if any items are colliding
-    return areColliding(item, otherItem);
+    return areColliding(item, otherItem)
+      ? CollisionState.CONFLICTED
+      : CollisionState.NEUTRAL;
   }
 
-  copy(): PlaceableItem {
+  copy(): IPlaceableItem {
     return new PlaceableItem(
       this.name,
       v4(),

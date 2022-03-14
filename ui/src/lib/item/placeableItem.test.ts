@@ -50,7 +50,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD
+        CollisionState.NEUTRAL
       );
       const testItem = new PlaceableItem(
         'testItem',
@@ -60,7 +60,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD
+        CollisionState.NEUTRAL
       );
 
       const itemList = new ItemList();
@@ -70,8 +70,10 @@ describe('PlaceableItem', () => {
       // will collide with otherItem once this drag occurs
       testItem.drag({ x: 600, y: 600 }, itemList, playground);
 
-      expect(testItem.collisionState).toBe(CollisionState.BAD);
-      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.BAD);
+      expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
+      expect(testItem.placementShadow?.collisionState).toBe(
+        CollisionState.CONFLICTED
+      );
     });
   });
 
@@ -82,7 +84,7 @@ describe('PlaceableItem', () => {
       width: 10,
       height: 10,
       length: 10,
-      collisionState: CollisionState.GOOD,
+      collisionState: CollisionState.NEUTRAL,
     };
     const plan = new Plan('square', 10_000, 10_000, 12);
     const playground = new Playground(1_000, 1_000, undefined, plan);
@@ -96,7 +98,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD,
+        CollisionState.NEUTRAL,
         placementShadow
       );
       expect(item.drop(new ItemList(1), playground)).toBe(true);
@@ -111,7 +113,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD
+        CollisionState.NEUTRAL
       );
       expect(item.drop(new ItemList(1), playground)).toBe(false);
     });
@@ -125,7 +127,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD,
+        CollisionState.NEUTRAL,
         placementShadow
       );
       item.drop(new ItemList(1), playground);
@@ -148,7 +150,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD
+        CollisionState.NEUTRAL
       );
       // does not currently collide with collidingItem, but has a placementShadow that does
       const testItem = new PlaceableItem(
@@ -159,7 +161,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD,
+        CollisionState.NEUTRAL,
         placementShadow
       );
 
@@ -169,7 +171,7 @@ describe('PlaceableItem', () => {
 
       testItem.drop(itemList, playground);
 
-      expect(testItem.collisionState).toBe(CollisionState.BAD);
+      expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
     });
 
     it('removes placementShadow from item on drop', () => {
@@ -181,7 +183,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
-        CollisionState.GOOD,
+        CollisionState.NEUTRAL,
         placementShadow
       );
 
@@ -209,7 +211,7 @@ describe('PlaceableItem', () => {
         width: 1000,
         height: 1000,
         length: 1000,
-        collisionState: CollisionState.GOOD,
+        collisionState: CollisionState.NEUTRAL,
       };
       const testItem = new PlaceableItem(
         'collision item',
@@ -219,7 +221,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         1000,
-        CollisionState.GOOD,
+        CollisionState.NEUTRAL,
         placementShadow
       );
 
@@ -227,13 +229,15 @@ describe('PlaceableItem', () => {
       items.push(collisionItem);
       items.push(testItem);
 
-      expect(testItem.collisionState).toBe(CollisionState.GOOD);
+      expect(testItem.collisionState).toBe(CollisionState.NEUTRAL);
       expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.GOOD
+        CollisionState.NEUTRAL
       );
       testItem.updateCollisions(items, playground);
-      expect(testItem.collisionState).toBe(CollisionState.BAD);
-      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.BAD);
+      expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
+      expect(testItem.placementShadow?.collisionState).toBe(
+        CollisionState.CONFLICTED
+      );
     });
 
     it('assigns collisionState=GOOD to item and item.placementShadow when no collisions', () => {
@@ -251,7 +255,7 @@ describe('PlaceableItem', () => {
         width: 1000,
         height: 1000,
         length: 1000,
-        collisionState: CollisionState.BAD,
+        collisionState: CollisionState.CONFLICTED,
       };
       const testItem = new PlaceableItem(
         'collision item',
@@ -261,7 +265,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         1000,
-        CollisionState.BAD,
+        CollisionState.CONFLICTED,
         placementShadow
       );
 
@@ -269,52 +273,79 @@ describe('PlaceableItem', () => {
       items.push(noCollisionItem);
       items.push(testItem);
 
-      expect(testItem.collisionState).toBe(CollisionState.BAD);
-      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.BAD);
-      testItem.updateCollisions(items, playground);
-      expect(testItem.collisionState).toBe(CollisionState.GOOD);
+      expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
       expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.GOOD
+        CollisionState.CONFLICTED
+      );
+      testItem.updateCollisions(items, playground);
+      expect(testItem.collisionState).toBe(CollisionState.NEUTRAL);
+      expect(testItem.placementShadow?.collisionState).toBe(
+        CollisionState.NEUTRAL
       );
     });
   });
 
   describe('#isCollidingWith', () => {
-    it('returns false if other item is outside of the current item', () => {
+    it('returns neutral if other item is outside of the current item', () => {
       const item = new PlaceableItem('', '1', 100, 100, 100, 100);
       const other = new PlaceableItem('', '2', 1001, 1001, 1001, 1001);
-      expect(item.isCollidingWith(item, other)).toBe(false);
+      expect(item.collisionStateBetween(item, other)).toBe(
+        CollisionState.NEUTRAL
+      );
     });
-    it('returns false if only the borders overlap', () => {
+    it('returns neutral if only the borders overlap', () => {
       const item = new PlaceableItem('', '1', 100, 100, 100, 100);
       const otherRight = new PlaceableItem('', '2', 200, 100, 100, 100);
-      expect(item.isCollidingWith(item, otherRight)).toBe(false);
+      expect(item.collisionStateBetween(item, otherRight)).toBe(
+        CollisionState.NEUTRAL
+      );
       const otherBelow = new PlaceableItem('', '3', 100, 200, 100, 100);
-      expect(item.isCollidingWith(item, otherBelow)).toBe(false);
+      expect(item.collisionStateBetween(item, otherBelow)).toBe(
+        CollisionState.NEUTRAL
+      );
       const otherLeft = new PlaceableItem('', '4', 0, 100, 100, 100);
-      expect(item.isCollidingWith(item, otherLeft)).toBe(false);
-      const otherTop = new PlaceableItem('', '5', 100, 0, 100, 100);
-      expect(item.isCollidingWith(item, otherTop)).toBe(false);
+      expect(item.collisionStateBetween(item, otherLeft)).toBe(
+        CollisionState.NEUTRAL
+      );
+      const otherTop = new PlaceableItem(
+        '',
+        '5',
+        100,
+        0,
+        100,
+        CollisionState.NEUTRAL
+      );
+      expect(item.collisionStateBetween(item, otherTop)).toBe(
+        CollisionState.NEUTRAL
+      );
     });
     it('returns true if other item is in the northeast corner', () => {
       const item = new PlaceableItem('', '1', 100, 100, 10, 10);
       const other = new PlaceableItem('', '2', 99, 91, 10, 10);
-      expect(item.isCollidingWith(item, other)).toBe(true);
+      expect(item.collisionStateBetween(item, other)).toBe(
+        CollisionState.CONFLICTED
+      );
     });
     it('returns true if other item is in the southeast corner', () => {
       const item = new PlaceableItem('', '1', 100, 100, 10, 10);
       const other = new PlaceableItem('', '2', 99, 109, 10, 10);
-      expect(item.isCollidingWith(item, other)).toBe(true);
+      expect(item.collisionStateBetween(item, other)).toBe(
+        CollisionState.CONFLICTED
+      );
     });
     it('returns true if other item is in the southwest corner', () => {
       const item = new PlaceableItem('', '1', 100, 100, 10, 10);
       const other = new PlaceableItem('', '2', 91, 109, 10, 10);
-      expect(item.isCollidingWith(item, other)).toBe(true);
+      expect(item.collisionStateBetween(item, other)).toBe(
+        CollisionState.CONFLICTED
+      );
     });
     it('returns true if other item is in the northwest corner', () => {
       const item = new PlaceableItem('', '1', 100, 100, 10, 10);
       const other = new PlaceableItem('', '2', 91, 91, 10, 10);
-      expect(item.isCollidingWith(item, other)).toBe(true);
+      expect(item.collisionStateBetween(item, other)).toBe(
+        CollisionState.CONFLICTED
+      );
     });
   });
 
