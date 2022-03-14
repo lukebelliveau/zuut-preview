@@ -9,7 +9,7 @@ import WindowItem from './windowitem';
 
 describe('DuctItem', () => {
   describe('#updateCollisions', () => {
-    it('has BAD collision state when colliding with a LightItem', () => {
+    it('has CONFLICTED collision state when colliding with a LightItem', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
       const duct = new DuctItem('duct', v4(), 0, 0, 1, 1, 1);

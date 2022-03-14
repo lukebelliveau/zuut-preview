@@ -4,6 +4,8 @@ import PlaceableItem from '../item/placeableItem';
 import Room from '../room';
 import {
   areColliding,
+  areExactlySharingBorder,
+  GeometryObject,
   isStraddlingBoundary,
   itemHasVerticalOrientation,
   itemIsAlignedWithBottomWall,
@@ -327,6 +329,274 @@ describe('placeOnRightBoundary', () => {
     const placedOnBottom = placedOnRightBoundary(item1, item2);
 
     expect(placedOnBottom.x).toBe(95);
+  });
+});
+
+describe('areExactlySharingBorder', () => {
+  it('returns true if item exactly shares left border', () => {
+    const item: GeometryObject = {
+      x: 50,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(true);
+  });
+
+  it('returns true if item exactly shares right border', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 50,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(true);
+  });
+
+  it('returns true if item exactly shares top border', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 50,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(true);
+  });
+
+  it('returns true if item exactly shares bottom border', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 0,
+      y: 50,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(true);
+  });
+
+  it('returns false if items are not touching', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 100,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if items are colliding', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 25,
+      y: 25,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares left border, but has bottom overhang', () => {
+    /**
+     *      ___
+     *  ___|   |
+     * |   |___|
+     * |___|
+     *
+     */
+    const item: GeometryObject = {
+      x: 50,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 0,
+      y: 25,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares left border, but has top overhang', () => {
+    /**
+     *   ___
+     *  |   |___
+     *  |___|   |
+     *      |___|
+     *
+     */
+    const item: GeometryObject = {
+      x: 50,
+      y: 25,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares right border, but has bottom overhang', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 50,
+      y: 25,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares right border, but has top overhang', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 25,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 50,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares top border, but has left overhang', () => {
+    const item: GeometryObject = {
+      x: 50,
+      y: 50,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 25,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares top border, but has right overhang', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 50,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 25,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares bottom border, but has left overhang', () => {
+    const item: GeometryObject = {
+      x: 50,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 25,
+      y: 50,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
+  });
+
+  it('returns false if item shares bottom border, but has right overhang', () => {
+    const item: GeometryObject = {
+      x: 0,
+      y: 0,
+      width: 50,
+      length: 50,
+    };
+
+    const otherItem: GeometryObject = {
+      x: 25,
+      y: 50,
+      width: 50,
+      length: 50,
+    };
+
+    expect(areExactlySharingBorder(item, otherItem)).toBe(false);
   });
 });
 

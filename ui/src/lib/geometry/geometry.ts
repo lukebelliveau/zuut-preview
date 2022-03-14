@@ -87,6 +87,54 @@ export const areColliding = (item1: GeometryObject, item2: GeometryObject) => {
   );
 };
 
+/**
+ * "exactly sharing" = the shared borders have the same origin & length.
+ */
+export const areExactlySharingBorder = (
+  item1: GeometryObject,
+  item2: GeometryObject
+): boolean => {
+  // item1's right border and item2's left border
+  if (
+    item1.x + item1.width === item2.x &&
+    item1.y === item2.y &&
+    item1.length === item2.length
+  ) {
+    console.log(1);
+    return true;
+  }
+
+  // item1's left border and item2's right border
+  if (
+    item2.x + item2.width === item1.x &&
+    item1.y === item2.y &&
+    item1.length === item2.length
+  ) {
+    console.log(2);
+    return true;
+  }
+
+  // item1's top border and item2's bottom border
+  if (
+    item1.y === item2.y + item2.length &&
+    item1.x === item2.x &&
+    item1.width === item2.width
+  ) {
+    return true;
+  }
+
+  // item1's bottom border and item2's top border
+  if (
+    item2.y === item1.y + item1.length &&
+    item1.x === item2.x &&
+    item1.width === item2.width
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
 const distanceFromExteriorLeftWall = (
   interiorItem: GeometryObject,
   exteriorItem: GeometryObject
