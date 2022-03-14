@@ -10,6 +10,8 @@ import DuctImage from '../../images/items/duct.png';
 import { isWindowItem } from './windowitem';
 import CeilingPlaceableItem from './ceilingPlaceableItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
+import ItemList from '../itemList';
+import Playground from '../playground';
 
 export const DUCT_ITEM_TYPE = 'DuctItem';
 
@@ -34,11 +36,34 @@ export default class DuctItem extends CeilingPlaceableItem {
     );
   }
 
+  updateCollisions(items: ItemList, playground: Playground) {
+    const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
+      items,
+      playground
+    );
+
+    if (collidingWithItem.length < 1 && collidingWithShadow.length < 1) {
+      this.collisionState = CollisionState.CONFLICTED;
+      if (this.placementShadow) {
+        this.placementShadow = {
+          ...this.placementShadow,
+          collisionState: CollisionState.CONFLICTED,
+        };
+      }
+    } else {
+      super.updateCollisions(items, playground);
+    }
+  }
+
   collisionStateBetween(
     item: PlacementShadow | IPlaceableItem,
     otherItem: IPlaceableItem
   ): CollisionState {
     if (isCeilingGrowspaceItem(otherItem)) {
+      return CollisionState.CONFLICTED;
+    } else if (isDuctItem(otherItem)) {
+      if (otherItem.collisionState === CollisionState.CONNECTED)
+        return CollisionState.CONNECTED;
       return CollisionState.CONFLICTED;
     } else if (isWindowItem(otherItem)) {
       return CollisionState.CONNECTED;
