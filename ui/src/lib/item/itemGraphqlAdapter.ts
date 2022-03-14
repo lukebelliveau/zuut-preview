@@ -13,6 +13,7 @@ import CeilingGrowspaceItem, {
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 import { isPlaceableItem } from './placeableItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
+import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -71,6 +72,8 @@ export default class ItemGraphqlAdapter {
         return new RoomItem(...itemAttrs);
       case WALL_ITEM_TYPE:
         return new WallItem(...itemAttrs);
+      case WINDOW_ITEM_TYPE:
+        return new WindowItem(...itemAttrs);
       case DUCT_ITEM_TYPE:
         return new DuctItem(...itemAttrs);
       default:

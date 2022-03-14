@@ -23,6 +23,8 @@ export function isWallItem(item: Item): item is WallItem {
 
 export default class WallItem extends PlaceableItem implements IPlaceableItem {
   type: string = WALL_ITEM_TYPE;
+  width = feetToMm(0.2);
+  length = feetToMm(2);
 
   copy(): WallItem {
     return new WallItem(
@@ -30,8 +32,8 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
       v4(),
       this.x,
       this.y,
-      feetToMm(0.1),
-      feetToMm(2),
+      this.width,
+      this.length,
       this.height
     );
   }
