@@ -23,7 +23,6 @@ export function isDuctItem(item: Item): item is DuctItem {
 export default class DuctItem extends CeilingPlaceableItem {
   type = DUCT_ITEM_TYPE;
   image = DuctImage;
-  layer = Layer.CEILING;
 
   copy(): DuctItem {
     return new DuctItem(

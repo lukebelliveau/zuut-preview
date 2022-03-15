@@ -58,7 +58,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
   image: string = RectangleImage;
   collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
-  layer: Layer;
+  layer = Layer.FLOOR;
 
   constructor(
     name: string,
@@ -69,8 +69,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     length: number = 610,
     height: number = 915,
     collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined,
-    layer: Layer = Layer.FLOOR
+    placementShadow: PlacementShadow | undefined = undefined
   ) {
     super(name, id);
     this.x = x;
@@ -80,7 +79,6 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     this.height = height;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
-    this.layer = layer;
   }
 
   place(position: Point) {

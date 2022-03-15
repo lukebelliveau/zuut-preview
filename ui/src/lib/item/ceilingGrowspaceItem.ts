@@ -20,7 +20,6 @@ export function isCeilingGrowspaceItem(
 
 export default class CeilingGrowspaceItem extends CeilingPlaceableItem {
   type = CEILING_GROWSPACE_ITEM_TYPE;
-  layer = Layer.CEILING;
 
   copy(): CeilingGrowspaceItem {
     return new CeilingGrowspaceItem(
