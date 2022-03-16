@@ -1,3 +1,4 @@
+import mixpanel from 'mixpanel-browser';
 import PlaceableItem from '../../lib/item/placeableItem';
 import { itemGroup } from '../../lib/itemsLibrary';
 import MenuSection from './MenuSection';
@@ -6,12 +7,14 @@ import InventoryCandidate from './InventoryCandidate';
 import SidebarTab from './SidebarTab';
 import { useBuildPlayground } from '../../app/builderHooks';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';
+import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 
 export default function LayoutTab() {
   const playground = useBuildPlayground();
   const dispatchAddItem = useDispatchAddItem();
 
   function placeItem(item: PlaceableItem) {
+    mixpanel.track(mixpanelEvents.PLACE_ITEM, { itemName: item.name });
     item.place(playground.place());
     dispatchAddItem(item.copy());
   }

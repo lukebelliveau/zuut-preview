@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import mixpanel from 'mixpanel-browser';
 
 import './index.css';
 
@@ -13,6 +14,13 @@ import { store } from './app/store';
 
 const AUTH0_DOMAIN = 'dev-baqlbrdt.us.auth0.com';
 const AUTH0_CLIENT_ID = 'ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid';
+
+if (process.env.MIXPANEL_TOKEN) {
+  mixpanel.init(process.env.MIXPANEL_TOKEN, {
+    // debug: true,
+    // ignore_dnt: true,
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>

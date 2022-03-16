@@ -100,7 +100,6 @@ export const areExactlySharingBorder = (
     item1.y === item2.y &&
     item1.length === item2.length
   ) {
-    console.log(1);
     return true;
   }
 
@@ -110,7 +109,6 @@ export const areExactlySharingBorder = (
     item1.y === item2.y &&
     item1.length === item2.length
   ) {
-    console.log(2);
     return true;
   }
 
