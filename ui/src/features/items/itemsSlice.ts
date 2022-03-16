@@ -14,6 +14,7 @@ export const itemsSlice = createSlice({
     updateOne: itemsAdapter.updateOne,
     updateOneWithoutHistory: itemsAdapter.updateOne,
     removeOne: itemsAdapter.removeOne,
+    removeMany: itemsAdapter.removeMany,
   },
 });
 
@@ -23,6 +24,7 @@ export const {
   updateOne,
   updateOneWithoutHistory,
   removeOne,
+  removeMany,
 } = itemsSlice.actions;
 
 export const addItem = createAsyncThunk(
@@ -51,6 +53,17 @@ export const removeItem = createAsyncThunk(
   'items/removeItem',
   async (id: string, { dispatch, getState }) => {
     dispatch(removeOne(id));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
+export const removeItems = createAsyncThunk(
+  'items/removeItems',
+  async (ids: string[], { dispatch, getState }) => {
+    dispatch(removeMany(ids));
 
     const state = getState() as RootState;
     const planService = new PlanService(state);

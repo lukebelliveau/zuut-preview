@@ -17,6 +17,9 @@ export const useSelectAllItems = () => useAppSelector(itemsSelectors.selectAll);
 export const useSelectAllItemEntities = () =>
   useAppSelector(itemsSelectors.selectEntities);
 
+export const useSelectAllItemIds = () =>
+  useAppSelector(itemsSelectors.selectIds);
+
 export const useSelectItemById = (id: string | undefined = '') => {
   return useAppSelector((state) => itemsSelectors.selectById(state, id));
 };

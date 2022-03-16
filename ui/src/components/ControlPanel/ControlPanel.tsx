@@ -11,8 +11,10 @@ import { ItemControls } from './ItemControls';
 type ControlPanelState = 'show' | 'hide' | 'minimize';
 
 const ControlPanel = () => {
-  const selectedItemId = useAppSelector(selectSelectedItemId);
-  const item = useSelectItemById(selectedItemId);
+  const selectedItemIds = useAppSelector(selectSelectedItemId);
+  const item = useSelectItemById(
+    selectedItemIds.length === 1 ? selectedItemIds[0] : undefined
+  );
   const [controlPanelState, setControlPanelState] = useState<ControlPanelState>(
     item ? 'show' : 'hide'
   );
@@ -40,7 +42,10 @@ const ControlPanel = () => {
   return (
     <div id="control-panel" className={controlPanelState}>
       <h2>
-        <button onClick={toggleDisplayControlPanel} onKeyDown={onReturnKey(toggleDisplayControlPanel)}>
+        <button
+          onClick={toggleDisplayControlPanel}
+          onKeyDown={onReturnKey(toggleDisplayControlPanel)}
+        >
           Control Panel
         </button>
       </h2>

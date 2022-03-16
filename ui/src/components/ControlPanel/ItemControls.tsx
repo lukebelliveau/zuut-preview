@@ -10,7 +10,6 @@ import { ItemState } from '../../features/items/itemState';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { onReturnKey } from '../../lib/interactions/keyboard';
 
-
 export function ItemControls({ item: itemState }: { item?: ItemState }) {
   const dispatch = useDispatch();
   if (!itemState) return null;
@@ -19,12 +18,10 @@ export function ItemControls({ item: itemState }: { item?: ItemState }) {
 
   function deleteItem() {
     dispatch(removeItem(item.id));
-    dispatch(unselect());
+    dispatch(unselect(item.id));
   }
 
-  function rotateItem() {
-
-  }
+  function rotateItem() {}
 
   return (
     <div className="control-panel-body">

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InteractionsState } from './interactionsState';
 
 const initialState: InteractionsState = {
-  selected: undefined,
+  selected: [],
 };
 
 export const interactionsSlice = createSlice({
@@ -10,20 +10,27 @@ export const interactionsSlice = createSlice({
   initialState,
   reducers: {
     select: (state: InteractionsState, action: PayloadAction<string>) => {
+      state.selected = [action.payload];
+    },
+    selectMany: (state: InteractionsState, action: PayloadAction<string[]>) => {
       state.selected = action.payload;
     },
     toggleSelect: (state: InteractionsState, action: PayloadAction<string>) => {
-      if (action.payload === state.selected) {
-        state.selected = undefined;
+      if (state.selected?.includes(action.payload)) {
+        state.selected = state.selected.filter((id) => id !== action.payload);
       } else {
-        state.selected = action.payload;
+        state.selected.push(action.payload);
       }
     },
-    unselect: (state: InteractionsState) => {
-      state.selected = undefined;
+    unselect: (state: InteractionsState, action: PayloadAction<string>) => {
+      state.selected = state.selected.filter((id) => id !== action.payload);
+    },
+    unselectAll: (state: InteractionsState) => {
+      state.selected = [];
     },
   },
 });
 
-export const { select, toggleSelect, unselect } = interactionsSlice.actions;
+export const { select, toggleSelect, unselect, unselectAll, selectMany } =
+  interactionsSlice.actions;
 export default interactionsSlice.reducer;

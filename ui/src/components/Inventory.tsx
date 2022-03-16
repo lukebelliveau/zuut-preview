@@ -21,7 +21,7 @@ export default function Inventory() {
   const className = hidden ? 'hidden' : undefined;
   const dispatch = useDispatch();
   const itemStates = useSelectAllItems();
-  const selectedId = useAppSelector(selectSelectedItemId);
+  const selectedIds = useAppSelector(selectSelectedItemId);
   const store = useStore();
 
   const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
@@ -39,7 +39,7 @@ export default function Inventory() {
   ) => {
     if (e.key === 'Enter' || e.key === 'Return') {
       dispatch(toggleSelect(item.id));
-    } else if (selectedId === item.id) {
+    } else if (selectedIds.includes(item.id)) {
       handleDeleteOnKeyDown(e, store);
     }
   };
@@ -49,7 +49,9 @@ export default function Inventory() {
       <h2>
         <button
           onClick={() => setHidden(!hidden)}
-          onKeyDown={onReturnKey(() => { setHidden(!hidden); })}
+          onKeyDown={onReturnKey(() => {
+            setHidden(!hidden);
+          })}
         >
           Inventory
         </button>
@@ -65,7 +67,7 @@ export default function Inventory() {
                   onClick={() => dispatch(toggleSelect(item.id))}
                   onKeyDown={(e) => handleItemKeyDown(e, item)}
                   tabIndex={0}
-                  className={clsx({ selected: item.id === selectedId })}
+                  className={clsx({ selected: selectedIds.includes(item.id) })}
                 >
                   {item.name}
                 </span>

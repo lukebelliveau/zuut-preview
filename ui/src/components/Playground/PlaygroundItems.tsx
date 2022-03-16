@@ -13,7 +13,7 @@ import {
   PlacementShadow,
 } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
-import { Fragment, useEffect } from 'react';
+import { Fragment, MutableRefObject, useEffect, useRef } from 'react';
 import { Point } from '../../lib/point';
 
 import { selectSelectedItemId } from '../../features/interactions/interactionsSelectors';
@@ -51,7 +51,7 @@ export default function PlaygroundItems() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const items = useBuildItemList();
-  const selectedItemId = useAppSelector(selectSelectedItemId);
+  const selectedItemIds = useAppSelector(selectSelectedItemId);
   const dispatchDropItem = useDispatchDropItem();
 
   function updatePlacement(item: IPlaceableItem, newPosition: Point) {
@@ -78,7 +78,7 @@ export default function PlaygroundItems() {
 
   return (
     <Layer>
-      {sortSelectedToLast(items, selectedItemId)
+      {sortSelectedToLast(items, selectedItemIds)
         .placeable()
         .map((item) => {
           return (
@@ -96,6 +96,36 @@ export default function PlaygroundItems() {
   );
 }
 
+/**
+ * This 'hack' with refs & effects seems to be the best way
+ * to detect keyboard events along with a click.
+ */
+const useHandleItemClicks = (
+  item: IPlaceableItem,
+  itemRef: MutableRefObject<any>
+) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleClickKeyboardEvents = (e: any) => {
+      if (e.metaKey) {
+        dispatch(toggleSelect(item.id));
+      } else {
+        dispatch(select(item.id));
+      }
+    };
+
+    if (itemRef && itemRef.current) {
+      const currentItemRef = itemRef.current;
+      currentItemRef.addEventListener('click', handleClickKeyboardEvents);
+
+      return () => {
+        currentItemRef.removeEventListener('click', handleClickKeyboardEvents);
+      };
+    }
+  }, [dispatch, item.id, itemRef]);
+};
+
 const Item = ({
   item,
   updatePlacement,
@@ -105,7 +135,6 @@ const Item = ({
   updatePlacement: (item: IPlaceableItem, newPosition: Point) => void;
   dropAndUpdateItemCollisions: (item: IPlaceableItem) => void;
 }) => {
-  const dispatch = useDispatch();
   if (!item.image) throw new Error('Image not found in ImageItem component');
 
   // create manually instead of using Konva's `use-image` package.
@@ -113,7 +142,7 @@ const Item = ({
   const imageObj = new window.Image();
   imageObj.src = item.image;
 
-  const selectedItemId = useAppSelector(selectSelectedItemId);
+  const selectedItemIds = useAppSelector(selectSelectedItemId);
 
   const setContainerCursor = (
     cursor: string,
@@ -139,15 +168,20 @@ const Item = ({
     setContainerCursor('grab', e);
   };
 
+  const itemRef = useRef<any>(null);
+
+  useHandleItemClicks(item, itemRef);
+
   return (
     <Image
       key={item.id}
       x={item.x}
       y={item.y}
+      ref={itemRef}
       width={item.width}
       height={item.length}
       stroke={getCollisionColor(item.collisionState)}
-      strokeWidth={item.id === selectedItemId ? 2 : 1}
+      strokeWidth={selectedItemIds.includes(item.id) ? 2 : 1}
       strokeScaleEnabled={false}
       draggable
       opacity={item.placementShadow ? 0.2 : 1}
@@ -155,7 +189,6 @@ const Item = ({
        * don't use imageObj in tests, because there is no window.Image() in tests
        */
       image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
-      onClick={() => dispatch(toggleSelect(item.id))}
       onDragMove={handleDragMove}
       onDragEnd={handleDragEnd}
       onMouseEnter={(e) => setContainerCursor('grab', e)}

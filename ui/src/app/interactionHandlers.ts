@@ -1,7 +1,10 @@
-import { unselect } from '../features/interactions/interactionsSlice';
+import {
+  selectMany,
+  unselectAll,
+} from '../features/interactions/interactionsSlice';
 import {
   redoItemAction,
-  removeItem,
+  removeItems,
   undoItemAction,
 } from '../features/items/itemsSlice';
 import { AppStore } from './store';
@@ -10,11 +13,11 @@ export const handleDeleteOnKeyDown = (
   e: React.KeyboardEvent<HTMLSpanElement>,
   store: AppStore
 ) => {
-  const selectedItemId = store.getState().interactions.selected;
+  const selectedItemIds = store.getState().interactions.selected;
 
-  if ((e.key === 'Backspace' || e.key === 'Delete') && selectedItemId) {
-    store.dispatch(removeItem(selectedItemId));
-    store.dispatch(unselect());
+  if ((e.key === 'Backspace' || e.key === 'Delete') && selectedItemIds) {
+    store.dispatch(removeItems(selectedItemIds));
+    store.dispatch(unselectAll());
   }
 };
 
@@ -29,6 +32,25 @@ export const handleUndoRedoOnKeyDown = (
     store.dispatch(redoItemAction());
   } else if (e.metaKey && e.key === 'z') {
     store.dispatch(undoItemAction());
+  }
+};
+
+export const handleSelectAllOnKeyDown = (
+  e: React.KeyboardEvent<HTMLSpanElement>,
+  store: AppStore
+) => {
+  if (e.key === 'a' && e.metaKey) {
+    const allItemIds = store.getState().items.present.ids;
+    store.dispatch(selectMany(allItemIds.map((id) => id.toString())));
+  }
+};
+
+export const handleEscOnKeyDown = (
+  e: React.KeyboardEvent<HTMLSpanElement>,
+  store: AppStore
+) => {
+  if (e.key === 'Escape') {
+    store.dispatch(unselectAll());
   }
 };
 

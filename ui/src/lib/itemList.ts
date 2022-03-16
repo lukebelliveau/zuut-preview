@@ -12,23 +12,22 @@ export default class ItemList extends Array<IItem> {
  */
 export const sortSelectedToLast = (
   items: ItemList,
-  idOfSelectedItem: string | undefined
+  selectedItemIds: string[]
 ): ItemList => {
-  if (!idOfSelectedItem || items.length === 0) {
-    return items;
-  }
-
   const itemsCopy = [...items];
+  const sortedItems = itemsCopy.sort((a, b) => {
+    if (selectedItemIds.includes(a.id) && !selectedItemIds.includes(b.id)) {
+      return 1;
+    }
 
-  const indexOfSelected = itemsCopy.findIndex(
-    (item) => item.id === idOfSelectedItem
-  );
-  const [selectedItem] = itemsCopy.splice(indexOfSelected, 1);
+    if (!selectedItemIds.includes(a.id) && selectedItemIds.includes(b.id)) {
+      return -1;
+    }
 
-  const sortedItems = new ItemList();
+    return 0;
+  });
 
-  itemsCopy.forEach((item) => sortedItems.push(item));
-  sortedItems.push(selectedItem);
-
-  return sortedItems;
+  const itemList = new ItemList();
+  sortedItems.forEach((item) => itemList.push(item));
+  return itemList;
 };

@@ -7,6 +7,7 @@ import undoable, { includeAction } from 'redux-undo';
 
 import itemsReducer, {
   addOne,
+  removeMany,
   removeOne,
   updateOne,
 } from '../features/items/itemsSlice';
@@ -27,7 +28,12 @@ export function createAppStore() {
   return configureStore({
     reducer: {
       items: undoable<EntityState<ItemState>>(itemsReducer, {
-        filter: includeAction([updateOne.type, addOne.type, removeOne.type]),
+        filter: includeAction([
+          updateOne.type,
+          addOne.type,
+          removeOne.type,
+          removeMany.type,
+        ]),
       }),
       plans: plansReducer,
       playground: playgroundReducer,

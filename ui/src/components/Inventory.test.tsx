@@ -41,7 +41,7 @@ describe('Inventory', () => {
 
     // select item
     fireEvent.keyDown(testItem, { key: 'Enter' });
-    await waitFor(() => store.getState().interactions.selected === item.id);
+    await waitFor(() => store.getState().interactions.selected[0] === item.id);
     fireEvent.keyDown(testItem, { key: 'Delete' });
 
     await waitFor(() =>

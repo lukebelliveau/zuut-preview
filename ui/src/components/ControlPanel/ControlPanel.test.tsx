@@ -39,7 +39,7 @@ describe('ControlPanel', () => {
     const deleteButton = screen.getByLabelText('delete item');
     fireEvent.click(deleteButton);
 
-    expect(store.getState().interactions.selected).toBeUndefined();
+    expect(store.getState().interactions.selected).toStrictEqual([]);
     expect(store.getState().items.present.ids).toHaveLength(0);
   });
 });

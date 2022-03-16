@@ -24,6 +24,8 @@ import Loading from '../../components/Loading';
 import { useJwt } from '../../features/users/userSelector';
 import {
   handleDeleteOnKeyDown,
+  handleEscOnKeyDown,
+  handleSelectAllOnKeyDown,
   handleUndoRedoOnKeyDown,
 } from '../../app/interactionHandlers';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';
@@ -89,8 +91,11 @@ export default function ShowPlayground() {
   const scale = playground.scale;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+    e.preventDefault();
     handleDeleteOnKeyDown(e, store);
     handleUndoRedoOnKeyDown(e, store);
+    handleSelectAllOnKeyDown(e, store);
+    handleEscOnKeyDown(e, store);
   };
 
   return (
