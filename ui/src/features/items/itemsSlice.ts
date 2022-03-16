@@ -4,6 +4,9 @@ import { RootState } from '../../app/store';
 import PlanService from '../../lib/plan/planService';
 import itemsAdapter from './itemsEntityAdapter';
 import { ItemState } from './itemState';
+import { itemsSelectors } from './itemsSelectors';
+import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
+import PlaceableItem from '../../lib/item/placeableItem';
 
 export const itemsSlice = createSlice({
   name: 'items',
@@ -98,6 +101,22 @@ export const loadItems = createAsyncThunk(
   async (items: ItemState[], { dispatch }) => {
     items.forEach((itemState) => dispatch(addOne(itemState)));
     dispatch(ActionCreators.clearHistory());
+  }
+);
+
+export const rotate = createAsyncThunk(
+  'items/rotate',
+  async (itemId: string, { dispatch, getState }) => {
+    const itemState = itemsSelectors.selectById(getState() as RootState, itemId);
+    if (!itemState) throw new Error('Item not found');
+
+    const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
+    item.rotate();
+    dispatch(updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) }));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
   }
 );
 

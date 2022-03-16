@@ -11,4 +11,5 @@ export type ItemState = {
   height?: number;
   collisionState?: CollisionState;
   placementShadow?: PlacementShadow;
+  rotation?: number;
 };

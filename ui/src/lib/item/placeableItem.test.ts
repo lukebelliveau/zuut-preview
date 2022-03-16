@@ -4,6 +4,7 @@ import ItemList from '../itemList';
 import Plan from '../plan';
 import Playground from '../playground';
 import PlaceableItem, { CollisionState } from './placeableItem';
+import PotItem from './potItem';
 
 describe('PlaceableItem', () => {
   describe('place', () => {
@@ -85,6 +86,7 @@ describe('PlaceableItem', () => {
       height: 10,
       length: 10,
       collisionState: CollisionState.NEUTRAL,
+      offset: { x: 95, y: 95 },
     };
     const plan = new Plan('square', 10_000, 10_000, 12);
     const playground = new Playground(1_000, 1_000, undefined, plan);
@@ -212,6 +214,7 @@ describe('PlaceableItem', () => {
         height: 1000,
         length: 1000,
         collisionState: CollisionState.NEUTRAL,
+        offset: { x: 0, y: 0 },
       };
       const testItem = new PlaceableItem(
         'collision item',
@@ -256,6 +259,7 @@ describe('PlaceableItem', () => {
         height: 1000,
         length: 1000,
         collisionState: CollisionState.CONFLICTED,
+        offset: { x: 0, y: 0 },
       };
       const testItem = new PlaceableItem(
         'collision item',
@@ -266,7 +270,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         CollisionState.CONFLICTED,
-        placementShadow
+        placementShadow,
       );
 
       const items = new ItemList();
@@ -365,6 +369,33 @@ describe('PlaceableItem', () => {
       expect(placementShadow.height).toBe(item.height);
       expect(placementShadow.length).toBe(item.length);
       expect(placementShadow.width).toBe(item.width);
+    });
+  });
+
+  describe('#rotate', () => {
+    it('rotates from 0 to 90 to 180 to 270 and back to 0 degrees', () => {
+      const item = new PotItem('Item 1', '123', 10, 10, 100, 200, 0);
+      expect(item.rotation).toEqual(0);
+
+      item.rotate();
+      expect(item.rotation).toEqual(90);
+      expect(item.width).toEqual(200);
+      expect(item.length).toEqual(100);
+      
+      item.rotate();
+      expect(item.rotation).toEqual(180);
+      expect(item.width).toEqual(100);
+      expect(item.length).toEqual(200);
+      
+      item.rotate();
+      expect(item.rotation).toEqual(270);
+      expect(item.width).toEqual(200);
+      expect(item.length).toEqual(100);
+      
+      item.rotate();
+      expect(item.rotation).toEqual(0);
+      expect(item.width).toEqual(100);
+      expect(item.length).toEqual(200);
     });
   });
 });

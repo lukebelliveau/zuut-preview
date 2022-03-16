@@ -15,6 +15,7 @@ export interface PlacementShadow {
   width: number;
   length: number;
   collisionState: CollisionState;
+  offset: Point;
 }
 
 export enum CollisionState {
@@ -43,6 +44,8 @@ export interface IPlaceableItem extends IItem {
   placementShadow: PlacementShadow | undefined;
   collisionState: CollisionState;
   layer: Layer;
+  rotation: number;
+  offset: Point;
 }
 
 export function isPlaceableItem(item: Item): item is PlaceableItem {
@@ -59,6 +62,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
   collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
   layer = Layer.FLOOR;
+  rotation: number = 0;
 
   constructor(
     name: string,
@@ -69,7 +73,8 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     length: number = 610,
     height: number = 915,
     collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined
+    placementShadow: PlacementShadow | undefined = undefined,
+    rotation: number = 0,
   ) {
     super(name, id);
     this.x = x;
@@ -79,6 +84,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     this.height = height;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
+    this.rotation = rotation;
   }
 
   place(position: Point) {
@@ -119,7 +125,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     position: Point,
     playground: Playground
   ): PlacementShadow {
-    if (!playground || !playground.plan || !playground.plan.grid)
+    if (!playground.plan || !playground.plan.grid)
       throw new Error('Missing grid!');
 
     const snappedPosition = playground.plan.grid.snapPostition(position);
@@ -130,6 +136,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       length: this.length,
       height: this.height,
       collisionState: CollisionState.NEUTRAL,
+      offset: this.offset,
     };
 
     return placementShadow;
@@ -282,6 +289,13 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       : CollisionState.NEUTRAL;
   }
 
+  rotate() {
+    this.rotation = (this.rotation + 90) % 360;
+    const oldWidth = this.width;
+    this.width = this.length;
+    this.length = oldWidth;
+  }
+
   copy(): IPlaceableItem {
     return new PlaceableItem(
       this.name,
@@ -292,5 +306,12 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       this.length,
       this.height
     );
+  }
+
+  get offset(): Point {
+    return {
+      x: this.width / 2,
+      y: this.length / 2
+    };
   }
 }

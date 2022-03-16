@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import PlaceableItem from '../item/placeableItem';
+import PlaceableItem, { IPlaceableItem } from '../item/placeableItem';
 
 import Room from '../room';
 import {
@@ -242,19 +242,21 @@ describe('itemIsBetweenTopAndBottomWall', () => {
 
 describe('placeOnBottomBoundary', () => {
   it('adjusts y-coordinate so first item straddles bottom boundary of second item', () => {
-    const item1 = {
+    const item1: GeometryObject = {
       x: 50,
       y: 91,
       length: 10,
       height: 10,
       width: 10,
+      offset: { x: 0, y: 0 },
     };
-    const item2 = {
+    const item2: GeometryObject = {
       x: 0,
       y: 0,
       length: 100,
       height: 100,
       width: 100,
+      offset: { x: 0, y: 0 },
     };
 
     const placedOnBottom = placedOnBottomBoundary(item1, item2);
@@ -265,19 +267,21 @@ describe('placeOnBottomBoundary', () => {
 
 describe('placeOnTopBoundary', () => {
   it('adjusts y-coordinate so first item straddles bottom boundary of second item', () => {
-    const item1 = {
+    const item1: GeometryObject = {
       x: 50,
       y: -1,
       length: 10,
       height: 10,
       width: 10,
+      offset: { x: 0, y: 0 },
     };
-    const item2 = {
+    const item2: GeometryObject = {
       x: 0,
       y: 0,
       length: 100,
       height: 100,
       width: 100,
+      offset: { x: 0, y: 0 },
     };
 
     const placedOnBottom = placedOnTopBoundary(item1, item2);
@@ -288,19 +292,21 @@ describe('placeOnTopBoundary', () => {
 
 describe('placeOnLeftBoundary', () => {
   it('adjusts x-coordinate so first item straddles left boundary of second item', () => {
-    const item1 = {
+    const item1: GeometryObject = {
       x: -2,
       y: 50,
       length: 10,
       height: 10,
       width: 10,
+      offset: { x: 0, y: 0 },
     };
-    const item2 = {
+    const item2: GeometryObject = {
       x: 0,
       y: 0,
       length: 100,
       height: 100,
       width: 100,
+      offset: { x: 0, y: 0 },
     };
 
     const placedOnBottom = placedOnLeftBoundary(item1, item2);
@@ -311,19 +317,21 @@ describe('placeOnLeftBoundary', () => {
 
 describe('placeOnRightBoundary', () => {
   it('adjusts x-coordinate so first item straddles right boundary of second item', () => {
-    const item1 = {
+    const item1: GeometryObject = {
       x: 97,
       y: 50,
       length: 10,
       height: 10,
       width: 10,
+      offset: { x: 0, y: 0 },
     };
-    const item2 = {
+    const item2: GeometryObject = {
       x: 0,
       y: 0,
       length: 100,
       height: 100,
       width: 100,
+      offset: { x: 0, y: 0 },
     };
 
     const placedOnBottom = placedOnRightBoundary(item1, item2);
@@ -339,6 +347,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -346,6 +355,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -357,6 +367,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -364,6 +375,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -375,6 +387,7 @@ describe('areExactlySharingBorder', () => {
       y: 50,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -382,6 +395,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -393,6 +407,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -400,6 +415,7 @@ describe('areExactlySharingBorder', () => {
       y: 50,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -411,6 +427,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -418,6 +435,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -429,6 +447,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -436,6 +455,7 @@ describe('areExactlySharingBorder', () => {
       y: 25,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -454,6 +474,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -461,6 +482,7 @@ describe('areExactlySharingBorder', () => {
       y: 25,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -479,6 +501,7 @@ describe('areExactlySharingBorder', () => {
       y: 25,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -486,6 +509,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -497,6 +521,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -504,6 +529,7 @@ describe('areExactlySharingBorder', () => {
       y: 25,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -515,6 +541,7 @@ describe('areExactlySharingBorder', () => {
       y: 25,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -522,6 +549,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -533,6 +561,7 @@ describe('areExactlySharingBorder', () => {
       y: 50,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -540,6 +569,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -551,6 +581,7 @@ describe('areExactlySharingBorder', () => {
       y: 50,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -558,6 +589,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -569,6 +601,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -576,6 +609,7 @@ describe('areExactlySharingBorder', () => {
       y: 50,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -587,6 +621,7 @@ describe('areExactlySharingBorder', () => {
       y: 0,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
@@ -594,6 +629,7 @@ describe('areExactlySharingBorder', () => {
       y: 50,
       width: 50,
       length: 50,
+      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);

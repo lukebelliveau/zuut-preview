@@ -32,7 +32,8 @@ export default class DuctItem extends CeilingPlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
+      this.rotation,
     );
   }
 

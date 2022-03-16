@@ -63,6 +63,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           height: this.height,
           length: this.length,
           collisionState: CollisionState.NEUTRAL,
+          offset: this.offset,
         };
       } else {
         return {
@@ -72,6 +73,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           height: this.height,
           length: this.width,
           collisionState: CollisionState.NEUTRAL,
+          offset: this.offset,
         };
       }
     } else {
@@ -83,6 +85,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           height: this.height,
           length: this.length,
           collisionState: CollisionState.NEUTRAL,
+          offset: this.offset,
         };
       } else {
         return {
@@ -92,8 +95,16 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
           height: this.height,
           length: this.width,
           collisionState: CollisionState.NEUTRAL,
+          offset: this.offset,
         };
       }
     }
+  }
+
+  get offset(): Point {
+    return {
+      x: 0,
+      y: 0,
+    };
   }
 }

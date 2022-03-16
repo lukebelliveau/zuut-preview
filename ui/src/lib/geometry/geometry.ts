@@ -10,6 +10,7 @@ export type GeometryObject = {
   height?: number;
   width: number;
   length: number;
+  offset: Point;
 };
 
 export const isStraddlingBoundary = (
@@ -78,12 +79,22 @@ export const itemHasVerticalOrientation = (item: GeometryObject) =>
 export const itemHasHorizontalOrientation = (item: GeometryObject) =>
   !itemHasVerticalOrientation(item);
 
+/*
+  For these calculations, the x,y position of the item is its center due 
+  to Konva's implementation of drawing Rects and how they need to be rotated
+  around the center.
+  
+  top left corner: x - offset.x, y - offset.y
+  top right corner: x + offset.x, y - offset.y
+  bottom right corner: x + offset.x, y + offset.y
+  bottom left corner: x - offset.x, y + offset.y
+*/
 export const areColliding = (item1: GeometryObject, item2: GeometryObject) => {
   return !(
-    Math.floor(item2.x) >= Math.floor(item1.x + item1.width) ||
-    Math.floor(item2.x + item2.width) <= Math.floor(item1.x) ||
-    Math.floor(item2.y) >= Math.floor(item1.y + item1.length) ||
-    Math.floor(item2.y + item2.length) <= Math.floor(item1.y)
+    Math.floor(item2.x - item2.offset.x) >= Math.floor(item1.x + item1.offset.x) || // left border of item2 is to the right of item1 right border
+    Math.floor(item2.x + item2.offset.x) <= Math.floor(item1.x - item1.offset.x) || // right border of item2 is to the left of item1 left border
+    Math.floor(item2.y - item2.offset.y) >= Math.floor(item1.y + item1.offset.y) || // top border of item2 is below bottom border of item1
+    Math.floor(item2.y + item2.offset.y) <= Math.floor(item1.y - item1.offset.y)    // bottom border of item2 is above top border of item1
   );
 };
 
@@ -96,8 +107,8 @@ export const areExactlySharingBorder = (
 ): boolean => {
   // item1's right border and item2's left border
   if (
-    Math.floor(item1.x + item1.width) === Math.floor(item2.x) &&
-    Math.floor(item1.y) === Math.floor(item2.y) &&
+    Math.floor(item1.x + item1.width + item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
+    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y + item2.offset.y) &&
     Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
@@ -105,8 +116,8 @@ export const areExactlySharingBorder = (
 
   // item1's left border and item2's right border
   if (
-    Math.floor(item2.x + item2.width) === Math.floor(item1.x) &&
-    Math.floor(item1.y) === Math.floor(item2.y) &&
+    Math.floor(item2.x + item2.width + item2.offset.x) === Math.floor(item1.x + item1.offset.x) &&
+    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y + item2.offset.y) &&
     Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
@@ -114,8 +125,8 @@ export const areExactlySharingBorder = (
 
   // item1's top border and item2's bottom border
   if (
-    Math.floor(item1.y) === Math.floor(item2.y + item2.length) &&
-    Math.floor(item1.x) === Math.floor(item2.x) &&
+    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y + item2.length + item2.offset.y) &&
+    Math.floor(item1.x + item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
     Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
@@ -123,8 +134,8 @@ export const areExactlySharingBorder = (
 
   // item1's bottom border and item2's top border
   if (
-    Math.floor(item2.y) === Math.floor(item1.y + item1.length) &&
-    Math.floor(item1.x) === Math.floor(item2.x) &&
+    Math.floor(item2.y + item2.offset.y) === Math.floor(item1.y + item1.offset.y + item1.length) &&
+    Math.floor(item1.x + item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
     Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
@@ -267,6 +278,7 @@ export const placedOnBottomBoundary = (
     length: item1.length,
     height: item1.height,
     width: item1.width,
+    offset: item1.offset,
   };
 };
 
@@ -285,6 +297,7 @@ export const placedOnTopBoundary = (
     length: item1.length,
     height: item1.height,
     width: item1.width,
+    offset: item1.offset,
   };
 };
 
@@ -303,6 +316,7 @@ export const placedOnLeftBoundary = (
     length: item1.length,
     height: item1.height,
     width: item1.width,
+    offset: item1.offset,
   };
 };
 
@@ -321,5 +335,6 @@ export const placedOnRightBoundary = (
     length: item1.length,
     height: item1.height,
     width: item1.width,
+    offset: item1.offset,
   };
 };

@@ -19,7 +19,7 @@ describe('WallItem', () => {
 
         horizontalWallItem.drag({ x: 10, y: 50 }, items, playground);
 
-        expect(horizontalWallItem.placementShadow).toEqual({
+        expect(horizontalWallItem.placementShadow).toMatchObject({
           x: -0.5,
           y: 50,
           length: horizontalWallItem.width,
@@ -35,7 +35,7 @@ describe('WallItem', () => {
 
         horizontalWallItem.drag({ x: 90, y: 50 }, items, playground);
 
-        expect(horizontalWallItem.placementShadow).toEqual({
+        expect(horizontalWallItem.placementShadow).toMatchObject({
           x: 99.5,
           y: 50,
           length: horizontalWallItem.width,
@@ -51,7 +51,7 @@ describe('WallItem', () => {
 
         horizontalWallItem.drag({ x: 50, y: 90 }, items, playground);
 
-        expect(horizontalWallItem.placementShadow).toEqual({
+        expect(horizontalWallItem.placementShadow).toMatchObject({
           x: 50,
           y: 99.5,
           length: horizontalWallItem.length,
@@ -67,7 +67,7 @@ describe('WallItem', () => {
 
         horizontalWallItem.drag({ x: 50, y: 10 }, items, playground);
 
-        expect(horizontalWallItem.placementShadow).toEqual({
+        expect(horizontalWallItem.placementShadow).toMatchObject({
           x: 50,
           y: -0.5,
           length: horizontalWallItem.length,
@@ -87,7 +87,7 @@ describe('WallItem', () => {
 
         verticalWallItem.drag({ x: 10, y: 50 }, items, playground);
 
-        expect(verticalWallItem.placementShadow).toEqual({
+        expect(verticalWallItem.placementShadow).toMatchObject({
           x: -0.5,
           y: 50,
           length: verticalWallItem.length,
@@ -103,7 +103,7 @@ describe('WallItem', () => {
 
         verticalWallItem.drag({ x: 90, y: 50 }, items, playground);
 
-        expect(verticalWallItem.placementShadow).toEqual({
+        expect(verticalWallItem.placementShadow).toMatchObject({
           x: 99.5,
           y: 50,
           length: verticalWallItem.length,
@@ -119,7 +119,7 @@ describe('WallItem', () => {
 
         verticalWallItem.drag({ x: 50, y: 90 }, items, playground);
 
-        expect(verticalWallItem.placementShadow).toEqual({
+        expect(verticalWallItem.placementShadow).toMatchObject({
           x: 50,
           y: 99.5,
           length: verticalWallItem.width,
@@ -135,7 +135,7 @@ describe('WallItem', () => {
 
         verticalWallItem.drag({ x: 50, y: 10 }, items, playground);
 
-        expect(verticalWallItem.placementShadow).toEqual({
+        expect(verticalWallItem.placementShadow).toMatchObject({
           x: 50,
           y: -0.5,
           length: verticalWallItem.width,

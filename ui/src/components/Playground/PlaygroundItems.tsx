@@ -181,8 +181,10 @@ const Item = ({
       width={item.width}
       height={item.length}
       stroke={getCollisionColor(item.collisionState)}
-      strokeWidth={selectedItemIds.includes(item.id) ? 2 : 1}
+      strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
       strokeScaleEnabled={false}
+      rotation={item.rotation}
+      offset={item.offset}
       draggable
       opacity={item.placementShadow ? 0.2 : 1}
       /**
@@ -220,6 +222,7 @@ const Shadow = ({ shadow }: { shadow?: PlacementShadow }) => {
       stroke={getCollisionColor(shadow.collisionState)}
       strokeWidth={1}
       strokeScaleEnabled={false}
+      offset={shadow.offset}
       draggable
     />
   );

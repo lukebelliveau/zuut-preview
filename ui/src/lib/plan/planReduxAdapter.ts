@@ -14,6 +14,7 @@ export default class PlanReduxAdapter {
         width: plan.width,
         length: plan.length,
         height: plan.height,
+        offset: plan.room.offset,
       }
     };
   }

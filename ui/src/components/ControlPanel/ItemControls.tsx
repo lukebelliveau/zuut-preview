@@ -5,7 +5,7 @@ import RotateIcon from '../../images/rotate.svg';
 
 import { ItemImage } from './ItemImage';
 import { unselect } from '../../features/interactions/interactionsSlice';
-import { removeItem } from '../../features/items/itemsSlice';
+import { removeItem, rotate } from '../../features/items/itemsSlice';
 import { ItemState } from '../../features/items/itemState';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { onReturnKey } from '../../lib/interactions/keyboard';
@@ -21,7 +21,9 @@ export function ItemControls({ item: itemState }: { item?: ItemState }) {
     dispatch(unselect(item.id));
   }
 
-  function rotateItem() {}
+  function rotateItem() {
+    dispatch(rotate(item.id));
+  }
 
   return (
     <div className="control-panel-body">

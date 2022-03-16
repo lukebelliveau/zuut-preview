@@ -1,4 +1,5 @@
 import { MISC_ITEM_TYPE } from '../item/miscItem';
+import Room from '../room';
 import PlanReduxAdapter from './planReduxAdapter';
 
 describe('PlanReduxAdapter', () => {
@@ -7,7 +8,7 @@ describe('PlanReduxAdapter', () => {
       const plan = PlanReduxAdapter.stateToPlan({
         id: '123',
         name: 'Topo Chico',
-        room: {},
+        room: new Room(10, 10),
       });
       expect(plan.items.length).toEqual(0);
     });
@@ -15,7 +16,7 @@ describe('PlanReduxAdapter', () => {
       const plan = PlanReduxAdapter.stateToPlan({
         id: '123',
         name: 'Topo Chico',
-        room: {},
+        room: new Room(10, 10),
       }, [
         { 
           id: '456',
