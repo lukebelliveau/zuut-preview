@@ -255,8 +255,9 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
 
     items.placeable().forEach((itemToCompare) => {
       if (itemToCompare.id === this.id) return;
-      if (areExactlySharingBorder(this, itemToCompare))
+      if (areExactlySharingBorder(this, itemToCompare)) {
         sharingBorderWithItem.push(itemToCompare);
+      }
       if (
         this.placementShadow &&
         areExactlySharingBorder(this.placementShadow, itemToCompare)

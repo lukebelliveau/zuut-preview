@@ -96,36 +96,36 @@ export const areExactlySharingBorder = (
 ): boolean => {
   // item1's right border and item2's left border
   if (
-    item1.x + item1.width === item2.x &&
-    item1.y === item2.y &&
-    item1.length === item2.length
+    Math.floor(item1.x + item1.width) === Math.floor(item2.x) &&
+    Math.floor(item1.y) === Math.floor(item2.y) &&
+    Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
   }
 
   // item1's left border and item2's right border
   if (
-    item2.x + item2.width === item1.x &&
-    item1.y === item2.y &&
-    item1.length === item2.length
+    Math.floor(item2.x + item2.width) === Math.floor(item1.x) &&
+    Math.floor(item1.y) === Math.floor(item2.y) &&
+    Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
   }
 
   // item1's top border and item2's bottom border
   if (
-    item1.y === item2.y + item2.length &&
-    item1.x === item2.x &&
-    item1.width === item2.width
+    Math.floor(item1.y) === Math.floor(item2.y + item2.length) &&
+    Math.floor(item1.x) === Math.floor(item2.x) &&
+    Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
   }
 
   // item1's bottom border and item2's top border
   if (
-    item2.y === item1.y + item1.length &&
-    item1.x === item2.x &&
-    item1.width === item2.width
+    Math.floor(item2.y) === Math.floor(item1.y + item1.length) &&
+    Math.floor(item1.x) === Math.floor(item2.x) &&
+    Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
   }
