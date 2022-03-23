@@ -28,8 +28,8 @@ export const isStraddlingBoundary = (
       isBetweenTopAndBottom ||
       isAlignedWithTopWall ||
       isAlignedWithBottomWall ||
-      item1.y === item2.y ||
-      item1.y + item1.length === item2.y + item2.length
+      item1.y - item1.offset.y === item2.y - item1.offset.y ||
+      item1.y + item1.offset.y === item2.y + item2.offset.y
     ) {
       return true;
     }
@@ -38,8 +38,8 @@ export const isStraddlingBoundary = (
       isBetweenLeftAndRight ||
       isAlignedWithLeftWall ||
       isAlignedWithRightWall ||
-      item1.x === item2.x ||
-      item1.x + item1.width === item2.x + item2.width
+      item1.x - item1.offset.x === item2.x - item2.offset.x ||
+      item1.x + item1.offset.x === item2.x + item2.offset.x
     ) {
       return true;
     }
@@ -107,8 +107,8 @@ export const areExactlySharingBorder = (
 ): boolean => {
   // item1's right border and item2's left border
   if (
-    Math.floor(item1.x + item1.width + item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
-    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y + item2.offset.y) &&
+    Math.floor(item1.x + item1.offset.x) === Math.floor(item2.x - item2.offset.x) &&
+    Math.floor(item1.y - item1.offset.y) === Math.floor(item2.y - item2.offset.y) &&
     Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
@@ -116,8 +116,8 @@ export const areExactlySharingBorder = (
 
   // item1's left border and item2's right border
   if (
-    Math.floor(item2.x + item2.width + item2.offset.x) === Math.floor(item1.x + item1.offset.x) &&
-    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y + item2.offset.y) &&
+    Math.floor(item2.x + item2.offset.x) === Math.floor(item1.x - item1.offset.x) &&
+    Math.floor(item1.y - item1.offset.y) === Math.floor(item2.y - item2.offset.y) &&
     Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
@@ -125,8 +125,8 @@ export const areExactlySharingBorder = (
 
   // item1's top border and item2's bottom border
   if (
-    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y + item2.length + item2.offset.y) &&
-    Math.floor(item1.x + item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
+    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y - item2.offset.y) &&
+    Math.floor(item1.x - item1.offset.x) === Math.floor(item2.x - item2.offset.x) &&
     Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
@@ -134,8 +134,8 @@ export const areExactlySharingBorder = (
 
   // item1's bottom border and item2's top border
   if (
-    Math.floor(item2.y + item2.offset.y) === Math.floor(item1.y + item1.offset.y + item1.length) &&
-    Math.floor(item1.x + item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
+    Math.floor(item2.y - item2.offset.y) === Math.floor(item1.y + item1.offset.y) &&
+    Math.floor(item1.x - item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
     Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;

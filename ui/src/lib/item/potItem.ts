@@ -23,7 +23,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
     );
   }
 }

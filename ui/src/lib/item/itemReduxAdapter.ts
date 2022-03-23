@@ -169,7 +169,8 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.collisionState,
-          itemState.placementShadow
+          itemState.placementShadow,
+          itemState.rotation,
         );
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);

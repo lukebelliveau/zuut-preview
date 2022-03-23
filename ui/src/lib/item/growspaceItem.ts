@@ -27,7 +27,7 @@ export default class GrowspaceItem extends PlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
     );
   }
 

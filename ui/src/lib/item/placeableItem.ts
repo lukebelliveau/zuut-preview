@@ -304,7 +304,8 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
+      this.rotation,
     );
   }
 
