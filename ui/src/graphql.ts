@@ -19,6 +19,7 @@ export type Item = {
   id: Scalars['ID'];
   length?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
+  rotation?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
   x?: Maybe<Scalars['Float']>;
@@ -30,6 +31,7 @@ export type ItemInput = {
   id: Scalars['ID'];
   length?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
+  rotation?: InputMaybe<Scalars['Float']>;
   type: Scalars['String'];
   width?: InputMaybe<Scalars['Float']>;
   x?: InputMaybe<Scalars['Float']>;

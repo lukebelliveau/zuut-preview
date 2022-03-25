@@ -49,6 +49,7 @@ export default class PlanGraphqlAdapter {
               width
               length
               height
+              rotation
             }
           }
         }

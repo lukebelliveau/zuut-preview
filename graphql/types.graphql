@@ -12,6 +12,7 @@ type Item {
   width: Float
   length: Float
   height: Float
+  rotation: Float
 }
 
 type Plan {
@@ -39,6 +40,7 @@ input ItemInput {
   width: Float
   length: Float
   height: Float
+  rotation: Float
 }
 
 input PlanInput {

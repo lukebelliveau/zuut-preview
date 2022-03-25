@@ -51,6 +51,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL
       );
       const testItem = new PlaceableItem(
@@ -61,6 +62,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL
       );
 
@@ -100,6 +102,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -115,6 +118,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL
       );
       expect(item.drop(new ItemList(1), playground)).toBe(false);
@@ -129,6 +133,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -152,6 +157,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL
       );
       // does not currently collide with collidingItem, but has a placementShadow that does
@@ -163,6 +169,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -185,6 +192,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        0,
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -224,6 +232,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         1000,
+        0,
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -269,6 +278,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         1000,
+        0,
         CollisionState.CONFLICTED,
         placementShadow,
       );
@@ -317,6 +327,7 @@ describe('PlaceableItem', () => {
         100,
         0,
         100,
+        0,
         CollisionState.NEUTRAL
       );
       expect(item.collisionStateBetween(item, otherTop)).toBe(

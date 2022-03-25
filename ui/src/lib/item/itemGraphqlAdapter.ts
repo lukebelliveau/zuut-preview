@@ -27,6 +27,7 @@ export default class ItemGraphqlAdapter {
         width: item.width,
         length: item.length,
         height: item.height,
+        rotation: item.rotation,
       };
     } else {
       return {
@@ -45,7 +46,8 @@ export default class ItemGraphqlAdapter {
       number | undefined,
       number | undefined,
       number | undefined,
-      number | undefined
+      number | undefined,
+      number | undefined,
     ] = [
       gqlItem.name,
       gqlItem.id,
@@ -54,6 +56,7 @@ export default class ItemGraphqlAdapter {
       unwrapOrUndefined(gqlItem.width),
       unwrapOrUndefined(gqlItem.length),
       unwrapOrUndefined(gqlItem.height),
+      unwrapOrUndefined(gqlItem.rotation),
     ];
     switch (unwrapOrError(gqlItem.type)) {
       case CEILING_GROWSPACE_ITEM_TYPE:

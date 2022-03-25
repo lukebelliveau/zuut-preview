@@ -25,6 +25,7 @@ export type Item = {
   id: Scalars['ID'];
   length?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
+  rotation?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
   x?: Maybe<Scalars['Float']>;
@@ -36,6 +37,7 @@ export type ItemInput = {
   id: Scalars['ID'];
   length?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
+  rotation?: InputMaybe<Scalars['Float']>;
   type: Scalars['String'];
   width?: InputMaybe<Scalars['Float']>;
   x?: InputMaybe<Scalars['Float']>;
@@ -242,6 +244,7 @@ export type ItemResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   length?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  rotation?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   width?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   x?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;

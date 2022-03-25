@@ -61,9 +61,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem(
@@ -74,9 +74,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case MISC_ITEM_TYPE:
         return new MiscItem(itemState.name, itemState.id);
@@ -89,9 +89,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
 
       case WALL_ITEM_TYPE:
@@ -103,9 +103,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case WINDOW_ITEM_TYPE:
         return new WindowItem(
@@ -116,9 +116,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case POT_ITEM_TYPE:
         return new PotItem(
@@ -129,9 +129,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem(
@@ -142,9 +142,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case LIGHT_ITEM_TYPE:
         return new LightItem(
@@ -155,9 +155,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       case DUCT_ITEM_TYPE:
         return new DuctItem(
@@ -168,9 +168,9 @@ export default class ItemReduxAdapter {
           itemState.width,
           itemState.length,
           itemState.height,
+          itemState.rotation,
           itemState.collisionState,
           itemState.placementShadow,
-          itemState.rotation,
         );
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);

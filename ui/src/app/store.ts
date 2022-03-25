@@ -18,7 +18,7 @@ import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 
 export const browserHistory = createBrowserHistory<unknown>();
-const reduxLoggerEnabled = true;
+const reduxLoggerEnabled = false;
 
 const errorHandlerMiddleware = createThunkErrorHandlerMiddleware({
   onError: console.error,

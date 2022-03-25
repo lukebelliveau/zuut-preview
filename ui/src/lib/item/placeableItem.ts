@@ -72,9 +72,9 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     width: number = 610,
     length: number = 610,
     height: number = 915,
+    rotation: number = 0,
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined,
-    rotation: number = 0,
   ) {
     super(name, id);
     this.x = x;
