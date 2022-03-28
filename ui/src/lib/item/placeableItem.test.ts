@@ -3,7 +3,10 @@ import { feetToMm } from '../conversions';
 import ItemList from '../itemList';
 import Plan from '../plan';
 import Playground from '../playground';
-import PlaceableItem, { CollisionState } from './placeableItem';
+import PlaceableItem, {
+  CollisionState,
+  PlacementShadow,
+} from './placeableItem';
 import PotItem from './potItem';
 
 describe('PlaceableItem', () => {
@@ -81,7 +84,7 @@ describe('PlaceableItem', () => {
   });
 
   describe('drop', () => {
-    const placementShadow = {
+    const placementShadow: PlacementShadow = {
       x: 90,
       y: 90,
       width: 10,
@@ -89,6 +92,10 @@ describe('PlaceableItem', () => {
       length: 10,
       collisionState: CollisionState.NEUTRAL,
       offset: { x: 95, y: 95 },
+      northWest: { x: 90, y: 90 },
+      northEast: { x: 100, y: 90 },
+      southWest: { x: 90, y: 100 },
+      southEast: { x: 100, y: 100 },
     };
     const plan = new Plan('square', 10_000, 10_000, 12);
     const playground = new Playground(1_000, 1_000, undefined, plan);
@@ -223,6 +230,10 @@ describe('PlaceableItem', () => {
         length: 1000,
         collisionState: CollisionState.NEUTRAL,
         offset: { x: 0, y: 0 },
+        northWest: { x: 0, y: 0 },
+        northEast: { x: 1000, y: 0 },
+        southWest: { x: 0, y: 1000 },
+        southEast: { x: 1000, y: 1000 },
       };
       const testItem = new PlaceableItem(
         'collision item',
@@ -269,6 +280,10 @@ describe('PlaceableItem', () => {
         length: 1000,
         collisionState: CollisionState.CONFLICTED,
         offset: { x: 0, y: 0 },
+        northWest: { x: 0, y: 0 },
+        northEast: { x: 1000, y: 0 },
+        southWest: { x: 0, y: 1000 },
+        southEast: { x: 1000, y: 1000 },
       };
       const testItem = new PlaceableItem(
         'collision item',
@@ -280,7 +295,7 @@ describe('PlaceableItem', () => {
         1000,
         0,
         CollisionState.CONFLICTED,
-        placementShadow,
+        placementShadow
       );
 
       const items = new ItemList();
@@ -392,17 +407,17 @@ describe('PlaceableItem', () => {
       expect(item.rotation).toEqual(90);
       expect(item.width).toEqual(200);
       expect(item.length).toEqual(100);
-      
+
       item.rotate();
       expect(item.rotation).toEqual(180);
       expect(item.width).toEqual(100);
       expect(item.length).toEqual(200);
-      
+
       item.rotate();
       expect(item.rotation).toEqual(270);
       expect(item.width).toEqual(200);
       expect(item.length).toEqual(100);
-      
+
       item.rotate();
       expect(item.rotation).toEqual(0);
       expect(item.width).toEqual(100);

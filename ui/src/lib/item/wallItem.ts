@@ -1,6 +1,10 @@
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
 import {
+  computeNorthEast,
+  computeNorthWest,
+  computeSouthEast,
+  computeSouthWest,
   findClosestWallPointToInteriorItem,
   itemHasHorizontalOrientation,
   itemHasVerticalOrientation,
@@ -56,46 +60,76 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
 
     if (stickingTo === 'left' || stickingTo === 'right') {
       if (itemHasVerticalOrientation(this)) {
-        return {
+        const offsetObject = {
           x: wallPosition.x - this.width / 2,
           y: wallPosition.y,
+          offset: this.offset,
+        };
+        return {
+          ...offsetObject,
           width: this.width,
           height: this.height,
           length: this.length,
           collisionState: CollisionState.NEUTRAL,
-          offset: this.offset,
+          northWest: computeNorthWest(offsetObject),
+          northEast: computeNorthEast(offsetObject),
+          southWest: computeSouthWest(offsetObject),
+          southEast: computeSouthEast(offsetObject),
         };
       } else {
-        return {
+        const offsetObject = {
           x: wallPosition.x - this.length / 2,
           y: wallPosition.y,
+          offset: this.offset,
+        };
+        return {
+          ...offsetObject,
           width: this.length,
           height: this.height,
           length: this.width,
           collisionState: CollisionState.NEUTRAL,
-          offset: this.offset,
+          northWest: computeNorthWest(offsetObject),
+          northEast: computeNorthEast(offsetObject),
+          southWest: computeSouthWest(offsetObject),
+          southEast: computeSouthEast(offsetObject),
         };
       }
     } else {
       if (itemHasHorizontalOrientation(this)) {
-        return {
+        const offsetObject = {
           x: wallPosition.x,
           y: wallPosition.y - this.length / 2,
+          offset: this.offset,
+        };
+
+        return {
+          ...offsetObject,
           width: this.width,
           height: this.height,
           length: this.length,
           collisionState: CollisionState.NEUTRAL,
-          offset: this.offset,
+          northWest: computeNorthWest(offsetObject),
+          northEast: computeNorthEast(offsetObject),
+          southWest: computeSouthWest(offsetObject),
+          southEast: computeSouthEast(offsetObject),
         };
       } else {
-        return {
+        const offsetObject = {
           x: wallPosition.x,
           y: wallPosition.y - this.width / 2,
+          offset: this.offset,
+        };
+
+        return {
+          ...offsetObject,
           width: this.length,
           height: this.height,
           length: this.width,
           collisionState: CollisionState.NEUTRAL,
-          offset: this.offset,
+          northWest: computeNorthWest(offsetObject),
+          northEast: computeNorthEast(offsetObject),
+          southWest: computeSouthWest(offsetObject),
+          southEast: computeSouthEast(offsetObject),
         };
       }
     }
@@ -105,6 +139,34 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     return {
       x: 0,
       y: 0,
+    };
+  }
+
+  get northWest(): Point {
+    return {
+      x: this.x,
+      y: this.y,
+    };
+  }
+
+  get northEast(): Point {
+    return {
+      x: this.x + this.width,
+      y: this.y,
+    };
+  }
+
+  get southWest(): Point {
+    return {
+      x: this.x,
+      y: this.y + this.length,
+    };
+  }
+
+  get southEast(): Point {
+    return {
+      x: this.x + this.width,
+      y: this.y + this.length,
     };
   }
 }

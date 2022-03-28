@@ -168,7 +168,7 @@ describe('WallItem', () => {
     describe('perpendicular & colliding with top wall', () => {
       // { x: 50, y: -10 width: 10, length: 50 }
       const item = new WallItem('Window', v4(), 50, -10, 10, 50);
-      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+      it('creates a placementShadow rotated & straddling the Room`s top wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);
 
@@ -182,7 +182,7 @@ describe('WallItem', () => {
     describe('perpendicular & colliding with left wall', () => {
       // { x: 50, y: -10 width: 10, length: 50 }
       const item = new WallItem('Window', v4(), -10, 10, 50, 10);
-      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+      it('creates a placementShadow rotated & straddling the Room`s left wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);
 
@@ -194,8 +194,8 @@ describe('WallItem', () => {
     });
 
     describe('perpendicular & colliding with right wall', () => {
-      const item = new WallItem('Window', v4(), 90, 10, 50, 10);
-      it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
+      const item = new WallItem('Window', v4(), 95, 10, 50, 10);
+      it('creates a placementShadow rotated & straddling the Room`s right wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);
 

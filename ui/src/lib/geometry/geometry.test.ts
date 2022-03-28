@@ -14,10 +14,6 @@ import {
   itemIsAlignedWithTopWall,
   itemIsBetweenLeftAndRightWall,
   itemIsBetweenTopAndBottomWall,
-  placedOnBottomBoundary,
-  placedOnLeftBoundary,
-  placedOnRightBoundary,
-  placedOnTopBoundary,
 } from './geometry';
 
 // 100x100x100 room, placed at { x: 0; y: 0 }
@@ -25,7 +21,7 @@ const room = new Room(100, 100, 100);
 describe('itemIsAlignedWithBottomWall', () => {
   it('returns true when item straddles y-coordinates of bottom wall', () => {
     // 20x20x20 window, placed at { x: 20; y: 90 }s
-    const item = new PlaceableItem('Window', v4(), 20, 90, 20, 20, 20);
+    const item = new PlaceableItem('Window', v4(), 30, 100, 20, 20, 20);
 
     expect(itemIsAlignedWithBottomWall(item, room)).toBe(true);
   });
@@ -54,7 +50,7 @@ describe('itemIsAlignedWithTopWall', () => {
   });
   it('returns false when item does not straddle y-coordinates of top wall', () => {
     // 20x20x20 window, placed at { x: 20; y: 5 }
-    const item = new PlaceableItem('Window', v4(), 20, 5, 20, 20, 20);
+    const item = new PlaceableItem('Window', v4(), 30, 15, 20, 20, 20);
 
     expect(itemIsAlignedWithTopWall(item, room)).toBe(false);
   });
@@ -69,7 +65,7 @@ describe('itemIsAlignedWithLeftWall', () => {
   });
   it('returns false when item does not straddle x-coordinates of left wall', () => {
     // 20x20x20 window, placed at { x: 5; y: 0 }
-    const item = new PlaceableItem('Window', v4(), 5, 0, 20, 20, 20);
+    const item = new PlaceableItem('Window', v4(), 15, 10, 20, 20, 20);
 
     expect(itemIsAlignedWithLeftWall(item, room)).toBe(false);
   });
@@ -122,8 +118,8 @@ describe('itemIsBetweenLeftAndRightWall', () => {
     const window: PlaceableItem = new PlaceableItem(
       'Window',
       v4(),
-      5,
-      0,
+      15,
+      10,
       20,
       20,
       20
@@ -184,8 +180,8 @@ describe('itemIsBetweenTopAndBottomWall', () => {
     const window: PlaceableItem = new PlaceableItem(
       'Window',
       v4(),
-      5,
-      5,
+      15,
+      15,
       20,
       20,
       20
@@ -240,142 +236,75 @@ describe('itemIsBetweenTopAndBottomWall', () => {
   });
 });
 
-describe('placeOnBottomBoundary', () => {
-  it('adjusts y-coordinate so first item straddles bottom boundary of second item', () => {
-    const item1: GeometryObject = {
-      x: 50,
-      y: 91,
-      length: 10,
-      height: 10,
-      width: 10,
-      offset: { x: 0, y: 0 },
-    };
-    const item2: GeometryObject = {
-      x: 0,
-      y: 0,
-      length: 100,
-      height: 100,
-      width: 100,
-      offset: { x: 0, y: 0 },
-    };
-
-    const placedOnBottom = placedOnBottomBoundary(item1, item2);
-
-    expect(placedOnBottom.y).toBe(95);
-  });
-});
-
-describe('placeOnTopBoundary', () => {
-  it('adjusts y-coordinate so first item straddles bottom boundary of second item', () => {
-    const item1: GeometryObject = {
-      x: 50,
-      y: -1,
-      length: 10,
-      height: 10,
-      width: 10,
-      offset: { x: 0, y: 0 },
-    };
-    const item2: GeometryObject = {
-      x: 0,
-      y: 0,
-      length: 100,
-      height: 100,
-      width: 100,
-      offset: { x: 0, y: 0 },
-    };
-
-    const placedOnBottom = placedOnTopBoundary(item1, item2);
-
-    expect(placedOnBottom.y).toBe(-5);
-  });
-});
-
-describe('placeOnLeftBoundary', () => {
-  it('adjusts x-coordinate so first item straddles left boundary of second item', () => {
-    const item1: GeometryObject = {
-      x: -2,
-      y: 50,
-      length: 10,
-      height: 10,
-      width: 10,
-      offset: { x: 0, y: 0 },
-    };
-    const item2: GeometryObject = {
-      x: 0,
-      y: 0,
-      length: 100,
-      height: 100,
-      width: 100,
-      offset: { x: 0, y: 0 },
-    };
-
-    const placedOnBottom = placedOnLeftBoundary(item1, item2);
-
-    expect(placedOnBottom.x).toBe(-5);
-  });
-});
-
-describe('placeOnRightBoundary', () => {
-  it('adjusts x-coordinate so first item straddles right boundary of second item', () => {
-    const item1: GeometryObject = {
-      x: 97,
-      y: 50,
-      length: 10,
-      height: 10,
-      width: 10,
-      offset: { x: 0, y: 0 },
-    };
-    const item2: GeometryObject = {
-      x: 0,
-      y: 0,
-      length: 100,
-      height: 100,
-      width: 100,
-      offset: { x: 0, y: 0 },
-    };
-
-    const placedOnBottom = placedOnRightBoundary(item1, item2);
-
-    expect(placedOnBottom.x).toBe(95);
-  });
-});
-
 describe('areExactlySharingBorder', () => {
   it('returns true if item exactly shares left border', () => {
+    // const item: GeometryObject = {
+    //   x: 50,
+    //   y: 0,
+    //   width: 50,
+    //   length: 50,
+    //   offset: { x: 25, y: 25 },
+    // };
+
     const item: GeometryObject = {
-      x: 50,
-      y: 0,
+      northWest: { x: 50, y: 0 },
+      northEast: { x: 100, y: 0 },
+      southWest: { x: 50, y: 50 },
+      southEast: { x: 100, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
+    // const otherItem: GeometryObject = {
+    //   x: 0,
+    //   y: 0,
+    //   width: 50,
+    //   length: 50,
+    //   offset: { x: 25, y: 25 },
+    // };
     const otherItem: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
   });
 
   it('returns true if item exactly shares right border', () => {
+    // const item: GeometryObject = {
+    //   x: 0,
+    //   y: 0,
+    //   width: 50,
+    //   length: 50,
+    //   offset: { x: 25, y: 25 },
+    // };
     const item: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
+    // const otherItem: GeometryObject = {
+    //   x: 50,
+    //   y: 0,
+    //   width: 50,
+    //   length: 50,
+    //   offset: { x: 25, y: 25 },
+    // };
     const otherItem: GeometryObject = {
-      x: 50,
-      y: 0,
+      northWest: { x: 50, y: 0 },
+      northEast: { x: 100, y: 0 },
+      southWest: { x: 50, y: 50 },
+      southEast: { x: 100, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -383,19 +312,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns true if item exactly shares top border', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 50,
+      northWest: { x: 0, y: 50 },
+      northEast: { x: 50, y: 50 },
+      southWest: { x: 0, y: 100 },
+      southEast: { x: 50, y: 100 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -403,19 +334,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns true if item exactly shares bottom border', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 0,
-      y: 50,
+      northWest: { x: 0, y: 50 },
+      northEast: { x: 50, y: 50 },
+      southWest: { x: 0, y: 100 },
+      southEast: { x: 50, y: 100 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(true);
@@ -423,19 +356,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if items are not touching', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 100,
-      y: 0,
+      northWest: { x: 100, y: 0 },
+      northEast: { x: 150, y: 0 },
+      southWest: { x: 100, y: 50 },
+      southEast: { x: 150, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -443,19 +378,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if items are colliding', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 25,
-      y: 25,
+      northWest: { x: 25, y: 25 },
+      northEast: { x: 75, y: 25 },
+      southWest: { x: 25, y: 75 },
+      southEast: { x: 75, y: 75 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -470,19 +407,21 @@ describe('areExactlySharingBorder', () => {
      *
      */
     const item: GeometryObject = {
-      x: 50,
-      y: 0,
+      northWest: { x: 50, y: 0 },
+      northEast: { x: 100, y: 0 },
+      southWest: { x: 50, y: 50 },
+      southEast: { x: 100, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 0,
-      y: 25,
+      northWest: { x: 0, y: 25 },
+      northEast: { x: 50, y: 25 },
+      southWest: { x: 0, y: 75 },
+      southEast: { x: 50, y: 75 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -497,19 +436,21 @@ describe('areExactlySharingBorder', () => {
      *
      */
     const item: GeometryObject = {
-      x: 50,
-      y: 25,
+      northWest: { x: 50, y: 25 },
+      northEast: { x: 100, y: 25 },
+      southWest: { x: 50, y: 75 },
+      southEast: { x: 100, y: 75 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -517,19 +458,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if item shares right border, but has bottom overhang', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 50,
-      y: 25,
+      northWest: { x: 50, y: 25 },
+      northEast: { x: 100, y: 25 },
+      southWest: { x: 50, y: 75 },
+      southEast: { x: 100, y: 75 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -537,19 +480,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if item shares right border, but has top overhang', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 25,
+      northWest: { x: 0, y: 25 },
+      northEast: { x: 50, y: 25 },
+      southWest: { x: 0, y: 75 },
+      southEast: { x: 50, y: 75 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 50,
-      y: 0,
+      northWest: { x: 50, y: 0 },
+      northEast: { x: 100, y: 0 },
+      southWest: { x: 50, y: 50 },
+      southEast: { x: 100, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -557,19 +502,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if item shares top border, but has left overhang', () => {
     const item: GeometryObject = {
-      x: 50,
-      y: 50,
+      northWest: { x: 50, y: 50 },
+      northEast: { x: 100, y: 50 },
+      southWest: { x: 50, y: 100 },
+      southEast: { x: 100, y: 100 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 25,
-      y: 0,
+      northWest: { x: 25, y: 0 },
+      northEast: { x: 75, y: 0 },
+      southWest: { x: 25, y: 50 },
+      southEast: { x: 75, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -577,19 +524,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if item shares top border, but has right overhang', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 50,
+      northWest: { x: 0, y: 50 },
+      northEast: { x: 50, y: 50 },
+      southWest: { x: 0, y: 100 },
+      southEast: { x: 50, y: 100 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 25,
-      y: 0,
+      northWest: { x: 25, y: 0 },
+      northEast: { x: 75, y: 0 },
+      southWest: { x: 25, y: 50 },
+      southEast: { x: 75, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -597,19 +546,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if item shares bottom border, but has left overhang', () => {
     const item: GeometryObject = {
-      x: 50,
-      y: 0,
+      northWest: { x: 50, y: 0 },
+      northEast: { x: 100, y: 0 },
+      southWest: { x: 50, y: 50 },
+      southEast: { x: 100, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 25,
-      y: 50,
+      northWest: { x: 25, y: 50 },
+      northEast: { x: 75, y: 50 },
+      southWest: { x: 25, y: 100 },
+      southEast: { x: 75, y: 100 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -617,19 +568,21 @@ describe('areExactlySharingBorder', () => {
 
   it('returns false if item shares bottom border, but has right overhang', () => {
     const item: GeometryObject = {
-      x: 0,
-      y: 0,
+      northWest: { x: 0, y: 0 },
+      northEast: { x: 50, y: 0 },
+      southWest: { x: 0, y: 50 },
+      southEast: { x: 50, y: 50 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     const otherItem: GeometryObject = {
-      x: 25,
-      y: 50,
+      northWest: { x: 25, y: 50 },
+      northEast: { x: 75, y: 50 },
+      southWest: { x: 25, y: 100 },
+      southEast: { x: 75, y: 100 },
       width: 50,
       length: 50,
-      offset: { x: 25, y: 25 },
     };
 
     expect(areExactlySharingBorder(item, otherItem)).toBe(false);
@@ -678,7 +631,7 @@ describe('areColliding', () => {
 describe('isStraddlingBoundary', () => {
   it('returns false if item is enclosed inside other item', () => {
     const item = new PlaceableItem('', '1', 50, 50, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(false);
   });
   it('returns false if item is outside other item', () => {
@@ -687,13 +640,13 @@ describe('isStraddlingBoundary', () => {
     expect(isStraddlingBoundary(item, other)).toBe(false);
   });
   it('returns true if item straddles left boundary', () => {
-    const item = new PlaceableItem('', '1', -5, -5, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 0, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles right boundary', () => {
-    const item = new PlaceableItem('', '1', 95, 95, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 100, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles top boundary', () => {
@@ -702,68 +655,68 @@ describe('isStraddlingBoundary', () => {
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles bottom boundary', () => {
-    const item = new PlaceableItem('', '1', 50, 95, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 50, 95, 20, 20);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles northeast corner', () => {
-    const item = new PlaceableItem('', '1', 95, -5, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 100, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles northwest corner', () => {
-    const item = new PlaceableItem('', '1', -5, -5, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 0, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles southeast corner', () => {
-    const item = new PlaceableItem('', '1', 95, 95, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 100, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles southwest corner', () => {
-    const item = new PlaceableItem('', '1', -5, 95, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 0, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles left wall and shares a top boundary with other item', () => {
-    const item = new PlaceableItem('', '1', -5, 0, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 0, 5, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles left wall and shares a bottom boundary with other item', () => {
-    const item = new PlaceableItem('', '1', -5, 90, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 0, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles right wall and shares a top boundary with other item', () => {
-    const item = new PlaceableItem('', '1', 95, 0, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 100, 5, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles right wall and shares a bottom boundary with other item', () => {
-    const item = new PlaceableItem('', '1', 95, 90, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 100, 95, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles top wall and shares a left boundary with other item', () => {
-    const item = new PlaceableItem('', '1', 0, -5, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 5, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles top wall and shares a right boundary with other item', () => {
-    const item = new PlaceableItem('', '1', 90, -5, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 95, 0, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles bottom wall and shares a left boundary with other item', () => {
-    const item = new PlaceableItem('', '1', 0, 95, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 5, 100, 10, 10);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
   it('returns true if item straddles bottom wall and shares a right boundary with other item', () => {
-    const item = new PlaceableItem('', '1', 90, 95, 10, 10);
-    const other = new PlaceableItem('', '2', 0, 0, 100, 100);
+    const item = new PlaceableItem('', '1', 90, 95, 20, 20);
+    const other = new PlaceableItem('', '2', 50, 50, 100, 100);
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
 });

@@ -2,13 +2,21 @@ import { v4 } from 'uuid';
 
 import RectangleImage from '../../images/items/rectangle.svg';
 
-import { areColliding, areExactlySharingBorder } from '../geometry/geometry';
+import {
+  areColliding,
+  areExactlySharingBorder,
+  computeNorthEast,
+  computeNorthWest,
+  computeSouthEast,
+  computeSouthWest,
+  GeometryObject,
+} from '../geometry/geometry';
 import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 import { IItem, Item } from '../item';
 
-export interface PlacementShadow {
+export interface PlacementShadow extends GeometryObject {
   x: number;
   y: number;
   height: number | undefined;
@@ -30,7 +38,7 @@ export enum Layer {
   BOTH,
 }
 
-export interface IPlaceableItem extends IItem {
+export interface IPlaceableItem extends IItem, GeometryObject {
   place(position: Point): void;
   drag(position: Point, items: ItemList, playground: Playground): void;
   drop(items: ItemList, playground: Playground): boolean;
@@ -52,7 +60,10 @@ export function isPlaceableItem(item: Item): item is PlaceableItem {
   return (item as PlaceableItem).x !== undefined;
 }
 
-export default class PlaceableItem extends Item implements IPlaceableItem {
+export default class PlaceableItem
+  extends Item
+  implements IPlaceableItem, GeometryObject
+{
   x: number;
   y: number;
   width: number;
@@ -74,7 +85,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
     height: number = 915,
     rotation: number = 0,
     collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined,
+    placementShadow: PlacementShadow | undefined = undefined
   ) {
     super(name, id);
     this.x = x;
@@ -129,14 +140,22 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       throw new Error('Missing grid!');
 
     const snappedPosition = playground.plan.grid.snapPostition(position);
-    const placementShadow: PlacementShadow = {
+    const offsetObject = {
       x: snappedPosition.x,
       y: snappedPosition.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      collisionState: CollisionState.NEUTRAL,
       offset: this.offset,
+    };
+
+    const placementShadow: PlacementShadow = {
+      ...offsetObject,
+      width: this.width,
+      height: this.height,
+      length: this.length,
+      collisionState: CollisionState.NEUTRAL,
+      northWest: computeNorthWest(offsetObject),
+      northEast: computeNorthEast(offsetObject),
+      southWest: computeSouthWest(offsetObject),
+      southEast: computeSouthEast(offsetObject),
     };
 
     return placementShadow;
@@ -305,14 +324,30 @@ export default class PlaceableItem extends Item implements IPlaceableItem {
       this.width,
       this.length,
       this.height,
-      this.rotation,
+      this.rotation
     );
   }
 
   get offset(): Point {
     return {
       x: this.width / 2,
-      y: this.length / 2
+      y: this.length / 2,
     };
+  }
+
+  get northWest(): Point {
+    return computeNorthWest(this);
+  }
+
+  get northEast(): Point {
+    return computeNorthEast(this);
+  }
+
+  get southWest(): Point {
+    return computeSouthWest(this);
+  }
+
+  get southEast(): Point {
+    return computeSouthEast(this);
   }
 }

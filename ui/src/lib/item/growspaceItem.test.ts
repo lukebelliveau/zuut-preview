@@ -34,15 +34,16 @@ describe('GrowspaceItem', () => {
       );
     });
     it('conflicts if straddling right growspace boundary', () => {
-      const item = new GrowspaceItem('', '2', 950, 500, 100, 100);
-      const other = new Growspace('', '1', 0, 0, 1000, 1000);
+      const item = new GrowspaceItem('', '2', 1000, 500, 100, 100);
+      const other = new Growspace('', '1', 500, 500, 1000, 1000);
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.CONFLICTED
       );
     });
     it('conflicts if straddling bottom growspace boundary', () => {
-      const item = new GrowspaceItem('', '2', 500, 950, 100, 100);
-      const other = new Growspace('', '1', 0, 0, 1000, 1000);
+      const item = new GrowspaceItem('', '2', 500, 1000, 100, 100);
+      const other = new Growspace('', '1', 500, 500, 1000, 1000);
+
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.CONFLICTED
       );

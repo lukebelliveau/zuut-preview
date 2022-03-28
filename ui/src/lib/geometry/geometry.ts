@@ -5,12 +5,12 @@ import { Point } from '../point';
  * and computing values based on these positions.
  */
 export type GeometryObject = {
-  x: number;
-  y: number;
-  height?: number;
-  width: number;
+  northWest: Point;
+  northEast: Point;
+  southWest: Point;
+  southEast: Point;
   length: number;
-  offset: Point;
+  width: number;
 };
 
 export const isStraddlingBoundary = (
@@ -23,13 +23,14 @@ export const isStraddlingBoundary = (
   const isAlignedWithRightWall = itemIsAlignedWithRightWall(item1, item2);
   const isAlignedWithBottomWall = itemIsAlignedWithBottomWall(item1, item2);
   const isAlignedWithTopWall = itemIsAlignedWithTopWall(item1, item2);
+
   if (isAlignedWithLeftWall || isAlignedWithRightWall) {
     if (
       isBetweenTopAndBottom ||
       isAlignedWithTopWall ||
       isAlignedWithBottomWall ||
-      item1.y - item1.offset.y === item2.y - item1.offset.y ||
-      item1.y + item1.offset.y === item2.y + item2.offset.y
+      item1.northWest.y === item2.northWest.y ||
+      item1.southWest.y === item2.southWest.y
     ) {
       return true;
     }
@@ -38,8 +39,8 @@ export const isStraddlingBoundary = (
       isBetweenLeftAndRight ||
       isAlignedWithLeftWall ||
       isAlignedWithRightWall ||
-      item1.x - item1.offset.x === item2.x - item2.offset.x ||
-      item1.x + item1.offset.x === item2.x + item2.offset.x
+      item1.northWest.x === item2.northWest.x ||
+      item1.northEast.x === item2.northEast.x
     ) {
       return true;
     }
@@ -50,51 +51,44 @@ export const isStraddlingBoundary = (
 export const itemIsAlignedWithLeftWall = (
   item: GeometryObject,
   room: GeometryObject
-) => item.x < room.x && room.x < item.x + item.width;
+) => {
+  return (
+    item.northWest.x < room.northWest.x && room.northWest.x < item.northEast.x
+  );
+};
 export const itemIsAlignedWithRightWall = (
   item: GeometryObject,
   room: GeometryObject
-) => item.x < room.x + room.width && room.x + room.width < item.x + item.width;
+) => item.northWest.x < room.northEast.x && room.northEast.x < item.northEast.x;
 export const itemIsBetweenTopAndBottomWall = (
   item: GeometryObject,
   room: GeometryObject
-) => room.y < item.y && item.y + item.length < room.y + room.length;
+) => room.northWest.y < item.northWest.y && item.southWest.y < room.southWest.y;
 
 export const itemIsAlignedWithBottomWall = (
   item: GeometryObject,
   room: GeometryObject
-) =>
-  item.y < room.y + room.length && room.y + room.length < item.y + item.length;
+) => item.northWest.y < room.southWest.y && room.southWest.y < item.southWest.y;
 export const itemIsAlignedWithTopWall = (
   item: GeometryObject,
   room: GeometryObject
-) => item.y < room.y && room.y < item.y + item.length;
+) => item.northWest.y < room.northWest.y && room.northWest.y < item.southWest.y;
 export const itemIsBetweenLeftAndRightWall = (
   item: GeometryObject,
   room: GeometryObject
-) => room.x < item.x && item.x + item.width < room.x + room.width;
+) => room.northWest.x < item.northWest.x && item.northEast.x < room.northEast.x;
 
 export const itemHasVerticalOrientation = (item: GeometryObject) =>
   item.length > item.width;
 export const itemHasHorizontalOrientation = (item: GeometryObject) =>
   !itemHasVerticalOrientation(item);
 
-/*
-  For these calculations, the x,y position of the item is its center due 
-  to Konva's implementation of drawing Rects and how they need to be rotated
-  around the center.
-  
-  top left corner: x - offset.x, y - offset.y
-  top right corner: x + offset.x, y - offset.y
-  bottom right corner: x + offset.x, y + offset.y
-  bottom left corner: x - offset.x, y + offset.y
-*/
 export const areColliding = (item1: GeometryObject, item2: GeometryObject) => {
   return !(
-    Math.floor(item2.x - item2.offset.x) >= Math.floor(item1.x + item1.offset.x) || // left border of item2 is to the right of item1 right border
-    Math.floor(item2.x + item2.offset.x) <= Math.floor(item1.x - item1.offset.x) || // right border of item2 is to the left of item1 left border
-    Math.floor(item2.y - item2.offset.y) >= Math.floor(item1.y + item1.offset.y) || // top border of item2 is below bottom border of item1
-    Math.floor(item2.y + item2.offset.y) <= Math.floor(item1.y - item1.offset.y)    // bottom border of item2 is above top border of item1
+    Math.floor(item2.northWest.x) >= Math.floor(item1.northEast.x) ||
+    Math.floor(item2.northEast.x) <= Math.floor(item1.northWest.x) ||
+    Math.floor(item2.northWest.y) >= Math.floor(item1.southWest.y) ||
+    Math.floor(item2.southWest.y) <= Math.floor(item1.northWest.y)
   );
 };
 
@@ -107,8 +101,8 @@ export const areExactlySharingBorder = (
 ): boolean => {
   // item1's right border and item2's left border
   if (
-    Math.floor(item1.x + item1.offset.x) === Math.floor(item2.x - item2.offset.x) &&
-    Math.floor(item1.y - item1.offset.y) === Math.floor(item2.y - item2.offset.y) &&
+    Math.floor(item1.northEast.x) === Math.floor(item2.northWest.x) &&
+    Math.floor(item1.northWest.y) === Math.floor(item2.northWest.y) &&
     Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
@@ -116,8 +110,8 @@ export const areExactlySharingBorder = (
 
   // item1's left border and item2's right border
   if (
-    Math.floor(item2.x + item2.offset.x) === Math.floor(item1.x - item1.offset.x) &&
-    Math.floor(item1.y - item1.offset.y) === Math.floor(item2.y - item2.offset.y) &&
+    Math.floor(item2.northEast.x) === Math.floor(item1.northWest.x) &&
+    Math.floor(item1.northWest.y) === Math.floor(item2.northWest.y) &&
     Math.floor(item1.length) === Math.floor(item2.length)
   ) {
     return true;
@@ -125,8 +119,8 @@ export const areExactlySharingBorder = (
 
   // item1's top border and item2's bottom border
   if (
-    Math.floor(item1.y + item1.offset.y) === Math.floor(item2.y - item2.offset.y) &&
-    Math.floor(item1.x - item1.offset.x) === Math.floor(item2.x - item2.offset.x) &&
+    Math.floor(item1.northWest.y) === Math.floor(item2.southWest.y) &&
+    Math.floor(item1.northWest.x) === Math.floor(item2.northWest.x) &&
     Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
@@ -134,8 +128,8 @@ export const areExactlySharingBorder = (
 
   // item1's bottom border and item2's top border
   if (
-    Math.floor(item2.y - item2.offset.y) === Math.floor(item1.y + item1.offset.y) &&
-    Math.floor(item1.x - item1.offset.x) === Math.floor(item2.x + item2.offset.x) &&
+    Math.floor(item2.northWest.y) === Math.floor(item1.southWest.y) &&
+    Math.floor(item1.northWest.x) === Math.floor(item2.northWest.x) &&
     Math.floor(item1.width) === Math.floor(item2.width)
   ) {
     return true;
@@ -148,31 +142,25 @@ const distanceFromExteriorLeftWall = (
   interiorItem: GeometryObject,
   exteriorItem: GeometryObject
 ) => {
-  return interiorItem.x - exteriorItem.x;
+  return interiorItem.northWest.x - exteriorItem.northWest.x;
 };
 const distanceFromExteriorRightWall = (
   interiorItem: GeometryObject,
   exteriorItem: GeometryObject
 ) => {
-  return (
-    exteriorItem.x + exteriorItem.width - (interiorItem.x + interiorItem.width)
-  );
+  return exteriorItem.northEast.x - interiorItem.northEast.x;
 };
 const distanceFromExteriorTopWall = (
   interiorItem: GeometryObject,
   exteriorItem: GeometryObject
 ) => {
-  return interiorItem.y - exteriorItem.y;
+  return interiorItem.northWest.y - exteriorItem.northWest.y;
 };
 const distanceFromExteriorBottomWall = (
   interiorItem: GeometryObject,
   exteriorItem: GeometryObject
 ) => {
-  return (
-    exteriorItem.y +
-    exteriorItem.length -
-    (interiorItem.y + interiorItem.length)
-  );
+  return exteriorItem.southWest.y - interiorItem.southWest.y;
 };
 
 interface WallDistances {
@@ -227,7 +215,10 @@ export const findClosestWallPointToInteriorItem = (
   const top = distanceFromExteriorTopWall(interiorItem, exteriorItem);
 
   if (closestToLeftWall({ left, right, bottom, top })) {
-    const position = { x: exteriorItem.x, y: interiorItem.y };
+    const position = {
+      x: exteriorItem.northWest.x,
+      y: interiorItem.northWest.y,
+    };
     return {
       stickingTo: 'left',
       position,
@@ -235,8 +226,8 @@ export const findClosestWallPointToInteriorItem = (
     };
   } else if (closestToRightWall({ left, right, bottom, top })) {
     const position = {
-      x: exteriorItem.x + exteriorItem.width,
-      y: interiorItem.y,
+      x: exteriorItem.northWest.x + exteriorItem.width,
+      y: interiorItem.northWest.y,
     };
     return {
       stickingTo: 'right',
@@ -244,7 +235,10 @@ export const findClosestWallPointToInteriorItem = (
       distance: right,
     };
   } else if (closestToTopWall({ left, right, bottom, top })) {
-    const position = { x: interiorItem.x, y: exteriorItem.y };
+    const position = {
+      x: interiorItem.northWest.x,
+      y: exteriorItem.northWest.y,
+    };
     return {
       stickingTo: 'top',
       position,
@@ -252,8 +246,8 @@ export const findClosestWallPointToInteriorItem = (
     };
   } else {
     const position = {
-      x: interiorItem.x,
-      y: exteriorItem.y + exteriorItem.length,
+      x: interiorItem.northWest.x,
+      y: exteriorItem.southWest.y,
     };
     return {
       stickingTo: 'bottom',
@@ -263,78 +257,44 @@ export const findClosestWallPointToInteriorItem = (
   }
 };
 
-/**
- * Straddle item1 on bottom boundary of item2
- */
-export const placedOnBottomBoundary = (
-  item1: GeometryObject,
-  item2: GeometryObject
-): GeometryObject => {
-  const newItem1Y = item2.y + item2.length - item1.length / 2;
+interface PlaceableObject {
+  x: number;
+  y: number;
+  width: number;
+  length: number;
+  offset: Point;
+}
 
+export interface OffsetObject {
+  x: number;
+  y: number;
+  offset: Point;
+}
+
+export const computeNorthWest = (offsetObject: OffsetObject): Point => {
   return {
-    x: item1.x,
-    y: newItem1Y,
-    length: item1.length,
-    height: item1.height,
-    width: item1.width,
-    offset: item1.offset,
+    x: offsetObject.x - offsetObject.offset.x,
+    y: offsetObject.y - offsetObject.offset.y,
   };
 };
 
-/**
- * Straddle item1 on top boundary of item2
- */
-export const placedOnTopBoundary = (
-  item1: GeometryObject,
-  item2: GeometryObject
-): GeometryObject => {
-  const newItem1Y = item2.y - item1.length / 2;
-
+export const computeNorthEast = (offsetObject: OffsetObject): Point => {
   return {
-    x: item1.x,
-    y: newItem1Y,
-    length: item1.length,
-    height: item1.height,
-    width: item1.width,
-    offset: item1.offset,
+    x: offsetObject.x + offsetObject.offset.x,
+    y: offsetObject.y - offsetObject.offset.y,
   };
 };
 
-/**
- * Straddle item1 on left boundary of item2
- */
-export const placedOnLeftBoundary = (
-  item1: GeometryObject,
-  item2: GeometryObject
-): GeometryObject => {
-  const newItem1X = item2.x - item1.width / 2;
-
+export const computeSouthWest = (offsetObject: OffsetObject): Point => {
   return {
-    x: newItem1X,
-    y: item1.y,
-    length: item1.length,
-    height: item1.height,
-    width: item1.width,
-    offset: item1.offset,
+    x: offsetObject.x - offsetObject.offset.x,
+    y: offsetObject.y + offsetObject.offset.y,
   };
 };
 
-/**
- * Straddle item1 on right boundary of item2
- */
-export const placedOnRightBoundary = (
-  item1: GeometryObject,
-  item2: GeometryObject
-): GeometryObject => {
-  const newItem1X = item2.x + item2.width - item1.width / 2;
-
+export const computeSouthEast = (offsetObject: OffsetObject): Point => {
   return {
-    x: newItem1X,
-    y: item1.y,
-    length: item1.length,
-    height: item1.height,
-    width: item1.width,
-    offset: item1.offset,
+    x: offsetObject.x + offsetObject.offset.x,
+    y: offsetObject.y + offsetObject.offset.y,
   };
 };
