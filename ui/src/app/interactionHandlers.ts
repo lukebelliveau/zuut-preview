@@ -18,6 +18,7 @@ export const handleDeleteOnKeyDown = (
   if ((e.key === 'Backspace' || e.key === 'Delete') && selectedItemIds) {
     store.dispatch(removeItems(selectedItemIds));
     store.dispatch(unselectAll());
+    e.preventDefault();
   }
 };
 
@@ -30,8 +31,10 @@ export const handleUndoRedoOnKeyDown = (
     (e.metaKey && e.key === 'y' && getOS() === 'windows')
   ) {
     store.dispatch(redoItemAction());
+    e.preventDefault();
   } else if (e.metaKey && e.key === 'z') {
     store.dispatch(undoItemAction());
+    e.preventDefault();
   }
 };
 
@@ -42,6 +45,7 @@ export const handleSelectAllOnKeyDown = (
   if (e.key === 'a' && e.metaKey) {
     const allItemIds = store.getState().items.present.ids;
     store.dispatch(selectMany(allItemIds.map((id) => id.toString())));
+    e.preventDefault();
   }
 };
 
@@ -51,6 +55,7 @@ export const handleEscOnKeyDown = (
 ) => {
   if (e.key === 'Escape') {
     store.dispatch(unselectAll());
+    e.preventDefault();
   }
 };
 
