@@ -1,4 +1,5 @@
 import PlaceableItem from './item/placeableItem';
+import { Layer } from './layer';
 import Plan from './plan';
 import { Point } from './point';
 
@@ -19,6 +20,7 @@ export default class Playground {
   centerY: number = 0;
   plan: Plan | undefined;
   items: PlaceableItem[] = [];
+  showLayer: Layer = Layer.FLOOR;
 
   constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0) {
     this.displayWidth = displayWidth;

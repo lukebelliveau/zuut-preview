@@ -1,6 +1,7 @@
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
 import ItemList from '../itemList';
+import { Layer } from '../layer';
 import Plan from '../plan';
 import Playground from '../playground';
 import PlaceableItem, {
@@ -422,6 +423,34 @@ describe('PlaceableItem', () => {
       expect(item.rotation).toEqual(0);
       expect(item.width).toEqual(100);
       expect(item.length).toEqual(200);
+    });
+  });
+
+  describe('#opacity', () => {
+    it('returns a lighter value when being dragged', () => {
+      const item = new PlaceableItem('foo');
+      item.placementShadow = {
+        x: 1,
+        y: 2,
+        width: 3,
+        length: 4,
+        height: 7,
+        collisionState: CollisionState.NEUTRAL,
+        offset: { x: 1, y: 2},
+        northWest: { x: 1, y: 2},
+        northEast: { x: 1, y: 2},
+        southWest: { x: 1, y: 2},
+        southEast: { x: 1, y: 2},
+      };
+      expect(item.opacity(Layer.FLOOR)).toBe(0.2);
+    });
+    it('returns a stronger value when at rest', () => {
+      const item = new PlaceableItem('foo');
+      expect(item.opacity(Layer.FLOOR)).toBe(1);
+    });
+    it('returns a lighter value when the item is not on the selected plane of existence', () => {
+      const item = new PlaceableItem('foo');
+      expect(item.opacity(Layer.CEILING)).toBe(0.2);
     });
   });
 });

@@ -25,6 +25,7 @@ import {
 import { sortSelectedToLast } from '../../lib/itemList';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../features/items/itemsHooks';
+import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -171,6 +172,7 @@ const Item = ({
   const itemRef = useRef<any>(null);
 
   useHandleItemClicks(item, itemRef);
+  const playground = useSelectPlayground();
 
   return (
     <Image
@@ -186,7 +188,7 @@ const Item = ({
       rotation={item.rotation}
       offset={item.offset}
       draggable
-      opacity={item.placementShadow ? 0.2 : 1}
+      opacity={item.opacity(playground.showLayer)}
       /**
        * don't use imageObj in tests, because there is no window.Image() in tests
        */

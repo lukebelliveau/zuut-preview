@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
+
 import { RootState } from '../../app/store';
 import { assertDefined } from '../../lib/assert';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { loadJwt } from '../../lib/jwt';
+import { Layer } from '../../lib/layer';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -23,6 +25,7 @@ const initialState: PlaygroundState = {
   centerX: 0,
   centerY: 0,
   scale: 1,
+  showLayer: Layer.FLOOR,
 };
 
 export const getStarted = createAsyncThunk(
@@ -116,6 +119,13 @@ export const playgroundSlice = createSlice({
       state.planId = action.payload.planId;
       state.scale = action.payload.scale;
     },
+    toggleLayer: (state: PlaygroundState) => {
+      if (state.showLayer === Layer.CEILING) {
+        state.showLayer = Layer.FLOOR;
+      } else {
+        state.showLayer = Layer.CEILING;
+      }
+    },
     resize: (
       state: PlaygroundState,
       action: PayloadAction<PlaygroundState>
@@ -135,6 +145,6 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const { update, setPlan, zoom } = playgroundSlice.actions;
+export const { toggleLayer, update, setPlan, zoom } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

@@ -9,4 +9,12 @@ export function isCeilingPlaceableItem(
 
 export default class CeilingPlaceableItem extends PlaceableItem {
   layer = Layer.CEILING;
+
+  opacity(currentlySelectedLayer: Layer): number {
+    if (this.placementShadow) return 0.2;
+
+    if (currentlySelectedLayer === Layer.FLOOR) return 0.2;
+
+    return 1;
+  }
 }

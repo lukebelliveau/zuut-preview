@@ -3,22 +3,29 @@
   padding: 5px 10px;
 }
 
-#toolbar button {
+#toolbar button.tool {
   all: unset;
   display: inline-block;
   cursor: pointer;
   padding: 5px;
 }
 
-#toolbar button:hover {
+#toolbar button.tool:hover {
   background-color: var(--gray-4);
 }
 
-#toolbar button:disabled {
+#toolbar button.tool:disabled {
   background-color: #ffffff;
   cursor: default;
 }
 
-#toolbar button:disabled svg path {
+#toolbar button.tool:disabled svg path {
   fill: var(--gray-2);
+}
+
+#toolbar button.primary,
+#toolbar button.secondary {
+  line-height: 1rem;
+  padding: 0.25rem 1rem;
+  margin: 0 0.25rem;
 }

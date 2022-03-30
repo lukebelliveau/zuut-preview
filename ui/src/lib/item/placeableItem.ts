@@ -20,8 +20,6 @@ export interface PlacementShadow extends GeometryObject {
   x: number;
   y: number;
   height: number | undefined;
-  width: number;
-  length: number;
   collisionState: CollisionState;
   offset: Point;
 }
@@ -54,6 +52,7 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   layer: Layer;
   rotation: number;
   offset: Point;
+  opacity: (currentlySelectedLayer: Layer) => number;
 }
 
 export function isPlaceableItem(item: Item): item is PlaceableItem {
@@ -349,5 +348,13 @@ export default class PlaceableItem
 
   get southEast(): Point {
     return computeSouthEast(this);
+  }
+
+  opacity(currentlySelectedLayer: Layer): number {
+    if (this.placementShadow) return 0.2;
+
+    if (currentlySelectedLayer === Layer.CEILING) return 0.2;
+
+    return 1;
   }
 }

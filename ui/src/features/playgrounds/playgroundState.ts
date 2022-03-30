@@ -1,3 +1,5 @@
+import { Layer } from '../../lib/layer';
+
 export type PlaygroundState = {
   planId: string;
   displayWidth: number;
@@ -5,4 +7,5 @@ export type PlaygroundState = {
   centerX: number;
   centerY: number;
   scale: number;
+  showLayer: Layer
 }

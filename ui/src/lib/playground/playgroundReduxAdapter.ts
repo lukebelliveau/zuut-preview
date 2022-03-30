@@ -12,12 +12,13 @@ export default class PlaygroundReduxAdapter {
       centerX: playground.centerX,
       centerY: playground.centerY,
       scale: playground.scale,
+      showLayer: playground.showLayer,
     };
   }
 
   public static playgroundFromState(planState: IPlan | undefined, playgroundState: PlaygroundState): Playground {
     const plan = planState ? PlanReduxAdapter.stateToPlan(planState) : undefined;
-    return new Playground(
+    const playground = new Playground(
       playgroundState.displayWidth,
       playgroundState.displayHeight,
       playgroundState.scale,
@@ -25,5 +26,7 @@ export default class PlaygroundReduxAdapter {
       playgroundState.centerX,
       playgroundState.centerY,
     );
+    playground.showLayer = playgroundState.showLayer;
+    return playground;
   }
 }
