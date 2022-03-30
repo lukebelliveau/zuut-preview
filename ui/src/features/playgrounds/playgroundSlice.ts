@@ -110,34 +110,37 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    update: (
+    update(
       state: PlaygroundState,
       action: PayloadAction<PlaygroundState>
-    ) => {
+    ) {
       state.displayHeight = action.payload.displayHeight;
       state.displayWidth = action.payload.displayWidth;
       state.planId = action.payload.planId;
       state.scale = action.payload.scale;
     },
-    toggleLayer: (state: PlaygroundState) => {
+    toggleLayer(state: PlaygroundState) {
       if (state.showLayer === Layer.CEILING) {
         state.showLayer = Layer.FLOOR;
       } else {
         state.showLayer = Layer.CEILING;
       }
     },
-    resize: (
+    setVisibleLayer(state: PlaygroundState, action: PayloadAction<Layer>) {
+      state.showLayer = action.payload;
+    },
+    resize(
       state: PlaygroundState,
       action: PayloadAction<PlaygroundState>
-    ) => {
+    ) {
       state.displayWidth = action.payload.displayWidth;
       state.displayHeight = action.payload.displayHeight;
       state.scale = action.payload.scale;
     },
-    setPlan: (state: PlaygroundState, action: PayloadAction<string>) => {
+    setPlan(state: PlaygroundState, action: PayloadAction<string>) {
       state.planId = action.payload;
     },
-    zoom: (state: PlaygroundState, action: PayloadAction<PlaygroundState>) => {
+    zoom(state: PlaygroundState, action: PayloadAction<PlaygroundState>) {
       state.centerX = action.payload.centerX;
       state.centerY = action.payload.centerY;
       state.scale = action.payload.scale;
@@ -145,6 +148,6 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const { toggleLayer, update, setPlan, zoom } = playgroundSlice.actions;
+export const { setVisibleLayer, toggleLayer, update, setPlan, zoom } = playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

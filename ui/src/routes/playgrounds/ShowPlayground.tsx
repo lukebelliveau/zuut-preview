@@ -11,6 +11,7 @@ import { useResizePlaygroundOnWindowResize } from '../../features/playgrounds/pl
 import Inventory from '../../components/Inventory';
 import {
   loadSavedPlayground,
+  setVisibleLayer,
   zoom as zoomPlayground,
 } from '../../features/playgrounds/playgroundSlice';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -33,6 +34,8 @@ import { useDispatchAddItem } from '../../features/items/itemsHooks';
 import './ShowPlayground.css';
 import Toolbar from '../../components/Toolbar/Toolbar';
 import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
+import { isCeilingPlaceableItem } from '../../lib/item/ceilingPlaceableItem';
+import { Layer } from '../../lib/layer';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -49,6 +52,11 @@ export default function ShowPlayground() {
   const [_, drop] = useDrop(() => ({
     accept: [DRAGGABLE_SIDEBAR_ITEM],
     drop: (item: PlaceableItem) => {
+      if (isCeilingPlaceableItem(item))
+        dispatch(setVisibleLayer(Layer.CEILING));
+      else
+        dispatch(setVisibleLayer(Layer.FLOOR));
+        
       if (isPlaceableItem(item)) {
         item.place(playground.place());
       }
