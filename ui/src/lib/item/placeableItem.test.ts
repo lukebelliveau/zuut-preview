@@ -4,6 +4,7 @@ import ItemList from '../itemList';
 import { Layer } from '../layer';
 import Plan from '../plan';
 import Playground from '../playground';
+import ModifierItem from './modifierItem';
 import PlaceableItem, {
   CollisionState,
   PlacementShadow,
@@ -11,6 +12,83 @@ import PlaceableItem, {
 import PotItem from './potItem';
 
 describe('PlaceableItem', () => {
+  describe('addModifier', () => {
+    it('throws an error if given an invalid modifier type', () => {
+      expect(() => {
+        const soilItem = new ModifierItem('soil');
+        const placeableItem = new PlaceableItem('item', v4());
+
+        placeableItem.addModifier(soilItem);
+      }).toThrow();
+    });
+    it('adds a soil modifier when there are no modifiers', () => {
+      const soilItem = new ModifierItem('soil');
+      const placeableItem = new PlaceableItem(
+        'item',
+        v4(),
+        0,
+        0,
+        100,
+        100,
+        100,
+        0,
+        { soil: [] }
+      );
+
+      placeableItem.addModifier(soilItem);
+
+      expect(placeableItem.modifiers.soil.length).toBe(1);
+      expect(placeableItem.modifiers.soil[0]).toBe(soilItem.id);
+    });
+
+    it('adds an additional soil modifier', () => {
+      const soilItem1 = new ModifierItem('soil');
+      const soilItem2 = new ModifierItem('soil');
+      const placeableItem = new PlaceableItem(
+        'item',
+        v4(),
+        0,
+        0,
+        100,
+        100,
+        100,
+        0,
+        { soil: [] }
+      );
+
+      placeableItem.addModifier(soilItem1);
+      placeableItem.addModifier(soilItem2);
+
+      expect(placeableItem.modifiers.soil.length).toBe(2);
+      expect(placeableItem.modifiers.soil[0]).toBe(soilItem1.id);
+      expect(placeableItem.modifiers.soil[1]).toBe(soilItem2.id);
+    });
+
+    it('adds multiple types of modifiers', () => {
+      const soilItem = new ModifierItem('soil');
+      const bambooItem = new ModifierItem('bamboo');
+      const placeableItem = new PlaceableItem(
+        'item',
+        v4(),
+        0,
+        0,
+        100,
+        100,
+        100,
+        0,
+        { soil: [], bamboo: [] }
+      );
+
+      placeableItem.addModifier(soilItem);
+      placeableItem.addModifier(bambooItem);
+
+      expect(placeableItem.modifiers.soil.length).toBe(1);
+      expect(placeableItem.modifiers.bamboo.length).toBe(1);
+      expect(placeableItem.modifiers.soil[0]).toBe(soilItem.id);
+      expect(placeableItem.modifiers.bamboo[0]).toBe(bambooItem.id);
+    });
+  });
+
   describe('place', () => {
     it("sets an item's position", () => {
       const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
