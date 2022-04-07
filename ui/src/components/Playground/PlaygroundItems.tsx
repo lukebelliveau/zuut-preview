@@ -189,6 +189,7 @@ const Item = ({
                 setContainerCursor={setContainerCursor}
                 itemRef={itemRef}
                 selectedItemIds={selectedItemIds}
+                key={modifierImage}
               />
             );
           })

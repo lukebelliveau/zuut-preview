@@ -5,10 +5,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
-import { createAppStore } from '../../app/store';
+import { AppStore, createAppStore } from '../../app/store';
 import { create } from '../../features/plans/planSlice';
 import { setPlan } from '../../features/playgrounds/playgroundSlice';
 import { setUser } from '../../features/users/userSlice';
+import { MODIFIER_ITEM_TYPE } from '../../lib/item/modifierItem';
+import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import Plan from '../../lib/plan';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import ShowPlayground from './ShowPlayground';
@@ -105,6 +107,98 @@ describe('ShowPlayground', () => {
     expect(
       screen.getByRole('menuitem', { name: /Pot 2x2/i })
     ).toBeInTheDocument();
+  });
+});
+
+describe('modifiers', () => {
+  const getItemsOfType = (store: AppStore, itemType: string) => {
+    const itemsOfType = Object.values(
+      store.getState().items.present.entities
+    ).filter((item: any) => item.type === itemType);
+
+    return itemsOfType;
+  };
+  it('increments and decrements a modifier', () => {
+    const store = createAppStore();
+    const plan = new Plan();
+    const planState = PlanReduxAdapter.planToState(plan);
+    store.dispatch(create(planState));
+    store.dispatch(setPlan(plan.id));
+    store.dispatch(setUser('jwt'));
+
+    renderWithContext(<ShowPlayground />, store);
+
+    const objectsTab = screen.getByText('Objects');
+    fireEvent.click(objectsTab);
+
+    const addPotButton = screen.getByRole('button', { name: /Pot 2x2/i });
+    fireEvent.click(addPotButton);
+
+    // item created, shows in inventory list
+    const potInventoryItem = screen.getByRole('menuitem', { name: /Pot 2x2/i });
+    fireEvent.click(potInventoryItem);
+
+    const incrementSoilButton = screen.getByLabelText('increment soil');
+    const decrementSoilButton = screen.getByLabelText('decrement soil');
+
+    fireEvent.click(incrementSoilButton);
+    // soil shows in inventory
+    screen.getByText(/soil \(/);
+    // soil *count* shows in inventory
+    screen.getByText('soil (x1)');
+    // soil is an item added to state
+    const soilItem = getItemsOfType(store, MODIFIER_ITEM_TYPE)[0];
+    const potItem = getItemsOfType(store, POT_ITEM_TYPE)[0];
+    expect(potItem?.modifiers?.soil[0]).toBe(soilItem?.id);
+
+    fireEvent.click(incrementSoilButton);
+    screen.getByText('soil (x2)');
+
+    fireEvent.click(decrementSoilButton);
+    screen.getByText('soil (x1)');
+    fireEvent.click(decrementSoilButton);
+    expect(screen.queryByText(/soil \(/)).toBeNull();
+  });
+
+  it('deletes modifiers when the parent item is deleted', async () => {
+    const store = createAppStore();
+    const plan = new Plan();
+    const planState = PlanReduxAdapter.planToState(plan);
+    store.dispatch(create(planState));
+    store.dispatch(setPlan(plan.id));
+    store.dispatch(setUser('jwt'));
+
+    renderWithContext(<ShowPlayground />, store);
+
+    const objectsTab = screen.getByText('Objects');
+    fireEvent.click(objectsTab);
+
+    const addPotButton = screen.getByRole('button', { name: /Pot 2x2/i });
+    fireEvent.click(addPotButton);
+
+    // item created, shows in inventory list
+    const potInventoryItem = screen.getByRole('menuitem', { name: /Pot 2x2/i });
+    fireEvent.click(potInventoryItem);
+
+    const incrementSoilButton = screen.getByLabelText('increment soil');
+    const decrementSoilButton = screen.getByLabelText('decrement soil');
+
+    fireEvent.click(incrementSoilButton);
+    // soil shows in inventory
+    screen.getByText(/soil \(/);
+    // soil *count* shows in inventory
+    screen.getByText('soil (x1)');
+    // soil is an item added to state
+    const soilItem = getItemsOfType(store, MODIFIER_ITEM_TYPE)[0];
+    const potItem = getItemsOfType(store, POT_ITEM_TYPE)[0];
+    expect(potItem?.modifiers?.soil[0]).toBe(soilItem?.id);
+
+    // delete pot
+    fireEvent.keyDown(potInventoryItem, { key: 'Delete' });
+
+    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+    expect(screen.queryByText(/soil \(/)).toBeNull();
+    expect(store.getState().items.present.ids.length).toBe(0);
   });
 });
 

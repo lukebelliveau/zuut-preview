@@ -15,6 +15,7 @@ export function ItemImage({ item }: { item: Item }) {
               className="item-modifier-image"
               src={modifierImage}
               alt={item.name}
+              key={modifierImage}
             />
           );
         })}

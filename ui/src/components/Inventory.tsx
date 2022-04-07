@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useStore } from 'react-redux';
 import { useAppSelector } from '../app/hooks';
@@ -63,42 +63,44 @@ export default function Inventory() {
           <ul>
             {items
               .filter((item) => !isModiferItem(item))
-              .map((item) => (
-                <>
-                  <li key={item.id}>
-                    <input type="checkbox" />
-                    <span
-                      role="menuitem"
-                      onClick={() => dispatch(toggleSelect(item.id))}
-                      onKeyDown={(e) => handleItemKeyDown(e, item)}
-                      tabIndex={0}
-                      className={clsx({
-                        selected: selectedIds.includes(item.id),
-                      })}
-                    >
-                      {item.name}
-                    </span>
-                  </li>
-                  {isPlaceableItem(item)
-                    ? Object.entries(item.modifiers).map(
-                        ([modifierName, modifierIds]) => {
-                          if (modifierIds.length > 0) {
-                            return (
-                              <li key={modifierName}>
-                                <span
-                                  role="menuitem"
-                                  className="modifier-list-item"
-                                >
-                                  {`${modifierName} (x${modifierIds.length})`}
-                                </span>
-                              </li>
-                            );
-                          } else return null;
-                        }
-                      )
-                    : null}
-                </>
-              ))}
+              .map((item) => {
+                return (
+                  <Fragment key={item.id}>
+                    <li>
+                      <input type="checkbox" />
+                      <span
+                        role="menuitem"
+                        onClick={() => dispatch(toggleSelect(item.id))}
+                        onKeyDown={(e) => handleItemKeyDown(e, item)}
+                        tabIndex={0}
+                        className={clsx({
+                          selected: selectedIds.includes(item.id),
+                        })}
+                      >
+                        {item.name}
+                      </span>
+                    </li>
+                    {isPlaceableItem(item)
+                      ? Object.entries(item.modifiers).map(
+                          ([modifierName, modifierIds]) => {
+                            if (modifierIds.length > 0) {
+                              return (
+                                <li key={modifierName}>
+                                  <span
+                                    role="menuitem"
+                                    className="modifier-list-item"
+                                  >
+                                    {`${modifierName} (x${modifierIds.length})`}
+                                  </span>
+                                </li>
+                              );
+                            } else return null;
+                          }
+                        )
+                      : null}
+                  </Fragment>
+                );
+              })}
           </ul>
         ) : (
           <p>Drag items from the Objects toolbox</p>
