@@ -6,7 +6,8 @@ import itemsAdapter from './itemsEntityAdapter';
 import { ItemState } from './itemState';
 import { itemsSelectors } from './itemsSelectors';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import PlaceableItem from '../../lib/item/placeableItem';
+import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
+import ModifierItem from '../../lib/item/modifierItem';
 
 export const itemsSlice = createSlice({
   name: 'items',
@@ -55,22 +56,56 @@ export const dropItem = createAsyncThunk(
 export const removeItem = createAsyncThunk(
   'items/removeItem',
   async (id: string, { dispatch, getState }) => {
-    dispatch(removeOne(id));
+    try {
+      const itemState = itemsSelectors.selectById(getState() as RootState, id);
+      if (!itemState) throw new Error('Item not found');
+      const item = ItemReduxAdapter.stateToItem(itemState);
 
-    const state = getState() as RootState;
-    const planService = new PlanService(state);
-    return planService.syncCurrent();
+      if (isPlaceableItem(item)) {
+        if (item.modifiers) {
+          let modifierIds: string[] = [];
+
+          Object.values(item.modifiers).forEach((modifierCategory) => {
+            modifierCategory.forEach((modifierId: string) => {
+              modifierIds.push(modifierId);
+            });
+          });
+
+          dispatch(removeMany(modifierIds));
+        }
+
+        item.removeAllModifiers();
+      }
+
+      dispatch(
+        updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+      );
+
+      dispatch(removeOne(id));
+
+      const state = getState() as RootState;
+      const planService = new PlanService(state);
+      return planService.syncCurrent();
+    } catch (e) {
+      console.error('Error in thunk items/removeItem:', e);
+    }
   }
 );
 
 export const removeItems = createAsyncThunk(
   'items/removeItems',
   async (ids: string[], { dispatch, getState }) => {
-    dispatch(removeMany(ids));
+    try {
+      ids.forEach((id) => {
+        dispatch(removeItem(id));
+      });
 
-    const state = getState() as RootState;
-    const planService = new PlanService(state);
-    return planService.syncCurrent();
+      const state = getState() as RootState;
+      const planService = new PlanService(state);
+      return planService.syncCurrent();
+    } catch (e) {
+      console.error('Error in thunk items/removeItems:', e);
+    }
   }
 );
 
@@ -107,13 +142,84 @@ export const loadItems = createAsyncThunk(
 export const rotate = createAsyncThunk(
   'items/rotate',
   async (itemId: string, { dispatch, getState }) => {
-    const itemState = itemsSelectors.selectById(getState() as RootState, itemId);
+    const itemState = itemsSelectors.selectById(
+      getState() as RootState,
+      itemId
+    );
     if (!itemState) throw new Error('Item not found');
 
     const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
     item.rotate();
-    dispatch(updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) }));
+    dispatch(
+      updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+    );
 
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
+export const incrementModifier = createAsyncThunk(
+  'items/incrementModifier',
+  async (
+    { itemId, modifierName }: { itemId: string; modifierName: string },
+    { dispatch, getState }
+  ) => {
+    try {
+      const itemState = itemsSelectors.selectById(
+        getState() as RootState,
+        itemId
+      );
+      if (!itemState) throw new Error('Item not found');
+      const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
+
+      const modifier = new ModifierItem(modifierName);
+      dispatch(addItem(ItemReduxAdapter.itemToState(modifier)));
+
+      item.addModifier(modifier);
+
+      dispatch(
+        updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+      );
+      const state = getState() as RootState;
+      const planService = new PlanService(state);
+      return planService.syncCurrent();
+    } catch (e) {
+      console.error('Error in thunk items/addModifer:', e);
+    }
+  }
+);
+
+export const decrementModifier = createAsyncThunk(
+  'items/decrementModifier',
+  async (
+    { itemId, modifierName }: { itemId: string; modifierName: string },
+    { dispatch, getState }
+  ) => {
+    const itemState = itemsSelectors.selectById(
+      getState() as RootState,
+      itemId
+    );
+    if (!itemState) throw new Error('Item not found');
+    const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
+
+    const idOfModifierToRemove = item.modifiers[modifierName][0];
+
+    const modifier = itemsSelectors.selectById(
+      getState() as RootState,
+      idOfModifierToRemove
+    );
+
+    if (!modifier)
+      throw new Error('Attempted to remove modifier, no modifier found');
+
+    dispatch(removeOne(idOfModifierToRemove));
+    item.removeModifier(ItemReduxAdapter.stateToItem(modifier) as ModifierItem);
+
+    dispatch(
+      updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+    );
     const state = getState() as RootState;
     const planService = new PlanService(state);
     return planService.syncCurrent();

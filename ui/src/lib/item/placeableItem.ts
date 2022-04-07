@@ -15,6 +15,7 @@ import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 import { IItem, Item } from '../item';
+import ModifierItem from './modifierItem';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;
@@ -36,6 +37,8 @@ export enum Layer {
   BOTH,
 }
 
+export type Modifiers = { [key: string]: string[] };
+
 export interface IPlaceableItem extends IItem, GeometryObject {
   place(position: Point): void;
   drag(position: Point, items: ItemList, playground: Playground): void;
@@ -53,6 +56,9 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   rotation: number;
   offset: Point;
   opacity: (currentlySelectedLayer: Layer) => number;
+  modifiers: Modifiers;
+  modifierImages: string[];
+  removeAllModifiers(): void;
 }
 
 export function isPlaceableItem(item: Item): item is PlaceableItem {
@@ -68,11 +74,11 @@ export default class PlaceableItem
   width: number;
   length: number;
   height: number | undefined;
-  image: string = RectangleImage;
   collisionState: CollisionState;
   placementShadow: PlacementShadow | undefined;
   layer = Layer.FLOOR;
   rotation: number = 0;
+  modifiers: Modifiers = {};
 
   constructor(
     name: string,
@@ -83,6 +89,7 @@ export default class PlaceableItem
     length: number = 610,
     height: number = 915,
     rotation: number = 0,
+    modifiers: Modifiers = {},
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
@@ -95,6 +102,7 @@ export default class PlaceableItem
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
     this.rotation = rotation;
+    this.modifiers = modifiers;
   }
 
   place(position: Point) {
@@ -323,7 +331,8 @@ export default class PlaceableItem
       this.width,
       this.length,
       this.height,
-      this.rotation
+      this.rotation,
+      this.modifiers
     );
   }
 
@@ -356,5 +365,41 @@ export default class PlaceableItem
     if (currentlySelectedLayer === Layer.CEILING) return 0.2;
 
     return 1;
+  }
+
+  get image() {
+    return RectangleImage;
+  }
+
+  get modifierImages(): string[] {
+    return [];
+  }
+
+  addModifier(modifier: ModifierItem): void {
+    const newIdsForModifier = [...this.modifiers[modifier.name], modifier.id];
+
+    const newModifiers = {
+      ...this.modifiers,
+      [modifier.name]: newIdsForModifier,
+    };
+
+    this.modifiers = newModifiers;
+  }
+
+  removeModifier(modifierToDelete: ModifierItem): void {
+    const newIdsForModifier = this.modifiers[modifierToDelete.name].filter(
+      (modifierId) => modifierId !== modifierToDelete.id
+    );
+
+    const newModifiers = {
+      ...this.modifiers,
+      [modifierToDelete.name]: newIdsForModifier,
+    };
+
+    this.modifiers = newModifiers;
+  }
+
+  removeAllModifiers(): void {
+    this.modifiers = {};
   }
 }

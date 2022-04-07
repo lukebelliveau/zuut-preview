@@ -1,7 +1,14 @@
 import { v4 } from 'uuid';
 
-import { IPlaceableItem } from './placeableItem';
-import PotImage from '../../images/items/pot.svg';
+import {
+  CollisionState,
+  IPlaceableItem,
+  Modifiers,
+  PlacementShadow,
+} from './placeableItem';
+import PotImage from '../../images/items/pot/pot.svg';
+import SoilModImage from '../../images/items/pot/soilMod.svg';
+
 import GrowspaceItem from './growspaceItem';
 import { Item } from '../item';
 
@@ -13,7 +20,48 @@ export function isPotItem(item: Item): item is PotItem {
 
 export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   type: string = POT_ITEM_TYPE;
-  image: string = PotImage;
+
+  constructor(
+    name: string,
+    id: string = v4(),
+    x: number = 0,
+    y: number = 0,
+    width: number = 610,
+    length: number = 610,
+    height: number = 915,
+    rotation: number = 0,
+    modifiers: Modifiers = { soil: [] },
+    collisionState: CollisionState = CollisionState.NEUTRAL,
+    placementShadow: PlacementShadow | undefined = undefined
+  ) {
+    super(name, id);
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.length = length;
+    this.height = height;
+    this.collisionState = collisionState;
+    this.placementShadow = placementShadow;
+    this.rotation = rotation;
+    this.modifiers = modifiers;
+  }
+
+  get image() {
+    return PotImage;
+  }
+
+  get modifierImages() {
+    const modifierImages = [];
+    if (this.modifiers.soil.length > 0) {
+      modifierImages.push(SoilModImage);
+    }
+
+    return modifierImages;
+  }
+
+  removeAllModifiers(): void {
+    this.modifiers = { soil: [] };
+  }
 
   copy(): PotItem {
     return new PotItem(
@@ -23,7 +71,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height,
+      this.height
     );
   }
 }

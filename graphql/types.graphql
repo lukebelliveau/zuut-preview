@@ -3,6 +3,8 @@ type Room {
   length: Float!
 }
 
+scalar Modifiers
+
 type Item {
   id: ID!
   name: String!
@@ -13,6 +15,7 @@ type Item {
   length: Float
   height: Float
   rotation: Float
+  modifiers: Modifiers
 }
 
 type Plan {
@@ -41,6 +44,7 @@ input ItemInput {
   length: Float
   height: Float
   rotation: Float
+  modifiers: Modifiers
 }
 
 input PlanInput {

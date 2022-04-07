@@ -3,7 +3,7 @@ import {
   InMemoryCache,
   createHttpLink,
   NormalizedCacheObject,
-  gql
+  gql,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
@@ -19,13 +19,15 @@ export default class PlanGraphqlAdapter {
     this.client = new ApolloClient<NormalizedCacheObject>({
       cache: new InMemoryCache(),
       link: setContext((_, { headers }) => ({
-          headers: {
-            ...headers,
-            Authorization: `Bearer ${jwt}`
-          }
-      })).concat(createHttpLink({
-        uri: '/graphql'
-      })),
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${jwt}`,
+        },
+      })).concat(
+        createHttpLink({
+          uri: '/graphql',
+        })
+      ),
     });
   }
 
@@ -50,6 +52,7 @@ export default class PlanGraphqlAdapter {
               length
               height
               rotation
+              modifiers
             }
           }
         }
@@ -66,9 +69,11 @@ export default class PlanGraphqlAdapter {
       gqlPlan.room?.width,
       gqlPlan.room?.length,
       undefined,
-      gqlPlan.id,
+      gqlPlan.id
     );
-    gqlPlan.items.forEach(gqlItem => plan.addItem(ItemGraphqlAdapter.graphqlToItem(gqlItem)));
+    gqlPlan.items.forEach((gqlItem) =>
+      plan.addItem(ItemGraphqlAdapter.graphqlToItem(gqlItem))
+    );
 
     return plan;
   }
@@ -87,9 +92,9 @@ export default class PlanGraphqlAdapter {
             width: plan.room.width,
             length: plan.room.length,
           },
-          items: plan.items
-        }
-      }
+          items: plan.items,
+        },
+      },
     });
 
     return result.data.createPlan;
@@ -112,9 +117,9 @@ export default class PlanGraphqlAdapter {
             width: plan.room.width,
             length: plan.room.length,
           },
-          items: plan.items.map(ItemGraphqlAdapter.itemToGraphql)
-        }
-      }
+          items: plan.items.map(ItemGraphqlAdapter.itemToGraphql),
+        },
+      },
     });
   }
 }

@@ -49,7 +49,7 @@ const ControlPanel = () => {
           Control Panel
         </button>
       </h2>
-      {controlPanelState === 'show' ? <ItemControls item={item} /> : null}
+      {controlPanelState === 'show' ? <ItemControls itemState={item} /> : null}
     </div>
   );
 };

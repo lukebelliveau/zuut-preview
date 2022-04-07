@@ -56,6 +56,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL
       );
       const testItem = new PlaceableItem(
@@ -67,6 +68,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL
       );
 
@@ -111,6 +113,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -127,6 +130,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL
       );
       expect(item.drop(new ItemList(1), playground)).toBe(false);
@@ -142,6 +146,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -166,6 +171,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL
       );
       // does not currently collide with collidingItem, but has a placementShadow that does
@@ -178,6 +184,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -201,6 +208,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         0,
+        {},
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -245,6 +253,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         0,
+        {},
         CollisionState.NEUTRAL,
         placementShadow
       );
@@ -295,6 +304,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         0,
+        {},
         CollisionState.CONFLICTED,
         placementShadow
       );
@@ -436,11 +446,11 @@ describe('PlaceableItem', () => {
         length: 4,
         height: 7,
         collisionState: CollisionState.NEUTRAL,
-        offset: { x: 1, y: 2},
-        northWest: { x: 1, y: 2},
-        northEast: { x: 1, y: 2},
-        southWest: { x: 1, y: 2},
-        southEast: { x: 1, y: 2},
+        offset: { x: 1, y: 2 },
+        northWest: { x: 1, y: 2 },
+        northEast: { x: 1, y: 2 },
+        southWest: { x: 1, y: 2 },
+        southEast: { x: 1, y: 2 },
       };
       expect(item.opacity(Layer.FLOOR)).toBe(0.2);
     });

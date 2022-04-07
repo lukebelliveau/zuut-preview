@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="54" viewBox="0 0 50 54" fill="none">
+    <mask id="mask0_3_9" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="15" width="50" height="39">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M50 15H0V25H4L14 54H37L46 25H50V15Z" fill="white"/>
+    </mask>
+    <circle cx="2.5" cy="2.5" r="2.5" fill="black" />
+  </svg> 

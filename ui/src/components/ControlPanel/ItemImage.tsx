@@ -5,8 +5,22 @@ import { isPlaceableItem } from '../../lib/item/placeableItem';
 
 export function ItemImage({ item }: { item: Item }) {
   if (isPlaceableItem(item)) {
-    return <img src={item.image} alt={item.name} />;
+    // overlay modifier images over base image
+    return (
+      <div className="item-image-container">
+        <img className="item-image" src={item.image} alt={item.name} />
+        {item.modifierImages.map((modifierImage) => {
+          return (
+            <img
+              className="item-modifier-image"
+              src={modifierImage}
+              alt={item.name}
+            />
+          );
+        })}
+      </div>
+    );
   } else {
     return <img src={RectangleImage} alt={item.name} />;
   }
-};
+}

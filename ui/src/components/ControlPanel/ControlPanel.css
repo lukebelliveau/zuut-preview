@@ -124,3 +124,32 @@
   all: unset;
   display: inline-block;
 }
+
+.item-image-container {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.item-image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.item-modifier-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modifier-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modifier-row button img {
+  height: 15px;
+  cursor: pointer;
+}

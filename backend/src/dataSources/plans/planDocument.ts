@@ -1,29 +1,34 @@
-import { Plan, PlanInput } from "../../graphql";
-import { assertDefined, unwrapOrUndefined } from "../../graphqlInput";
+import { Plan, PlanInput } from '../../graphql';
+import { assertDefined, unwrapOrUndefined } from '../../graphqlInput';
 
 export interface PlanDocument {
-  _id?: string
-  userId: string
-  name?: string
-  room: Room
-  items: PlanDocumentItem[]
+  _id?: string;
+  userId: string;
+  name?: string;
+  room: Room;
+  items: PlanDocumentItem[];
+}
+
+interface Modifiers {
+  [key: string]: string[];
 }
 
 interface PlanDocumentItem {
-  id: string
-  type: string
-  name: string
-  x?: number
-  y?: number
-  width?: number
-  length?: number
-  height?: number
-  rotation?: number
+  id: string;
+  type: string;
+  name: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  length?: number;
+  height?: number;
+  rotation?: number;
+  modifiers: Modifiers;
 }
 
 interface Room {
-  width: number
-  length: number
+  width: number;
+  length: number;
 }
 
 export function planDocumentToGraphql(planDocument: PlanDocument): Plan {
@@ -34,7 +39,7 @@ export function planDocumentToGraphql(planDocument: PlanDocument): Plan {
       width: planDocument.room.width,
       length: planDocument.room.length,
     },
-    items: planDocument.items.map(item => ({
+    items: planDocument.items.map((item) => ({
       id: item.id,
       type: item.type,
       name: item.name,
@@ -44,11 +49,15 @@ export function planDocumentToGraphql(planDocument: PlanDocument): Plan {
       length: item.length,
       height: item.height,
       rotation: item.rotation,
+      modifiers: item.modifiers,
     })),
   };
 }
 
-export function planDocumentFromGraphql(plan: PlanInput, userId: string): PlanDocument {
+export function planDocumentFromGraphql(
+  plan: PlanInput,
+  userId: string
+): PlanDocument {
   return {
     userId,
     name: unwrapOrUndefined(plan.name),
@@ -56,7 +65,7 @@ export function planDocumentFromGraphql(plan: PlanInput, userId: string): PlanDo
       width: plan.room.width,
       length: plan.room.length,
     },
-    items: plan.items.map(item => ({
+    items: plan.items.map((item) => ({
       id: item.id,
       type: item.type,
       name: item.name,
@@ -66,6 +75,7 @@ export function planDocumentFromGraphql(plan: PlanInput, userId: string): PlanDo
       length: unwrapOrUndefined(item.length),
       height: unwrapOrUndefined(item.height),
       rotation: unwrapOrUndefined(item.rotation),
-    }))
-  }
+      modifiers: unwrapOrUndefined(item.modifiers),
+    })),
+  };
 }

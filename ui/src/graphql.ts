@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Modifiers: any;
 };
 
 export type Item = {
@@ -18,6 +19,7 @@ export type Item = {
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   length?: Maybe<Scalars['Float']>;
+  modifiers?: Maybe<Scalars['Modifiers']>;
   name: Scalars['String'];
   rotation?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
@@ -30,6 +32,7 @@ export type ItemInput = {
   height?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];
   length?: InputMaybe<Scalars['Float']>;
+  modifiers?: InputMaybe<Scalars['Modifiers']>;
   name: Scalars['String'];
   rotation?: InputMaybe<Scalars['Float']>;
   type: Scalars['String'];

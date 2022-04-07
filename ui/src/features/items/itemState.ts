@@ -1,4 +1,8 @@
-import { CollisionState, PlacementShadow } from '../../lib/item/placeableItem';
+import {
+  CollisionState,
+  Modifiers,
+  PlacementShadow,
+} from '../../lib/item/placeableItem';
 
 export type ItemState = {
   id: string;
@@ -12,4 +16,5 @@ export type ItemState = {
   collisionState?: CollisionState;
   placementShadow?: PlacementShadow;
   rotation?: number;
+  modifiers?: Modifiers;
 };

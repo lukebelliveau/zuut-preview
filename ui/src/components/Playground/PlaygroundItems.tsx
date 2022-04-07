@@ -26,6 +26,7 @@ import { sortSelectedToLast } from '../../lib/itemList';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../features/items/itemsHooks';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
+import { PlaygroundState } from '../../features/playgrounds/playgroundState';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -175,6 +176,73 @@ const Item = ({
   const playground = useSelectPlayground();
 
   return (
+    <>
+      {item.modifierImages.length > 0
+        ? item.modifierImages.map((modifierImage) => {
+            return (
+              <ModifierImage
+                item={item}
+                image={modifierImage}
+                playground={playground}
+                handleDragEnd={handleDragEnd}
+                handleDragMove={handleDragMove}
+                setContainerCursor={setContainerCursor}
+                itemRef={itemRef}
+                selectedItemIds={selectedItemIds}
+              />
+            );
+          })
+        : null}
+      <Image
+        key={item.id}
+        x={item.x}
+        y={item.y}
+        ref={itemRef}
+        width={item.width}
+        height={item.length}
+        stroke={getCollisionColor(item.collisionState)}
+        strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
+        strokeScaleEnabled={false}
+        rotation={item.rotation}
+        offset={item.offset}
+        draggable
+        opacity={item.opacity(playground.showLayer)}
+        /**
+         * don't use imageObj in tests, because there is no window.Image() in tests
+         */
+        image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
+        onDragMove={handleDragMove}
+        onDragEnd={handleDragEnd}
+        onMouseEnter={(e) => setContainerCursor('grab', e)}
+        onMouseLeave={(e) => setContainerCursor('auto', e)}
+      />
+    </>
+  );
+};
+
+const ModifierImage = ({
+  item,
+  image,
+  playground,
+  handleDragMove,
+  handleDragEnd,
+  setContainerCursor,
+  itemRef,
+  selectedItemIds,
+}: {
+  item: IPlaceableItem;
+  image: string;
+  playground: PlaygroundState;
+  handleDragMove: (e: KonvaEventObject<MouseEvent>) => void;
+  handleDragEnd: (e: KonvaEventObject<MouseEvent>) => void;
+  setContainerCursor: (cursor: string, e: KonvaEventObject<MouseEvent>) => void;
+  itemRef: MutableRefObject<any>;
+  selectedItemIds: string[];
+}) => {
+  const modifierImageObj = new window.Image();
+  modifierImageObj.src = image;
+
+  return (
     <Image
       key={item.id}
       x={item.x}
@@ -192,7 +260,7 @@ const Item = ({
       /**
        * don't use imageObj in tests, because there is no window.Image() in tests
        */
-      image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
+      image={process.env.NODE_ENV === 'test' ? undefined : modifierImageObj}
       onDragMove={handleDragMove}
       onDragEnd={handleDragEnd}
       onMouseEnter={(e) => setContainerCursor('grab', e)}

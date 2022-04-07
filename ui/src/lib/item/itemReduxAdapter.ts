@@ -14,6 +14,7 @@ import CeilingGrowspaceItem, {
 } from './ceilingGrowspaceItem';
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
+import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
@@ -44,6 +45,7 @@ export default class ItemReduxAdapter {
         collisionState: item.collisionState,
         placementShadow: item.placementShadow,
         rotation: item.rotation,
+        modifiers: item.modifiers,
       };
     } else {
       return baseItemState;
@@ -62,8 +64,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem(
@@ -75,11 +78,14 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case MISC_ITEM_TYPE:
         return new MiscItem(itemState.name, itemState.id);
+      case MODIFIER_ITEM_TYPE:
+        return new ModifierItem(itemState.name, itemState.id);
       case ROOM_ITEM_TYPE:
         return new RoomItem(
           itemState.name,
@@ -90,8 +96,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
 
       case WALL_ITEM_TYPE:
@@ -104,8 +111,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case WINDOW_ITEM_TYPE:
         return new WindowItem(
@@ -117,8 +125,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case POT_ITEM_TYPE:
         return new PotItem(
@@ -130,8 +139,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem(
@@ -143,8 +153,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case LIGHT_ITEM_TYPE:
         return new LightItem(
@@ -156,8 +167,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       case DUCT_ITEM_TYPE:
         return new DuctItem(
@@ -169,8 +181,9 @@ export default class ItemReduxAdapter {
           itemState.length,
           itemState.height,
           itemState.rotation,
+          itemState.modifiers,
           itemState.collisionState,
-          itemState.placementShadow,
+          itemState.placementShadow
         );
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);

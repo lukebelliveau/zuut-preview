@@ -83,3 +83,7 @@
 #inventory-list span.selected {
   font-weight: bold;
 }
+
+.inventory-list-body .modifier-list-item {
+  margin-left: 26px;
+}

@@ -15,6 +15,8 @@ import { toggleSelect } from '../features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
 import { Item } from '../lib/item';
 import { onReturnKey } from '../lib/interactions/keyboard';
+import { isModiferItem } from '../lib/item/modifierItem';
+import { isPlaceableItem } from '../lib/item/placeableItem';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -59,20 +61,44 @@ export default function Inventory() {
       <div className="inventory-list-body">
         {items.length > 0 ? (
           <ul>
-            {items.map((item) => (
-              <li key={item.id}>
-                <input type="checkbox" />
-                <span
-                  role="menuitem"
-                  onClick={() => dispatch(toggleSelect(item.id))}
-                  onKeyDown={(e) => handleItemKeyDown(e, item)}
-                  tabIndex={0}
-                  className={clsx({ selected: selectedIds.includes(item.id) })}
-                >
-                  {item.name}
-                </span>
-              </li>
-            ))}
+            {items
+              .filter((item) => !isModiferItem(item))
+              .map((item) => (
+                <>
+                  <li key={item.id}>
+                    <input type="checkbox" />
+                    <span
+                      role="menuitem"
+                      onClick={() => dispatch(toggleSelect(item.id))}
+                      onKeyDown={(e) => handleItemKeyDown(e, item)}
+                      tabIndex={0}
+                      className={clsx({
+                        selected: selectedIds.includes(item.id),
+                      })}
+                    >
+                      {item.name}
+                    </span>
+                  </li>
+                  {isPlaceableItem(item)
+                    ? Object.entries(item.modifiers).map(
+                        ([modifierName, modifierIds]) => {
+                          if (modifierIds.length > 0) {
+                            return (
+                              <li key={modifierName}>
+                                <span
+                                  role="menuitem"
+                                  className="modifier-list-item"
+                                >
+                                  {`${modifierName} (x${modifierIds.length})`}
+                                </span>
+                              </li>
+                            );
+                          } else return null;
+                        }
+                      )
+                    : null}
+                </>
+              ))}
           </ul>
         ) : (
           <p>Drag items from the Objects toolbox</p>

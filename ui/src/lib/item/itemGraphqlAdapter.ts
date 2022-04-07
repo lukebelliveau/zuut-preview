@@ -11,9 +11,10 @@ import CeilingGrowspaceItem, {
   CEILING_GROWSPACE_ITEM_TYPE,
 } from './ceilingGrowspaceItem';
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
-import { isPlaceableItem } from './placeableItem';
+import { isPlaceableItem, Modifiers } from './placeableItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
+import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -28,6 +29,7 @@ export default class ItemGraphqlAdapter {
         length: item.length,
         height: item.height,
         rotation: item.rotation,
+        modifiers: item.modifiers,
       };
     } else {
       return {
@@ -48,6 +50,7 @@ export default class ItemGraphqlAdapter {
       number | undefined,
       number | undefined,
       number | undefined,
+      Modifiers | undefined
     ] = [
       gqlItem.name,
       gqlItem.id,
@@ -57,6 +60,7 @@ export default class ItemGraphqlAdapter {
       unwrapOrUndefined(gqlItem.length),
       unwrapOrUndefined(gqlItem.height),
       unwrapOrUndefined(gqlItem.rotation),
+      unwrapOrUndefined(gqlItem.modifiers),
     ];
     switch (unwrapOrError(gqlItem.type)) {
       case CEILING_GROWSPACE_ITEM_TYPE:
@@ -69,6 +73,8 @@ export default class ItemGraphqlAdapter {
         return new LightItem(...itemAttrs);
       case MISC_ITEM_TYPE:
         return new MiscItem(gqlItem.name, gqlItem.id);
+      case MODIFIER_ITEM_TYPE:
+        return new ModifierItem(gqlItem.name, gqlItem.id);
       case POT_ITEM_TYPE:
         return new PotItem(...itemAttrs);
       case ROOM_ITEM_TYPE:

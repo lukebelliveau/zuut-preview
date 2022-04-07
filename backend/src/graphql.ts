@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Modifiers: any;
 };
 
 export type AdditionalEntityFields = {
@@ -24,6 +25,7 @@ export type Item = {
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   length?: Maybe<Scalars['Float']>;
+  modifiers?: Maybe<Scalars['Modifiers']>;
   name: Scalars['String'];
   rotation?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
@@ -36,6 +38,7 @@ export type ItemInput = {
   height?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];
   length?: InputMaybe<Scalars['Float']>;
+  modifiers?: InputMaybe<Scalars['Modifiers']>;
   name: Scalars['String'];
   rotation?: InputMaybe<Scalars['Float']>;
   type: Scalars['String'];
@@ -166,6 +169,7 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   ItemInput: ItemInput;
+  Modifiers: ResolverTypeWrapper<Scalars['Modifiers']>;
   Mutation: ResolverTypeWrapper<{}>;
   Plan: ResolverTypeWrapper<Plan>;
   PlanInput: PlanInput;
@@ -183,6 +187,7 @@ export type ResolversParentTypes = {
   Float: Scalars['Float'];
   ID: Scalars['ID'];
   ItemInput: ItemInput;
+  Modifiers: Scalars['Modifiers'];
   Mutation: {};
   Plan: Plan;
   PlanInput: PlanInput;
@@ -243,6 +248,7 @@ export type ItemResolvers<ContextType = any, ParentType extends ResolversParentT
   height?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   length?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  modifiers?: Resolver<Maybe<ResolversTypes['Modifiers']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   rotation?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -251,6 +257,10 @@ export type ItemResolvers<ContextType = any, ParentType extends ResolversParentT
   y?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface ModifiersScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Modifiers'], any> {
+  name: 'Modifiers';
+}
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createPlan?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationCreatePlanArgs, 'plan'>>;
@@ -277,6 +287,7 @@ export type RoomResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Item?: ItemResolvers<ContextType>;
+  Modifiers?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Plan?: PlanResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

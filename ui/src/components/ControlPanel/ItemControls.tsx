@@ -2,19 +2,27 @@ import { useDispatch } from 'react-redux';
 
 import DeleteIcon from '../../images/delete.svg';
 import RotateIcon from '../../images/rotate.svg';
+import MinusIcon from '../../images/glyphs/minus.svg';
+import PlusIcon from '../../images/glyphs/plus.svg';
 
 import { ItemImage } from './ItemImage';
 import { unselect } from '../../features/interactions/interactionsSlice';
-import { removeItem, rotate } from '../../features/items/itemsSlice';
+import {
+  incrementModifier as incrementModifierThunk,
+  decrementModifier as decrementModifierThunk,
+  removeItem,
+  rotate,
+} from '../../features/items/itemsSlice';
 import { ItemState } from '../../features/items/itemState';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { onReturnKey } from '../../lib/interactions/keyboard';
+import PlaceableItem from '../../lib/item/placeableItem';
 
-export function ItemControls({ item: itemState }: { item?: ItemState }) {
+export function ItemControls({ itemState }: { itemState?: ItemState }) {
   const dispatch = useDispatch();
   if (!itemState) return null;
 
-  const item = ItemReduxAdapter.stateToItem(itemState);
+  const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
 
   function deleteItem() {
     dispatch(removeItem(item.id));
@@ -56,6 +64,51 @@ export function ItemControls({ item: itemState }: { item?: ItemState }) {
           <img src={RotateIcon} alt="rotate item" />
         </button>
       </div>
+      <ModifierControls item={item} />
     </div>
   );
 }
+
+const ModifierControls = ({ item }: { item: PlaceableItem }) => {
+  const dispatch = useDispatch();
+  if (!item || !item.modifiers) return null;
+
+  function decrementModifier(modifierName: string) {
+    dispatch(decrementModifierThunk({ itemId: item.id, modifierName }));
+  }
+
+  function incrementModifier(modifierName: string) {
+    dispatch(incrementModifierThunk({ itemId: item.id, modifierName }));
+  }
+  return (
+    <div className="control-panel-section">
+      <h4>Quick adds</h4>
+      {Object.keys(item.modifiers).map((modifierName) => {
+        return (
+          <div className="modifier-row" key={modifierName}>
+            {modifierName}
+            <div>
+              <button
+                onClick={() => decrementModifier(modifierName)}
+                onKeyDown={onReturnKey(() => decrementModifier(modifierName))}
+                aria-label={`decrement ${modifierName}`}
+                tabIndex={-1}
+              >
+                <img src={MinusIcon} alt={`decrement ${modifierName}`} />
+              </button>
+              {item.modifiers ? item.modifiers[modifierName].length : null}
+              <button
+                onClick={() => incrementModifier(modifierName)}
+                onKeyDown={onReturnKey(() => incrementModifier(modifierName))}
+                aria-label={`increment ${modifierName}`}
+                tabIndex={-1}
+              >
+                <img src={PlusIcon} alt={`increment ${modifierName}`} />
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

@@ -15,7 +15,10 @@ export default class LightItem
   implements IPlaceableItem
 {
   type = LIGHT_ITEM_TYPE;
-  image = LightImage;
+
+  get image() {
+    return LightImage;
+  }
 
   copy(): LightItem {
     return new LightItem(
@@ -25,7 +28,7 @@ export default class LightItem
       this.y,
       this.width,
       this.length,
-      this.height,
+      this.height
     );
   }
 }
