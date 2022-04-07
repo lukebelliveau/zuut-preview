@@ -17,8 +17,8 @@ const AUTH0_CLIENT_ID = 'ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid';
 
 if (process.env.REACT_APP_MIXPANEL_TOKEN) {
   mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN, {
-    // debug: true,
-    // ignore_dnt: true,
+    debug: true,
+    ignore_dnt: true,
   });
 }
 
