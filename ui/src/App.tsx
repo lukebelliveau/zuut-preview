@@ -28,7 +28,6 @@ function App() {
           FallbackComponent={ErrorFallback}
           onReset={() => {
             history.push(`${new_playground_path()}?reset-playground=true`);
-            // reset the state of your app so the error doesn't happen again
           }}
           onError={(error: Error, info: { componentStack: string }) => {
             mixpanelTrack(mixpanelEvents.ERROR, { error, info });

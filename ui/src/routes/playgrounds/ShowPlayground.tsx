@@ -97,8 +97,6 @@ export default function ShowPlayground() {
 
   const scale = playground.scale;
 
-  throw new Error('ahhhhh');
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     handleDeleteOnKeyDown(e, store);
     handleUndoRedoOnKeyDown(e, store);
