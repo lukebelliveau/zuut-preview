@@ -7,15 +7,21 @@ import { browserHistory } from './app/store';
 import RequireAuth from './components/RequireAuth';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
-import NewPlayground, { new_playground_path } from './routes/playgrounds/NewPlayground';
-import ShowPlayground, { playground_path } from './routes/playgrounds/ShowPlayground';
+import NewPlayground, {
+  new_playground_path,
+} from './routes/playgrounds/NewPlayground';
+import ShowPlayground, {
+  playground_path,
+} from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
 
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <ConnectedRouter history={browserHistory}>
-        <Route exact path={homePath()}><Home /></Route>
+        <Route exact path={homePath()}>
+          <Home />
+        </Route>
         <Route path={new_playground_path()}>
           <RequireAuth>
             <NewPlayground />
@@ -31,7 +37,9 @@ function App() {
             <Workplace />
           </RequireAuth>
         </Route>
-        <Route path="/access-denied"><AccessDenied /></Route>
+        <Route path="/access-denied">
+          <AccessDenied />
+        </Route>
       </ConnectedRouter>
     </DndProvider>
   );

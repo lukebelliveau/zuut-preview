@@ -14,6 +14,8 @@ import RedoIcon from './RedoIcon';
 import { toggleLayer } from '../../features/playgrounds/playgroundSlice';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 import { Layer } from '../../lib/layer';
+import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
+import Link from '../Link';
 
 function Toolbar() {
   const dispatch = useDispatch();
@@ -46,7 +48,7 @@ function Toolbar() {
   return (
     <div id="toolbar">
       <button
-        className='tool'
+        className="tool"
         tabIndex={0}
         onClick={undo}
         onKeyDown={(e) => doIfEnter(e, undo)}
@@ -56,7 +58,7 @@ function Toolbar() {
         <UndoIcon />
       </button>
       <button
-        className='tool'
+        className="tool"
         tabIndex={0}
         onClick={redo}
         onKeyDown={(e) => doIfEnter(e, redo)}
@@ -66,7 +68,9 @@ function Toolbar() {
         <RedoIcon />
       </button>
       <button
-        className={playground.showLayer === Layer.FLOOR ? 'primary' : 'secondary'}
+        className={
+          playground.showLayer === Layer.FLOOR ? 'primary' : 'secondary'
+        }
         tabIndex={0}
         onClick={toggleSelectedLayer}
         onKeyDown={(e) => doIfEnter(e, toggleSelectedLayer)}
@@ -75,7 +79,9 @@ function Toolbar() {
         Floor Plane
       </button>
       <button
-        className={playground.showLayer === Layer.CEILING ? 'primary' : 'secondary'}
+        className={
+          playground.showLayer === Layer.CEILING ? 'primary' : 'secondary'
+        }
         tabIndex={0}
         onClick={toggleSelectedLayer}
         onKeyDown={(e) => doIfEnter(e, toggleSelectedLayer)}
@@ -83,8 +89,15 @@ function Toolbar() {
       >
         Ceiling Plane
       </button>
+
+      <Link
+        to={`${new_playground_path()}?reset-playground=true`}
+        className="tool"
+      >
+        Reset playground
+      </Link>
     </div>
   );
-};
+}
 
 export default Toolbar;

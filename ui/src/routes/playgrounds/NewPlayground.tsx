@@ -14,6 +14,7 @@ import { createPlan } from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
 import { playground_path } from './ShowPlayground';
 import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playgroundSlice';
+import useQuery from '../../app/useQuery';
 
 export const new_playground_path = () => '/playgrounds/new';
 
@@ -23,13 +24,16 @@ export default function NewPlayground() {
   const { isAuthenticated } = useAuth0();
   const { register, handleSubmit } = useForm<FormParams>();
   const [isFirstLoad, setIsFirstLoad] = useState(false);
+  let query = useQuery();
+
+  const resetPlayground = query.get('reset-playground');
 
   useEffect(() => {
-    if (!isFirstLoad) {
+    if (!isFirstLoad && !resetPlayground) {
       dispatch(loadCurrentPlaygroundIfPresent(true));
       setIsFirstLoad(true);
     }
-  }, [isFirstLoad, setIsFirstLoad, dispatch]);
+  }, [isFirstLoad, setIsFirstLoad, dispatch, resetPlayground]);
 
   type FormParams = {
     name: string;
@@ -38,11 +42,13 @@ export default function NewPlayground() {
   };
 
   const onSubmit: SubmitHandler<FormParams> = (data) => {
-    dispatch(createPlan({
-      name: data.name,
-      width: feetToMm(data.width),
-      length: feetToMm(data.length),
-    }));
+    dispatch(
+      createPlan({
+        name: data.name,
+        width: feetToMm(data.width),
+        length: feetToMm(data.length),
+      })
+    );
 
     push(playground_path());
   };

@@ -10,6 +10,13 @@
   padding: 5px;
 }
 
+#toolbar a.tool {
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+}
+
 #toolbar button.tool:hover {
   background-color: var(--gray-4);
 }
