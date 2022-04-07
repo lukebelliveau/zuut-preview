@@ -14,6 +14,7 @@ import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import Plan from '../../lib/plan';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import ShowPlayground from './ShowPlayground';
+import getItemsOfType from '../../../tests/getItemsOfType';
 
 jest.mock('../../lib/plan/planService');
 
@@ -111,13 +112,6 @@ describe('ShowPlayground', () => {
 });
 
 describe('modifiers', () => {
-  const getItemsOfType = (store: AppStore, itemType: string) => {
-    const itemsOfType = Object.values(
-      store.getState().items.present.entities
-    ).filter((item: any) => item.type === itemType);
-
-    return itemsOfType;
-  };
   it('increments and decrements a modifier', () => {
     const store = createAppStore();
     const plan = new Plan();
@@ -147,8 +141,8 @@ describe('modifiers', () => {
     // soil *count* shows in inventory
     screen.getByText('soil (x1)');
     // soil is an item added to state
-    const soilItem = getItemsOfType(store, MODIFIER_ITEM_TYPE)[0];
-    const potItem = getItemsOfType(store, POT_ITEM_TYPE)[0];
+    const soilItem = getItemsOfType(MODIFIER_ITEM_TYPE, store)[0];
+    const potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
     expect(potItem?.modifiers?.soil[0]).toBe(soilItem?.id);
 
     fireEvent.click(incrementSoilButton);
@@ -189,8 +183,8 @@ describe('modifiers', () => {
     // soil *count* shows in inventory
     screen.getByText('soil (x1)');
     // soil is an item added to state
-    const soilItem = getItemsOfType(store, MODIFIER_ITEM_TYPE)[0];
-    const potItem = getItemsOfType(store, POT_ITEM_TYPE)[0];
+    const soilItem = getItemsOfType(MODIFIER_ITEM_TYPE, store)[0];
+    const potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
     expect(potItem?.modifiers?.soil[0]).toBe(soilItem?.id);
 
     // delete pot
