@@ -58,4 +58,4 @@ RUN npm ci
 
 COPY --from=build /app/ui/build /app/ui/build
 
-CMD npm start
+CMD npm start:devdeploy
