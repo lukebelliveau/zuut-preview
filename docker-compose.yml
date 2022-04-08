@@ -1,16 +1,15 @@
-version: '3.8'
+version: "3.8"
 
 services:
   app:
     build: .
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
       AUTH0_AUDIENCE: ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid
       AUTH0_ISSUER: https://dev-baqlbrdt.us.auth0.com/
       JWKS_URL: https://dev-baqlbrdt.us.auth0.com/.well-known/jwks.json
       MONGODB_URL: mongodb://mongodb/dev?retryWrites=true&w=majority
-      REACT_APP_MIXPANEL_TOKEN: e5d2699a9fe25e45c53c85472e799725
       PORT: 3000
     depends_on:
       - mongodb
