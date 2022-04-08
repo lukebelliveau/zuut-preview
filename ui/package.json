@@ -64,6 +64,7 @@
     "lint": "tsc --noEmit && eslint src",
     "prepush": "npm run lint -- --max-warnings=0 && CI=true npm test",
     "start": "env BROWSER=none react-scripts start",
+    "start:dev": "REACT_APP_MIXPANEL_TOKEN=e5d2699a9fe25e45c53c85472e799725 env BROWSER=none react-scripts start",
     "test": "react-scripts test",
     "dev": "npm start"
   },
