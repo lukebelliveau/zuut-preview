@@ -90,18 +90,16 @@ const ModifierControls = ({ item }: { item: PlaceableItem }) => {
             <div>
               <button
                 onClick={() => decrementModifier(modifierName)}
-                onKeyDown={onReturnKey(() => decrementModifier(modifierName))}
                 aria-label={`decrement ${modifierName}`}
-                tabIndex={-1}
+                tabIndex={0}
               >
                 <img src={MinusIcon} alt={`decrement ${modifierName}`} />
               </button>
               {item.modifiers ? item.modifiers[modifierName].length : null}
               <button
                 onClick={() => incrementModifier(modifierName)}
-                onKeyDown={onReturnKey(() => incrementModifier(modifierName))}
                 aria-label={`increment ${modifierName}`}
-                tabIndex={-1}
+                tabIndex={0}
               >
                 <img src={PlusIcon} alt={`increment ${modifierName}`} />
               </button>
