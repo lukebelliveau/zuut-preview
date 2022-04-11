@@ -13,6 +13,7 @@ import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 import { isCeilingPlaceableItem } from '../../lib/item/ceilingPlaceableItem';
 import { setVisibleLayer } from '../../features/playgrounds/playgroundSlice';
 import { Layer } from '../../lib/layer';
+import { select } from '../../features/interactions/interactionsSlice';
 
 export default function LayoutTab() {
   const dispatch = useDispatch();
@@ -20,14 +21,14 @@ export default function LayoutTab() {
   const dispatchAddItem = useDispatchAddItem();
 
   function placeItem(item: PlaceableItem) {
-    if (isCeilingPlaceableItem(item))
-      dispatch(setVisibleLayer(Layer.CEILING));
-    else
-      dispatch(setVisibleLayer(Layer.FLOOR));
+    if (isCeilingPlaceableItem(item)) dispatch(setVisibleLayer(Layer.CEILING));
+    else dispatch(setVisibleLayer(Layer.FLOOR));
 
     mixpanelTrack(mixpanelEvents.PLACE_ITEM, { itemName: item.name });
     item.place(playground.place());
-    dispatchAddItem(item.copy());
+    const itemCopy = item.copy();
+    dispatchAddItem(itemCopy);
+    dispatch(select(itemCopy.id));
   }
 
   return (

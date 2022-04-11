@@ -58,7 +58,6 @@ describe('ShowPlayground', () => {
 
     // item in inventory list
     const item = await screen.findByRole('menuitem', { name: /Pot 2x2/i });
-    fireEvent.click(item);
 
     // user sees Control Panel
     screen.getByText('Description');
@@ -129,8 +128,7 @@ describe('modifiers', () => {
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
-    const potInventoryItem = screen.getByRole('menuitem', { name: /Pot 2x2/i });
-    fireEvent.click(potInventoryItem);
+    screen.getByRole('menuitem', { name: /Pot 2x2/i });
 
     const incrementSoilButton = screen.getByLabelText('increment soil');
     const decrementSoilButton = screen.getByLabelText('decrement soil');
@@ -172,7 +170,6 @@ describe('modifiers', () => {
 
     // item created, shows in inventory list
     const potInventoryItem = screen.getByRole('menuitem', { name: /Pot 2x2/i });
-    fireEvent.click(potInventoryItem);
 
     const incrementSoilButton = screen.getByLabelText('increment soil');
     const decrementSoilButton = screen.getByLabelText('decrement soil');

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import { useBuildPlayground } from '../../app/builderHooks';
+import { select } from '../../features/interactions/interactionsSlice';
 import { addOne } from '../../features/items/itemsSlice';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import PlaceableItem from '../../lib/item/placeableItem';
@@ -20,6 +21,7 @@ export default function LayoutTab() {
   function placeItem(item: PlaceableItem) {
     item.place(playground.place());
     dispatch(addOne(ItemReduxAdapter.itemToState(item.copy())));
+    dispatch(select(item.id));
   }
 
   return (
