@@ -83,7 +83,7 @@ export default function ShowPlayground() {
         stageY: stageRef.current.y(),
       };
 
-      if (event.evt.deltaY > 0) {
+      if (event.evt.deltaY < 0) {
         playground.zoomIn(zoomParams);
       } else {
         playground.zoomOut(zoomParams);
