@@ -1,3 +1,4 @@
+import { LayerState } from '../features/playgrounds/playgroundState';
 import PlaceableItem from './item/placeableItem';
 import { Layer } from './layer';
 import Plan from './plan';
@@ -10,7 +11,7 @@ type ZoomParams = {
   mouseY: number;
   stageX: number;
   stageY: number;
-}
+};
 
 export default class Playground {
   displayWidth: number;
@@ -20,9 +21,20 @@ export default class Playground {
   centerY: number = 0;
   plan: Plan | undefined;
   items: PlaceableItem[] = [];
-  showLayer: Layer = Layer.FLOOR;
+  showLayer: LayerState = {
+    [Layer.FLOOR]: true,
+    [Layer.CEILING]: true,
+    [Layer.BOTH]: true,
+  };
 
-  constructor(displayWidth: number, displayHeight: number, scale: number | undefined, plan?: Plan, centerX: number = 0, centerY: number = 0) {
+  constructor(
+    displayWidth: number,
+    displayHeight: number,
+    scale: number | undefined,
+    plan?: Plan,
+    centerX: number = 0,
+    centerY: number = 0
+  ) {
     this.displayWidth = displayWidth;
     this.displayHeight = displayHeight;
     this.plan = plan;

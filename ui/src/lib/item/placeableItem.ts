@@ -16,6 +16,7 @@ import Playground from '../playground';
 import { Point } from '../point';
 import { IItem, Item } from '../item';
 import ModifierItem from './modifierItem';
+import { LayerState } from '../../features/playgrounds/playgroundState';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;
@@ -55,7 +56,7 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   layer: Layer;
   rotation: number;
   offset: Point;
-  opacity: (currentlySelectedLayer: Layer) => number;
+  opacity: (layerState: LayerState) => number;
   modifiers: Modifiers;
   modifierImages: string[];
   removeAllModifiers(): void;
@@ -359,12 +360,12 @@ export default class PlaceableItem
     return computeSouthEast(this);
   }
 
-  opacity(currentlySelectedLayer: Layer): number {
+  opacity(layerState: LayerState): number {
     if (this.placementShadow) return 0.2;
 
-    if (currentlySelectedLayer === Layer.CEILING) return 0.2;
+    if (layerState[this.layer]) return 1;
 
-    return 1;
+    return 0.2;
   }
 
   get image() {

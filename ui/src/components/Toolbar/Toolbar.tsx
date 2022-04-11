@@ -29,8 +29,8 @@ function Toolbar() {
     dispatch(redoItemAction());
   };
 
-  function toggleSelectedLayer() {
-    dispatch(toggleLayer());
+  function toggleSelectedLayer(layer: Layer) {
+    dispatch(toggleLayer(layer));
   }
 
   const doIfEnter = (
@@ -68,23 +68,23 @@ function Toolbar() {
         <RedoIcon />
       </button>
       <button
-        className={
-          playground.showLayer === Layer.FLOOR ? 'primary' : 'secondary'
-        }
+        className={playground.showLayer[Layer.FLOOR] ? 'primary' : 'secondary'}
         tabIndex={0}
-        onClick={toggleSelectedLayer}
-        onKeyDown={(e) => doIfEnter(e, toggleSelectedLayer)}
+        onClick={() => toggleSelectedLayer(Layer.FLOOR)}
+        onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.FLOOR))}
         aria-label="Floor plane"
       >
         Floor Plane
       </button>
       <button
         className={
-          playground.showLayer === Layer.CEILING ? 'primary' : 'secondary'
+          playground.showLayer[Layer.CEILING] ? 'primary' : 'secondary'
         }
         tabIndex={0}
-        onClick={toggleSelectedLayer}
-        onKeyDown={(e) => doIfEnter(e, toggleSelectedLayer)}
+        onClick={() => toggleSelectedLayer(Layer.CEILING)}
+        onKeyDown={(e) =>
+          doIfEnter(e, () => toggleSelectedLayer(Layer.CEILING))
+        }
         aria-label="Ceiling plane"
       >
         Ceiling Plane

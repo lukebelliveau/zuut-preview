@@ -25,7 +25,11 @@ const initialState: PlaygroundState = {
   centerX: 0,
   centerY: 0,
   scale: 1,
-  showLayer: Layer.FLOOR,
+  showLayer: {
+    [Layer.FLOOR]: true,
+    [Layer.CEILING]: true,
+    [Layer.BOTH]: true,
+  },
 };
 
 export const getStarted = createAsyncThunk(
@@ -110,29 +114,20 @@ export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    update(
-      state: PlaygroundState,
-      action: PayloadAction<PlaygroundState>
-    ) {
+    update(state: PlaygroundState, action: PayloadAction<PlaygroundState>) {
       state.displayHeight = action.payload.displayHeight;
       state.displayWidth = action.payload.displayWidth;
       state.planId = action.payload.planId;
       state.scale = action.payload.scale;
     },
-    toggleLayer(state: PlaygroundState) {
-      if (state.showLayer === Layer.CEILING) {
-        state.showLayer = Layer.FLOOR;
-      } else {
-        state.showLayer = Layer.CEILING;
-      }
+    toggleLayer(state: PlaygroundState, action: PayloadAction<Layer>) {
+      if (action.payload === Layer.BOTH) return;
+      state.showLayer[action.payload] = !state.showLayer[action.payload];
     },
     setVisibleLayer(state: PlaygroundState, action: PayloadAction<Layer>) {
-      state.showLayer = action.payload;
+      state.showLayer[action.payload] = true;
     },
-    resize(
-      state: PlaygroundState,
-      action: PayloadAction<PlaygroundState>
-    ) {
+    resize(state: PlaygroundState, action: PayloadAction<PlaygroundState>) {
       state.displayWidth = action.payload.displayWidth;
       state.displayHeight = action.payload.displayHeight;
       state.scale = action.payload.scale;
@@ -148,6 +143,7 @@ export const playgroundSlice = createSlice({
   },
 });
 
-export const { setVisibleLayer, toggleLayer, update, setPlan, zoom } = playgroundSlice.actions;
+export const { setVisibleLayer, toggleLayer, update, setPlan, zoom } =
+  playgroundSlice.actions;
 
 export default playgroundSlice.reducer;

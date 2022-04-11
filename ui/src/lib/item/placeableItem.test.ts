@@ -530,15 +530,33 @@ describe('PlaceableItem', () => {
         southWest: { x: 1, y: 2 },
         southEast: { x: 1, y: 2 },
       };
-      expect(item.opacity(Layer.FLOOR)).toBe(0.2);
+      expect(
+        item.opacity({
+          [Layer.CEILING]: true,
+          [Layer.FLOOR]: true,
+          [Layer.BOTH]: true,
+        })
+      ).toBe(0.2);
     });
     it('returns a stronger value when at rest', () => {
       const item = new PlaceableItem('foo');
-      expect(item.opacity(Layer.FLOOR)).toBe(1);
+      expect(
+        item.opacity({
+          [Layer.CEILING]: true,
+          [Layer.FLOOR]: true,
+          [Layer.BOTH]: true,
+        })
+      ).toBe(1);
     });
     it('returns a lighter value when the item is not on the selected plane of existence', () => {
       const item = new PlaceableItem('foo');
-      expect(item.opacity(Layer.CEILING)).toBe(0.2);
+      expect(
+        item.opacity({
+          [Layer.CEILING]: true,
+          [Layer.FLOOR]: false,
+          [Layer.BOTH]: true,
+        })
+      ).toBe(0.2);
     });
   });
 });

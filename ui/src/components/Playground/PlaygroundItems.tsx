@@ -138,6 +138,7 @@ const Item = ({
   dropAndUpdateItemCollisions: (item: IPlaceableItem) => void;
 }) => {
   if (!item.image) throw new Error('Image not found in ImageItem component');
+  const playground = useSelectPlayground();
 
   // create manually instead of using Konva's `use-image` package.
   // useImage() asynchronously loads the image every time the component mounts, causing flickering on zoom (because children of the Stage re-mount).
@@ -150,6 +151,7 @@ const Item = ({
     cursor: string,
     e: KonvaEventObject<MouseEvent>
   ) => {
+    if (!playground.showLayer[item.layer]) return;
     if (e.target.getStage()?.container()) {
       const container = e.target?.getStage()?.container();
       if (container) {
@@ -173,7 +175,6 @@ const Item = ({
   const itemRef = useRef<any>(null);
 
   useHandleItemClicks(item, itemRef);
-  const playground = useSelectPlayground();
 
   return (
     <>
@@ -206,7 +207,7 @@ const Item = ({
         strokeScaleEnabled={false}
         rotation={item.rotation}
         offset={item.offset}
-        draggable
+        draggable={playground.showLayer[item.layer]}
         opacity={item.opacity(playground.showLayer)}
         /**
          * don't use imageObj in tests, because there is no window.Image() in tests
