@@ -18,9 +18,11 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorFallback';
 import { mixpanelTrack } from './analytics/mixpanelTrack';
 import { mixpanelEvents } from './analytics/mixpanelEvents';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function App() {
   const history = useHistory();
+  const { user } = useAuth0();
   return (
     <DndProvider backend={HTML5Backend}>
       <ConnectedRouter history={browserHistory}>
@@ -30,7 +32,9 @@ function App() {
             history.push(`${new_playground_path()}?reset-playground=true`);
           }}
           onError={(error: Error, info: { componentStack: string }) => {
-            mixpanelTrack(mixpanelEvents.ERROR, { error: error.message, info });
+            console.log('sending error to mixpanel:');
+            console.log(error);
+            mixpanelTrack(mixpanelEvents.ERROR, { error, info, user });
           }}
         >
           <Route exact path={homePath()}>
