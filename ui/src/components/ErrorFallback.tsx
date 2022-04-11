@@ -5,7 +5,7 @@ function ErrorFallback({
   error: Error;
   resetErrorBoundary: (...args: Array<unknown>) => void;
 }) {
-  console.log(error, resetErrorBoundary);
+  console.log(error.message);
   return (
     <div role="alert">
       <p>Something went wrong:</p>

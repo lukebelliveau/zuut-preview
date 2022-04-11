@@ -30,7 +30,7 @@ function App() {
             history.push(`${new_playground_path()}?reset-playground=true`);
           }}
           onError={(error: Error, info: { componentStack: string }) => {
-            mixpanelTrack(mixpanelEvents.ERROR, { error, info });
+            mixpanelTrack(mixpanelEvents.ERROR, { error: error.message, info });
           }}
         >
           <Route exact path={homePath()}>

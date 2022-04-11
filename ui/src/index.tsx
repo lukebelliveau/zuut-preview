@@ -24,7 +24,7 @@ const AUTH0_CLIENT_ID = 'ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid';
 
 // sloppy!
 mixpanel.init('8e6a75065b59fcc16af32951e8340a92', {
-  debug: true,
+  // debug: true,
   ignore_dnt: true,
 });
 
