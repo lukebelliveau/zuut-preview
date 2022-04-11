@@ -27,6 +27,7 @@ import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../features/items/itemsHooks';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
+import { setVisibleLayer } from '../../features/playgrounds/playgroundSlice';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ export default function PlaygroundItems() {
 
   function updatePlacement(item: IPlaceableItem, newPosition: Point) {
     dispatch(select(item.id));
+    dispatch(setVisibleLayer(item.layer));
     item.drag(newPosition, items, playground);
     dispatch(
       updateOneWithoutHistory({

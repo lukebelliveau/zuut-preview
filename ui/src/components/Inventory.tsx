@@ -11,12 +11,16 @@ import ItemReduxAdapter from '../lib/item/itemReduxAdapter';
 import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
 
 import './Inventory.css';
-import { toggleSelect } from '../features/interactions/interactionsSlice';
+import {
+  select,
+  toggleSelect,
+} from '../features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
 import { Item } from '../lib/item';
 import { onReturnKey } from '../lib/interactions/keyboard';
 import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
+import { setVisibleLayer } from '../features/playgrounds/playgroundSlice';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -40,9 +44,16 @@ export default function Inventory() {
     item: Item
   ) => {
     if (e.key === 'Enter' || e.key === 'Return') {
-      dispatch(toggleSelect(item.id));
+      selectItemFromInventory(item);
     } else if (selectedIds.includes(item.id)) {
       handleDeleteOnKeyDown(e, store);
+    }
+  };
+
+  const selectItemFromInventory = (item: Item) => {
+    dispatch(select(item.id));
+    if (isPlaceableItem(item)) {
+      dispatch(setVisibleLayer(item.layer));
     }
   };
 
@@ -70,7 +81,7 @@ export default function Inventory() {
                       <input type="checkbox" />
                       <span
                         role="menuitem"
-                        onClick={() => dispatch(toggleSelect(item.id))}
+                        onClick={() => selectItemFromInventory(item)}
                         onKeyDown={(e) => handleItemKeyDown(e, item)}
                         tabIndex={0}
                         className={clsx({
