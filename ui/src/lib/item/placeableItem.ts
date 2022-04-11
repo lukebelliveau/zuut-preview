@@ -17,6 +17,7 @@ import { Point } from '../point';
 import { IItem, Item } from '../item';
 import ModifierItem from './modifierItem';
 import { LayerState } from '../../features/playgrounds/playgroundState';
+import { Layer } from '../layer';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;
@@ -30,12 +31,6 @@ export enum CollisionState {
   NEUTRAL,
   CONFLICTED,
   CONNECTED,
-}
-
-export enum Layer {
-  FLOOR,
-  CEILING,
-  BOTH,
 }
 
 export type Modifiers = { [key: string]: string[] };

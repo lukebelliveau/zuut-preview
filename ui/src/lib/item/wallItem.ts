@@ -11,6 +11,7 @@ import {
 } from '../geometry/geometry';
 import { Item } from '../item';
 import ItemList from '../itemList';
+import { Layer } from '../layer';
 import Playground from '../playground';
 import { Point } from '../point';
 import PlaceableItem, {
@@ -27,6 +28,7 @@ export function isWallItem(item: Item): item is WallItem {
 
 export default class WallItem extends PlaceableItem implements IPlaceableItem {
   type: string = WALL_ITEM_TYPE;
+  layer = Layer.BOTH;
 
   copy(): WallItem {
     return new WallItem(

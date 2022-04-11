@@ -1,5 +1,6 @@
 import { Item } from '../item';
-import PlaceableItem, { Layer } from './placeableItem';
+import { Layer } from '../layer';
+import PlaceableItem from './placeableItem';
 
 export function isCeilingPlaceableItem(
   item: Item

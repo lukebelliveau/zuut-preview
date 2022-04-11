@@ -1,6 +1,5 @@
 import PlaceableItem, {
   CollisionState,
-  Layer,
   PlacementShadow,
 } from './placeableItem';
 import { v4 } from 'uuid';

@@ -3,12 +3,12 @@ import { v4 } from 'uuid';
 import { isStraddlingBoundary } from '../geometry/geometry';
 import PlaceableItem, {
   CollisionState,
-  Layer,
   PlacementShadow,
 } from './placeableItem';
 import { Item } from '../item';
 import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
+import { Layer } from '../layer';
 
 export const GROWSPACE_TYPE = 'Growspace';
 

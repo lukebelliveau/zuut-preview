@@ -10,6 +10,8 @@ export const mixpanelTrack = (
   // console.log('mixpanelToken:' + process.env.REACT_APP_MIXPANEL_TOKEN);
   // if (process.env.REACT_APP_MIXPANEL_TOKEN) {
   // console.log('token found, calling mixpanel.track');
-  mixpanel.track(event_name, properties, optionsOrCallback, callback);
+  if (process.env.NODE_ENV !== 'test') {
+    mixpanel.track(event_name, properties, optionsOrCallback, callback);
+  }
   // }
 };

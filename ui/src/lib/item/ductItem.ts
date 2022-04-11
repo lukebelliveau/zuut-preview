@@ -3,7 +3,6 @@ import { Item } from '../item';
 import {
   CollisionState,
   IPlaceableItem,
-  Layer,
   PlacementShadow,
 } from './placeableItem';
 import DuctImage from '../../images/items/duct.png';
