@@ -34,7 +34,13 @@ function App() {
           onError={(error: Error, info: { componentStack: string }) => {
             console.log('sending error to mixpanel:');
             console.log(error);
-            mixpanelTrack(mixpanelEvents.ERROR, { error, info, user });
+            mixpanelTrack(mixpanelEvents.ERROR, {
+              error,
+              info,
+              user,
+              errorMessage: error.message,
+              errorJson: JSON.stringify(error),
+            });
           }}
         >
           <Route exact path={homePath()}>
