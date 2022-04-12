@@ -14,35 +14,13 @@ import ShowPlayground, {
   playground_path,
 } from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from './components/ErrorFallback';
-import { mixpanelTrack } from './analytics/mixpanelTrack';
-import { mixpanelEvents } from './analytics/mixpanelEvents';
-import { useAuth0 } from '@auth0/auth0-react';
+import AppErrorBoundary from './components/ErrorFallback';
 
 function App() {
-  const history = useHistory();
-  const { user } = useAuth0();
   return (
     <DndProvider backend={HTML5Backend}>
       <ConnectedRouter history={browserHistory}>
-        <ErrorBoundary
-          FallbackComponent={ErrorFallback}
-          onReset={() => {
-            history.push(`${new_playground_path()}?reset-playground=true`);
-          }}
-          onError={(error: Error, info: { componentStack: string }) => {
-            console.log('sending error to mixpanel:');
-            console.log(error);
-            mixpanelTrack(mixpanelEvents.ERROR, {
-              error,
-              info,
-              user,
-              errorMessage: error.message,
-              errorJson: JSON.stringify(error),
-            });
-          }}
-        >
+        <AppErrorBoundary>
           <Route exact path={homePath()}>
             <Home />
           </Route>
@@ -64,7 +42,7 @@ function App() {
           <Route path="/access-denied">
             <AccessDenied />
           </Route>
-        </ErrorBoundary>
+        </AppErrorBoundary>
       </ConnectedRouter>
     </DndProvider>
   );

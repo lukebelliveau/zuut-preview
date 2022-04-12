@@ -30,6 +30,7 @@ declare global {
   namespace Cypress {
     interface Chainable<Subject> {
       logout(): void;
+      undo(): void;
     }
   }
 }
@@ -44,4 +45,8 @@ Cypress.Commands.add('logout', () => {
     url: 'https://dev-baqlbrdt.us.auth0.com/v2/logout',
   };
   cy.request(options);
+});
+
+Cypress.Commands.add('undo', () => {
+  cy.findByTestId('playground-container').type('{meta+z}');
 });

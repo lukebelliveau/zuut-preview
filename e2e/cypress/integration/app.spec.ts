@@ -42,5 +42,12 @@ describe('app', () => {
       .focus()
       .type('{backspace}');
     cy.findByRole('menuitem', { name: /Pot 2x2/i }).should('not.exist');
+
+    cy.undo();
+
+    cy.findByRole('menuitem', { name: /Pot 2x2/i }).click();
+
+    cy.findByLabelText('delete item').click();
+    cy.findByRole('menuitem', { name: /Pot 2x2/i }).should('not.exist');
   });
 });
