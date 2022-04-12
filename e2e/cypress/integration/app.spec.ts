@@ -19,7 +19,8 @@ describe('app', () => {
     cy.findByLabelText('Email address').type(Cypress.env('AUTH_USERNAME'));
     cy.findByLabelText('Password').type(Cypress.env('AUTH_PASSWORD'));
     cy.findByText('Continue').click();
-    // cy.findByText('Accept').click();
+
+    cy.visit('/playgrounds/new?reset-playground=true');
 
     cy.findByLabelText('name').type('Test Grow').type('{enter}');
     cy.findByLabelText('length').type('20');
@@ -33,14 +34,13 @@ describe('app', () => {
     // add item
     cy.findByRole('button', { name: /Pot 2x2/i }).click();
 
-    // // select item from Inventory
-    // cy.findByRole('menuitem', { name: /Pot 2x2/i }).click();
-
     // see control panel
     cy.findByText('Description').should('exist');
     cy.findByText('Transform').should('exist');
 
-    cy.findByRole('menuitem', { name: /Pot 2x2/i }).type('{backspace}');
+    cy.findByRole('menuitem', { name: /Pot 2x2/i })
+      .focus()
+      .type('{backspace}');
     cy.findByRole('menuitem', { name: /Pot 2x2/i }).should('not.exist');
   });
 });
