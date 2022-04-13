@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
+import { mixpanelEvents } from '../../analytics/mixpanelEvents';
+import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 
 import { RootState } from '../../app/store';
 import { assertDefined } from '../../lib/assert';
@@ -9,7 +11,10 @@ import { Layer } from '../../lib/layer';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
-import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
+import {
+  new_playground_path,
+  reset_playground_path,
+} from '../../routes/playgrounds/NewPlayground';
 import { playground_path } from '../../routes/playgrounds/ShowPlayground';
 import { loadItems } from '../items/itemsSlice';
 import { selectDefaultPlan } from '../plans/planSelectors';
@@ -77,13 +82,25 @@ export const loadCurrentPlaygroundIfPresent = createAsyncThunk(
 export const loadSavedPlayground = createAsyncThunk(
   'playground/loadSavedPlayground',
   async (jwt: string, { dispatch }) => {
-    const adapter = new PlanGraphqlAdapter(jwt);
-    const plan = assertDefined(await adapter.current());
+    try {
+      const adapter = new PlanGraphqlAdapter(jwt);
+      const plan = assertDefined(await adapter.current());
 
-    dispatch(create(PlanReduxAdapter.planToState(plan)));
-    dispatch(loadItems(plan.items.map(ItemReduxAdapter.itemToState)));
-    dispatch(setPlan(plan.id));
-    dispatch(resizePlayground());
+      dispatch(create(PlanReduxAdapter.planToState(plan)));
+      dispatch(loadItems(plan.items.map(ItemReduxAdapter.itemToState)));
+      dispatch(setPlan(plan.id));
+      dispatch(resizePlayground());
+    } catch (e: any) {
+      console.error('ERROR IN THUNK playground/loadSavedPlayground:', e);
+      console.log('Resetting playground...');
+      mixpanelTrack(mixpanelEvents.ERROR, {
+        error: e,
+        errorMessage: e.message,
+        errorJson: JSON.stringify(e),
+        info: "Couldn't load playground in playground/loadSavedPlayground. Resetting plans.",
+      });
+      dispatch(push(reset_playground_path()));
+    }
   }
 );
 
