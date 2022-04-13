@@ -17,6 +17,8 @@ import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playg
 import useQuery from '../../app/useQuery';
 
 export const new_playground_path = () => '/playgrounds/new';
+export const reset_playground_path = () =>
+  new_playground_path() + '?reset-playground=true';
 
 export default function NewPlayground() {
   let fullPageRef = createRef<any>();
