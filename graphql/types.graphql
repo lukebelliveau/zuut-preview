@@ -57,4 +57,5 @@ input PlanInput {
 type Mutation {
   createPlan(plan: PlanInput!): ID!
   updatePlan(plan: PlanInput!): Plan!
+  deleteAllPlans: [Plan]
 }

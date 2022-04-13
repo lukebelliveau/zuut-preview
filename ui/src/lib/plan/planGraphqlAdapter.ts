@@ -100,6 +100,18 @@ export default class PlanGraphqlAdapter {
     return result.data.createPlan;
   }
 
+  deleteAll() {
+    return this.client.mutate({
+      mutation: gql`
+        mutation DeleteAllPlans {
+          deleteAllPlans {
+            id
+          }
+        }
+      `,
+    });
+  }
+
   update(plan: Plan) {
     return this.client.mutate({
       mutation: gql`

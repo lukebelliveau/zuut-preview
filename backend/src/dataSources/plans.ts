@@ -1,19 +1,26 @@
-import { MongoDataSource } from "apollo-datasource-mongodb";
-import { ObjectId } from "mongodb";
+import { MongoDataSource } from 'apollo-datasource-mongodb';
+import { ObjectId } from 'mongodb';
 
-import { Plan, PlanInput } from "../graphql";
-import { assertDefined } from "../graphqlInput";
-import { GraphqlContext } from "../server";
-import { PlanDocument, planDocumentFromGraphql, planDocumentToGraphql } from "./plans/planDocument";
+import { Plan, PlanInput } from '../graphql';
+import { assertDefined } from '../graphqlInput';
+import { GraphqlContext } from '../server';
+import {
+  PlanDocument,
+  planDocumentFromGraphql,
+  planDocumentToGraphql,
+} from './plans/planDocument';
 
-export default class Plans extends MongoDataSource<PlanDocument, GraphqlContext> {
+export default class Plans extends MongoDataSource<
+  PlanDocument,
+  GraphqlContext
+> {
   async all(): Promise<Plan[]> {
     const list = await this.findByFields({
-      userId: this.userId
+      userId: this.userId,
     });
 
     const filteredList: PlanDocument[] = list.map(assertDefined);
-    
+
     return filteredList.map(planDocumentToGraphql);
   }
 
@@ -31,12 +38,23 @@ export default class Plans extends MongoDataSource<PlanDocument, GraphqlContext>
 
   async update(planInput: PlanInput): Promise<Plan> {
     const planId = assertDefined(planInput.id);
-    await this.collection.replaceOne({
-      _id: new ObjectId(planId),
-      userId: this.userId,
-    }, planDocumentFromGraphql(planInput, this.userId));
-    
+    await this.collection.replaceOne(
+      {
+        _id: new ObjectId(planId),
+        userId: this.userId,
+      },
+      planDocumentFromGraphql(planInput, this.userId)
+    );
+
     return this.getPlan(planId);
+  }
+
+  async deleteAll(): Promise<null> {
+    await this.collection.deleteMany({
+      userId: this.userId,
+    });
+
+    return null;
   }
 
   get userId() {

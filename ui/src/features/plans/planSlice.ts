@@ -5,6 +5,7 @@ import { RootState } from '../../app/store';
 import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
+import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
 import { playground_path } from '../../routes/playgrounds/ShowPlayground';
 import { setPlan } from '../playgrounds/playgroundSlice';
 import { selectJwt } from '../users/userSelector';
@@ -39,6 +40,22 @@ export const createPlan = createAsyncThunk(
     dispatch(create(PlanReduxAdapter.planToState(plan)));
     dispatch(setPlan(plan.id));
     dispatch(push(playground_path()));
+  }
+);
+
+export const deleteAllPlans = createAsyncThunk(
+  'plan/deleteAllPlans',
+  async (_: boolean, { dispatch, getState }) => {
+    try {
+      const jwt = selectJwt(getState() as RootState);
+      const adapter = new PlanGraphqlAdapter(jwt);
+
+      await adapter.deleteAll();
+
+      dispatch(push(new_playground_path()));
+    } catch (e) {
+      console.error('ERROR IN THUNK plan/deleteAllPlans: ', e);
+    }
   }
 );
 

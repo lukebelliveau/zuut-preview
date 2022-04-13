@@ -50,6 +50,7 @@ export type ItemInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPlan: Scalars['ID'];
+  deleteAllPlans?: Maybe<Array<Maybe<Plan>>>;
   updatePlan: Plan;
 };
 
@@ -264,6 +265,7 @@ export interface ModifiersScalarConfig extends GraphQLScalarTypeConfig<Resolvers
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createPlan?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationCreatePlanArgs, 'plan'>>;
+  deleteAllPlans?: Resolver<Maybe<Array<Maybe<ResolversTypes['Plan']>>>, ParentType, ContextType>;
   updatePlan?: Resolver<ResolversTypes['Plan'], ParentType, ContextType, RequireFields<MutationUpdatePlanArgs, 'plan'>>;
 };
 

@@ -10,7 +10,7 @@ import EnterDimensions from './NewPlayground/EnterDimensions';
 import { useJwt } from '../../features/users/userSelector';
 import Loading from '../../components/Loading';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { createPlan } from '../../features/plans/planSlice';
+import { createPlan, deleteAllPlans } from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
 import { playground_path } from './ShowPlayground';
 import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playgroundSlice';
@@ -27,13 +27,16 @@ export default function NewPlayground() {
   let query = useQuery();
 
   const resetPlayground = query.get('reset-playground');
+  const jwt = useJwt();
 
   useEffect(() => {
     if (!isFirstLoad && !resetPlayground) {
       dispatch(loadCurrentPlaygroundIfPresent(true));
       setIsFirstLoad(true);
+    } else if (resetPlayground && jwt) {
+      dispatch(deleteAllPlans(true));
     }
-  }, [isFirstLoad, setIsFirstLoad, dispatch, resetPlayground]);
+  }, [isFirstLoad, setIsFirstLoad, dispatch, resetPlayground, jwt]);
 
   type FormParams = {
     name: string;

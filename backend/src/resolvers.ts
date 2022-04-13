@@ -1,5 +1,5 @@
-import { Resolvers } from "./graphql";
-import { GraphqlContext } from "./server";
+import { Resolvers } from './graphql';
+import { GraphqlContext } from './server';
 
 export const resolvers: Resolvers<GraphqlContext> = {
   Query: {
@@ -14,6 +14,10 @@ export const resolvers: Resolvers<GraphqlContext> = {
 
     updatePlan(_, planInput, { dataSources }) {
       return dataSources.plans.update(planInput.plan);
-    }
+    },
+
+    deleteAllPlans(_, __, { dataSources }) {
+      return dataSources.plans.deleteAll();
+    },
   },
 };

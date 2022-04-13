@@ -44,6 +44,7 @@ export type ItemInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPlan: Scalars['ID'];
+  deleteAllPlans?: Maybe<Array<Maybe<Plan>>>;
   updatePlan: Plan;
 };
 
