@@ -23,11 +23,11 @@ import {
 } from '../features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
 import { Item } from '../lib/item';
-import { onReturnKey } from '../lib/interactions/keyboard';
 import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
 import { setVisibleLayer } from '../features/playgrounds/playgroundSlice';
 import ControlPanel from './ControlPanel/ControlPanel';
+import { isWallItem } from '../lib/item/wallItem';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -111,7 +111,63 @@ export default function Inventory() {
           {items.length > 0 ? (
             <ul>
               {items
-                .filter((item) => !isModiferItem(item))
+                .filter((item) => !isModiferItem(item) && !isWallItem(item))
+                .map((item) => {
+                  const selected = selectedIds.includes(item.id);
+                  return (
+                    <Fragment key={item.id}>
+                      <li>
+                        <input
+                          type="checkbox"
+                          checked={selected}
+                          onChange={() => toggleItemSelected(item)}
+                        />
+                        <span
+                          role="menuitem"
+                          onClick={() => selectItemFromInventory(item)}
+                          onKeyDown={(e) => handleItemKeyDown(e, item)}
+                          tabIndex={0}
+                          className={clsx({
+                            selected,
+                          })}
+                        >
+                          {item.name}
+                        </span>
+                      </li>
+                      {isPlaceableItem(item)
+                        ? Object.entries(item.modifiers).map(
+                            ([modifierName, modifierIds]) => {
+                              if (modifierIds.length > 0) {
+                                return (
+                                  <li key={modifierName}>
+                                    <span
+                                      role="menuitem"
+                                      className="modifier-list-item"
+                                    >
+                                      {`${modifierName} (x${modifierIds.length})`}
+                                    </span>
+                                  </li>
+                                );
+                              } else return null;
+                            }
+                          )
+                        : null}
+                    </Fragment>
+                  );
+                })}
+            </ul>
+          ) : (
+            <p>Drag items from the Objects toolbox</p>
+          )}
+        </div>
+        {items.filter((item) => isWallItem(item)).length > 0 ? (
+          <div className="layout-list-body">
+            <span>
+              <b>Layout</b>
+            </span>
+            <ul>
+              {items
+                .filter((item) => isWallItem(item))
                 .map((item) => {
                   const selected = selectedIds.includes(item.id);
                   return (
@@ -159,10 +215,8 @@ export default function Inventory() {
                   );
                 })}
             </ul>
-          ) : (
-            <p>Drag items from the Objects toolbox</p>
-          )}
-        </div>
+          </div>
+        ) : null}
       </section>
       <ControlPanel />
     </div>

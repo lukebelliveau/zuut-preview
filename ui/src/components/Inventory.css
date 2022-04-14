@@ -46,6 +46,20 @@
   width: 90%;
 }
 
+.layout-list-body {
+  background-color: var(--primary-white);
+  border-top: 0;
+  visibility: visible;
+  min-height: 4rem;
+  padding: 5%;
+  width: 90%;
+}
+
+.layout-list-body span {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
 #inventory-list ul {
   margin: 0;
 }

@@ -23,7 +23,7 @@ import PlaceableItem, {
 export const WALL_ITEM_TYPE = 'WallItem';
 
 export function isWallItem(item: Item): item is WallItem {
-  return (item as WallItem).type === WALL_ITEM_TYPE;
+  return item instanceof WallItem;
 }
 
 export default class WallItem extends PlaceableItem implements IPlaceableItem {

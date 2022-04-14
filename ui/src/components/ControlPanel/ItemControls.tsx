@@ -17,6 +17,7 @@ import { ItemState } from '../../features/items/itemState';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { onReturnKey } from '../../lib/interactions/keyboard';
 import PlaceableItem from '../../lib/item/placeableItem';
+import { isWallItem } from '../../lib/item/wallItem';
 
 export function ItemControls({ itemState }: { itemState?: ItemState }) {
   const dispatch = useDispatch();
@@ -55,14 +56,16 @@ export function ItemControls({ itemState }: { itemState?: ItemState }) {
         >
           <img src={DeleteIcon} alt="delete item" />
         </button>
-        <button
-          onClick={rotateItem}
-          onKeyDown={onReturnKey(rotateItem)}
-          aria-label="rotate item"
-          tabIndex={-1}
-        >
-          <img src={RotateIcon} alt="rotate item" />
-        </button>
+        {isWallItem(item) ? null : (
+          <button
+            onClick={rotateItem}
+            onKeyDown={onReturnKey(rotateItem)}
+            aria-label="rotate item"
+            tabIndex={-1}
+          >
+            <img src={RotateIcon} alt="rotate item" />
+          </button>
+        )}
       </div>
       <ModifierControls item={item} />
     </div>
@@ -80,6 +83,8 @@ const ModifierControls = ({ item }: { item: PlaceableItem }) => {
   function incrementModifier(modifierName: string) {
     dispatch(incrementModifierThunk({ itemId: item.id, modifierName }));
   }
+  if (Object.keys(item.modifiers).length === 0) return null;
+
   return (
     <div className="control-panel-section">
       <h4>Quick adds</h4>
