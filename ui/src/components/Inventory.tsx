@@ -73,16 +73,6 @@ export default function Inventory() {
     dispatch(toggleSelect(item.id));
   };
 
-  let selectButtonText = 'Select All';
-  let selectButtonOnClick = selectAll;
-
-  if (selectedIds.length === itemIds.length) {
-    selectButtonText = 'Deselect All';
-    selectButtonOnClick = () => {
-      dispatch(unselectAll());
-    };
-  }
-
   const setItemSelected = (checked: boolean, item: Item) => {
     if (checked) {
       dispatch(select(item.id));
@@ -90,6 +80,16 @@ export default function Inventory() {
       dispatch(unselect(item.id));
     }
   };
+
+  let selectButtonText = 'Select All';
+  let selectButtonOnClick = selectAll;
+
+  if (selectedIds.length === itemIds.length && selectedIds.length > 0) {
+    selectButtonText = 'Deselect All';
+    selectButtonOnClick = () => {
+      dispatch(unselectAll());
+    };
+  }
 
   return (
     <div id="inventory-sidebar">
@@ -101,6 +101,7 @@ export default function Inventory() {
               tabIndex={0}
               onClick={selectButtonOnClick}
               aria-label={selectButtonText}
+              disabled={itemIds.length === 0}
             >
               {selectButtonText}
             </button>

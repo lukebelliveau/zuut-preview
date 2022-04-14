@@ -18,6 +18,11 @@
   padding: 0.1rem 1rem;
 }
 
+#inventory-header button:disabled {
+  cursor: unset;
+  border: none;
+}
+
 #inventory-header h2 {
   font-weight: 700;
   font-size: 1.5rem;
