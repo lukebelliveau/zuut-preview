@@ -93,8 +93,58 @@ export const removeItem = createAsyncThunk(
       const state = getState() as RootState;
       const planService = new PlanService(state);
       return planService.syncCurrent();
-    } catch (e) {
-      console.error('Error in thunk items/removeItem:', e);
+    } catch (e: any) {
+      if (e.message === 'No JWT set' && process.env.NODE_ENV === 'test') {
+        return;
+      } else {
+        console.error('Error in thunk items/removeItem:', e);
+      }
+    }
+  }
+);
+
+export const removeItemWithoutHistory = createAsyncThunk(
+  'items/removeItemWithoutHistory',
+  async (id: string, { dispatch, getState }) => {
+    try {
+      const itemState = itemsSelectors.selectById(getState() as RootState, id);
+      if (!itemState) throw new Error('Item not found');
+      const item = ItemReduxAdapter.stateToItem(itemState);
+
+      if (isPlaceableItem(item)) {
+        if (item.modifiers) {
+          let modifierIds: string[] = [];
+
+          Object.values(item.modifiers).forEach((modifierCategory) => {
+            modifierCategory.forEach((modifierId: string) => {
+              modifierIds.push(modifierId);
+            });
+          });
+
+          dispatch(removeManyWithoutHistory(modifierIds));
+        }
+
+        item.removeAllModifiers();
+      }
+
+      dispatch(
+        updateOneWithoutHistory({
+          id: item.id,
+          changes: ItemReduxAdapter.itemToState(item),
+        })
+      );
+
+      dispatch(removeOneWithoutHistory(id));
+
+      const state = getState() as RootState;
+      const planService = new PlanService(state);
+      return planService.syncCurrent();
+    } catch (e: any) {
+      if (e.message === 'No JWT set' && process.env.NODE_ENV === 'test') {
+        return;
+      } else {
+        console.error('Error in thunk items/removeItemWithoutHistory:', e);
+      }
     }
   }
 );
@@ -103,13 +153,19 @@ export const removeItems = createAsyncThunk(
   'items/removeItems',
   async (ids: string[], { dispatch, getState }) => {
     try {
-      dispatch(removeMany(ids));
+      ids.forEach(async (id) => {
+        dispatch(removeItemWithoutHistory(id));
+      });
 
       const state = getState() as RootState;
       const planService = new PlanService(state);
       return planService.syncCurrent();
-    } catch (e) {
-      console.error('Error in thunk items/removeItems:', e);
+    } catch (e: any) {
+      if (e.message === 'No JWT set' && process.env.NODE_ENV === 'test') {
+        return;
+      } else {
+        console.error('Error in thunk items/removeItems:', e);
+      }
     }
   }
 );

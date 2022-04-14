@@ -83,6 +83,14 @@ export default function Inventory() {
     };
   }
 
+  const setItemSelected = (checked: boolean, item: Item) => {
+    if (checked) {
+      dispatch(select(item.id));
+    } else {
+      dispatch(unselect(item.id));
+    }
+  };
+
   return (
     <div id="inventory-sidebar">
       <section ref={drop} id="inventory-list" className={className}>
@@ -112,6 +120,9 @@ export default function Inventory() {
                           type="checkbox"
                           checked={selected}
                           onClick={() => toggleItemSelected(item)}
+                          onChange={(e) =>
+                            setItemSelected(e.target.checked, item)
+                          }
                         />
                         <span
                           role="menuitem"

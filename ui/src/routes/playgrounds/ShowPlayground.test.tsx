@@ -1,11 +1,11 @@
 import { EnhancedStore } from '@reduxjs/toolkit';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
-import { AppStore, createAppStore } from '../../app/store';
+import { createAppStore } from '../../app/store';
 import { create } from '../../features/plans/planSlice';
 import { setPlan } from '../../features/playgrounds/playgroundSlice';
 import { setUser } from '../../features/users/userSlice';
@@ -189,7 +189,9 @@ describe('modifiers', () => {
 
     expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
     expect(screen.queryByText(/soil \(/)).toBeNull();
-    expect(store.getState().items.present.ids.length).toBe(0);
+    await waitFor(() =>
+      expect(store.getState().items.present.ids.length).toBe(0)
+    );
   });
 });
 
