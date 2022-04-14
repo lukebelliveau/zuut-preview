@@ -5,7 +5,10 @@ import { useAppSelector } from '../app/hooks';
 import { selectSelectedItemId } from '../features/interactions/interactionsSelectors';
 import clsx from 'clsx';
 
-import { useSelectAllItems } from '../features/items/itemsSelectors';
+import {
+  useSelectAllItemIds,
+  useSelectAllItems,
+} from '../features/items/itemsSelectors';
 import { addItem } from '../features/items/itemsSlice';
 import ItemReduxAdapter from '../lib/item/itemReduxAdapter';
 import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
@@ -13,7 +16,10 @@ import MiscItem, { MISC_ITEM_TYPE } from '../lib/item/miscItem';
 import './Inventory.css';
 import {
   select,
+  selectMany,
   toggleSelect,
+  unselect,
+  unselectAll,
 } from '../features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
 import { Item } from '../lib/item';
@@ -32,6 +38,7 @@ export default function Inventory() {
   const store = useStore();
 
   const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
+  const itemIds = useSelectAllItemIds();
 
   const [_, drop] = useDrop(() => ({
     accept: MISC_ITEM_TYPE,
@@ -58,11 +65,38 @@ export default function Inventory() {
     }
   };
 
+  const selectAll = () => {
+    dispatch(selectMany(itemIds.map((id) => id.toString())));
+  };
+
+  const toggleItemSelected = (item: Item) => {
+    dispatch(toggleSelect(item.id));
+  };
+
+  let selectButtonText = 'Select All';
+  let selectButtonOnClick = selectAll;
+
+  if (selectedIds.length === itemIds.length) {
+    selectButtonText = 'Deselect All';
+    selectButtonOnClick = () => {
+      dispatch(unselectAll());
+    };
+  }
+
   return (
     <div id="inventory-sidebar">
       <section ref={drop} id="inventory-list" className={className}>
         <div id="inventory-header">
           <h2>Inventory</h2>
+          <div className="buttons">
+            <button
+              tabIndex={0}
+              onClick={selectButtonOnClick}
+              aria-label={selectButtonText}
+            >
+              {selectButtonText}
+            </button>
+          </div>
         </div>
         <div className="inventory-list-body">
           {items.length > 0 ? (
@@ -70,17 +104,22 @@ export default function Inventory() {
               {items
                 .filter((item) => !isModiferItem(item))
                 .map((item) => {
+                  const selected = selectedIds.includes(item.id);
                   return (
                     <Fragment key={item.id}>
                       <li>
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          checked={selected}
+                          onClick={() => toggleItemSelected(item)}
+                        />
                         <span
                           role="menuitem"
                           onClick={() => selectItemFromInventory(item)}
                           onKeyDown={(e) => handleItemKeyDown(e, item)}
                           tabIndex={0}
                           className={clsx({
-                            selected: selectedIds.includes(item.id),
+                            selected,
                           })}
                         >
                           {item.name}
