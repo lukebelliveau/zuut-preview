@@ -1,19 +1,21 @@
 #control-panel {
-  height: 80%;
-  width: 14.063rem;
+  height: 60%;
   position: absolute;
-  right: 0.5rem;
-  top: 50%;
+  width: 100%;
+  top: 40%;
   transition: all 1s;
+  overflow-y: hidden;
 }
+
 #control-panel.hide {
-  top: 95%;
+  top: 100%;
   transition: all 1s;
-  height: 0px;
+  height: 0%;
 }
 #control-panel.minimize {
   top: 95%;
   transition: all 1s;
+  height: 5%;
 }
 #control-panel.hidden .control-panel-body {
   visibility: hidden;
@@ -29,7 +31,7 @@
   font-size: 1rem;
   line-height: 1.067rem;
   margin: 0;
-  padding: 0.813rem 0;
+  padding: 5% 0;
   text-align: center;
   text-transform: uppercase;
 }
@@ -71,6 +73,7 @@
   visibility: visible;
   min-height: 4rem;
   padding: 0.5rem;
+  height: 100%;
 }
 
 .control-panel-section {

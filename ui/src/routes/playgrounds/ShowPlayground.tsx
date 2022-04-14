@@ -124,6 +124,7 @@ export default function ShowPlayground() {
             ref={stageRef}
             width={playground.displayWidth}
             height={playground.displayHeight}
+            // height={0}
             x={playground.centerX}
             y={playground.centerY}
             scaleX={scale}
@@ -139,8 +140,6 @@ export default function ShowPlayground() {
           </Stage>
         </div>
       </Layout>
-      <Inventory />
-      <ControlPanel />
     </div>
   );
 }

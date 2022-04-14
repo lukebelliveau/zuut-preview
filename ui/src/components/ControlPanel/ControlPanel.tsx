@@ -46,7 +46,7 @@ const ControlPanel = () => {
           onClick={toggleDisplayControlPanel}
           onKeyDown={onReturnKey(toggleDisplayControlPanel)}
         >
-          Control Panel
+          {item && item.name ? item.name : 'Control Panel'}
         </button>
       </h2>
       {controlPanelState === 'show' ? <ItemControls itemState={item} /> : null}

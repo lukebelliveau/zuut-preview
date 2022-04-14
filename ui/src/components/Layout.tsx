@@ -8,6 +8,7 @@ import LogoutButton from './LogoutButton';
 import Sidebar from './Sidebar';
 import { useSelectDefaultPlan } from '../features/plans/planSelectors';
 import Link from './Link';
+import Inventory from './Inventory';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -36,6 +37,7 @@ export default function Layout(props: LayoutProps) {
         <Sidebar />
       </div>
       <div id="content">{props.children}</div>
+      <Inventory />
     </div>
   );
 }

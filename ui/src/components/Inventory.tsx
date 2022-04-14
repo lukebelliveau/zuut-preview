@@ -21,6 +21,7 @@ import { onReturnKey } from '../lib/interactions/keyboard';
 import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
 import { setVisibleLayer } from '../features/playgrounds/playgroundSlice';
+import ControlPanel from './ControlPanel/ControlPanel';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -58,65 +59,61 @@ export default function Inventory() {
   };
 
   return (
-    <section ref={drop} id="inventory-list" className={className}>
-      <h2>
-        <button
-          onClick={() => setHidden(!hidden)}
-          onKeyDown={onReturnKey(() => {
-            setHidden(!hidden);
-          })}
-        >
-          Inventory
-        </button>
-      </h2>
-      <div className="inventory-list-body">
-        {items.length > 0 ? (
-          <ul>
-            {items
-              .filter((item) => !isModiferItem(item))
-              .map((item) => {
-                return (
-                  <Fragment key={item.id}>
-                    <li>
-                      <input type="checkbox" />
-                      <span
-                        role="menuitem"
-                        onClick={() => selectItemFromInventory(item)}
-                        onKeyDown={(e) => handleItemKeyDown(e, item)}
-                        tabIndex={0}
-                        className={clsx({
-                          selected: selectedIds.includes(item.id),
-                        })}
-                      >
-                        {item.name}
-                      </span>
-                    </li>
-                    {isPlaceableItem(item)
-                      ? Object.entries(item.modifiers).map(
-                          ([modifierName, modifierIds]) => {
-                            if (modifierIds.length > 0) {
-                              return (
-                                <li key={modifierName}>
-                                  <span
-                                    role="menuitem"
-                                    className="modifier-list-item"
-                                  >
-                                    {`${modifierName} (x${modifierIds.length})`}
-                                  </span>
-                                </li>
-                              );
-                            } else return null;
-                          }
-                        )
-                      : null}
-                  </Fragment>
-                );
-              })}
-          </ul>
-        ) : (
-          <p>Drag items from the Objects toolbox</p>
-        )}
-      </div>
-    </section>
+    <div id="inventory-sidebar">
+      <section ref={drop} id="inventory-list" className={className}>
+        <div id="inventory-header">
+          <h2>Inventory</h2>
+        </div>
+        <div className="inventory-list-body">
+          {items.length > 0 ? (
+            <ul>
+              {items
+                .filter((item) => !isModiferItem(item))
+                .map((item) => {
+                  return (
+                    <Fragment key={item.id}>
+                      <li>
+                        <input type="checkbox" />
+                        <span
+                          role="menuitem"
+                          onClick={() => selectItemFromInventory(item)}
+                          onKeyDown={(e) => handleItemKeyDown(e, item)}
+                          tabIndex={0}
+                          className={clsx({
+                            selected: selectedIds.includes(item.id),
+                          })}
+                        >
+                          {item.name}
+                        </span>
+                      </li>
+                      {isPlaceableItem(item)
+                        ? Object.entries(item.modifiers).map(
+                            ([modifierName, modifierIds]) => {
+                              if (modifierIds.length > 0) {
+                                return (
+                                  <li key={modifierName}>
+                                    <span
+                                      role="menuitem"
+                                      className="modifier-list-item"
+                                    >
+                                      {`${modifierName} (x${modifierIds.length})`}
+                                    </span>
+                                  </li>
+                                );
+                              } else return null;
+                            }
+                          )
+                        : null}
+                    </Fragment>
+                  );
+                })}
+            </ul>
+          ) : (
+            <p>Drag items from the Objects toolbox</p>
+          )}
+        </div>
+      </section>
+      <ControlPanel />
+    </div>
   );
 }

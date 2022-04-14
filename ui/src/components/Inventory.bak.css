@@ -1,39 +1,61 @@
 #inventory-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 80%;
+  width: 14.063rem;
+  position: absolute;
+  right: 0.5rem;
+  top: 10%;
+  transition: all 1s;
 }
-#inventory-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--black);
-  width: 75%;
+#inventory-list.hidden {
+  top: 90%;
+  transition: all 1s;
+  height: 0px;
+}
+#inventory-list.hidden .inventory-list-body {
+  visibility: hidden;
 }
 
-#inventory-header h2 {
+#inventory-list h2 {
+  background-color: var(--purple-1);
+  border: 0.063rem solid var(--black);
+  border-bottom: 0;
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: var(--primary-white);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1rem;
   line-height: 1.067rem;
   margin: 0;
   padding: 0.813rem 0;
   text-align: center;
   text-transform: uppercase;
 }
-
+#inventory-list h2::after {
+  margin-left: 1rem;
+  content: url('../images/triangle-upside-down.svg');
+}
+#inventory-list h2 button {
+  background-color: var(--purple-1);
+  border: 0;
+  color: var(--primary-white);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.067rem;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
 #inventory-list.hidden h2::after {
   content: url('../images/triangle.svg');
 }
 
 .inventory-list-body {
   background-color: var(--primary-white);
+  border: 0.063rem solid var(--black);
   border-top: 0;
   visibility: visible;
   min-height: 4rem;
   padding: 0.5rem;
-  width: 100%;
-  margin-left: 10%;
 }
 
 #inventory-list ul {

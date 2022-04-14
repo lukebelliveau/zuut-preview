@@ -108,7 +108,12 @@ export const resizePlayground = createAsyncThunk(
   'playground/resizePlayground',
   async (_, { dispatch, getState }) => {
     const sandbox = window.document.getElementById('sandbox');
-    if (!sandbox) return;
+    const toolbar = window.document.getElementById('toolbar');
+    if (!sandbox || !toolbar)
+      throw new Error(
+        `tried to resize playground but couldn't find sandbox or toolbar:
+          sandbox: ${sandbox} toolbar: ${toolbar}`
+      );
 
     const playgroundState = selectPlaygroundState(getState() as RootState);
     const planState = selectDefaultPlan(getState() as RootState);
@@ -117,7 +122,10 @@ export const resizePlayground = createAsyncThunk(
       playgroundState
     );
 
-    playground.setDisplayDimensions(sandbox.offsetWidth, sandbox.offsetHeight);
+    playground.setDisplayDimensions(
+      sandbox.offsetWidth,
+      sandbox.offsetHeight - toolbar.offsetHeight
+    );
 
     dispatch(
       playgroundSlice.actions.resize(
