@@ -8,7 +8,6 @@ import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
 import { useResizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
-import Inventory from '../../components/Inventory';
 import {
   loadSavedPlayground,
   setVisibleLayer,
@@ -18,7 +17,6 @@ import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter'
 import PlaygroundRoom from '../../components/Playground/PlaygroundRoom';
 import PlaygroundItems from '../../components/Playground/PlaygroundItems';
 import GridLines from '../../components/Playground/GridLines';
-import ControlPanel from '../../components/ControlPanel/ControlPanel';
 import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/Sidebar/SidebarTabs';
 import { useBuildPlayground } from '../../app/builderHooks';
 import Loading from '../../components/Loading';
@@ -36,6 +34,7 @@ import Toolbar from '../../components/Toolbar/Toolbar';
 import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
 import { isCeilingPlaceableItem } from '../../lib/item/ceilingPlaceableItem';
 import { Layer } from '../../lib/layer';
+import { Point } from '../../lib/point';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -47,6 +46,18 @@ export default function ShowPlayground() {
   const store = useStore();
   const dispatchAddItem = useDispatchAddItem();
 
+  /**
+   * Ugh. I'm not able to get the react-dnd useDrop() hook to update
+   * when the playground updates. The instance of `playground` the callback closes over
+   * always returns { x: 0, y: 0} (initial values),
+   * even when the component re-renders with different playground values.
+   *
+   * This hacky workaround ensures that when an item is dropped,
+   * it's placed in the center of the playground.
+   */
+  const hackyPlaygroundCenterRef = useRef<Point>();
+  hackyPlaygroundCenterRef.current = playground.place();
+
   useResizePlaygroundOnWindowResize();
 
   const [_, drop] = useDrop(() => ({
@@ -57,8 +68,13 @@ export default function ShowPlayground() {
       else dispatch(setVisibleLayer(Layer.FLOOR));
 
       if (isPlaceableItem(item)) {
-        item.place(playground.place());
+        item.place(
+          hackyPlaygroundCenterRef.current
+            ? hackyPlaygroundCenterRef.current
+            : playground.place()
+        );
       }
+
       dispatchAddItem(item.copy());
     },
   }));
