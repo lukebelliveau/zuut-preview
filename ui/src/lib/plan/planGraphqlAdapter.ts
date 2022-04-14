@@ -5,29 +5,52 @@ import {
   NormalizedCacheObject,
   gql,
 } from '@apollo/client';
+import { NetworkError } from '@apollo/client/errors';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
+import { push } from 'connected-react-router';
 
 import { Query } from '../../graphql';
 import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
 import ItemGraphqlAdapter from '../item/itemGraphqlAdapter';
 import Plan from '../plan';
 
+const requestLink = (jwt: string) => {
+  return setContext((_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+  })
+    .concat(
+      onError(() => {
+        /**
+         * hacky workaround in lieu of token refresh
+         * app stops responding
+         *
+         * I'm so sorry
+         */
+        // eslint-disable-next-line
+        location.href = '/session-expired';
+      })
+    )
+    .concat(
+      createHttpLink({
+        uri: '/graphql',
+      })
+    );
+};
+
 export default class PlanGraphqlAdapter {
   client: ApolloClient<NormalizedCacheObject>;
 
   constructor(jwt: string) {
+    console.log(jwt);
     this.client = new ApolloClient<NormalizedCacheObject>({
       cache: new InMemoryCache(),
-      link: setContext((_, { headers }) => ({
-        headers: {
-          ...headers,
-          Authorization: `Bearer ${jwt}`,
-        },
-      })).concat(
-        createHttpLink({
-          uri: '/graphql',
-        })
-      ),
+      link: requestLink(jwt),
     });
   }
 

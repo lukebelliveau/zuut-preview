@@ -15,6 +15,7 @@ import ShowPlayground, {
 } from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
 import AppErrorBoundary from './components/ErrorFallback';
+import SessionExpired from './routes/SessionExpired';
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function App() {
           </Route>
           <Route path="/access-denied">
             <AccessDenied />
+          </Route>
+          <Route path="/session-expired">
+            <SessionExpired />
           </Route>
         </AppErrorBoundary>
       </ConnectedRouter>
