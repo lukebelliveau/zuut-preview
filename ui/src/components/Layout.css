@@ -52,7 +52,6 @@
 }
 
 #sidebar {
-  grid-area: sidebar;
   grid-column: col-start / span 2;
   grid-row: 2 / 4;
 
@@ -64,7 +63,6 @@
 }
 
 #inventory-sidebar {
-  grid-area: sidebar;
   grid-column: 11 / span 2;
   grid-row: 2 / 4;
 
