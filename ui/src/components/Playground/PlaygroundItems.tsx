@@ -40,7 +40,7 @@ const useTrackCollisions = () => {
       item.updateCollisions(items, playground);
       if (oldCollisionState !== item.collisionState) {
         dispatch(
-          updateOne({
+          updateOneWithoutHistory({
             id: item.id,
             changes: ItemReduxAdapter.itemToState(item),
           })

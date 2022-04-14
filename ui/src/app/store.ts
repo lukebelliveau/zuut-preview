@@ -33,6 +33,7 @@ export function createAppStore() {
           addOne.type,
           removeOne.type,
           removeMany.type,
+          'items/removeItems',
         ]),
       }),
       plans: plansReducer,

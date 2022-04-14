@@ -18,7 +18,9 @@ export const itemsSlice = createSlice({
     updateOne: itemsAdapter.updateOne,
     updateOneWithoutHistory: itemsAdapter.updateOne,
     removeOne: itemsAdapter.removeOne,
+    removeOneWithoutHistory: itemsAdapter.removeOne,
     removeMany: itemsAdapter.removeMany,
+    removeManyWithoutHistory: itemsAdapter.removeMany,
   },
 });
 
@@ -28,7 +30,9 @@ export const {
   updateOne,
   updateOneWithoutHistory,
   removeOne,
+  removeOneWithoutHistory,
   removeMany,
+  removeManyWithoutHistory,
 } = itemsSlice.actions;
 
 export const addItem = createAsyncThunk(
@@ -78,10 +82,13 @@ export const removeItem = createAsyncThunk(
       }
 
       dispatch(
-        updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) })
+        updateOneWithoutHistory({
+          id: item.id,
+          changes: ItemReduxAdapter.itemToState(item),
+        })
       );
 
-      dispatch(removeOne(id));
+      dispatch(removeOneWithoutHistory(id));
 
       const state = getState() as RootState;
       const planService = new PlanService(state);
@@ -96,9 +103,7 @@ export const removeItems = createAsyncThunk(
   'items/removeItems',
   async (ids: string[], { dispatch, getState }) => {
     try {
-      ids.forEach((id) => {
-        dispatch(removeItem(id));
-      });
+      dispatch(removeMany(ids));
 
       const state = getState() as RootState;
       const planService = new PlanService(state);
