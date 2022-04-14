@@ -15,6 +15,8 @@ import { feetToMm } from '../../lib/conversions';
 import { playground_path } from './ShowPlayground';
 import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playgroundSlice';
 import useQuery from '../../app/useQuery';
+import { removeAll, removeAllItems } from '../../features/items/itemsSlice';
+import { ActionCreators } from 'redux-undo';
 
 export const new_playground_path = () => '/playgrounds/new';
 export const reset_playground_path = () =>
@@ -37,6 +39,8 @@ export default function NewPlayground() {
       setIsFirstLoad(true);
     } else if (resetPlayground && jwt) {
       dispatch(deleteAllPlans(true));
+      dispatch(removeAllItems(true));
+      dispatch(ActionCreators.clearHistory());
     }
   }, [isFirstLoad, setIsFirstLoad, dispatch, resetPlayground, jwt]);
 
