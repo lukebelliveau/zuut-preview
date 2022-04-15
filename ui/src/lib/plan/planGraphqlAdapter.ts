@@ -23,24 +23,11 @@ const requestLink = (jwt: string) => {
         Authorization: `Bearer ${jwt}`,
       },
     };
-  })
-    .concat(
-      onError(() => {
-        /**
-         * hacky workaround in lieu of token refresh
-         * app stops responding
-         *
-         * I'm so sorry
-         */
-        // eslint-disable-next-line
-        location.href = '/session-expired';
-      })
-    )
-    .concat(
-      createHttpLink({
-        uri: '/graphql',
-      })
-    );
+  }).concat(
+    createHttpLink({
+      uri: '/graphql',
+    })
+  );
 };
 
 export default class PlanGraphqlAdapter {
