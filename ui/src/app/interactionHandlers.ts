@@ -22,17 +22,27 @@ export const handleDeleteOnKeyDown = (
   }
 };
 
+const undoPressed = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+  if (e.ctrlKey && e.key === 'z' && getOS() === 'windows') return true;
+  if (e.metaKey && e.key === 'z') return true;
+  return false;
+};
+
+const redoPressed = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+  return (
+    (e.metaKey && e.shiftKey && e.key === 'z') ||
+    (e.ctrlKey && e.key === 'y' && getOS() === 'windows')
+  );
+};
+
 export const handleUndoRedoOnKeyDown = (
   e: React.KeyboardEvent<HTMLSpanElement>,
   store: AppStore
 ) => {
-  if (
-    (e.metaKey && e.shiftKey && e.key === 'z') ||
-    (e.metaKey && e.key === 'y' && getOS() === 'windows')
-  ) {
+  if (redoPressed(e)) {
     store.dispatch(redoItemAction());
     e.preventDefault();
-  } else if (e.metaKey && e.key === 'z') {
+  } else if (undoPressed(e)) {
     store.dispatch(undoItemAction());
     e.preventDefault();
   }
