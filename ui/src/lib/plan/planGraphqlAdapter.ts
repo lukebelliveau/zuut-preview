@@ -23,18 +23,33 @@ const requestLink = (jwt: string) => {
         Authorization: `Bearer ${jwt}`,
       },
     };
-  }).concat(
-    createHttpLink({
-      uri: '/graphql',
-    })
-  );
+  })
+    .concat(
+      onError((e: any) => {
+        /**
+         * seems like sometimes auth0 does not refresh tokens and user is left with stale token
+         * resulting in what was previously a 401 error invisible to the user
+         * this is a quick & hacky workaround
+         *
+         * I'm so sorry
+         */
+        if (e.networkError?.message?.includes('401')) {
+          // eslint-disable-next-line
+          location.href = '/session-expired';
+        }
+      })
+    )
+    .concat(
+      createHttpLink({
+        uri: '/graphql',
+      })
+    );
 };
 
 export default class PlanGraphqlAdapter {
   client: ApolloClient<NormalizedCacheObject>;
 
   constructor(jwt: string) {
-    console.log(jwt);
     this.client = new ApolloClient<NormalizedCacheObject>({
       cache: new InMemoryCache(),
       link: requestLink(jwt),

@@ -67,6 +67,10 @@ async function listen(port: number) {
     });
   }
 
+  app.use((err: any, req: any, res: any, next: any) => {
+    res.status(err.status).json(err);
+  });
+
   return new Promise((resolve, reject) => {
     httpServer.listen(port).once('listening', resolve).once('error', reject);
   });
