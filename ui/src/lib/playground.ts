@@ -1,4 +1,3 @@
-import { LayerState } from '../features/playgrounds/playgroundState';
 import PlaceableItem from './item/placeableItem';
 import { Layer } from './layer';
 import Plan from './plan';
@@ -21,11 +20,6 @@ export default class Playground {
   centerY: number = 0;
   plan: Plan | undefined;
   items: PlaceableItem[] = [];
-  showLayer: LayerState = {
-    [Layer.FLOOR]: true,
-    [Layer.CEILING]: true,
-    [Layer.BOTH]: true,
-  };
 
   constructor(
     displayWidth: number,

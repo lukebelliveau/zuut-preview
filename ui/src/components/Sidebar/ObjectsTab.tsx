@@ -11,9 +11,11 @@ import { useDispatchAddItem } from '../../features/items/itemsHooks';
 import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 import { isCeilingPlaceableItem } from '../../lib/item/ceilingPlaceableItem';
-import { setVisibleLayer } from '../../features/playgrounds/playgroundSlice';
 import { Layer } from '../../lib/layer';
-import { select } from '../../features/interactions/interactionsSlice';
+import {
+  select,
+  setVisibleLayer,
+} from '../../features/interactions/interactionsSlice';
 
 export default function LayoutTab() {
   const dispatch = useDispatch();

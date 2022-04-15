@@ -16,8 +16,8 @@ import Playground from '../playground';
 import { Point } from '../point';
 import { IItem, Item } from '../item';
 import ModifierItem from './modifierItem';
-import { LayerState } from '../../features/playgrounds/playgroundState';
 import { Layer } from '../layer';
+import { LayerState } from '../../features/interactions/interactionsState';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;

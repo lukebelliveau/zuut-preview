@@ -10,7 +10,6 @@ import Layout from '../../components/Layout';
 import { useResizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import {
   loadSavedPlayground,
-  setVisibleLayer,
   zoom as zoomPlayground,
 } from '../../features/playgrounds/playgroundSlice';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -35,6 +34,7 @@ import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
 import { isCeilingPlaceableItem } from '../../lib/item/ceilingPlaceableItem';
 import { Layer } from '../../lib/layer';
 import { Point } from '../../lib/point';
+import { setVisibleLayer } from '../../features/interactions/interactionsSlice';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -42,6 +42,9 @@ export default function ShowPlayground() {
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
+  // playground.place()
+  // playground.plan
+  console.log(playground);
   const jwt = useJwt();
   const store = useStore();
   const dispatchAddItem = useDispatchAddItem();

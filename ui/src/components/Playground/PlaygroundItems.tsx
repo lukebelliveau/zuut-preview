@@ -16,10 +16,14 @@ import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment, MutableRefObject, useEffect, useRef } from 'react';
 import { Point } from '../../lib/point';
 
-import { selectSelectedItemId } from '../../features/interactions/interactionsSelectors';
+import {
+  selectSelectedItemId,
+  useSelectShowLayer,
+} from '../../features/interactions/interactionsSelectors';
 import { useAppSelector } from '../../app/hooks';
 import {
   select,
+  setVisibleLayer,
   toggleSelect,
 } from '../../features/interactions/interactionsSlice';
 import { sortSelectedToLast } from '../../lib/itemList';
@@ -27,7 +31,6 @@ import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../features/items/itemsHooks';
 import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 import { PlaygroundState } from '../../features/playgrounds/playgroundState';
-import { setVisibleLayer } from '../../features/playgrounds/playgroundSlice';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -140,7 +143,7 @@ const Item = ({
   dropAndUpdateItemCollisions: (item: IPlaceableItem) => void;
 }) => {
   if (!item.image) throw new Error('Image not found in ImageItem component');
-  const playground = useSelectPlayground();
+  const showLayer = useSelectShowLayer();
 
   // create manually instead of using Konva's `use-image` package.
   // useImage() asynchronously loads the image every time the component mounts, causing flickering on zoom (because children of the Stage re-mount).
@@ -153,7 +156,7 @@ const Item = ({
     cursor: string,
     e: KonvaEventObject<MouseEvent>
   ) => {
-    if (!playground.showLayer[item.layer]) return;
+    if (!showLayer[item.layer]) return;
     if (e.target.getStage()?.container()) {
       const container = e.target?.getStage()?.container();
       if (container) {
@@ -186,7 +189,6 @@ const Item = ({
               <ModifierImage
                 item={item}
                 image={modifierImage}
-                playground={playground}
                 handleDragEnd={handleDragEnd}
                 handleDragMove={handleDragMove}
                 setContainerCursor={setContainerCursor}
@@ -209,8 +211,8 @@ const Item = ({
         strokeScaleEnabled={false}
         rotation={item.rotation}
         offset={item.offset}
-        draggable={playground.showLayer[item.layer]}
-        opacity={item.opacity(playground.showLayer)}
+        draggable={showLayer[item.layer]}
+        opacity={item.opacity(showLayer)}
         /**
          * don't use imageObj in tests, because there is no window.Image() in tests
          */
@@ -227,7 +229,6 @@ const Item = ({
 const ModifierImage = ({
   item,
   image,
-  playground,
   handleDragMove,
   handleDragEnd,
   setContainerCursor,
@@ -236,13 +237,13 @@ const ModifierImage = ({
 }: {
   item: IPlaceableItem;
   image: string;
-  playground: PlaygroundState;
   handleDragMove: (e: KonvaEventObject<MouseEvent>) => void;
   handleDragEnd: (e: KonvaEventObject<MouseEvent>) => void;
   setContainerCursor: (cursor: string, e: KonvaEventObject<MouseEvent>) => void;
   itemRef: MutableRefObject<any>;
   selectedItemIds: string[];
 }) => {
+  const showLayer = useSelectShowLayer();
   const modifierImageObj = new window.Image();
   modifierImageObj.src = image;
 
@@ -260,7 +261,7 @@ const ModifierImage = ({
       rotation={item.rotation}
       offset={item.offset}
       draggable
-      opacity={item.opacity(playground.showLayer)}
+      opacity={item.opacity(showLayer)}
       /**
        * don't use imageObj in tests, because there is no window.Image() in tests
        */

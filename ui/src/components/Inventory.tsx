@@ -17,6 +17,7 @@ import './Inventory.css';
 import {
   select,
   selectMany,
+  setVisibleLayer,
   toggleSelect,
   unselect,
   unselectAll,
@@ -25,7 +26,6 @@ import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
 import { Item } from '../lib/item';
 import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
-import { setVisibleLayer } from '../features/playgrounds/playgroundSlice';
 import ControlPanel from './ControlPanel/ControlPanel';
 import { isWallItem } from '../lib/item/wallItem';
 

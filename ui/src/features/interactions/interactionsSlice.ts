@@ -1,8 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Layer } from '../../lib/layer';
 import { InteractionsState } from './interactionsState';
 
 const initialState: InteractionsState = {
   selected: [],
+  showLayer: {
+    [Layer.FLOOR]: true,
+    [Layer.CEILING]: true,
+    [Layer.BOTH]: true,
+  },
 };
 
 export const interactionsSlice = createSlice({
@@ -32,9 +38,23 @@ export const interactionsSlice = createSlice({
     unselectAll: (state: InteractionsState) => {
       state.selected = [];
     },
+    toggleLayer(state: InteractionsState, action: PayloadAction<Layer>) {
+      if (action.payload === Layer.BOTH) return;
+      state.showLayer[action.payload] = !state.showLayer[action.payload];
+    },
+    setVisibleLayer(state: InteractionsState, action: PayloadAction<Layer>) {
+      state.showLayer[action.payload] = true;
+    },
   },
 });
 
-export const { select, toggleSelect, unselect, unselectAll, selectMany } =
-  interactionsSlice.actions;
+export const {
+  select,
+  toggleSelect,
+  unselect,
+  unselectAll,
+  selectMany,
+  toggleLayer,
+  setVisibleLayer,
+} = interactionsSlice.actions;
 export default interactionsSlice.reducer;

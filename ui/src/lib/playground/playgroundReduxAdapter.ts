@@ -12,21 +12,24 @@ export default class PlaygroundReduxAdapter {
       centerX: playground.centerX,
       centerY: playground.centerY,
       scale: playground.scale,
-      showLayer: playground.showLayer,
     };
   }
 
-  public static playgroundFromState(planState: IPlan | undefined, playgroundState: PlaygroundState): Playground {
-    const plan = planState ? PlanReduxAdapter.stateToPlan(planState) : undefined;
+  public static playgroundFromState(
+    planState: IPlan | undefined,
+    playgroundState: PlaygroundState
+  ): Playground {
+    const plan = planState
+      ? PlanReduxAdapter.stateToPlan(planState)
+      : undefined;
     const playground = new Playground(
       playgroundState.displayWidth,
       playgroundState.displayHeight,
       playgroundState.scale,
       plan,
       playgroundState.centerX,
-      playgroundState.centerY,
+      playgroundState.centerY
     );
-    playground.showLayer = playgroundState.showLayer;
     return playground;
   }
 }
