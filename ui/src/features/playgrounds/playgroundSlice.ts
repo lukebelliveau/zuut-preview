@@ -7,7 +7,6 @@ import { RootState } from '../../app/store';
 import { assertDefined } from '../../lib/assert';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { loadJwt } from '../../lib/jwt';
-import { Layer } from '../../lib/layer';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -27,8 +26,8 @@ const initialState: PlaygroundState = {
   planId: '0',
   displayWidth: 10,
   displayHeight: 10,
-  centerX: 0,
-  centerY: 0,
+  centerX: 10,
+  centerY: 10,
   scale: 1,
 };
 
