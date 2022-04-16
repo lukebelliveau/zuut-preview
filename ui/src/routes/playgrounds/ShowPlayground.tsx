@@ -42,9 +42,6 @@ export default function ShowPlayground() {
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
-  // playground.place()
-  // playground.plan
-  console.log(playground);
   const jwt = useJwt();
   const store = useStore();
   const dispatchAddItem = useDispatchAddItem();
@@ -143,7 +140,6 @@ export default function ShowPlayground() {
             ref={stageRef}
             width={playground.displayWidth}
             height={playground.displayHeight}
-            // height={0}
             x={playground.centerX}
             y={playground.centerY}
             scaleX={scale}

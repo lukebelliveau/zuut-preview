@@ -36,3 +36,21 @@
   padding: 0.25rem 1rem;
   margin: 0 0.25rem;
 }
+
+.reset-playground-modal button {
+  margin: 0.5rem 1rem;
+}
+
+.reset-playground-modal p {
+  text-align: center;
+  margin: 15px;
+}
+
+.reset-playground-modal div {
+  display: flex;
+
+  justify-content: center;
+  width: 100%;
+
+  margin: 5px;
+}

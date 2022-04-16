@@ -3,7 +3,6 @@ import {
   undoItemAction,
   redoItemAction,
 } from '../../features/items/itemsSlice';
-
 import './Toolbar.css';
 import {
   useSelectRedoStack,
@@ -11,17 +10,25 @@ import {
 } from '../../features/items/itemsSelectors';
 import UndoIcon from './UndoIcon';
 import RedoIcon from './RedoIcon';
-import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
 import { Layer } from '../../lib/layer';
-import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
-import Link from '../Link';
 import { useSelectShowLayer } from '../../features/interactions/interactionsSelectors';
 import { toggleLayer } from '../../features/interactions/interactionsSlice';
+import ResetPlaygroundModal from './ResetPlaygroundModal';
+import { useState } from 'react';
+import Modal from 'react-modal';
 
 function Toolbar() {
   const dispatch = useDispatch();
   const showLayer = useSelectShowLayer();
-  const playground = useSelectPlayground();
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    Modal.setAppElement('#root');
+    setIsOpen(false);
+  }
 
   const undo = () => {
     dispatch(undoItemAction());
@@ -89,13 +96,10 @@ function Toolbar() {
       >
         Ceiling Plane
       </button>
-
-      <Link
-        to={`${new_playground_path()}?reset-playground=true`}
-        className="tool"
-      >
+      <button className="tool" onClick={openModal}>
         Reset playground
-      </Link>
+      </button>
+      <ResetPlaygroundModal open={modalIsOpen} closeModal={closeModal} />
     </div>
   );
 }
