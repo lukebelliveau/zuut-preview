@@ -1,10 +1,9 @@
-import { Layer, Rect, Image } from 'react-konva';
+import { Layer, Rect, Image, Text } from 'react-konva';
 import { useDispatch } from 'react-redux';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import {
   removeItem,
-  updateOne,
   updateOneWithoutHistory,
 } from '../../features/items/itemsSlice';
 import {
@@ -29,8 +28,7 @@ import {
 import { sortSelectedToLast } from '../../lib/itemList';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../features/items/itemsHooks';
-import { useSelectPlayground } from '../../features/playgrounds/playgroundSelector';
-import { PlaygroundState } from '../../features/playgrounds/playgroundState';
+import { mmToFeet } from '../../lib/conversions';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -222,6 +220,7 @@ const Item = ({
         onMouseEnter={(e) => setContainerCursor('grab', e)}
         onMouseLeave={(e) => setContainerCursor('auto', e)}
       />
+      {/* <Coordinates item={item} /> */}
     </>
   );
 };
@@ -248,29 +247,31 @@ const ModifierImage = ({
   modifierImageObj.src = image;
 
   return (
-    <Image
-      key={item.id}
-      x={item.x}
-      y={item.y}
-      ref={itemRef}
-      width={item.width}
-      height={item.length}
-      stroke={getCollisionColor(item.collisionState)}
-      strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
-      strokeScaleEnabled={false}
-      rotation={item.rotation}
-      offset={item.offset}
-      draggable
-      opacity={item.opacity(showLayer)}
-      /**
-       * don't use imageObj in tests, because there is no window.Image() in tests
-       */
-      image={process.env.NODE_ENV === 'test' ? undefined : modifierImageObj}
-      onDragMove={handleDragMove}
-      onDragEnd={handleDragEnd}
-      onMouseEnter={(e) => setContainerCursor('grab', e)}
-      onMouseLeave={(e) => setContainerCursor('auto', e)}
-    />
+    <>
+      <Image
+        key={item.id}
+        x={item.x}
+        y={item.y}
+        ref={itemRef}
+        width={item.width}
+        height={item.length}
+        stroke={getCollisionColor(item.collisionState)}
+        strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
+        strokeScaleEnabled={false}
+        rotation={item.rotation}
+        offset={item.offset}
+        draggable
+        opacity={item.opacity(showLayer)}
+        /**
+         * don't use imageObj in tests, because there is no window.Image() in tests
+         */
+        image={process.env.NODE_ENV === 'test' ? undefined : modifierImageObj}
+        onDragMove={handleDragMove}
+        onDragEnd={handleDragEnd}
+        onMouseEnter={(e) => setContainerCursor('grab', e)}
+        onMouseLeave={(e) => setContainerCursor('auto', e)}
+      />
+    </>
   );
 };
 
@@ -299,6 +300,26 @@ const Shadow = ({ shadow }: { shadow?: PlacementShadow }) => {
       strokeScaleEnabled={false}
       offset={shadow.offset}
       draggable
+    />
+  );
+};
+
+const Coordinates = ({ item }: { item: IPlaceableItem }) => {
+  // only show if items are being dragged
+  if (!item.placementShadow) return null;
+  return (
+    <Text
+      key={item.id}
+      x={item.x - 450}
+      y={item.y - 150}
+      strokeWidth={1}
+      fontSize={150}
+      text={`(${Math.round(mmToFeet(item.x))}, ${Math.round(
+        mmToFeet(item.y)
+      )})`}
+      wrap="char"
+      align="center"
+      offset={item.offset}
     />
   );
 };
