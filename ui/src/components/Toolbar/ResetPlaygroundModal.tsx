@@ -21,7 +21,6 @@ const ResetPlaygroundModal = ({
   open: boolean;
   closeModal: () => void;
 }) => {
-  console.log('modal');
   return (
     <Modal
       isOpen={open}

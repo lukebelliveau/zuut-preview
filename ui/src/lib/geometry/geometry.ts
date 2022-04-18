@@ -273,28 +273,28 @@ export interface OffsetObject {
 
 export const computeNorthWest = (offsetObject: OffsetObject): Point => {
   return {
-    x: offsetObject.x - offsetObject.offset.x,
-    y: offsetObject.y - offsetObject.offset.y,
+    x: Math.round(offsetObject.x - offsetObject.offset.x),
+    y: Math.round(offsetObject.y - offsetObject.offset.y),
   };
 };
 
 export const computeNorthEast = (offsetObject: OffsetObject): Point => {
   return {
-    x: offsetObject.x + offsetObject.offset.x,
-    y: offsetObject.y - offsetObject.offset.y,
+    x: Math.round(offsetObject.x + offsetObject.offset.x),
+    y: Math.round(offsetObject.y - offsetObject.offset.y),
   };
 };
 
 export const computeSouthWest = (offsetObject: OffsetObject): Point => {
   return {
-    x: offsetObject.x - offsetObject.offset.x,
-    y: offsetObject.y + offsetObject.offset.y,
+    x: Math.round(offsetObject.x - offsetObject.offset.x),
+    y: Math.round(offsetObject.y + offsetObject.offset.y),
   };
 };
 
 export const computeSouthEast = (offsetObject: OffsetObject): Point => {
   return {
-    x: offsetObject.x + offsetObject.offset.x,
-    y: offsetObject.y + offsetObject.offset.y,
+    x: Math.round(offsetObject.x + offsetObject.offset.x),
+    y: Math.round(offsetObject.y + offsetObject.offset.y),
   };
 };
