@@ -4,6 +4,7 @@ import ItemList from '../itemList';
 import Plan from '../plan';
 import Playground from '../playground';
 import DuctItem from './ductItem';
+import Growspace from './growspace';
 import LightItem from './lightItem';
 import { CollisionState } from './placeableItem';
 import WindowItem from './windowitem';
@@ -254,5 +255,16 @@ describe('DuctItem', () => {
       expect(duct1.collisionState).toBe(CollisionState.CONNECTED);
       expect(duct2.collisionState).toBe(CollisionState.CONNECTED);
     });
+  });
+});
+
+describe('#collisionStateBetween', () => {
+  it('does not conflict with growspace', () => {
+    const growspace = new Growspace('', '1', 1001, 1001, 1001, 1001);
+    const duct = new DuctItem('', '2', 950, 950, 2000, 2000);
+
+    expect(duct.collisionStateBetween(duct, growspace)).toBe(
+      CollisionState.NEUTRAL
+    );
   });
 });

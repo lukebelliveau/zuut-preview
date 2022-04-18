@@ -9,6 +9,7 @@ import { Item } from '../item';
 import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import { Layer } from '../layer';
+import { isDuctItem } from './ductItem';
 
 export const GROWSPACE_TYPE = 'Growspace';
 
@@ -40,6 +41,8 @@ export default class Growspace extends PlaceableItem {
       return isStraddlingBoundary(otherItem, item)
         ? CollisionState.CONFLICTED
         : CollisionState.NEUTRAL;
+    } else if (isDuctItem(otherItem)) {
+      return CollisionState.NEUTRAL;
     }
 
     return super.collisionStateBetween(this, otherItem);

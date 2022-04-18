@@ -1,3 +1,4 @@
+import DuctItem from './ductItem';
 import Growspace from './growspace';
 import GrowspaceItem from './growspaceItem';
 import { CollisionState } from './placeableItem';
@@ -15,6 +16,14 @@ describe('Growspace', () => {
       const growspace = new Growspace('', '2', 1001, 1001, 1001, 1001);
       const item = new GrowspaceItem('', '1', 100, 100, 100, 100);
       expect(growspace.collisionStateBetween(growspace, item)).toBe(
+        CollisionState.NEUTRAL
+      );
+    });
+    it('does not conflict with ducts', () => {
+      const growspace = new Growspace('', '1', 1001, 1001, 1001, 1001);
+      const duct = new DuctItem('', '2', 950, 950, 2000, 2000);
+
+      expect(growspace.collisionStateBetween(growspace, duct)).toBe(
         CollisionState.NEUTRAL
       );
     });
