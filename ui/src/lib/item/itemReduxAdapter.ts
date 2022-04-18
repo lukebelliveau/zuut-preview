@@ -1,5 +1,4 @@
 import { ItemState } from '../../features/items/itemState';
-import ItemList from '../itemList';
 import Growspace, { GROWSPACE_TYPE } from './growspace';
 import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
 import { IItem, Item } from '../item';
@@ -17,8 +16,8 @@ import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 
 export default class ItemReduxAdapter {
-  public static itemStatesToItemList(itemStates: ItemState[]): ItemList {
-    const items = new ItemList();
+  public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
+    const items: IItem[] = [];
     itemStates.forEach((itemState) =>
       items.push(ItemReduxAdapter.stateToItem(itemState))
     );

@@ -1,6 +1,5 @@
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
-import ItemList from '../itemList';
 import Plan from '../plan';
 import Playground from '../playground';
 import DuctItem from './ductItem';
@@ -16,7 +15,7 @@ describe('DuctItem', () => {
       const playground = new Playground(1_000, 1_000, undefined, plan);
       const duct = new DuctItem('duct', v4(), 0, 0, 1, 1, 1);
       const light = new LightItem('light', v4(), 0, 0, 1, 1, 1);
-      const itemList = new ItemList();
+      const itemList = [];
       itemList.push(duct);
       itemList.push(light);
 
@@ -29,7 +28,7 @@ describe('DuctItem', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
       const duct = new DuctItem('duct', v4(), 0, 0, 1, 1, 1);
-      const itemList = new ItemList();
+      const itemList = [];
       itemList.push(duct);
 
       duct.updateCollisions(itemList, playground);
@@ -50,7 +49,7 @@ describe('DuctItem', () => {
         feetToMm(1)
       );
       const window = new WindowItem('window', v4(), -30, 3600);
-      const itemList = new ItemList();
+      const itemList = [];
       itemList.push(duct);
       itemList.push(window);
 
@@ -81,7 +80,7 @@ describe('DuctItem', () => {
         feetToMm(1)
       );
       const window = new WindowItem('window', v4(), -30, 3600);
-      const itemList = new ItemList();
+      const itemList = [];
       itemList.push(duct1);
       itemList.push(duct2);
       itemList.push(window);
@@ -170,7 +169,7 @@ describe('DuctItem', () => {
         feetToMm(1)
       );
       const window = new WindowItem('window', v4(), -30, 3600);
-      const itemList = new ItemList();
+      const itemList = [];
       itemList.push(duct0);
       itemList.push(duct1);
       itemList.push(duct2);
@@ -240,7 +239,7 @@ describe('DuctItem', () => {
       );
 
       const window = new WindowItem('window', v4(), -30, 3600);
-      const itemList = new ItemList();
+      const itemList = [];
       itemList.push(duct0);
       itemList.push(duct1);
       itemList.push(duct2);

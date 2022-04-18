@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
-import ItemList from '../itemList';
+import { IItem } from '../item';
 import { Layer } from '../layer';
 import Plan from '../plan';
 import Playground from '../playground';
@@ -105,7 +105,7 @@ describe('PlaceableItem', () => {
 
     it("sets an item's position", () => {
       const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
-      item.drag({ x: 99, y: 99 }, new ItemList(), playground);
+      item.drag({ x: 99, y: 99 }, [], playground);
 
       expect(item.x).toBe(99);
       expect(item.y).toBe(99);
@@ -113,7 +113,7 @@ describe('PlaceableItem', () => {
 
     it('creates a placement shadow based on snapped position and item dimensions', () => {
       const item = new PlaceableItem('item', v4(), 0, 0, 10, 20);
-      item.drag({ x: 300, y: 600 }, new ItemList(), playground);
+      item.drag({ x: 300, y: 600 }, [], playground);
 
       const { placementShadow } = item;
       expect(placementShadow).not.toBeUndefined();
@@ -128,34 +128,29 @@ describe('PlaceableItem', () => {
       const otherItem = new PlaceableItem(
         'collidingItem',
         v4(),
-        600,
-        600,
-        10,
-        10,
-        10,
-        0,
-        {},
-        CollisionState.NEUTRAL
+        4500,
+        3000,
+        feetToMm(2),
+        feetToMm(2),
+        feetToMm(2)
       );
+
       const testItem = new PlaceableItem(
-        'testItem',
+        'test',
         v4(),
         0,
         0,
-        10,
-        10,
-        10,
-        0,
-        {},
-        CollisionState.NEUTRAL
+        feetToMm(2),
+        feetToMm(2),
+        feetToMm(2)
       );
 
-      const itemList = new ItemList();
+      const itemList: IItem[] = [];
       itemList.push(testItem);
       itemList.push(otherItem);
 
       // will collide with otherItem once this drag occurs
-      testItem.drag({ x: 600, y: 600 }, itemList, playground);
+      testItem.drag({ x: 4000, y: 2600 }, itemList, playground);
 
       expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
       expect(testItem.placementShadow?.collisionState).toBe(
@@ -195,7 +190,7 @@ describe('PlaceableItem', () => {
         CollisionState.NEUTRAL,
         placementShadow
       );
-      expect(item.drop(new ItemList(1), playground)).toBe(true);
+      expect(item.drop([], playground)).toBe(true);
     });
 
     it('returns false when item has no placementShadow', () => {
@@ -211,7 +206,7 @@ describe('PlaceableItem', () => {
         {},
         CollisionState.NEUTRAL
       );
-      expect(item.drop(new ItemList(1), playground)).toBe(false);
+      expect(item.drop([], playground)).toBe(false);
     });
 
     it('sets current position/dimensions to placementShadow', () => {
@@ -228,7 +223,7 @@ describe('PlaceableItem', () => {
         CollisionState.NEUTRAL,
         placementShadow
       );
-      item.drop(new ItemList(1), playground);
+      item.drop([], playground);
 
       expect(item.x).toBe(placementShadow.x);
       expect(item.x).toBe(placementShadow.x);
@@ -267,7 +262,7 @@ describe('PlaceableItem', () => {
         placementShadow
       );
 
-      const itemList = new ItemList();
+      const itemList: IItem[] = [];
       itemList.push(testItem);
       itemList.push(collidingItem);
 
@@ -291,7 +286,7 @@ describe('PlaceableItem', () => {
         placementShadow
       );
 
-      testItem.drop(new ItemList(), playground);
+      testItem.drop([], playground);
 
       expect(testItem.placementShadow).toBeUndefined();
     });
@@ -336,7 +331,7 @@ describe('PlaceableItem', () => {
         placementShadow
       );
 
-      const items = new ItemList();
+      const items: IItem[] = [];
       items.push(collisionItem);
       items.push(testItem);
 
@@ -387,7 +382,7 @@ describe('PlaceableItem', () => {
         placementShadow
       );
 
-      const items = new ItemList();
+      const items: IItem[] = [];
       items.push(noCollisionItem);
       items.push(testItem);
 

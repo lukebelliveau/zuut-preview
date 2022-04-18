@@ -1,8 +1,9 @@
+import { IItem } from './item';
 import PlaceableItem from './item/placeableItem';
-import ItemList, { sortSelectedToLast } from './itemList';
+import { sortSelectedToLast } from './itemList';
 
 describe('sortSelectedToLast', () => {
-  const itemList = new ItemList();
+  const itemList: IItem[] = [];
   const item0 = new PlaceableItem('item0');
   const item1 = new PlaceableItem('item1');
   const item2 = new PlaceableItem('item2');
@@ -11,7 +12,7 @@ describe('sortSelectedToLast', () => {
   itemList.push(item2);
 
   it('returns empty list if items is of length 0', () => {
-    const emptyItemList = new ItemList();
+    const emptyItemList: IItem[] = [];
     const sortedItems = sortSelectedToLast(emptyItemList, []);
 
     expect(sortedItems).toEqual([]);

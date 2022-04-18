@@ -9,6 +9,7 @@ import {
 import {
   CollisionState,
   IPlaceableItem,
+  isPlaceableItem,
   PlacementShadow,
 } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
@@ -36,7 +37,7 @@ const useTrackCollisions = () => {
   const items = useBuildItemList();
 
   useEffect(() => {
-    items.placeable().forEach((item) => {
+    items.filter(isPlaceableItem).forEach((item) => {
       const oldCollisionState = item.collisionState;
       item.updateCollisions(items, playground);
       if (oldCollisionState !== item.collisionState) {
@@ -84,7 +85,7 @@ export default function PlaygroundItems() {
   return (
     <Layer>
       {sortSelectedToLast(items, selectedItemIds)
-        .placeable()
+        .filter(isPlaceableItem)
         .map((item) => {
           return (
             <Fragment key={item.id}>

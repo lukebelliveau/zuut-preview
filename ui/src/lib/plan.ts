@@ -1,8 +1,7 @@
 import { v4 } from 'uuid';
 
 import Grid from './grid';
-import { Item } from './item';
-import ItemList from './itemList';
+import { IItem, Item } from './item';
 import Room, { IRoom } from './room';
 
 export interface IPlan {
@@ -16,9 +15,15 @@ export default class Plan implements IPlan {
   name?: string;
   room: Room;
   grid: Grid;
-  items: ItemList = new ItemList();
+  items: IItem[] = [];
 
-  constructor(name?: string, width: number = 0, length: number = 0, height?: number, id: string = v4()) {
+  constructor(
+    name?: string,
+    width: number = 0,
+    length: number = 0,
+    height?: number,
+    id: string = v4()
+  ) {
     this.id = id;
     this.name = name;
 

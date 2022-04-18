@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import ItemList from '../itemList';
+import { IItem } from '../item';
 import Plan from '../plan';
 import Playground from '../playground';
 import PlaceableItem, { CollisionState } from './placeableItem';
@@ -14,7 +14,7 @@ describe('WallItem', () => {
       const horizontalWallItem = new WallItem('wall', v4(), 0, 0, 10, 1, 100);
 
       it('rotates and aligns placementShadow when the closest wall is the left wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(horizontalWallItem);
 
         horizontalWallItem.drag({ x: 10, y: 50 }, items, playground);
@@ -30,7 +30,7 @@ describe('WallItem', () => {
       });
 
       it('rotates and aligns placementShadow when the closest wall is the right wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(horizontalWallItem);
 
         horizontalWallItem.drag({ x: 90, y: 50 }, items, playground);
@@ -46,7 +46,7 @@ describe('WallItem', () => {
       });
 
       it('aligns placementShadow without rotation when the closest wall is the bottom wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(horizontalWallItem);
 
         horizontalWallItem.drag({ x: 50, y: 90 }, items, playground);
@@ -62,7 +62,7 @@ describe('WallItem', () => {
       });
 
       it('aligns placementShadow without rotation when the closest wall is the top wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(horizontalWallItem);
 
         horizontalWallItem.drag({ x: 50, y: 10 }, items, playground);
@@ -82,7 +82,7 @@ describe('WallItem', () => {
       const verticalWallItem = new WallItem('wall', v4(), 0, 0, 1, 10, 100);
 
       it('aligns placementShadow without rotation when the closest wall is the left wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(verticalWallItem);
 
         verticalWallItem.drag({ x: 10, y: 50 }, items, playground);
@@ -98,7 +98,7 @@ describe('WallItem', () => {
       });
 
       it('aligns placementShadow without rotation when the closest wall is the right wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(verticalWallItem);
 
         verticalWallItem.drag({ x: 90, y: 50 }, items, playground);
@@ -114,7 +114,7 @@ describe('WallItem', () => {
       });
 
       it('aligns and rotates placementShadow when the closest wall is the bottom wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(verticalWallItem);
 
         verticalWallItem.drag({ x: 50, y: 90 }, items, playground);
@@ -130,7 +130,7 @@ describe('WallItem', () => {
       });
 
       it('aligns and rotates placementShadow when the closest wall is the top wall', () => {
-        const items = new ItemList();
+        const items: IItem[] = [];
         items.push(verticalWallItem);
 
         verticalWallItem.drag({ x: 50, y: 10 }, items, playground);

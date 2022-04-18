@@ -1,8 +1,8 @@
 import { useSelectAllItems } from '../features/items/itemsSelectors';
 import { useSelectPlanById } from '../features/plans/planSelectors';
 import { useSelectPlayground } from '../features/playgrounds/playgroundSelector';
+import { IItem } from '../lib/item';
 import ItemReduxAdapter from '../lib/item/itemReduxAdapter';
-import ItemList from '../lib/itemList';
 import Plan from '../lib/plan';
 import Playground from '../lib/playground';
 import PlaygroundReduxAdapter from '../lib/playground/playgroundReduxAdapter';
@@ -13,7 +13,7 @@ export function useBuildPlayground(): Playground {
   return PlaygroundReduxAdapter.playgroundFromState(planState, playgroundState);
 }
 
-export function useBuildItemList(): ItemList {
+export function useBuildItemList(): IItem[] {
   const itemsState = useSelectAllItems();
   return ItemReduxAdapter.itemStatesToItemList(itemsState);
 }

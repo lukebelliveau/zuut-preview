@@ -9,8 +9,7 @@ import {
   itemHasHorizontalOrientation,
   itemHasVerticalOrientation,
 } from '../geometry/geometry';
-import { Item } from '../item';
-import ItemList from '../itemList';
+import { IItem, Item } from '../item';
 import { Layer } from '../layer';
 import Playground from '../playground';
 import { Point } from '../point';
@@ -42,7 +41,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     );
   }
 
-  drag(position: Point, items: ItemList, playground: Playground) {
+  drag(position: Point, items: IItem[], playground: Playground) {
     if (!playground.plan) throw new Error('Playground missing plan!');
     const room = playground.plan.room;
     if (!room) throw new Error('Playground missing room!');

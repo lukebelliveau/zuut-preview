@@ -33,7 +33,7 @@ describe('Playground', () => {
         mouseX: 10,
         mouseY: 10,
         stageX: 20,
-        stageY: 20
+        stageY: 20,
       });
       expect(playground.scale).toBe(1.05);
       expect(playground.centerX).toBe(20.5);
@@ -49,7 +49,7 @@ describe('Playground', () => {
         mouseX: 10,
         mouseY: 10,
         stageX: 20,
-        stageY: 20
+        stageY: 20,
       });
       expect(playground.scale).toBe(0.95);
       expect(playground.centerX).toBe(19.5);

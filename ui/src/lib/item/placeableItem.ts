@@ -11,7 +11,6 @@ import {
   computeSouthWest,
   GeometryObject,
 } from '../geometry/geometry';
-import ItemList from '../itemList';
 import Playground from '../playground';
 import { Point } from '../point';
 import { IItem, Item } from '../item';
@@ -37,9 +36,9 @@ export type Modifiers = { [key: string]: string[] };
 
 export interface IPlaceableItem extends IItem, GeometryObject {
   place(position: Point): void;
-  drag(position: Point, items: ItemList, playground: Playground): void;
-  drop(items: ItemList, playground: Playground): boolean;
-  updateCollisions(items: ItemList, playground: Playground): void;
+  drag(position: Point, items: IItem[], playground: Playground): void;
+  drop(items: IItem[], playground: Playground): boolean;
+  updateCollisions(items: IItem[], playground: Playground): void;
   x: number;
   y: number;
   width: number;
@@ -106,7 +105,7 @@ export default class PlaceableItem
     this.y = position.y;
   }
 
-  drag(position: Point, items: ItemList, playground: Playground) {
+  drag(position: Point, items: IItem[], playground: Playground) {
     if (!playground || !playground.plan || !playground.plan.grid)
       throw new Error('Missing grid!');
     this.x = position.x;
@@ -120,7 +119,7 @@ export default class PlaceableItem
     this.updateCollisions(items, playground);
   }
 
-  drop(items: ItemList, playground: Playground) {
+  drop(items: IItem[], playground: Playground) {
     if (this.placementShadow) {
       this.x = this.placementShadow.x;
       this.y = this.placementShadow.y;
@@ -176,7 +175,7 @@ export default class PlaceableItem
     });
   }
 
-  updateCollisions(items: ItemList, playground: Playground) {
+  updateCollisions(items: IItem[], playground: Playground) {
     const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
       items,
       playground
@@ -248,7 +247,7 @@ export default class PlaceableItem
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   protected detectOverlaps(
-    items: ItemList,
+    items: IItem[],
     playground: Playground
   ): {
     collidingWithItem: IPlaceableItem[];
@@ -257,7 +256,7 @@ export default class PlaceableItem
     let collidingWithItem: IPlaceableItem[] = [];
     let collidingWithShadow: IPlaceableItem[] = [];
 
-    items.placeable().forEach((itemToCompare) => {
+    items.filter(isPlaceableItem).forEach((itemToCompare: IPlaceableItem) => {
       if (itemToCompare.id === this.id) return;
       if (areColliding(this, itemToCompare))
         collidingWithItem.push(itemToCompare);
@@ -275,14 +274,14 @@ export default class PlaceableItem
     };
   }
 
-  protected detectSharingBorders(items: ItemList): {
+  protected detectSharingBorders(items: IItem[]): {
     sharingBorderWithItem: IPlaceableItem[];
     sharingBorderWithShadow: IPlaceableItem[];
   } {
     let sharingBorderWithItem: IPlaceableItem[] = [];
     let sharingBorderWithShadow: IPlaceableItem[] = [];
 
-    items.placeable().forEach((itemToCompare) => {
+    items.filter(isPlaceableItem).forEach((itemToCompare: IPlaceableItem) => {
       if (itemToCompare.id === this.id) return;
       if (areExactlySharingBorder(this, itemToCompare)) {
         sharingBorderWithItem.push(itemToCompare);

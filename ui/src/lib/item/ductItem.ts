@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { Item } from '../item';
+import { IItem, Item } from '../item';
 import {
   CollisionState,
   IPlaceableItem,
@@ -9,7 +9,6 @@ import DuctImage from '../../images/items/duct.png';
 import { isWindowItem } from './windowitem';
 import CeilingPlaceableItem from './ceilingPlaceableItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
-import ItemList from '../itemList';
 import Playground from '../playground';
 import { areExactlySharingBorder } from '../geometry/geometry';
 import { isGrowspace } from './growspace';
@@ -39,7 +38,7 @@ export default class DuctItem extends CeilingPlaceableItem {
     );
   }
 
-  updateCollisions(items: ItemList, playground: Playground) {
+  updateCollisions(items: IItem[], playground: Playground) {
     const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
       items,
       playground
