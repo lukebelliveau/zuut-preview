@@ -26,7 +26,7 @@ import {
   setVisibleLayer,
   toggleSelect,
 } from '../../features/interactions/interactionsSlice';
-import { sortSelectedToLast } from '../../lib/itemList';
+import { sortItems } from '../../lib/itemList';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../features/items/itemsHooks';
 import { mmToFeet } from '../../lib/conversions';
@@ -58,6 +58,7 @@ export default function PlaygroundItems() {
   const items = useBuildItemList();
   const selectedItemIds = useAppSelector(selectSelectedItemId);
   const dispatchDropItem = useDispatchDropItem();
+  const showLayer = useSelectShowLayer();
 
   function updatePlacement(item: IPlaceableItem, newPosition: Point) {
     dispatch(select(item.id));
@@ -84,7 +85,7 @@ export default function PlaygroundItems() {
 
   return (
     <Layer>
-      {sortSelectedToLast(items, selectedItemIds)
+      {sortItems(items, selectedItemIds, showLayer)
         .filter(isPlaceableItem)
         .map((item) => {
           return (
