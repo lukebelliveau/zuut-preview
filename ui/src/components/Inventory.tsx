@@ -4,6 +4,8 @@ import { useDispatch, useStore } from 'react-redux';
 import { useAppSelector } from '../app/hooks';
 import { selectSelectedItemId } from '../features/interactions/interactionsSelectors';
 import clsx from 'clsx';
+import LeftChevron from '../images/glyphs/chevron-left.png';
+import RightChevron from '../images/glyphs/chevron-right.png';
 
 import {
   useSelectAllItemIds,
@@ -28,6 +30,7 @@ import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
 import ControlPanel from './ControlPanel/ControlPanel';
 import { isWallItem } from '../lib/item/wallItem';
+import { resizePlayground } from '../features/playgrounds/playgroundSlice';
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -91,134 +94,151 @@ export default function Inventory() {
     };
   }
 
+  const toggleShouldDisplay = () => {
+    setHidden(!hidden);
+    dispatch(resizePlayground());
+  };
+
   return (
-    <div id="inventory-sidebar">
-      <section ref={drop} id="inventory-list" className={className}>
-        <div id="inventory-header">
-          <h2>Inventory</h2>
-          <div className="buttons">
-            <button
-              tabIndex={0}
-              onClick={selectButtonOnClick}
-              aria-label={selectButtonText}
-              disabled={itemIds.length === 0}
-            >
-              {selectButtonText}
-            </button>
+    <div id="inventory-sidebar-container" className={clsx({ hidden })}>
+      <div id="inventory-sidebar">
+        <button
+          id="minimize-inventory"
+          className={clsx({ hidden })}
+          onClick={toggleShouldDisplay}
+        >
+          <img
+            src={hidden ? LeftChevron : RightChevron}
+            alt="minimize-inventory"
+          />
+        </button>
+        <section ref={drop} id="inventory-list" className={clsx({ hidden })}>
+          <div id="inventory-header">
+            <h2>Inventory</h2>
+            <div className="buttons">
+              <button
+                tabIndex={0}
+                onClick={selectButtonOnClick}
+                aria-label={selectButtonText}
+                disabled={itemIds.length === 0}
+              >
+                {selectButtonText}
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="inventory-list-body">
-          {items.length > 0 ? (
-            <ul>
-              {items
-                .filter((item) => !isModiferItem(item) && !isWallItem(item))
-                .map((item) => {
-                  const selected = selectedIds.includes(item.id);
-                  return (
-                    <Fragment key={item.id}>
-                      <li>
-                        <input
-                          type="checkbox"
-                          checked={selected}
-                          onChange={() => toggleItemSelected(item)}
-                        />
-                        <span
-                          role="menuitem"
-                          onClick={() => selectItemFromInventory(item)}
-                          onKeyDown={(e) => handleItemKeyDown(e, item)}
-                          tabIndex={0}
-                          className={clsx({
-                            selected,
-                          })}
-                        >
-                          {item.name}
-                        </span>
-                      </li>
-                      {isPlaceableItem(item)
-                        ? Object.entries(item.modifiers).map(
-                            ([modifierName, modifierIds]) => {
-                              if (modifierIds.length > 0) {
-                                return (
-                                  <li key={modifierName}>
-                                    <span
-                                      role="menuitem"
-                                      className="modifier-list-item"
-                                    >
-                                      {`${modifierName} (x${modifierIds.length})`}
-                                    </span>
-                                  </li>
-                                );
-                              } else return null;
-                            }
-                          )
-                        : null}
-                    </Fragment>
-                  );
-                })}
-            </ul>
-          ) : (
-            <p>Drag items from the Objects toolbox</p>
-          )}
-        </div>
-        {items.filter((item) => isWallItem(item)).length > 0 ? (
-          <div className="layout-list-body">
-            <span>
-              <b>Layout</b>
-            </span>
-            <ul>
-              {items
-                .filter((item) => isWallItem(item))
-                .map((item) => {
-                  const selected = selectedIds.includes(item.id);
-                  return (
-                    <Fragment key={item.id}>
-                      <li>
-                        <input
-                          type="checkbox"
-                          checked={selected}
-                          onClick={() => toggleItemSelected(item)}
-                          onChange={(e) =>
-                            setItemSelected(e.target.checked, item)
-                          }
-                        />
-                        <span
-                          role="menuitem"
-                          onClick={() => selectItemFromInventory(item)}
-                          onKeyDown={(e) => handleItemKeyDown(e, item)}
-                          tabIndex={0}
-                          className={clsx({
-                            selected,
-                          })}
-                        >
-                          {item.name}
-                        </span>
-                      </li>
-                      {isPlaceableItem(item)
-                        ? Object.entries(item.modifiers).map(
-                            ([modifierName, modifierIds]) => {
-                              if (modifierIds.length > 0) {
-                                return (
-                                  <li key={modifierName}>
-                                    <span
-                                      role="menuitem"
-                                      className="modifier-list-item"
-                                    >
-                                      {`${modifierName} (x${modifierIds.length})`}
-                                    </span>
-                                  </li>
-                                );
-                              } else return null;
-                            }
-                          )
-                        : null}
-                    </Fragment>
-                  );
-                })}
-            </ul>
+          <div className="inventory-list-body">
+            {items.length > 0 ? (
+              <ul>
+                {items
+                  .filter((item) => !isModiferItem(item) && !isWallItem(item))
+                  .map((item) => {
+                    const selected = selectedIds.includes(item.id);
+                    return (
+                      <Fragment key={item.id}>
+                        <li>
+                          <input
+                            type="checkbox"
+                            checked={selected}
+                            onChange={() => toggleItemSelected(item)}
+                          />
+                          <span
+                            role="menuitem"
+                            onClick={() => selectItemFromInventory(item)}
+                            onKeyDown={(e) => handleItemKeyDown(e, item)}
+                            tabIndex={0}
+                            className={clsx({
+                              selected,
+                            })}
+                          >
+                            {item.name}
+                          </span>
+                        </li>
+                        {isPlaceableItem(item)
+                          ? Object.entries(item.modifiers).map(
+                              ([modifierName, modifierIds]) => {
+                                if (modifierIds.length > 0) {
+                                  return (
+                                    <li key={modifierName}>
+                                      <span
+                                        role="menuitem"
+                                        className="modifier-list-item"
+                                      >
+                                        {`${modifierName} (x${modifierIds.length})`}
+                                      </span>
+                                    </li>
+                                  );
+                                } else return null;
+                              }
+                            )
+                          : null}
+                      </Fragment>
+                    );
+                  })}
+              </ul>
+            ) : (
+              <p>Drag items from the Objects toolbox</p>
+            )}
           </div>
-        ) : null}
-      </section>
-      <ControlPanel />
+          {items.filter((item) => isWallItem(item)).length > 0 ? (
+            <div className="layout-list-body">
+              <span>
+                <b>Layout</b>
+              </span>
+              <ul>
+                {items
+                  .filter((item) => isWallItem(item))
+                  .map((item) => {
+                    const selected = selectedIds.includes(item.id);
+                    return (
+                      <Fragment key={item.id}>
+                        <li>
+                          <input
+                            type="checkbox"
+                            checked={selected}
+                            onClick={() => toggleItemSelected(item)}
+                            onChange={(e) =>
+                              setItemSelected(e.target.checked, item)
+                            }
+                          />
+                          <span
+                            role="menuitem"
+                            onClick={() => selectItemFromInventory(item)}
+                            onKeyDown={(e) => handleItemKeyDown(e, item)}
+                            tabIndex={0}
+                            className={clsx({
+                              selected,
+                            })}
+                          >
+                            {item.name}
+                          </span>
+                        </li>
+                        {isPlaceableItem(item)
+                          ? Object.entries(item.modifiers).map(
+                              ([modifierName, modifierIds]) => {
+                                if (modifierIds.length > 0) {
+                                  return (
+                                    <li key={modifierName}>
+                                      <span
+                                        role="menuitem"
+                                        className="modifier-list-item"
+                                      >
+                                        {`${modifierName} (x${modifierIds.length})`}
+                                      </span>
+                                    </li>
+                                  );
+                                } else return null;
+                              }
+                            )
+                          : null}
+                      </Fragment>
+                    );
+                  })}
+              </ul>
+            </div>
+          ) : null}
+        </section>
+        <ControlPanel />
+      </div>
     </div>
   );
 }

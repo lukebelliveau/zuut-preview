@@ -1,6 +1,7 @@
 #toolbar {
   border: 0.063rem solid var(--black);
   padding: 5px 10px;
+  margin: 0px 0px 15px -20px;
 }
 
 #toolbar button.tool {
