@@ -33,11 +33,11 @@ export default function Layout(props: LayoutProps) {
           <LogoutButton />
         </div>
       </header>
-      <div id="playground-wrapper">
+      <div id="sidebar">
         <Sidebar />
-        <div id="content">{props.children}</div>
-        <Inventory />
       </div>
+      <div id="content">{props.children}</div>
+      <Inventory />
     </div>
   );
 }

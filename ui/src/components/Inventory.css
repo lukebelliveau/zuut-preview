@@ -1,41 +1,8 @@
-#inventory-sidebar {
-  overflow-y: scroll;
-  scrollbar-width: thin;
-
-  border: 1px solid var(--black);
-  height: 100%;
-}
-
-#minimize-inventory {
-  position: absolute;
-  bottom: -2px;
-
-  width: 19px;
-  padding: 1px 1px 1px 15px;
-  text-align: right;
-  left: 0px;
-  border-radius: 0rem 0.5rem 0.5rem 0rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#minimize-inventory.hidden {
-  left: -18px;
-  border-radius: 0.5rem 0rem 0rem 0.5rem;
-  align-items: center;
-}
-
-#minimize-inventory img {
-  width: 20px;
-}
-
 #inventory-list {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
 }
-
 #inventory-header {
   display: flex;
   flex-direction: column;

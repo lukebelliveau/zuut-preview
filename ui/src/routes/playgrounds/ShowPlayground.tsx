@@ -126,7 +126,7 @@ export default function ShowPlayground() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      className="page-wrapper"
+      className="playground-wrapper"
       data-testid="playground-container"
     >
       <Helmet>

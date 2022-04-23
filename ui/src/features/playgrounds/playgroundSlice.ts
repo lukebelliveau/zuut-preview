@@ -26,8 +26,8 @@ const initialState: PlaygroundState = {
   planId: '0',
   displayWidth: 10,
   displayHeight: 10,
-  centerX: 0,
-  centerY: 0,
+  centerX: 10,
+  centerY: 10,
   scale: 1,
 };
 
