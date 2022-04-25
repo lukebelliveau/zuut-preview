@@ -10,6 +10,7 @@ import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import { Layer } from '../layer';
 import { isDuctItem } from './ductItem';
+import GrowspaceImage from '../../images/items/growspace.svg';
 
 export const GROWSPACE_TYPE = 'Growspace';
 
@@ -21,6 +22,10 @@ export default class Growspace extends PlaceableItem {
   type: string = GROWSPACE_TYPE;
   layer = Layer.FLOOR;
   description = 'Place a tent to start your grow.';
+
+  get image() {
+    return GrowspaceImage;
+  }
 
   copy(): Growspace {
     return new Growspace(

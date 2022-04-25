@@ -5,7 +5,7 @@ import {
   IPlaceableItem,
   PlacementShadow,
 } from './placeableItem';
-import DuctImage from '../../images/items/duct.png';
+import DuctImage from '../../images/items/duct.svg';
 import { isWindowItem } from './windowitem';
 import CeilingPlaceableItem from './ceilingPlaceableItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';

@@ -3,16 +3,16 @@ import { useDispatch } from 'react-redux';
 import { useBuildPlayground } from '../../app/builderHooks';
 import { select } from '../../features/interactions/interactionsSlice';
 import { addOne } from '../../features/items/itemsSlice';
+import DoorItem from '../../lib/item/doorItem';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import PlaceableItem from '../../lib/item/placeableItem';
-import WallItem from '../../lib/item/wallItem';
 import WindowItem from '../../lib/item/windowitem';
 
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
 
-const layoutItems = [new WindowItem('Window'), new WallItem('Door')];
+const layoutItems = [new WindowItem('Window'), new DoorItem('Door')];
 
 export default function LayoutTab() {
   const dispatch = useDispatch();

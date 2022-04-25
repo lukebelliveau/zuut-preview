@@ -16,6 +16,7 @@ import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
+import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -90,6 +91,8 @@ export default class ItemGraphqlAdapter {
         return new WallItem(...itemAttrs);
       case WINDOW_ITEM_TYPE:
         return new WindowItem(...itemAttrs);
+      case DOOR_ITEM_TYPE:
+        return new DoorItem(...itemAttrs);
       case DUCT_ITEM_TYPE:
         return new DuctItem(...itemAttrs);
       default:

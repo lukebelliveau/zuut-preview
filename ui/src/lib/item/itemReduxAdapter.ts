@@ -15,6 +15,7 @@ import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
+import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
@@ -122,6 +123,21 @@ export default class ItemReduxAdapter {
         );
       case WINDOW_ITEM_TYPE:
         return new WindowItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case DOOR_ITEM_TYPE:
+        return new DoorItem(
           itemState.name,
           itemState.id,
           itemState.x,
