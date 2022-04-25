@@ -9,7 +9,7 @@ export default class Grid {
   constructor(
     width: number,
     length: number,
-    snapInterval: number = feetToMm(0.5)
+    snapInterval: number = feetToMm(0.25)
   ) {
     this.width = width;
     this.length = length;

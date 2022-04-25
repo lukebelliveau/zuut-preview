@@ -160,7 +160,8 @@ export default function Inventory() {
             <p>Drag items from the Objects toolbox</p>
           )}
         </div>
-        {items.filter((item) => isWallItem(item)).length > 0 ? (
+        {items.filter((item) => isWallItem(item)).length > 0 &&
+        process.env.NODE_ENV === 'development' ? (
           <div className="layout-list-body">
             <span>
               <b>Layout</b>
