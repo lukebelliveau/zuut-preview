@@ -1,8 +1,8 @@
 #control-panel {
-  height: 60%;
+  height: 90%;
   position: absolute;
   width: 100%;
-  top: 40%;
+  top: 10%;
   transition: all 1s;
   overflow-y: hidden;
 }

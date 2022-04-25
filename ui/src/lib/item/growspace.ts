@@ -20,6 +20,7 @@ export function isGrowspace(item: Item): item is Growspace {
 export default class Growspace extends PlaceableItem {
   type: string = GROWSPACE_TYPE;
   layer = Layer.FLOOR;
+  description = 'Place a tent to start your grow.';
 
   copy(): Growspace {
     return new Growspace(
@@ -29,7 +30,8 @@ export default class Growspace extends PlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
+      this.description
     );
   }
 

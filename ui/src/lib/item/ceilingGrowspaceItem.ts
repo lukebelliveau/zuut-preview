@@ -28,7 +28,8 @@ export default class CeilingGrowspaceItem extends CeilingPlaceableItem {
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
+      this.description
     );
   }
 

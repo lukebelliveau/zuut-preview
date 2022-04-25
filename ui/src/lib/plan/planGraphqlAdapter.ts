@@ -78,6 +78,7 @@ export default class PlanGraphqlAdapter {
               height
               rotation
               modifiers
+              description
             }
           }
         }

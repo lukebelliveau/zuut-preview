@@ -25,7 +25,8 @@ export default class WindowItem extends WallItem {
       this.y,
       feetToMm(0.2),
       feetToMm(2),
-      this.height
+      this.height,
+      this.description
     );
   }
 

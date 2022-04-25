@@ -21,6 +21,7 @@ export default class RoomItem extends PlaceableItem {
       this.width,
       this.length,
       this.height,
+      this.description
     );
   }
 }

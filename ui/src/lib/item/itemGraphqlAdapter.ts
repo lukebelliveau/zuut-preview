@@ -30,6 +30,7 @@ export default class ItemGraphqlAdapter {
         height: item.height,
         rotation: item.rotation,
         modifiers: item.modifiers,
+        description: item.description,
       };
     } else {
       return {
@@ -64,6 +65,7 @@ export default class ItemGraphqlAdapter {
       unwrapOrUndefined(gqlItem.rotation),
       unwrapOrUndefined(gqlItem.modifiers),
     ];
+
     switch (unwrapOrError(gqlItem.type)) {
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem(...itemAttrs);

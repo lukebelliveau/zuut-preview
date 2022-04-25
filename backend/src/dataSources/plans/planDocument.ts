@@ -24,6 +24,7 @@ interface PlanDocumentItem {
   height?: number;
   rotation?: number;
   modifiers: Modifiers;
+  description?: string;
 }
 
 interface Room {
@@ -50,6 +51,7 @@ export function planDocumentToGraphql(planDocument: PlanDocument): Plan {
       height: item.height,
       rotation: item.rotation,
       modifiers: item.modifiers,
+      description: item.description,
     })),
   };
 }
@@ -76,6 +78,7 @@ export function planDocumentFromGraphql(
       height: unwrapOrUndefined(item.height),
       rotation: unwrapOrUndefined(item.rotation),
       modifiers: unwrapOrUndefined(item.modifiers),
+      description: unwrapOrUndefined(item.description),
     })),
   };
 }

@@ -45,6 +45,7 @@ export default class ItemReduxAdapter {
         placementShadow: item.placementShadow,
         rotation: item.rotation,
         modifiers: item.modifiers,
+        description: item.description,
       };
     } else {
       return baseItemState;

@@ -28,7 +28,8 @@ export default class LightItem
       this.y,
       this.width,
       this.length,
-      this.height
+      this.height,
+      this.description
     );
   }
 }
