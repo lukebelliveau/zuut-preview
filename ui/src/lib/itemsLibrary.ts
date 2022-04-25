@@ -6,6 +6,9 @@ import PotItem from './item/potItem';
 import { feetToMm, inchesToMm } from './conversions';
 import LightItem from './item/lightItem';
 import DuctItem from './item/ductItem';
+import CeilingPlaceableItem from './item/ceilingPlaceableItem';
+import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
+import GrowspaceItem from './item/growspaceItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -142,36 +145,109 @@ const ItemsLibrary: IItemGroup[] = [
     itemGroup: 'lights',
     items: [
       new LightItem(
-        'Light 1x1',
+        'LED Light',
         undefined,
         undefined,
         undefined,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      ),
-      new LightItem(
-        'Light 2x2',
-        undefined,
-        undefined,
-        undefined,
-        feetToMm(2),
-        feetToMm(2),
-        feetToMm(2)
+        inchesToMm(12),
+        inchesToMm(24),
+        inchesToMm(5),
+        'A relatively new type of grow light that produces better quality buds and bigger yields while using less electricity and producing less heat than traditional grow lights.'
       ),
     ],
   },
   {
     itemGroup: 'climate',
     items: [
-      new RoomItem(
-        'climate obj',
+      new CeilingGrowspaceItem(
+        'Exhaust Fan',
         undefined,
         undefined,
         undefined,
-        304.8,
-        304.8,
-        304.8
+        inchesToMm(12),
+        inchesToMm(8),
+        inchesToMm(8),
+        'A steady supply of fresh air helps cannabis grow faster, produce more buds, controls the humidity and temperature, and protects plants from certain pests and molds.'
+      ),
+      new DuctItem(
+        'Ducting',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(12),
+        inchesToMm(8),
+        inchesToMm(8),
+        'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
+      ),
+      new CeilingGrowspaceItem(
+        'Carbon Filter',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(20),
+        inchesToMm(8),
+        inchesToMm(8),
+        'Connecting a carbon filter to an exhaust fan filters the smells out of the air before it leaves the grow space.'
+      ),
+      new GrowspaceItem(
+        'Floor AC Unit',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(20),
+        inchesToMm(16),
+        inchesToMm(33),
+        'Cannabis does not like temperatures above 85 degrees. Lowers temperature, lowers humidity'
+      ),
+      new GrowspaceItem(
+        'Heat',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(20),
+        inchesToMm(16),
+        inchesToMm(33),
+        'Cannabis does not like temperatures below 50 degrees. Raises temperature, lowers humidity'
+      ),
+      new GrowspaceItem(
+        'Purifier',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(12),
+        inchesToMm(10),
+        inchesToMm(19),
+        'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.'
+      ),
+      new GrowspaceItem(
+        'Humidifier',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(12),
+        inchesToMm(10),
+        inchesToMm(14),
+        'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.'
+      ),
+      new GrowspaceItem(
+        'Dehumidifer',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(12),
+        inchesToMm(10),
+        inchesToMm(14),
+        'Cannabis does not like humidity higher than 60%. Lowers humidity, raises temperature (slightly)'
+      ),
+      new CeilingGrowspaceItem(
+        'Oscillating fan',
+        undefined,
+        undefined,
+        undefined,
+        inchesToMm(6),
+        inchesToMm(8),
+        inchesToMm(12),
+        'In nature, cannabis plants thrive in a gentle breeze. Air movement protects plants from certain pests and molds.'
       ),
     ],
   },
@@ -282,14 +358,14 @@ const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'misc',
     items: [
-      new DuctItem(
-        'Duct 1x1',
+      new RoomItem(
+        'Water Container',
         undefined,
         undefined,
         undefined,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
+        inchesToMm(24),
+        inchesToMm(24),
+        inchesToMm(36)
       ),
     ],
   },

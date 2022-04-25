@@ -18,6 +18,20 @@ export function isPotItem(item: Item): item is PotItem {
   return (item as PotItem).type === POT_ITEM_TYPE;
 }
 
+const defaultPotModifiers = {
+  soil: [],
+  irrigation: [],
+  globes: [],
+  bamboo: [],
+  saucers: [],
+  trays: [],
+  holders: [],
+  clips: [],
+  ties: [],
+  seeds: [],
+  yoyos: [],
+  coco: [],
+};
 export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   type: string = POT_ITEM_TYPE;
 
@@ -31,20 +45,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     height: number = 915,
     description: string = '',
     rotation: number = 0,
-    modifiers: Modifiers = {
-      soil: [],
-      irrigation: [],
-      globes: [],
-      bamboo: [],
-      saucers: [],
-      trays: [],
-      holders: [],
-      clips: [],
-      ties: [],
-      seeds: [],
-      yoyos: [],
-      coco: [],
-    },
+    modifiers: Modifiers = defaultPotModifiers,
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
@@ -75,7 +76,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   }
 
   removeAllModifiers(): void {
-    this.modifiers = { soil: [] };
+    this.modifiers = defaultPotModifiers;
   }
 
   copy(): PotItem {

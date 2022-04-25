@@ -73,9 +73,18 @@ export default function LayoutTab() {
       </MenuSection>
       <MenuSection title="Misc">
         {itemGroup('misc').map((item) => (
-          <InventoryCandidate key={item.name} item={item} />
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
         ))}
       </MenuSection>
+      {/* <MenuSection title="Non-playground items">
+        {itemGroup('extras').map((item) => (
+          <InventoryCandidate key={item.name} item={item} />
+        ))}
+      </MenuSection> */}
     </SidebarTab>
   );
 }
