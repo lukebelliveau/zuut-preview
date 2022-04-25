@@ -14,6 +14,7 @@ import CeilingGrowspaceItem, {
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
+import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
@@ -166,6 +167,21 @@ export default class ItemReduxAdapter {
         );
       case LIGHT_ITEM_TYPE:
         return new LightItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case CARBON_FILTER_ITEM_TYPE:
+        return new CarbonFilterItem(
           itemState.name,
           itemState.id,
           itemState.x,

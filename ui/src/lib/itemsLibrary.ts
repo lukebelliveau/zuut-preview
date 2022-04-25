@@ -9,6 +9,7 @@ import DuctItem from './item/ductItem';
 import CeilingPlaceableItem from './item/ceilingPlaceableItem';
 import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
 import GrowspaceItem from './item/growspaceItem';
+import CarbonFilterItem from './item/carbonFilterItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -179,7 +180,7 @@ const ItemsLibrary: IItemGroup[] = [
         inchesToMm(8),
         'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
       ),
-      new CeilingGrowspaceItem(
+      new CarbonFilterItem(
         'Carbon Filter',
         undefined,
         undefined,

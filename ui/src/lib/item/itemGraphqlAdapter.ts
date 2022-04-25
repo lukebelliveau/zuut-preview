@@ -15,6 +15,7 @@ import { isPlaceableItem, Modifiers } from './placeableItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
+import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -75,6 +76,8 @@ export default class ItemGraphqlAdapter {
         return new GrowspaceItem(...itemAttrs);
       case LIGHT_ITEM_TYPE:
         return new LightItem(...itemAttrs);
+      case CARBON_FILTER_ITEM_TYPE:
+        return new CarbonFilterItem(...itemAttrs);
       case MISC_ITEM_TYPE:
         return new MiscItem(gqlItem.name, gqlItem.id);
       case MODIFIER_ITEM_TYPE:

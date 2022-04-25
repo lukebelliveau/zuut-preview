@@ -1,4 +1,11 @@
-import { CEILING_GROWSPACE_ITEM_TYPE, isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
+import {
+  CARBON_FILTER_ITEM_TYPE,
+  isCarbonFilterItem,
+} from './carbonFilterItem';
+import {
+  CEILING_GROWSPACE_ITEM_TYPE,
+  isCeilingGrowspaceItem,
+} from './ceilingGrowspaceItem';
 import { GROWSPACE_TYPE, isGrowspace } from './growspace';
 import { GROWSPACE_ITEM_TYPE, isGrowspaceItem } from './growspaceItem';
 import ItemGraphqlAdapter from './itemGraphqlAdapter';
@@ -11,60 +18,103 @@ import { isWallItem, WALL_ITEM_TYPE } from './wallItem';
 describe('ItemGraphqlAdapter', () => {
   describe('#graphqlToItem', () => {
     it('hydrates a Growspace', () => {
-      expect(isGrowspace(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: GROWSPACE_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isGrowspace(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: GROWSPACE_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a GrowspaceItem', () => {
-      expect(isGrowspaceItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: GROWSPACE_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isGrowspaceItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: GROWSPACE_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a LightItem', () => {
-      expect(isLightItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: LIGHT_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isLightItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: LIGHT_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
+    });
+    it('hydrates a CarbonFilterItem', () => {
+      expect(
+        isCarbonFilterItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: CARBON_FILTER_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a CeilingGrowspaceItem', () => {
-      expect(isCeilingGrowspaceItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: CEILING_GROWSPACE_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isCeilingGrowspaceItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: CEILING_GROWSPACE_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a MiscItem', () => {
-      expect(isMiscItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: MISC_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isMiscItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: MISC_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a RoomItem', () => {
-      expect(isRoomItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: ROOM_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isRoomItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: ROOM_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a WallItem', () => {
-      expect(isWallItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: WALL_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isWallItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: WALL_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
     it('hydrates a PotItem', () => {
-      expect(isPotItem(ItemGraphqlAdapter.graphqlToItem({
-        id: '123',
-        name: 'foo',
-        type: POT_ITEM_TYPE,
-      }))).toBeTruthy();
+      expect(
+        isPotItem(
+          ItemGraphqlAdapter.graphqlToItem({
+            id: '123',
+            name: 'foo',
+            type: POT_ITEM_TYPE,
+          })
+        )
+      ).toBeTruthy();
     });
   });
 });
