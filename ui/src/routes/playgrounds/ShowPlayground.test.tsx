@@ -52,12 +52,14 @@ describe('ShowPlayground', () => {
     fireEvent.click(objectsTab);
 
     const addPotButton = await screen.findByRole('button', {
-      name: /Pot 2x2/i,
+      name: /2 Gallon Pot/i,
     });
     fireEvent.click(addPotButton);
 
     // item in inventory list
-    const item = await screen.findByRole('menuitem', { name: /Pot 2x2/i });
+    const item = await screen.findByRole('menuitem', {
+      name: /2 Gallon Pot/i,
+    });
 
     // user sees Control Panel
     screen.getByText('Description');
@@ -65,7 +67,9 @@ describe('ShowPlayground', () => {
 
     // delete item
     fireEvent.keyDown(item, { key: 'Delete' });
-    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+    expect(
+      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
+    ).toBeNull();
   });
 
   it('can undo and redo', async () => {
@@ -81,31 +85,35 @@ describe('ShowPlayground', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const addPotButton = screen.getByRole('button', { name: /Pot 2x2/i });
+    const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
-    screen.getByRole('menuitem', { name: /Pot 2x2/i });
+    screen.getByRole('menuitem', { name: /2 Gallon Pot/i });
 
     const playgroundContainer = screen.getByTestId('playground-container');
 
     fireKeyboardUndoOn(playgroundContainer);
-    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+    expect(
+      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
+    ).toBeNull();
 
     fireKeyboardRedoOn(playgroundContainer);
     expect(
-      screen.getByRole('menuitem', { name: /Pot 2x2/i })
+      screen.getByRole('menuitem', { name: /2 Gallon Pot/i })
     ).toBeInTheDocument();
 
     const undoButton = screen.getByLabelText('undo');
     const redoButton = screen.getByLabelText('redo');
 
     fireEvent.click(undoButton);
-    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+    expect(
+      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
+    ).toBeNull();
 
     fireEvent.click(redoButton);
     expect(
-      screen.getByRole('menuitem', { name: /Pot 2x2/i })
+      screen.getByRole('menuitem', { name: /2 Gallon Pot/i })
     ).toBeInTheDocument();
   });
 });
@@ -124,11 +132,11 @@ describe('modifiers', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const addPotButton = screen.getByRole('button', { name: /Pot 2x2/i });
+    const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
-    screen.getByRole('menuitem', { name: /Pot 2x2/i });
+    screen.getByRole('menuitem', { name: /2 Gallon Pot/i });
 
     const incrementSoilButton = screen.getByLabelText('increment soil');
     const decrementSoilButton = screen.getByLabelText('decrement soil');
@@ -165,11 +173,13 @@ describe('modifiers', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const addPotButton = screen.getByRole('button', { name: /Pot 2x2/i });
+    const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
-    const potInventoryItem = screen.getByRole('menuitem', { name: /Pot 2x2/i });
+    const potInventoryItem = screen.getByRole('menuitem', {
+      name: /2 Gallon Pot/i,
+    });
 
     const incrementSoilButton = screen.getByLabelText('increment soil');
     const decrementSoilButton = screen.getByLabelText('decrement soil');
@@ -187,7 +197,9 @@ describe('modifiers', () => {
     // delete pot
     fireEvent.keyDown(potInventoryItem, { key: 'Delete' });
 
-    expect(screen.queryByRole('menuitem', { name: /Pot 2x2/i })).toBeNull();
+    expect(
+      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
+    ).toBeNull();
     expect(screen.queryByText(/soil \(/)).toBeNull();
     await waitFor(() =>
       expect(store.getState().items.present.ids.length).toBe(0)

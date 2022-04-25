@@ -209,7 +209,6 @@ const Item = ({
         stroke={getCollisionColor(item.collisionState)}
         strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
         strokeScaleEnabled={false}
-        rotation={item.rotation}
         offset={item.offset}
         draggable={showLayer[item.layer]}
         opacity={item.opacity(showLayer)}

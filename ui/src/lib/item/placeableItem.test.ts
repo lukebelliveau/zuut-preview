@@ -31,6 +31,7 @@ describe('PlaceableItem', () => {
         100,
         100,
         100,
+        '',
         0,
         { soil: [] }
       );
@@ -52,6 +53,7 @@ describe('PlaceableItem', () => {
         100,
         100,
         100,
+        '',
         0,
         { soil: [] }
       );
@@ -75,6 +77,7 @@ describe('PlaceableItem', () => {
         100,
         100,
         100,
+        '',
         0,
         { soil: [], bamboo: [] }
       );
@@ -185,6 +188,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        '',
         0,
         {},
         CollisionState.NEUTRAL,
@@ -202,6 +206,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        '',
         0,
         {},
         CollisionState.NEUTRAL
@@ -218,6 +223,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        '',
         0,
         {},
         CollisionState.NEUTRAL,
@@ -243,6 +249,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        '',
         0,
         {},
         CollisionState.NEUTRAL
@@ -256,6 +263,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        '',
         0,
         {},
         CollisionState.NEUTRAL,
@@ -280,6 +288,7 @@ describe('PlaceableItem', () => {
         10,
         10,
         10,
+        '',
         0,
         {},
         CollisionState.NEUTRAL,
@@ -325,6 +334,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         1000,
+        '',
         0,
         {},
         CollisionState.NEUTRAL,
@@ -376,6 +386,7 @@ describe('PlaceableItem', () => {
         1000,
         1000,
         1000,
+        '',
         0,
         {},
         CollisionState.CONFLICTED,

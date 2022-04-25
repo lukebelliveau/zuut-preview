@@ -54,6 +54,7 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   modifiers: Modifiers;
   modifierImages: string[];
   removeAllModifiers(): void;
+  description: string;
 }
 
 export function isPlaceableItem(item: Item): item is PlaceableItem {
@@ -74,6 +75,7 @@ export default class PlaceableItem
   layer = Layer.FLOOR;
   rotation: number = 0;
   modifiers: Modifiers = {};
+  description = '';
 
   constructor(
     name: string,
@@ -83,6 +85,7 @@ export default class PlaceableItem
     width: number = 610,
     length: number = 610,
     height: number = 915,
+    description: string = '',
     rotation: number = 0,
     modifiers: Modifiers = {},
     collisionState: CollisionState = CollisionState.NEUTRAL,
@@ -94,6 +97,7 @@ export default class PlaceableItem
     this.width = width;
     this.length = length;
     this.height = height;
+    this.description = description;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
     this.rotation = rotation;
@@ -326,6 +330,7 @@ export default class PlaceableItem
       this.width,
       this.length,
       this.height,
+      this.description,
       this.rotation,
       this.modifiers
     );

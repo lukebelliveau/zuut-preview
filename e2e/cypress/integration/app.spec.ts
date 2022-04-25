@@ -32,22 +32,22 @@ describe('app', () => {
     cy.findByText('Objects').click();
 
     // add item
-    cy.findByRole('button', { name: /Pot 2x2/i }).click();
+    cy.findByRole('button', { name: /2 Gallon Pot/i }).click();
 
     // see control panel
     cy.findByText('Description').should('exist');
     cy.findByText('Transform').should('exist');
 
-    cy.findByRole('menuitem', { name: /Pot 2x2/i })
+    cy.findByRole('menuitem', { name: /2 Gallon Pot/i })
       .focus()
       .type('{backspace}');
-    cy.findByRole('menuitem', { name: /Pot 2x2/i }).should('not.exist');
+    cy.findByRole('menuitem', { name: /2 Gallon Pot/i }).should('not.exist');
 
     cy.undo();
 
-    cy.findByRole('menuitem', { name: /Pot 2x2/i }).click();
+    cy.findByRole('menuitem', { name: /2 Gallon Pot/i }).click();
 
     cy.findByLabelText('delete item').click();
-    cy.findByRole('menuitem', { name: /Pot 2x2/i }).should('not.exist');
+    cy.findByRole('menuitem', { name: /2 Gallon Pot/i }).should('not.exist');
   });
 });

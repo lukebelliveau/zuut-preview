@@ -49,6 +49,7 @@ export default class ItemGraphqlAdapter {
       number | undefined,
       number | undefined,
       number | undefined,
+      string | undefined,
       number | undefined,
       Modifiers | undefined
     ] = [
@@ -59,6 +60,7 @@ export default class ItemGraphqlAdapter {
       unwrapOrUndefined(gqlItem.width),
       unwrapOrUndefined(gqlItem.length),
       unwrapOrUndefined(gqlItem.height),
+      unwrapOrUndefined(gqlItem.description),
       unwrapOrUndefined(gqlItem.rotation),
       unwrapOrUndefined(gqlItem.modifiers),
     ];

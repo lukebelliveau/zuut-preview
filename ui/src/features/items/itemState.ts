@@ -13,6 +13,7 @@ export type ItemState = {
   width?: number;
   length?: number;
   height?: number;
+  description?: string;
   collisionState?: CollisionState;
   placementShadow?: PlacementShadow;
   rotation?: number;

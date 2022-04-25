@@ -29,8 +29,22 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     width: number = 610,
     length: number = 610,
     height: number = 915,
+    description: string = '',
     rotation: number = 0,
-    modifiers: Modifiers = { soil: [] },
+    modifiers: Modifiers = {
+      soil: [],
+      irrigation: [],
+      globes: [],
+      bamboo: [],
+      saucers: [],
+      trays: [],
+      holders: [],
+      clips: [],
+      ties: [],
+      seeds: [],
+      yoyos: [],
+      coco: [],
+    },
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
@@ -40,6 +54,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     this.width = width;
     this.length = length;
     this.height = height;
+    this.description = description;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
     this.rotation = rotation;
