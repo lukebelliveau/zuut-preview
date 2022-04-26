@@ -78,5 +78,5 @@ jobs:
           docker_build_args: |
             MY_ZUUT_ARG
         env:
-          MY_ZUUT_ARG: 'zuut-arg-1'
+          MY_ZUUT_ARG: 'zuut-arg-3'
         #timeout-minutes: 2

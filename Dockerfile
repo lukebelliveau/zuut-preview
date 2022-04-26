@@ -14,9 +14,6 @@ RUN apk add --update --no-cache \
     autoconf \
     automake
 
-ARG MY_ZUUT_ARG
-ENV REACT_APP_MY_ZUUT_ENV_VAR $MY_ZUUT_ARG
-
 WORKDIR /app/backend
 
 ADD backend/package.json backend/package-lock.json /app/backend/
@@ -47,9 +44,6 @@ RUN npm run build
 WORKDIR /app
 
 FROM node:16-alpine AS prod
-
-ARG MY_ZUUT_ARG
-ENV REACT_APP_MY_ZUUT_ENV_VAR $MY_ZUUT_ARG
 
 EXPOSE 4000
 
