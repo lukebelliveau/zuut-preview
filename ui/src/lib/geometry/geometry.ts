@@ -269,32 +269,77 @@ export interface OffsetObject {
   x: number;
   y: number;
   offset: Point;
+  rotation?: number;
 }
 
 export const computeNorthWest = (offsetObject: OffsetObject): Point => {
-  return {
-    x: Math.round(offsetObject.x - offsetObject.offset.x),
-    y: Math.round(offsetObject.y - offsetObject.offset.y),
-  };
+  if (
+    !offsetObject.rotation ||
+    offsetObject.rotation === 0 ||
+    offsetObject.rotation === 180
+  ) {
+    return {
+      x: Math.round(offsetObject.x - offsetObject.offset.x),
+      y: Math.round(offsetObject.y - offsetObject.offset.y),
+    };
+  } else {
+    return {
+      x: Math.round(offsetObject.x - offsetObject.offset.y),
+      y: Math.round(offsetObject.y - offsetObject.offset.x),
+    };
+  }
 };
 
 export const computeNorthEast = (offsetObject: OffsetObject): Point => {
-  return {
-    x: Math.round(offsetObject.x + offsetObject.offset.x),
-    y: Math.round(offsetObject.y - offsetObject.offset.y),
-  };
+  if (
+    !offsetObject.rotation ||
+    offsetObject.rotation === 0 ||
+    offsetObject.rotation === 180
+  ) {
+    return {
+      x: Math.round(offsetObject.x + offsetObject.offset.x),
+      y: Math.round(offsetObject.y - offsetObject.offset.y),
+    };
+  } else {
+    return {
+      x: Math.round(offsetObject.x + offsetObject.offset.y),
+      y: Math.round(offsetObject.y - offsetObject.offset.x),
+    };
+  }
 };
 
 export const computeSouthWest = (offsetObject: OffsetObject): Point => {
-  return {
-    x: Math.round(offsetObject.x - offsetObject.offset.x),
-    y: Math.round(offsetObject.y + offsetObject.offset.y),
-  };
+  if (
+    !offsetObject.rotation ||
+    offsetObject.rotation === 0 ||
+    offsetObject.rotation === 180
+  ) {
+    return {
+      x: Math.round(offsetObject.x - offsetObject.offset.x),
+      y: Math.round(offsetObject.y + offsetObject.offset.y),
+    };
+  } else {
+    return {
+      x: Math.round(offsetObject.x - offsetObject.offset.y),
+      y: Math.round(offsetObject.y + offsetObject.offset.x),
+    };
+  }
 };
 
 export const computeSouthEast = (offsetObject: OffsetObject): Point => {
-  return {
-    x: Math.round(offsetObject.x + offsetObject.offset.x),
-    y: Math.round(offsetObject.y + offsetObject.offset.y),
-  };
+  if (
+    !offsetObject.rotation ||
+    offsetObject.rotation === 0 ||
+    offsetObject.rotation === 180
+  ) {
+    return {
+      x: Math.round(offsetObject.x + offsetObject.offset.x),
+      y: Math.round(offsetObject.y + offsetObject.offset.y),
+    };
+  } else {
+    return {
+      x: Math.round(offsetObject.x + offsetObject.offset.y),
+      y: Math.round(offsetObject.y + offsetObject.offset.x),
+    };
+  }
 };

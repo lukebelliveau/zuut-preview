@@ -95,7 +95,7 @@ export default function PlaygroundItems() {
                 updatePlacement={updatePlacement}
                 dropAndUpdateItemCollisions={dropAndUpdateItemCollisions}
               />
-              <Shadow shadow={item.placementShadow} />
+              <Shadow item={item} />
             </Fragment>
           );
         })}
@@ -216,6 +216,7 @@ const Item = ({
          * don't use imageObj in tests, because there is no window.Image() in tests
          */
         image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
+        rotation={item.rotation}
         onDragMove={handleDragMove}
         onDragEnd={handleDragEnd}
         onMouseEnter={(e) => setContainerCursor('grab', e)}
@@ -287,19 +288,20 @@ const getCollisionColor = (collisionState: CollisionState) => {
   }
 };
 
-const Shadow = ({ shadow }: { shadow?: PlacementShadow }) => {
-  if (!shadow) return null;
+const Shadow = ({ item }: { item?: IPlaceableItem }) => {
+  if (!item?.placementShadow) return null;
 
   return (
     <Rect
-      x={shadow.x}
-      y={shadow.y}
-      width={shadow.width}
-      height={shadow.length}
-      stroke={getCollisionColor(shadow.collisionState)}
+      x={item.placementShadow.x}
+      y={item.placementShadow.y}
+      width={item.placementShadow.width}
+      height={item.placementShadow.length}
+      stroke={getCollisionColor(item.placementShadow.collisionState)}
       strokeWidth={1}
       strokeScaleEnabled={false}
-      offset={shadow.offset}
+      offset={item.placementShadow.offset}
+      rotation={item.rotation}
       draggable
     />
   );

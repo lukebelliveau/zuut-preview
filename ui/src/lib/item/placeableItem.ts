@@ -316,9 +316,6 @@ export default class PlaceableItem
 
   rotate() {
     this.rotation = (this.rotation + 90) % 360;
-    const oldWidth = this.width;
-    this.width = this.length;
-    this.length = oldWidth;
   }
 
   copy(): IPlaceableItem {

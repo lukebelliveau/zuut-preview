@@ -500,23 +500,15 @@ describe('PlaceableItem', () => {
 
       item.rotate();
       expect(item.rotation).toEqual(90);
-      expect(item.width).toEqual(200);
-      expect(item.length).toEqual(100);
 
       item.rotate();
       expect(item.rotation).toEqual(180);
-      expect(item.width).toEqual(100);
-      expect(item.length).toEqual(200);
 
       item.rotate();
       expect(item.rotation).toEqual(270);
-      expect(item.width).toEqual(200);
-      expect(item.length).toEqual(100);
 
       item.rotate();
       expect(item.rotation).toEqual(0);
-      expect(item.width).toEqual(100);
-      expect(item.length).toEqual(200);
     });
   });
 
