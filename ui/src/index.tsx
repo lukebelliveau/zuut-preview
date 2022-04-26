@@ -28,6 +28,9 @@ mixpanel.init('8e6a75065b59fcc16af32951e8340a92', {
   ignore_dnt: true,
 });
 
+console.log('TESTING ARG:************');
+console.log(process.env.REACT_APP_MY_ZUUT_ENV_VAR);
+
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
