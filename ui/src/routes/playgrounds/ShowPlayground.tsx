@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';
@@ -28,6 +28,8 @@ import {
 } from '../../app/interactionHandlers';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';
 
+import Feedback from 'feeder-react-feedback';
+import 'feeder-react-feedback/dist/feeder-react-feedback.css';
 import './ShowPlayground.css';
 import Toolbar from '../../components/Toolbar/Toolbar';
 import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
@@ -35,6 +37,8 @@ import { isCeilingPlaceableItem } from '../../lib/item/ceilingPlaceableItem';
 import { Layer } from '../../lib/layer';
 import { Point } from '../../lib/point';
 import { setVisibleLayer } from '../../features/interactions/interactionsSlice';
+
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const playground_path = () => '/playgrounds/current';
 
@@ -45,6 +49,7 @@ export default function ShowPlayground() {
   const jwt = useJwt();
   const store = useStore();
   const dispatchAddItem = useDispatchAddItem();
+  const { user } = useAuth0();
 
   /**
    * Ugh. I'm not able to get the react-dnd useDrop() hook to update
@@ -121,7 +126,7 @@ export default function ShowPlayground() {
   };
 
   return (
-    <Layout>
+    <Fragment>
       <div
         role="presentation"
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
@@ -130,31 +135,38 @@ export default function ShowPlayground() {
         className="playground-wrapper"
         data-testid="playground-container"
       >
-        <Helmet>
-          <title>Zuut - Design your grow</title>
-        </Helmet>
-        <div id="sandbox" ref={drop}>
-          <Toolbar />
-          <Stage
-            key={v4()}
-            ref={stageRef}
-            width={playground.displayWidth}
-            height={playground.displayHeight}
-            x={playground.centerX}
-            y={playground.centerY}
-            scaleX={scale}
-            scaleY={scale}
-            onWheel={zoom}
-            draggable
-          >
-            <Provider store={store}>
-              <GridLines />
-              <PlaygroundRoom room={room} />
-              <PlaygroundItems />
-            </Provider>
-          </Stage>
-        </div>
+        <Layout>
+          <Helmet>
+            <title>Zuut - Design your grow</title>
+          </Helmet>
+          <div id="sandbox" ref={drop}>
+            <Toolbar />
+            <Stage
+              key={v4()}
+              ref={stageRef}
+              width={playground.displayWidth}
+              height={playground.displayHeight}
+              x={playground.centerX}
+              y={playground.centerY}
+              scaleX={scale}
+              scaleY={scale}
+              onWheel={zoom}
+              draggable
+            >
+              <Provider store={store}>
+                <GridLines />
+                <PlaygroundRoom room={room} />
+                <PlaygroundItems />
+              </Provider>
+            </Stage>
+          </div>
+        </Layout>
       </div>
-    </Layout>
+      <Feedback
+        projectId="6267e6a8b4e0a100041f4471"
+        emailDefaultValue={user?.email}
+        email
+      />
+    </Fragment>
   );
 }
