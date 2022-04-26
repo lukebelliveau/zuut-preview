@@ -18,6 +18,8 @@ jobs:
           usedocker: true
           #healthcheck: true // save for later
           #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
+          docker_build_args: |
+            MIXPANEL_TOKEN
         env:
           MIXPANEL_TOKEN: 'c3c6fa03d2d58bf1cb9fe4a7a211ba79'
         #timeout-minutes: 2
