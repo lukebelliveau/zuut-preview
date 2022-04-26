@@ -89,6 +89,24 @@ You will need a `ui/cypress.env.json` file that specifies the following Auth0 va
 - `auth_client_secret`
 - `auth_username`
 - `auth_password`
+
+## Deploying
+We deploy to Heroku via GitHub actions. We have three workflows, defined in `.github/workflows/{dev,prod,stage}.yml`
+
+### Deploying to dev
+All pushes to the `main` branch are deployed to `zuut-dev.herokuapp.com` if they pass our pipeline checks.
+
+### Deploying to QA
+Pushes tagged with `q*` will be deployed to `zuut-qa.herokuapp.com`. To tag and push, do the following:
+
+`$ git tag q2022-04-26` (for example)
+`$ git push origin q2022-04-26`
+
+### Deploying to Prod
+Pushes tagged with `v*` will be deployed to `zuut-prod.herokuapp.com`. To tag and push, do the following:
+
+`$ git tag v2022-04-26` (for example)
+`$ git push origin v2022-04-26`
 ## In production
 
 The app is built with docker which runs the backend server. When `NODE_ENV=production`, the backend will not use a proxy,

@@ -2,7 +2,7 @@ name: prod
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -13,10 +13,11 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "zuut-prod" #Must be unique in Heroku
-          heroku_email: "zuutheroku@gmail.com"
+          heroku_app_name: 'zuut-prod' #Must be unique in Heroku
+          heroku_email: 'zuutheroku@gmail.com'
+          usedocker: true
           #healthcheck: true // save for later
           #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
         env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+          MIXPANEL_TOKEN: 'c3c6fa03d2d58bf1cb9fe4a7a211ba79'
         #timeout-minutes: 2
