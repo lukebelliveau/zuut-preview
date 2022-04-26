@@ -6,7 +6,7 @@ export const mixpanelTrack = (
   optionsOrCallback?: RequestOptions | Callback,
   callback?: Callback
 ) => {
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.REACT_APP_MIXPANEL_TOKEN) {
     mixpanel.track(
       event_name,
       {

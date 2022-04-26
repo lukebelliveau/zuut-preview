@@ -121,18 +121,18 @@ export default function ShowPlayground() {
   };
 
   return (
-    <div
-      role="presentation"
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-      className="playground-wrapper"
-      data-testid="playground-container"
-    >
-      <Helmet>
-        <title>Zuut - Design your grow</title>
-      </Helmet>
-      <Layout>
+    <Layout>
+      <div
+        role="presentation"
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        className="playground-wrapper"
+        data-testid="playground-container"
+      >
+        <Helmet>
+          <title>Zuut - Design your grow</title>
+        </Helmet>
         <div id="sandbox" ref={drop}>
           <Toolbar />
           <Stage
@@ -154,7 +154,7 @@ export default function ShowPlayground() {
             </Provider>
           </Stage>
         </div>
-      </Layout>
-    </div>
+      </div>
+    </Layout>
   );
 }

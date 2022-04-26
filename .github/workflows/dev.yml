@@ -41,22 +41,22 @@ jobs:
           CYPRESS_AUTH_PASSWORD: ${{ secrets.CYPRESS_AUTH_PASSWORD }}
 
   backend_unit_test:
-  runs-on: ubuntu-18.04
-  env:
-    CI: 'true'
-  steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '15.14.0'
-        cache: 'npm'
-    - run: npm ci
-      working-directory: ./backend
+    runs-on: ubuntu-18.04
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+        working-directory: ./backend
 
-    - name: Run unit tests
-      run: npm test -- --reporters=default --reporters=jest-junit
-      working-directory: ./backend
+      - name: Run unit tests
+        run: npm test -- --reporters=default --reporters=jest-junit
+        working-directory: ./backend
 
   deploy:
     runs-on: ubuntu-18.04
