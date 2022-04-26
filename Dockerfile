@@ -30,8 +30,9 @@ WORKDIR /app
 
 FROM node:16-alpine AS build
 
-ARG MY_ZUUT_ARG
-ENV REACT_APP_MY_ZUUT_ENV_VAR $MY_ZUUT_ARG
+# from github action docker_build_args
+ARG MIXPANEL_TOKEN
+ENV REACT_APP_MIXPANEL_TOKEN $MIXPANEL_TOKEN
 
 WORKDIR /app/backend
 COPY --from=dev /app/backend /app/backend

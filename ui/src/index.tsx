@@ -15,21 +15,12 @@ import { store } from './app/store';
 const AUTH0_DOMAIN = 'dev-baqlbrdt.us.auth0.com';
 const AUTH0_CLIENT_ID = 'ZiG0fuIV7rhOvYedlOXAL5wwl6FyLHid';
 
-// if (process.env.REACT_APP_MIXPANEL_TOKEN) {
-//   mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN, {
-//     debug: true,
-//     ignore_dnt: true,
-//   });
-// }
-
-// sloppy!
-mixpanel.init('8e6a75065b59fcc16af32951e8340a92', {
-  // debug: true,
-  ignore_dnt: true,
-});
-
-console.log('TESTING ARG:************');
-console.log(process.env.REACT_APP_MY_ZUUT_ENV_VAR);
+if (process.env.REACT_APP_MIXPANEL_TOKEN) {
+  mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN, {
+    debug: true,
+    ignore_dnt: true,
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>
