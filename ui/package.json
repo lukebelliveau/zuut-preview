@@ -90,7 +90,10 @@
   "jest": {
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!konva)"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/src/__mocks__/cssMock.js"
+    }
   },
   "eslintConfig": {
     "extends": [
