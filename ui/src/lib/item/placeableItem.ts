@@ -10,6 +10,7 @@ import {
   computeSouthEast,
   computeSouthWest,
   GeometryObject,
+  isStraddlingBoundary,
 } from '../geometry/geometry';
 import Playground from '../playground';
 import { Point } from '../point';
@@ -180,13 +181,36 @@ export default class PlaceableItem
     });
   }
 
+  isCollidingWithPlanWall(playground: Playground) {
+    /**
+     * hacky way to detect collisions between items and plan wall
+     */
+    if (!playground.plan || playground.plan.length === undefined) {
+      throw new Error('Tried to update collisions, but no plan found!');
+    }
+    const planGeometryObject: GeometryObject = {
+      northEast: playground.plan.northEast,
+      northWest: playground.plan.northWest,
+      southEast: playground.plan.southEast,
+      southWest: playground.plan.southWest,
+      length: playground.plan.length || 0,
+      width: playground.plan.width || 0,
+    };
+
+    return isStraddlingBoundary(this, planGeometryObject);
+  }
+
   updateCollisions(items: IItem[], playground: Playground) {
     const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
       items,
       playground
     );
 
-    if (this.itemHasConflicts(collidingWithItem)) {
+    if (this.isCollidingWithPlanWall(playground)) {
+      this.collisionState = CollisionState.CONFLICTED;
+    }
+    // end of gross hack to detect plan wall
+    else if (this.itemHasConflicts(collidingWithItem)) {
       this.collisionState = CollisionState.CONFLICTED;
     } else {
       const itemHasConnections = collidingWithItem.some((collidingItem) => {

@@ -122,4 +122,9 @@ export default class DuctItem extends CeilingPlaceableItem {
 
     return super.collisionStateBetween(this, otherItem);
   }
+
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  isCollidingWithPlanWall() {
+    return false;
+  }
 }

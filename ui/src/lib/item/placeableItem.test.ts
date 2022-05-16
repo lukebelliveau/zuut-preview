@@ -1,3 +1,4 @@
+import { isTupleTypeNode } from 'typescript';
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
 import { IItem } from '../item';
@@ -302,7 +303,7 @@ describe('PlaceableItem', () => {
   });
 
   describe('updateCollisions', () => {
-    const plan = new Plan('square', 10_000, 10_000, 12);
+    const plan = new Plan('square', feetToMm(10_000), feetToMm(10_000), 12);
     const playground = new Playground(1_000, 1_000, undefined, plan);
     it('sets collisionState=BAD to item and item.placementShadow when collisions occur', () => {
       const collisionItem = new PlaceableItem(
@@ -356,14 +357,36 @@ describe('PlaceableItem', () => {
       );
     });
 
+    it('has collisionState=CONFLICTED if it is not a WallItem and straddles a wall of the plan', () => {
+      const testItem = new PlaceableItem(
+        'collision item',
+        v4(),
+        feetToMm(0),
+        feetToMm(0),
+        feetToMm(1000),
+        feetToMm(1000),
+        feetToMm(1000),
+        '',
+        0,
+        {},
+        CollisionState.NEUTRAL
+      );
+      const playground = new Playground(1_000, 1_000, undefined, plan);
+      const items: IItem[] = [];
+      items.push(testItem);
+      testItem.updateCollisions(items, playground);
+
+      expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
+    });
+
     it('assigns collisionState=GOOD to item and item.placementShadow when no collisions', () => {
       const noCollisionItem = new PlaceableItem(
         'collision item',
         v4(),
-        2000,
-        2000,
-        1000,
-        1000
+        feetToMm(150),
+        feetToMm(150),
+        feetToMm(50),
+        feetToMm(50)
       );
       const placementShadow = {
         x: 0,
@@ -379,13 +402,13 @@ describe('PlaceableItem', () => {
         southEast: { x: 1000, y: 1000 },
       };
       const testItem = new PlaceableItem(
-        'collision item',
+        'test item',
         v4(),
-        0,
-        0,
-        1000,
-        1000,
-        1000,
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(50),
+        feetToMm(50),
+        feetToMm(1000),
         '',
         0,
         {},

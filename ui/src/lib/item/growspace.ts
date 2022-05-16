@@ -11,6 +11,7 @@ import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import { Layer } from '../layer';
 import { isDuctItem } from './ductItem';
 import GrowspaceImage from '../../images/items/growspace.svg';
+import { LayerState } from '../../features/interactions/interactionsState';
 
 export const GROWSPACE_TYPE = 'Growspace';
 
@@ -53,5 +54,16 @@ export default class Growspace extends PlaceableItem {
     }
 
     return super.collisionStateBetween(this, otherItem);
+  }
+
+  /**
+   * Growspaces should be opaque as long as one of the layers is enabled.
+   */
+  opacity(layerState: LayerState): number {
+    if (this.placementShadow) return 0.2;
+
+    if (layerState[Layer.FLOOR] || layerState[Layer.CEILING]) return 1;
+
+    return 0.2;
   }
 }
