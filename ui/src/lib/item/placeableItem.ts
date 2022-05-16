@@ -17,6 +17,7 @@ import { IItem, Item } from '../item';
 import ModifierItem from './modifierItem';
 import { Layer } from '../layer';
 import { LayerState } from '../../features/interactions/interactionsState';
+import { normalizeMmTo3InchesIfEnabled } from '../conversions';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;
@@ -335,8 +336,8 @@ export default class PlaceableItem
 
   get offset(): Point {
     return {
-      x: this.width / 2,
-      y: this.length / 2,
+      x: normalizeMmTo3InchesIfEnabled(this.width / 2),
+      y: normalizeMmTo3InchesIfEnabled(this.length / 2),
     };
   }
 

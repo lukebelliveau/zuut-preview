@@ -1,6 +1,8 @@
 import { feetToMm } from './conversions';
 import { Point } from './point';
 
+export const shouldNormalizeTo3Inches = true;
+
 export default class Grid {
   width: number;
   length: number;

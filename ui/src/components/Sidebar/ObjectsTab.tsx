@@ -35,6 +35,15 @@ export default function LayoutTab() {
 
   return (
     <SidebarTab>
+      <MenuSection title="Tents">
+        {itemGroup('tents').map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
       <MenuSection title="Pots">
         {itemGroup('pots').map((item) => (
           <PlaceableLibraryItem
@@ -55,15 +64,6 @@ export default function LayoutTab() {
       </MenuSection>
       <MenuSection title="Climate">
         {itemGroup('climate').map((item) => (
-          <PlaceableLibraryItem
-            key={item.name}
-            item={item as PlaceableItem}
-            placeItem={placeItem}
-          />
-        ))}
-      </MenuSection>
-      <MenuSection title="Structure">
-        {itemGroup('structure').map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}

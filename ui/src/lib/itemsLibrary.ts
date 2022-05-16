@@ -3,10 +3,13 @@ import { Item } from './item';
 import MiscItem from './item/miscItem';
 import RoomItem from './item/roomItem';
 import PotItem from './item/potItem';
-import { feetToMm, inchesToMm } from './conversions';
+import {
+  feetToMm,
+  inchesToMm,
+  normalizeMmTo3InchesIfEnabled,
+} from './conversions';
 import LightItem from './item/lightItem';
 import DuctItem from './item/ductItem';
-import CeilingPlaceableItem from './item/ceilingPlaceableItem';
 import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
 import GrowspaceItem from './item/growspaceItem';
 import CarbonFilterItem from './item/carbonFilterItem';
@@ -16,14 +19,111 @@ export type IItemGroup = {
   items: Item[];
 };
 
-const shouldNormalizeTo3Inches = true;
-
-// round to nearest 3 inches, then return value in mm
-const normalizeMmTo3InchesIfEnabled = (mm: number) => {
-  return shouldNormalizeTo3Inches ? inchesToMm(Math.round(mm / 76.2)) * 3 : mm;
-};
-
 const ItemsLibrary: IItemGroup[] = [
+  {
+    itemGroup: 'tents',
+    items: [
+      new Growspace(
+        '4x4x6.5 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
+      ),
+      new Growspace(
+        '5x5x6.5 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
+      ),
+      new Growspace(
+        '4x2x5 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(5))
+      ),
+      new Growspace(
+        '3x3x6 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(3)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(3)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(6))
+      ),
+      new Growspace(
+        '5x2.5x6.5 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(2.5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
+      ),
+      new Growspace(
+        '2x2x3 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(3))
+      ),
+      new Growspace(
+        '2x2x4 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(4))
+      ),
+      new Growspace(
+        '2.5x2.5x5.25 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(2.5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(2.5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(5.25))
+      ),
+      new Growspace(
+        '3x1.5x5.25 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(3)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(1.5)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(5.25))
+      ),
+      new Growspace(
+        '8x4x6.5 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(8)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
+      ),
+      new Growspace(
+        '8x4x6 tent',
+        undefined,
+        undefined,
+        undefined,
+        normalizeMmTo3InchesIfEnabled(feetToMm(8)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
+        normalizeMmTo3InchesIfEnabled(feetToMm(6))
+      ),
+    ],
+  },
   {
     itemGroup: 'pots',
     items: [
@@ -256,110 +356,6 @@ const ItemsLibrary: IItemGroup[] = [
         normalizeMmTo3InchesIfEnabled(inchesToMm(8)),
         normalizeMmTo3InchesIfEnabled(inchesToMm(12)),
         'In nature, cannabis plants thrive in a gentle breeze. Air movement protects plants from certain pests and molds.'
-      ),
-    ],
-  },
-  {
-    itemGroup: 'structure',
-    items: [
-      new Growspace(
-        '4x4x6.5 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
-      ),
-      new Growspace(
-        '5x5x6.5 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
-      ),
-      new Growspace(
-        '4x2x5 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(5))
-      ),
-      new Growspace(
-        '3x3x6 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(3)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(3)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(6))
-      ),
-      new Growspace(
-        '5x2.5x6.5 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(2.5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
-      ),
-      new Growspace(
-        '2x2x3 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(3))
-      ),
-      new Growspace(
-        '2x2x4 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(2)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(4))
-      ),
-      new Growspace(
-        '2.5x2.5x5.25 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(2.5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(2.5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(5.25))
-      ),
-      new Growspace(
-        '3x1.5x5.25 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(3)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(1.5)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(5.25))
-      ),
-      new Growspace(
-        '8x4x6.5 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(8)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(6.5))
-      ),
-      new Growspace(
-        '8x4x6 tent',
-        undefined,
-        undefined,
-        undefined,
-        normalizeMmTo3InchesIfEnabled(feetToMm(8)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(4)),
-        normalizeMmTo3InchesIfEnabled(feetToMm(6))
       ),
     ],
   },
