@@ -26,11 +26,11 @@ describe('PlaceableItem', () => {
       const placeableItem = new PlaceableItem(
         'item',
         v4(),
-        0,
-        0,
-        100,
-        100,
-        100,
+        feetToMm(0),
+        feetToMm(0),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100),
         '',
         0,
         { soil: [] }
@@ -48,11 +48,11 @@ describe('PlaceableItem', () => {
       const placeableItem = new PlaceableItem(
         'item',
         v4(),
-        0,
-        0,
-        100,
-        100,
-        100,
+        feetToMm(0),
+        feetToMm(0),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100),
         '',
         0,
         { soil: [] }
@@ -72,11 +72,11 @@ describe('PlaceableItem', () => {
       const placeableItem = new PlaceableItem(
         'item',
         v4(),
-        0,
-        0,
-        100,
-        100,
-        100,
+        feetToMm(0),
+        feetToMm(0),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100),
         '',
         0,
         { soil: [], bamboo: [] }
@@ -164,17 +164,17 @@ describe('PlaceableItem', () => {
 
   describe('drop', () => {
     const placementShadow: PlacementShadow = {
-      x: 90,
-      y: 90,
-      width: 10,
-      height: 10,
-      length: 10,
+      x: feetToMm(90),
+      y: feetToMm(90),
+      width: feetToMm(10),
+      height: feetToMm(10),
+      length: feetToMm(10),
       collisionState: CollisionState.NEUTRAL,
-      offset: { x: 95, y: 95 },
-      northWest: { x: 90, y: 90 },
-      northEast: { x: 100, y: 90 },
-      southWest: { x: 90, y: 100 },
-      southEast: { x: 100, y: 100 },
+      offset: { x: feetToMm(95), y: feetToMm(95) },
+      northWest: { x: feetToMm(90), y: feetToMm(90) },
+      northEast: { x: feetToMm(100), y: feetToMm(90) },
+      southWest: { x: feetToMm(90), y: feetToMm(100) },
+      southEast: { x: feetToMm(100), y: feetToMm(100) },
     };
     const plan = new Plan('square', 10_000, 10_000, 12);
     const playground = new Playground(1_000, 1_000, undefined, plan);
@@ -244,11 +244,11 @@ describe('PlaceableItem', () => {
       const collidingItem = new PlaceableItem(
         'collidingItem',
         v4(),
-        85,
-        85,
-        10,
-        10,
-        10,
+        feetToMm(85),
+        feetToMm(85),
+        feetToMm(10),
+        feetToMm(10),
+        feetToMm(10),
         '',
         0,
         {},
@@ -258,11 +258,11 @@ describe('PlaceableItem', () => {
       const testItem = new PlaceableItem(
         'testItem',
         v4(),
-        0,
-        0,
-        10,
-        10,
-        10,
+        feetToMm(0),
+        feetToMm(0),
+        feetToMm(10),
+        feetToMm(10),
+        feetToMm(10),
         '',
         0,
         {},
@@ -411,33 +411,75 @@ describe('PlaceableItem', () => {
 
   describe('#isCollidingWith', () => {
     it('returns neutral if other item is outside of the current item', () => {
-      const item = new PlaceableItem('', '1', 100, 100, 100, 100);
-      const other = new PlaceableItem('', '2', 1001, 1001, 1001, 1001);
+      const item = new PlaceableItem(
+        '',
+        '1',
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100)
+      );
+      const other = new PlaceableItem(
+        '',
+        '2',
+        feetToMm(1001),
+        feetToMm(1001),
+        feetToMm(1001),
+        feetToMm(1001)
+      );
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.NEUTRAL
       );
     });
     it('returns neutral if only the borders overlap', () => {
-      const item = new PlaceableItem('', '1', 100, 100, 100, 100);
-      const otherRight = new PlaceableItem('', '2', 200, 100, 100, 100);
+      const item = new PlaceableItem(
+        '',
+        '1',
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100)
+      );
+      const otherRight = new PlaceableItem(
+        '',
+        '2',
+        feetToMm(200),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100)
+      );
       expect(item.collisionStateBetween(item, otherRight)).toBe(
         CollisionState.NEUTRAL
       );
-      const otherBelow = new PlaceableItem('', '3', 100, 200, 100, 100);
+      const otherBelow = new PlaceableItem(
+        '',
+        '3',
+        feetToMm(100),
+        feetToMm(200),
+        feetToMm(100),
+        feetToMm(100)
+      );
       expect(item.collisionStateBetween(item, otherBelow)).toBe(
         CollisionState.NEUTRAL
       );
-      const otherLeft = new PlaceableItem('', '4', 0, 100, 100, 100);
+      const otherLeft = new PlaceableItem(
+        '',
+        '4',
+        feetToMm(0),
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(100)
+      );
       expect(item.collisionStateBetween(item, otherLeft)).toBe(
         CollisionState.NEUTRAL
       );
       const otherTop = new PlaceableItem(
         '',
         '5',
-        100,
-        0,
-        100,
-        0,
+        feetToMm(100),
+        feetToMm(0),
+        feetToMm(100),
+        feetToMm(0),
         CollisionState.NEUTRAL
       );
       expect(item.collisionStateBetween(item, otherTop)).toBe(
@@ -445,29 +487,85 @@ describe('PlaceableItem', () => {
       );
     });
     it('returns true if other item is in the northeast corner', () => {
-      const item = new PlaceableItem('', '1', 100, 100, 10, 10);
-      const other = new PlaceableItem('', '2', 99, 91, 10, 10);
+      const item = new PlaceableItem(
+        '',
+        '1',
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(10),
+        feetToMm(10)
+      );
+      const other = new PlaceableItem(
+        '',
+        '2',
+        feetToMm(99),
+        feetToMm(91),
+        feetToMm(10),
+        feetToMm(10)
+      );
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.CONFLICTED
       );
     });
     it('returns true if other item is in the southeast corner', () => {
-      const item = new PlaceableItem('', '1', 100, 100, 10, 10);
-      const other = new PlaceableItem('', '2', 99, 109, 10, 10);
+      const item = new PlaceableItem(
+        '',
+        '1',
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(10),
+        feetToMm(10)
+      );
+      const other = new PlaceableItem(
+        '',
+        '2',
+        feetToMm(99),
+        feetToMm(109),
+        feetToMm(10),
+        feetToMm(10)
+      );
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.CONFLICTED
       );
     });
     it('returns true if other item is in the southwest corner', () => {
-      const item = new PlaceableItem('', '1', 100, 100, 10, 10);
-      const other = new PlaceableItem('', '2', 91, 109, 10, 10);
+      const item = new PlaceableItem(
+        '',
+        '1',
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(10),
+        feetToMm(10)
+      );
+      const other = new PlaceableItem(
+        '',
+        '2',
+        feetToMm(91),
+        feetToMm(109),
+        feetToMm(10),
+        feetToMm(10)
+      );
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.CONFLICTED
       );
     });
     it('returns true if other item is in the northwest corner', () => {
-      const item = new PlaceableItem('', '1', 100, 100, 10, 10);
-      const other = new PlaceableItem('', '2', 91, 91, 10, 10);
+      const item = new PlaceableItem(
+        '',
+        '1',
+        feetToMm(100),
+        feetToMm(100),
+        feetToMm(10),
+        feetToMm(10)
+      );
+      const other = new PlaceableItem(
+        '',
+        '2',
+        feetToMm(91),
+        feetToMm(91),
+        feetToMm(10),
+        feetToMm(10)
+      );
       expect(item.collisionStateBetween(item, other)).toBe(
         CollisionState.CONFLICTED
       );

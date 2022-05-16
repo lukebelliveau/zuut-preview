@@ -93,11 +93,11 @@ export default class PlaceableItem
     placementShadow: PlacementShadow | undefined = undefined
   ) {
     super(name, id);
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.length = length;
-    this.height = height;
+    this.x = normalizeMmTo3InchesIfEnabled(x);
+    this.y = normalizeMmTo3InchesIfEnabled(y);
+    this.width = normalizeMmTo3InchesIfEnabled(width);
+    this.length = normalizeMmTo3InchesIfEnabled(length);
+    this.height = normalizeMmTo3InchesIfEnabled(height);
     this.description = description;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;

@@ -22,8 +22,6 @@ export const sortSelectedToLast = (
 ): IItem[] => {
   const itemsCopy = [...items];
   const sortedItems = itemsCopy.sort((a, b) => {
-    if (isGrowspace(a) || isGrowspace(b)) return sortGrowspaceToBottom(a, b);
-
     if (selectedItemIds.includes(a.id) && !selectedItemIds.includes(b.id)) {
       return 1;
     }
@@ -46,7 +44,6 @@ export const sortFromGroundToCeiling = (items: (IItem | IPlaceableItem)[]) => {
     if (isPlaceableItem(a) && !isPlaceableItem(b)) {
       return 1;
     } else if (isPlaceableItem(b) && !isPlaceableItem(a)) {
-      console.log('????');
       return -1;
     } else if (!isPlaceableItem(a) && !isPlaceableItem(b)) {
       return 0;
