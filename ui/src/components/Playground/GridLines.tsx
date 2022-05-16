@@ -7,13 +7,15 @@ const GridLines = () => {
 
   return (
     <Layer>
-      {plan.grid.lines.map((line, i) => <Line
-        key={i}
-        strokeWidth={1}
-        strokeScaleEnabled={false}
-        stroke={'#ededed'}
-        points={line}
-      />)}
+      {plan.grid.lines.map((line, i) => (
+        <Line
+          key={i}
+          strokeWidth={1}
+          strokeScaleEnabled={false}
+          stroke={'#ededed'}
+          points={line}
+        />
+      ))}
     </Layer>
   );
 };
