@@ -14,6 +14,7 @@ import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
 import GrowspaceItem from './item/growspaceItem';
 import CarbonFilterItem from './item/carbonFilterItem';
 import WaterItem from './item/waterItem';
+import ExhaustFanItem from './item/exhaustFanItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -268,7 +269,7 @@ const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'climate',
     items: [
-      new CeilingGrowspaceItem(
+      new ExhaustFanItem(
         'Exhaust Fan',
         undefined,
         undefined,
