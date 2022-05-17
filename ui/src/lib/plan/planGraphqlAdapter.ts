@@ -9,6 +9,7 @@ import { NetworkError } from '@apollo/client/errors';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { push } from 'connected-react-router';
+import { isDemoMode } from '../../app/store';
 
 import { Query } from '../../graphql';
 import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
@@ -26,6 +27,13 @@ const requestLink = (jwt: string) => {
   })
     .concat(
       onError((e: any) => {
+        if (isDemoMode()) {
+          /**
+           * requests to graphql server may fail if there is a stale token and user doesn't re-login
+           * we don't care because this is demo mode only
+           */
+          return;
+        }
         /**
          * seems like sometimes auth0 does not refresh tokens and user is left with stale token
          * resulting in what was previously a 401 error invisible to the user
