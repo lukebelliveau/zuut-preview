@@ -16,6 +16,7 @@ import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
+import WaterItem, { WATER_ITEM_TYPE } from './waterItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
@@ -198,6 +199,21 @@ export default class ItemReduxAdapter {
         );
       case CARBON_FILTER_ITEM_TYPE:
         return new CarbonFilterItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case WATER_ITEM_TYPE:
+        return new WaterItem(
           itemState.name,
           itemState.id,
           itemState.x,

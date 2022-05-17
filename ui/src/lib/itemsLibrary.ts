@@ -13,6 +13,7 @@ import DuctItem from './item/ductItem';
 import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
 import GrowspaceItem from './item/growspaceItem';
 import CarbonFilterItem from './item/carbonFilterItem';
+import WaterItem from './item/waterItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -362,7 +363,7 @@ const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'misc',
     items: [
-      new RoomItem(
+      new WaterItem(
         'Water Container',
         undefined,
         undefined,

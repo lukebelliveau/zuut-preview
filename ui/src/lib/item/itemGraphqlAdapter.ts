@@ -17,6 +17,7 @@ import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
+import WaterItem, { WATER_ITEM_TYPE } from './waterItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -79,6 +80,8 @@ export default class ItemGraphqlAdapter {
         return new LightItem(...itemAttrs);
       case CARBON_FILTER_ITEM_TYPE:
         return new CarbonFilterItem(...itemAttrs);
+      case WATER_ITEM_TYPE:
+        return new WaterItem(...itemAttrs);
       case MISC_ITEM_TYPE:
         return new MiscItem(gqlItem.name, gqlItem.id);
       case MODIFIER_ITEM_TYPE:
