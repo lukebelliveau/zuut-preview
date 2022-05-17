@@ -17,6 +17,9 @@ import interactionsReducer from '../features/interactions/interactionsSlice';
 import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 
+export const DEMO_MODE = true;
+export const ZUUT_STATE = 'zuut-state';
+
 export const browserHistory = createBrowserHistory<unknown>();
 const reduxLoggerEnabled = false;
 
@@ -24,25 +27,27 @@ const errorHandlerMiddleware = createThunkErrorHandlerMiddleware({
   onError: console.error,
 });
 
+const reducers = {
+  items: undoable<EntityState<ItemState>>(itemsReducer, {
+    filter: includeAction([
+      updateOne.type,
+      addOne.type,
+      removeOne.type,
+      removeMany.type,
+      'items/removeItems/pending',
+      'items/removeItems/fulfilled',
+    ]),
+  }),
+  plans: plansReducer,
+  playground: playgroundReducer,
+  interactions: interactionsReducer,
+  user: userReducer,
+  router: connectRouter<LocationState>(browserHistory),
+};
+
 export function createAppStore() {
   return configureStore({
-    reducer: {
-      items: undoable<EntityState<ItemState>>(itemsReducer, {
-        filter: includeAction([
-          updateOne.type,
-          addOne.type,
-          removeOne.type,
-          removeMany.type,
-          'items/removeItems/pending',
-          'items/removeItems/fulfilled',
-        ]),
-      }),
-      plans: plansReducer,
-      playground: playgroundReducer,
-      interactions: interactionsReducer,
-      user: userReducer,
-      router: connectRouter<LocationState>(browserHistory),
-    },
+    reducer: reducers,
     middleware: (getDefaultMiddleware) => {
       let middlewares = getDefaultMiddleware();
       if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
@@ -53,7 +58,33 @@ export function createAppStore() {
   });
 }
 
-export const store = createAppStore();
+export function getDemoModeStore() {
+  const persistentState = localStorage.getItem(ZUUT_STATE)
+    ? JSON.parse(localStorage.getItem(ZUUT_STATE) || '')
+    : {};
+
+  return configureStore({
+    reducer: reducers,
+    middleware: (getDefaultMiddleware) => {
+      let middlewares = getDefaultMiddleware();
+      if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
+      return middlewares
+        .concat(routerMiddleware(browserHistory))
+        .concat(errorHandlerMiddleware);
+    },
+    preloadedState: persistentState,
+  });
+}
+
+export const store = DEMO_MODE ? getDemoModeStore() : createAppStore();
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppStore = ReturnType<typeof createAppStore>;
+
+if (DEMO_MODE) {
+  store.subscribe(() => {
+    const state = store.getState();
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem(ZUUT_STATE, serializedState);
+  });
+}

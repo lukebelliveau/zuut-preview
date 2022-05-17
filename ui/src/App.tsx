@@ -11,6 +11,7 @@ import NewPlayground, {
   new_playground_path,
 } from './routes/playgrounds/NewPlayground';
 import ShowPlayground, {
+  demo_playground_path,
   playground_path,
 } from './routes/playgrounds/ShowPlayground';
 import Workplace from './routes/Workplace';
@@ -34,6 +35,9 @@ function App() {
             <RequireAuth>
               <ShowPlayground />
             </RequireAuth>
+          </Route>
+          <Route path={demo_playground_path()}>
+            <ShowPlayground />
           </Route>
           <Route path="/workplace">
             <RequireAuth>

@@ -39,8 +39,12 @@ import { Point } from '../../lib/point';
 import { setVisibleLayer } from '../../features/interactions/interactionsSlice';
 
 import { useAuth0 } from '@auth0/auth0-react';
+import { DEMO_MODE } from '../../app/store';
+import { createPlan } from '../../features/plans/planSlice';
+import { feetToMm } from '../../lib/conversions';
 
 export const playground_path = () => '/playgrounds/current';
+export const demo_playground_path = () => '/playgrounds/demo';
 
 export default function ShowPlayground() {
   const stageRef = useRef<any>(null);
@@ -84,7 +88,16 @@ export default function ShowPlayground() {
     },
   }));
 
-  if (!playground.plan || !jwt) {
+  if (DEMO_MODE && !playground.plan) {
+    dispatch(
+      createPlan({
+        name: 'Demo Playground',
+        width: feetToMm(50),
+        length: feetToMm(50),
+      })
+    );
+    return <Loading />;
+  } else if (!playground.plan || !jwt) {
     if (jwt) dispatch(loadSavedPlayground(jwt));
     return <Loading />;
   }

@@ -101,31 +101,35 @@ export const loadSavedPlayground = createAsyncThunk(
 export const resizePlayground = createAsyncThunk(
   'playground/resizePlayground',
   async (_, { dispatch, getState }) => {
-    const sandbox = window.document.getElementById('sandbox');
-    const toolbar = window.document.getElementById('toolbar');
-    if (!sandbox || !toolbar)
-      throw new Error(
-        `tried to resize playground but couldn't find sandbox or toolbar:
+    try {
+      const sandbox = window.document.getElementById('sandbox');
+      const toolbar = window.document.getElementById('toolbar');
+      if (!sandbox || !toolbar)
+        throw new Error(
+          `tried to resize playground but couldn't find sandbox or toolbar:
           sandbox: ${sandbox} toolbar: ${toolbar}`
+        );
+
+      const playgroundState = selectPlaygroundState(getState() as RootState);
+      const planState = selectDefaultPlan(getState() as RootState);
+      const playground = PlaygroundReduxAdapter.playgroundFromState(
+        planState,
+        playgroundState
       );
 
-    const playgroundState = selectPlaygroundState(getState() as RootState);
-    const planState = selectDefaultPlan(getState() as RootState);
-    const playground = PlaygroundReduxAdapter.playgroundFromState(
-      planState,
-      playgroundState
-    );
+      playground.setDisplayDimensions(
+        sandbox.offsetWidth,
+        sandbox.offsetHeight - toolbar.offsetHeight
+      );
 
-    playground.setDisplayDimensions(
-      sandbox.offsetWidth,
-      sandbox.offsetHeight - toolbar.offsetHeight
-    );
-
-    dispatch(
-      playgroundSlice.actions.resize(
-        PlaygroundReduxAdapter.playgroundToState(playground)
-      )
-    );
+      dispatch(
+        playgroundSlice.actions.resize(
+          PlaygroundReduxAdapter.playgroundToState(playground)
+        )
+      );
+    } catch (e) {
+      console.error('ERROR in thunk playground/resizePlayground:', e);
+    }
   }
 );
 

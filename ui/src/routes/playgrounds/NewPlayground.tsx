@@ -12,11 +12,13 @@ import Loading from '../../components/Loading';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createPlan, deleteAllPlans } from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
-import { playground_path } from './ShowPlayground';
+import { demo_playground_path, playground_path } from './ShowPlayground';
 import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playgroundSlice';
 import useQuery from '../../app/useQuery';
 import { removeAll, removeAllItems } from '../../features/items/itemsSlice';
 import { ActionCreators } from 'redux-undo';
+import { DEMO_MODE, ZUUT_STATE as ZUUT_DEMO_STATE } from '../../app/store';
+import { useHistory } from 'react-router';
 
 export const new_playground_path = () => '/playgrounds/new';
 export const reset_playground_path = () =>
@@ -29,6 +31,7 @@ export default function NewPlayground() {
   const { register, handleSubmit } = useForm<FormParams>();
   const [isFirstLoad, setIsFirstLoad] = useState(false);
   let query = useQuery();
+  const history = useHistory();
 
   const resetPlayground = query.get('reset-playground');
   const jwt = useJwt();
@@ -37,12 +40,15 @@ export default function NewPlayground() {
     if (!isFirstLoad && !resetPlayground) {
       dispatch(loadCurrentPlaygroundIfPresent(true));
       setIsFirstLoad(true);
+    } else if (resetPlayground && DEMO_MODE) {
+      localStorage.removeItem(ZUUT_DEMO_STATE);
+      history.push(demo_playground_path());
     } else if (resetPlayground && jwt) {
       dispatch(deleteAllPlans(true));
       dispatch(removeAllItems(true));
       dispatch(ActionCreators.clearHistory());
     }
-  }, [isFirstLoad, setIsFirstLoad, dispatch, resetPlayground, jwt]);
+  }, [isFirstLoad, setIsFirstLoad, dispatch, resetPlayground, jwt, history]);
 
   type FormParams = {
     name: string;
