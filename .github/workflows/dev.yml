@@ -4,8 +4,66 @@ on:
     branches:
       - main
 jobs:
+  ui_unit_test:
+    runs-on: ubuntu-18.04
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+        working-directory: ./ui
+
+      - name: Run unit tests
+        run: npm test -- --reporters=default --reporters=jest-junit
+        working-directory: ./ui
+
+  browser_tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: browser-tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+      - run: cd e2e && npm ci && npx cypress verify
+      - run: docker compose build
+      - run: docker compose up -d
+      - run: npm run e2e
+        env:
+          CYPRESS_AUTH_USERNAME: ${{ secrets.CYPRESS_AUTH_USERNAME }}
+          CYPRESS_AUTH_PASSWORD: ${{ secrets.CYPRESS_AUTH_PASSWORD }}
+
+  backend_unit_test:
+    runs-on: ubuntu-18.04
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+        working-directory: ./backend
+
+      - name: Run unit tests
+        run: npm test -- --reporters=default --reporters=jest-junit
+        working-directory: ./backend
+
   deploy:
     runs-on: ubuntu-18.04
+    needs:
+      - ui_unit_test
+      - browser_tests
+      - backend_unit_test
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to development environment
@@ -14,11 +72,8 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'zuut-dev' #Must be unique in Heroku
           heroku_email: 'zuutheroku@gmail.com'
-          usedocker: true
           #healthcheck: true // save for later
           #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
-          docker_build_args: |
-            MIXPANEL_TOKEN
         env:
-          MIXPANEL_TOKEN: '8e6a75065b59fcc16af32951e8340a92'
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
         #timeout-minutes: 2

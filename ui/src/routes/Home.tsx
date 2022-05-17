@@ -7,7 +7,10 @@ import ZuutLogo from '../images/zuut-logo.svg';
 import LoginButton from '../components/LoginButton';
 import Link from '../components/Link';
 import { new_playground_path } from './playgrounds/NewPlayground';
-import { playground_path } from './playgrounds/ShowPlayground';
+import {
+  demo_playground_path,
+  playground_path,
+} from './playgrounds/ShowPlayground';
 import { getStarted } from '../features/playgrounds/playgroundSlice';
 import { useDispatch } from 'react-redux';
 
@@ -29,10 +32,16 @@ function Home() {
           <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
         </div>
         <div id="header-auth">
-          {isAuthenticated ? 
-            <Link to={playground_path()} onClick={onGetStarted}>Playground</Link> :
+          {isAuthenticated ? (
+            <Link to={playground_path()} onClick={onGetStarted}>
+              <button className="warning">Playground</button>
+            </Link>
+          ) : (
             <LoginButton />
-          }
+          )}
+          <Link to={demo_playground_path()}>
+            <button>Demo</button>
+          </Link>{' '}
         </div>
       </header>
       <div id="content">
@@ -40,12 +49,17 @@ function Home() {
           <h5>ZUUT Grower Playground</h5>
           <h2>Design and plan your grow.</h2>
           <p>
-            ZUUT empowers first time growers &amp;
-            seasonded cultivators to design &amp;
-            plan your grow while maximizing yields &amp;
-            minimizing costs.
+            ZUUT empowers first time growers &amp; seasonded cultivators to
+            design &amp; plan your grow while maximizing yields &amp; minimizing
+            costs.
           </p>
-          <Link className="button go" to={new_playground_path()} onClick={onGetStarted}>Get started</Link>
+          <Link
+            className="button go"
+            to={new_playground_path()}
+            onClick={onGetStarted}
+          >
+            Get started
+          </Link>
         </section>
       </div>
     </div>
