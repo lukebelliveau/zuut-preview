@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { push } from 'connected-react-router';
 import { v4 } from 'uuid';
-import { DEMO_MODE, RootState } from '../../app/store';
+import { isDemoMode, RootState } from '../../app/store';
 
 import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
@@ -35,7 +35,7 @@ export const createPlan = createAsyncThunk(
     try {
       const plan = new Plan(args.name, args.width, args.length);
       let id = v4();
-      if (!DEMO_MODE) {
+      if (!isDemoMode()) {
         const jwt = selectJwt(getState() as RootState);
         const adapter = new PlanGraphqlAdapter(jwt);
         id = await adapter.create(plan);

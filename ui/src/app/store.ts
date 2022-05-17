@@ -17,7 +17,7 @@ import interactionsReducer from '../features/interactions/interactionsSlice';
 import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 
-export const DEMO_MODE = true;
+export const isDemoMode = () => window.location.href.includes('demo');
 export const ZUUT_STATE = 'zuut-state';
 
 export const browserHistory = createBrowserHistory<unknown>();
@@ -76,12 +76,12 @@ export function getDemoModeStore() {
   });
 }
 
-export const store = DEMO_MODE ? getDemoModeStore() : createAppStore();
+export const store = isDemoMode() ? getDemoModeStore() : createAppStore();
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppStore = ReturnType<typeof createAppStore>;
 
-if (DEMO_MODE) {
+if (isDemoMode()) {
   store.subscribe(() => {
     const state = store.getState();
     const serializedState = JSON.stringify(state);

@@ -17,7 +17,7 @@ import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playg
 import useQuery from '../../app/useQuery';
 import { removeAll, removeAllItems } from '../../features/items/itemsSlice';
 import { ActionCreators } from 'redux-undo';
-import { DEMO_MODE, ZUUT_STATE as ZUUT_DEMO_STATE } from '../../app/store';
+import { isDemoMode, ZUUT_STATE as ZUUT_DEMO_STATE } from '../../app/store';
 import { useHistory } from 'react-router';
 
 export const new_playground_path = () => '/playgrounds/new';
@@ -40,7 +40,7 @@ export default function NewPlayground() {
     if (!isFirstLoad && !resetPlayground) {
       dispatch(loadCurrentPlaygroundIfPresent(true));
       setIsFirstLoad(true);
-    } else if (resetPlayground && DEMO_MODE) {
+    } else if (resetPlayground && isDemoMode()) {
       localStorage.removeItem(ZUUT_DEMO_STATE);
       history.push(demo_playground_path());
     } else if (resetPlayground && jwt) {

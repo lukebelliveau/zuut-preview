@@ -39,7 +39,7 @@ import { Point } from '../../lib/point';
 import { setVisibleLayer } from '../../features/interactions/interactionsSlice';
 
 import { useAuth0 } from '@auth0/auth0-react';
-import { DEMO_MODE } from '../../app/store';
+import { isDemoMode } from '../../app/store';
 import { createPlan } from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
 
@@ -88,7 +88,7 @@ export default function ShowPlayground() {
     },
   }));
 
-  if (DEMO_MODE && !playground.plan) {
+  if (isDemoMode() && !playground.plan) {
     dispatch(
       createPlan({
         name: 'Demo Playground',
