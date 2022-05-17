@@ -15,7 +15,7 @@ export function isCarbonFilterItem(item: Item): item is CarbonFilterItem {
   return (item as CarbonFilterItem).type === CARBON_FILTER_ITEM_TYPE;
 }
 
-const defaultFilterModifiers = { ratchets: [] };
+const defaultFilterModifiers = { 'Rope Ratchets': [] };
 
 export default class CarbonFilterItem
   extends CeilingGrowspaceItem
