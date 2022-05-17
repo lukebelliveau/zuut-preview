@@ -1,5 +1,6 @@
 import Modal from 'react-modal';
-import { reset_playground_path } from '../../routes/playgrounds/NewPlayground';
+import { isDemoMode } from '../../app/store';
+import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
 import Link from '../Link';
 import './Toolbar.css';
 
@@ -21,6 +22,8 @@ const ResetPlaygroundModal = ({
   open: boolean;
   closeModal: () => void;
 }) => {
+  const link = `${new_playground_path()}/${isDemoMode() ? 'demo' : null}`;
+
   return (
     <Modal
       isOpen={open}
@@ -32,7 +35,7 @@ const ResetPlaygroundModal = ({
         <p>Resetting will cause your current playground to be gone forever.</p>
         <p>Are you sure you want to reset your playground?</p>
         <div>
-          <Link to={reset_playground_path()}>
+          <Link to={link}>
             <button className="warning">Reset playground</button>
           </Link>
           <button onClick={closeModal}>Close</button>

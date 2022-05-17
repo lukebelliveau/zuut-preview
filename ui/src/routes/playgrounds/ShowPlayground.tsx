@@ -7,8 +7,12 @@ import { Provider, useDispatch, useStore } from 'react-redux';
 import { v4 } from 'uuid';
 
 import Layout from '../../components/Layout';
-import { useResizePlaygroundOnWindowResize } from '../../features/playgrounds/playgroundEffects';
 import {
+  useLoadDemoPlan,
+  useResizePlaygroundOnWindowResize,
+} from '../../features/playgrounds/playgroundEffects';
+import {
+  createDemoPlan,
   loadSavedPlayground,
   zoom as zoomPlayground,
 } from '../../features/playgrounds/playgroundSlice';
@@ -40,7 +44,6 @@ import { setVisibleLayer } from '../../features/interactions/interactionsSlice';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import { isDemoMode } from '../../app/store';
-import { createPlan } from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
 
 export const playground_path = () => '/playgrounds/current';
@@ -67,6 +70,7 @@ export default function ShowPlayground() {
   const hackyPlaygroundCenterRef = useRef<Point>();
   hackyPlaygroundCenterRef.current = playground.place();
 
+  useLoadDemoPlan();
   useResizePlaygroundOnWindowResize();
 
   const [_, drop] = useDrop(() => ({
@@ -89,14 +93,10 @@ export default function ShowPlayground() {
   }));
 
   if (isDemoMode() && !playground.plan) {
-    dispatch(
-      createPlan({
-        name: 'Demo Playground',
-        width: feetToMm(50),
-        length: feetToMm(50),
-      })
-    );
+    createDemoPlan(dispatch);
+
     return <Loading />;
+  } else if (isDemoMode() && playground.plan) {
   } else if (!playground.plan || !jwt) {
     if (jwt) dispatch(loadSavedPlayground(jwt));
     return <Loading />;

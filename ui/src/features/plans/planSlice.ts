@@ -18,10 +18,11 @@ export const planSlice = createSlice({
   reducers: {
     create: planAdapter.addOne,
     update: planAdapter.updateOne,
+    removeAll: planAdapter.removeAll,
   },
 });
 
-export const { create, update } = planSlice.actions;
+export const { create, update, removeAll } = planSlice.actions;
 
 interface CreatePlanPayload {
   name: string;

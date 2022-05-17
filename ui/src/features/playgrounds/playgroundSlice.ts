@@ -3,10 +3,12 @@ import { push } from 'connected-react-router';
 import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 
-import { RootState } from '../../app/store';
+import { AppDispatch, RootState } from '../../app/store';
 import { assertDefined } from '../../lib/assert';
+import { feetToMm } from '../../lib/conversions';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { loadJwt } from '../../lib/jwt';
+import Plan from '../../lib/plan';
 import PlanGraphqlAdapter from '../../lib/plan/planGraphqlAdapter';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -132,6 +134,14 @@ export const resizePlayground = createAsyncThunk(
     }
   }
 );
+
+export const createDemoPlan = (dispatch: AppDispatch) => {
+  const planState = new Plan('Demo Playground', feetToMm(50), feetToMm(50));
+  const plan = PlanReduxAdapter.planToState(planState);
+  dispatch(create(plan));
+  dispatch(setPlan(plan.id));
+  dispatch(resizePlayground());
+};
 
 export const playgroundSlice = createSlice({
   name: 'playground',

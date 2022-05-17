@@ -10,12 +10,19 @@ import EnterDimensions from './NewPlayground/EnterDimensions';
 import { useJwt } from '../../features/users/userSelector';
 import Loading from '../../components/Loading';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { createPlan, deleteAllPlans } from '../../features/plans/planSlice';
+import {
+  createPlan,
+  deleteAllPlans,
+  removeAll as removeAllPlans,
+} from '../../features/plans/planSlice';
 import { feetToMm } from '../../lib/conversions';
 import { demo_playground_path, playground_path } from './ShowPlayground';
-import { loadCurrentPlaygroundIfPresent } from '../../features/playgrounds/playgroundSlice';
+import {
+  createDemoPlan,
+  loadCurrentPlaygroundIfPresent,
+} from '../../features/playgrounds/playgroundSlice';
 import useQuery from '../../app/useQuery';
-import { removeAll, removeAllItems } from '../../features/items/itemsSlice';
+import { removeAllItems } from '../../features/items/itemsSlice';
 import { ActionCreators } from 'redux-undo';
 import { isDemoMode, ZUUT_STATE as ZUUT_DEMO_STATE } from '../../app/store';
 import { useHistory } from 'react-router';
@@ -40,9 +47,13 @@ export default function NewPlayground() {
     if (!isFirstLoad && !resetPlayground) {
       dispatch(loadCurrentPlaygroundIfPresent(true));
       setIsFirstLoad(true);
-    } else if (resetPlayground && isDemoMode()) {
+    } else if (isDemoMode()) {
+      dispatch(removeAllPlans());
+      dispatch(removeAllItems(true));
       localStorage.removeItem(ZUUT_DEMO_STATE);
+      createDemoPlan(dispatch);
       history.push(demo_playground_path());
+      return;
     } else if (resetPlayground && jwt) {
       dispatch(deleteAllPlans(true));
       dispatch(removeAllItems(true));

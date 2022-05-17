@@ -1,27 +1,28 @@
-#control-panel {
-  height: 90%;
+#properties {
+  left: 0;
+  top: 70%;
+  height: 30%;
   position: absolute;
-  width: 100%;
-  top: 10%;
+  width: 300px;
   transition: all 1s;
   overflow-y: hidden;
+  z-index: 1;
 }
 
-#control-panel.hide {
-  top: 100%;
-  transition: all 1s;
-  height: 0%;
+#properties form {
+  height: 100%;
 }
-#control-panel.minimize {
+
+#properties.minimize {
   top: 95%;
   transition: all 1s;
   height: 5%;
 }
-#control-panel.hidden .control-panel-body {
+#properties.hidden .properties-body {
   visibility: hidden;
 }
 
-#control-panel h2 {
+#properties h2 {
   background-color: var(--purple-1);
   border: 0.063rem solid var(--black);
   border-bottom: 0;
@@ -35,11 +36,11 @@
   text-align: center;
   text-transform: uppercase;
 }
-#control-panel h2::after {
+#properties h2::after {
   margin-left: 1rem;
   content: url('../../images/triangle-upside-down.svg');
 }
-#control-panel h2 button {
+#properties h2 button {
   background-color: var(--purple-1);
   border: 0;
   color: var(--primary-white);
@@ -52,51 +53,56 @@
   text-transform: uppercase;
   cursor: pointer;
 }
-#control-panel.minimize h2::after {
+#properties.minimize h2::after {
   content: url('../../images/triangle.svg');
 }
-#control-panel.hide h2 {
+#properties.hide h2 {
   background-color: var(--gray-1);
 }
-#control-panel.hide h2 button {
+#properties.hide h2 button {
   background-color: var(--gray-1);
   cursor: auto;
 }
-#control-panel.hide h2::after {
+#properties.hide h2::after {
   content: none;
 }
 
-.control-panel-body {
+.properties-body {
   background-color: var(--gray-4);
   border: 0.063rem solid var(--black);
   border-top: 0;
   visibility: visible;
   min-height: 4rem;
   padding: 0.5rem;
-  height: calc(100% - 50px);
+  height: 100%;
   overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
 }
 
-.control-panel-section {
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 0.5rem 0.8rem;
-  margin: 10px 0px;
-}
-
-.control-panel-section * h3 {
+.properties-body * h3 {
   font-size: 12px;
   line-height: 15px;
   font-weight: bold;
   color: var(--black);
 }
 
-.control-panel-section h4 {
+.properties-body h4 {
   font-size: 10px;
   line-height: 12px;
   font-weight: bold;
   text-transform: uppercase;
   color: var(--black);
+}
+
+.properties-body button {
+  margin: 15px 0px;
+}
+
+.properties-body button:disabled {
+  cursor: auto;
 }
 
 .item-description img {
@@ -124,7 +130,7 @@
   cursor: pointer;
 }
 
-.control-panel-section button {
+.properties-section button {
   all: unset;
   display: inline-block;
 }

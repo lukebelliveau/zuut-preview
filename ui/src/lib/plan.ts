@@ -41,6 +41,10 @@ export default class Plan implements IPlan {
     this.grid = new Grid(width, length);
   }
 
+  setName(name: string) {
+    this.name = name;
+  }
+
   get width(): number | undefined {
     return this.room?.width;
   }

@@ -3,7 +3,5 @@ type ISidebarMenuPanelSections = {
 };
 
 export default function SidebarTab({ children }: ISidebarMenuPanelSections) {
-  return <div className="content-section">
-    {children}
-  </div>;
+  return <div className="content-section">{children}</div>;
 }

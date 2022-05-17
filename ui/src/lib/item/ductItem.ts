@@ -74,7 +74,6 @@ export default class DuctItem extends CeilingPlaceableItem {
   }
 
   updateCollisions(items: IItem[], playground: Playground) {
-    // console.log('DUCT - UPDATE COLLISIONS!');
     const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
       items,
       playground
