@@ -8,6 +8,7 @@ import {
 import CarbonFilterImage from '../../images/items/carbonFilter/carbonFilter.svg';
 import { v4 } from 'uuid';
 import { Item } from '../item';
+import { feetToMm } from '../conversions';
 
 export const CARBON_FILTER_ITEM_TYPE = 'CarbonFilterItemType';
 
@@ -36,17 +37,20 @@ export default class CarbonFilterItem
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
-    super(name, id);
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.length = length;
-    this.height = height;
-    this.description = description;
-    this.collisionState = collisionState;
-    this.placementShadow = placementShadow;
-    this.rotation = rotation;
-    this.modifiers = modifiers;
+    super(
+      name,
+      id,
+      x,
+      y,
+      width,
+      length,
+      height,
+      description,
+      rotation,
+      modifiers,
+      collisionState,
+      placementShadow
+    );
   }
 
   get image() {

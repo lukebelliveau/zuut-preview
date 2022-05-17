@@ -3,6 +3,7 @@ import { IItem, Item } from '../item';
 import {
   CollisionState,
   IPlaceableItem,
+  Modifiers,
   PlacementShadow,
 } from './placeableItem';
 import DuctImage from '../../images/items/duct.svg';
@@ -12,6 +13,7 @@ import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import Playground from '../playground';
 import { areExactlySharingBorder } from '../geometry/geometry';
 import { isGrowspace } from './growspace';
+import { feetToMm, normalizeMmTo3InchesIfEnabled } from '../conversions';
 
 export const DUCT_ITEM_TYPE = 'DuctItem';
 
@@ -19,8 +21,40 @@ export function isDuctItem(item: Item): item is DuctItem {
   return item instanceof DuctItem;
 }
 
+const defaultDuctModifiers = { 'Rope Ratchets': [] };
+
 export default class DuctItem extends CeilingPlaceableItem {
   type = DUCT_ITEM_TYPE;
+
+  constructor(
+    name: string,
+    id: string = v4(),
+    x: number = 0,
+    y: number = 0,
+    width: number = 610,
+    length: number = 610,
+    height: number = 915,
+    description: string = '',
+    rotation: number = 0,
+    modifiers: Modifiers = defaultDuctModifiers,
+    collisionState: CollisionState = CollisionState.NEUTRAL,
+    placementShadow: PlacementShadow | undefined = undefined
+  ) {
+    super(
+      name,
+      id,
+      x,
+      y,
+      width,
+      length,
+      height,
+      description,
+      rotation,
+      modifiers,
+      collisionState,
+      placementShadow
+    );
+  }
 
   get image() {
     return DuctImage;
@@ -40,6 +74,7 @@ export default class DuctItem extends CeilingPlaceableItem {
   }
 
   updateCollisions(items: IItem[], playground: Playground) {
+    // console.log('DUCT - UPDATE COLLISIONS!');
     const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
       items,
       playground
