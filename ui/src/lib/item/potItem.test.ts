@@ -22,7 +22,7 @@ describe('PotItem', () => {
 
     it('includes soil modifier if there is one soil modifier', () => {
       const potItem = new PotItem('pot', v4(), 0, 0, 100, 100, 100, '', 0, {
-        soil: [v4()],
+        Soil: [v4()],
       });
 
       const modifierImages = potItem.modifierImages;
@@ -31,7 +31,7 @@ describe('PotItem', () => {
 
     it('includes soil modifier if there are multiple soil modifiers', () => {
       const potItem = new PotItem('pot', v4(), 0, 0, 100, 100, 100, '', 0, {
-        soil: [v4(), v4()],
+        Soil: [v4(), v4()],
       });
 
       const modifierImages = potItem.modifierImages;

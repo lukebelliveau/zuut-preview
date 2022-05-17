@@ -91,8 +91,8 @@ const ModifierControls = ({ item }: { item: PlaceableItem }) => {
       {Object.keys(item.modifiers).map((modifierName) => {
         return (
           <div className="modifier-row" key={modifierName}>
-            {modifierName}
-            <div>
+            <span>{modifierName}</span>
+            <div className="modifier-buttons">
               <button
                 onClick={() => decrementModifier(modifierName)}
                 aria-label={`decrement ${modifierName}`}

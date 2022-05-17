@@ -79,7 +79,7 @@ describe('items/dropItem', () => {
       height: 10,
       collisionState: CollisionState.CONNECTED,
       rotation: 10,
-      modifiers: { soil: [v4()] },
+      modifiers: { Soil: [v4()] },
     };
 
     store.dispatch(addItem(item));
@@ -115,9 +115,9 @@ describe('items/removeItem', () => {
 
     // add modifier items to state
     // normally done by `items/incrementModifer`, but we're not testing that here
-    const mod1 = new ModifierItem('soil');
-    const mod2 = new ModifierItem('soil');
-    const mod3 = new ModifierItem('soil');
+    const mod1 = new ModifierItem('Soil');
+    const mod2 = new ModifierItem('Soil');
+    const mod3 = new ModifierItem('Soil');
     store.dispatch(addItem(ItemReduxAdapter.itemToState(mod1)));
     store.dispatch(addItem(ItemReduxAdapter.itemToState(mod2)));
     store.dispatch(addItem(ItemReduxAdapter.itemToState(mod3)));
@@ -180,20 +180,20 @@ describe('items/incrementModifier', () => {
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item)));
 
     store.dispatch(
-      incrementModifier({ itemId: item.id, modifierName: 'soil' })
+      incrementModifier({ itemId: item.id, modifierName: 'Soil' })
     );
     // pot and soil
     expect(store.getState().items.present.ids.length).toBe(2);
     let potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil.length).toBe(1);
+    expect(potItem?.modifiers?.Soil.length).toBe(1);
 
     store.dispatch(
-      incrementModifier({ itemId: item.id, modifierName: 'soil' })
+      incrementModifier({ itemId: item.id, modifierName: 'Soil' })
     );
     // pot and soil (x2)
     expect(store.getState().items.present.ids.length).toBe(3);
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil.length).toBe(2);
+    expect(potItem?.modifiers?.Soil.length).toBe(2);
   });
 });
 
@@ -203,32 +203,32 @@ describe('items/decrementModifier', () => {
     const item = new PotItem('Pot');
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item)));
     store.dispatch(
-      incrementModifier({ itemId: item.id, modifierName: 'soil' })
+      incrementModifier({ itemId: item.id, modifierName: 'Soil' })
     );
     // pot and soil
     expect(store.getState().items.present.ids.length).toBe(2);
     let potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil.length).toBe(1);
+    expect(potItem?.modifiers?.Soil.length).toBe(1);
     store.dispatch(
-      incrementModifier({ itemId: item.id, modifierName: 'soil' })
+      incrementModifier({ itemId: item.id, modifierName: 'Soil' })
     );
     // pot and soil (x2)
     expect(store.getState().items.present.ids.length).toBe(3);
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil.length).toBe(2);
+    expect(potItem?.modifiers?.Soil.length).toBe(2);
 
     store.dispatch(
-      decrementModifier({ itemId: item.id, modifierName: 'soil' })
+      decrementModifier({ itemId: item.id, modifierName: 'Soil' })
     );
     expect(store.getState().items.present.ids.length).toBe(2);
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil.length).toBe(1);
+    expect(potItem?.modifiers?.Soil.length).toBe(1);
 
     store.dispatch(
-      decrementModifier({ itemId: item.id, modifierName: 'soil' })
+      decrementModifier({ itemId: item.id, modifierName: 'Soil' })
     );
     expect(store.getState().items.present.ids.length).toBe(1);
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil.length).toBe(0);
+    expect(potItem?.modifiers?.Soil.length).toBe(0);
   });
 });

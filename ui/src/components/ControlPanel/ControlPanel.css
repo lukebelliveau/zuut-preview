@@ -151,9 +151,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 12px;
+  overflow: ellipsis;
+}
+
+.modifier-row span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .modifier-row button img {
-  height: 15px;
+  height: 12px;
   cursor: pointer;
+}
+
+.modifier-buttons {
+  display: flex;
 }

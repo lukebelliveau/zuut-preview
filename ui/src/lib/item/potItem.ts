@@ -19,18 +19,18 @@ export function isPotItem(item: Item): item is PotItem {
 }
 
 const defaultPotModifiers = {
-  soil: [],
-  irrigation: [],
-  globes: [],
-  bamboo: [],
-  saucers: [],
-  trays: [],
-  holders: [],
-  clips: [],
-  ties: [],
-  seeds: [],
-  yoyos: [],
-  coco: [],
+  'Irrigation System': [],
+  'Watering globes': [],
+  'Bamboo Stick': [],
+  Saucers: [],
+  Trays: [],
+  'Pot holders': [],
+  Soil: [],
+  'Binder clips': [],
+  'Plant ties': [],
+  Seeds: [],
+  'Plant Yoyos': [],
+  'Coco Coir': [],
 };
 export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   type: string = POT_ITEM_TYPE;
@@ -68,7 +68,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
 
   get modifierImages() {
     const modifierImages = [];
-    if (this.modifiers.soil.length > 0) {
+    if (this.modifiers.Soil.length > 0) {
       modifierImages.push(SoilModImage);
     }
 

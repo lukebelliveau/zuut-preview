@@ -138,26 +138,26 @@ describe('modifiers', () => {
     // item created, shows in inventory list
     screen.getByRole('menuitem', { name: /2 Gallon Pot/i });
 
-    const incrementSoilButton = screen.getByLabelText('increment soil');
-    const decrementSoilButton = screen.getByLabelText('decrement soil');
+    const incrementSoilButton = screen.getByLabelText('increment Soil');
+    const decrementSoilButton = screen.getByLabelText('decrement Soil');
 
     fireEvent.click(incrementSoilButton);
-    // soil shows in inventory
-    screen.getByText(/soil \(/);
-    // soil *count* shows in inventory
-    screen.getByText('soil (x1)');
-    // soil is an item added to state
-    const soilItem = getItemsOfType(MODIFIER_ITEM_TYPE, store)[0];
+    // Soil shows in inventory
+    screen.getByText(/Soil \(/);
+    // Soil *count* shows in inventory
+    screen.getByText('Soil (x1)');
+    // Soil is an item added to state
+    const SoilItem = getItemsOfType(MODIFIER_ITEM_TYPE, store)[0];
     const potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil[0]).toBe(soilItem?.id);
+    expect(potItem?.modifiers?.Soil[0]).toBe(SoilItem?.id);
 
     fireEvent.click(incrementSoilButton);
-    screen.getByText('soil (x2)');
+    screen.getByText('Soil (x2)');
 
     fireEvent.click(decrementSoilButton);
-    screen.getByText('soil (x1)');
+    screen.getByText('Soil (x1)');
     fireEvent.click(decrementSoilButton);
-    expect(screen.queryByText(/soil \(/)).toBeNull();
+    expect(screen.queryByText(/Soil \(/)).toBeNull();
   });
 
   it('deletes modifiers when the parent item is deleted', async () => {
@@ -181,18 +181,18 @@ describe('modifiers', () => {
       name: /2 Gallon Pot/i,
     });
 
-    const incrementSoilButton = screen.getByLabelText('increment soil');
-    const decrementSoilButton = screen.getByLabelText('decrement soil');
+    const incrementSoilButton = screen.getByLabelText('increment Soil');
+    const decrementSoilButton = screen.getByLabelText('decrement Soil');
 
     fireEvent.click(incrementSoilButton);
-    // soil shows in inventory
-    screen.getByText(/soil \(/);
-    // soil *count* shows in inventory
-    screen.getByText('soil (x1)');
-    // soil is an item added to state
-    const soilItem = getItemsOfType(MODIFIER_ITEM_TYPE, store)[0];
+    // Soil shows in inventory
+    screen.getByText(/Soil \(/);
+    // Soil *count* shows in inventory
+    screen.getByText('Soil (x1)');
+    // Soil is an item added to state
+    const SoilItem = getItemsOfType(MODIFIER_ITEM_TYPE, store)[0];
     const potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
-    expect(potItem?.modifiers?.soil[0]).toBe(soilItem?.id);
+    expect(potItem?.modifiers?.Soil[0]).toBe(SoilItem?.id);
 
     // delete pot
     fireEvent.keyDown(potInventoryItem, { key: 'Delete' });
@@ -200,7 +200,7 @@ describe('modifiers', () => {
     expect(
       screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
     ).toBeNull();
-    expect(screen.queryByText(/soil \(/)).toBeNull();
+    expect(screen.queryByText(/Soil \(/)).toBeNull();
     await waitFor(() =>
       expect(store.getState().items.present.ids.length).toBe(0)
     );
