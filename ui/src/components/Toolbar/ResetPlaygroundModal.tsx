@@ -16,7 +16,9 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement('#root');
+if (process.env.NODE_ENV !== 'test') {
+  Modal.setAppElement('#root');
+}
 
 const ResetPlaygroundModal = ({
   open,

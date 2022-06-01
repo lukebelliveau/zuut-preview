@@ -8,14 +8,19 @@ import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import { useDispatch } from 'react-redux';
 import { update as updatePlan } from '../../features/plans/planSlice';
 import { isDemoMode } from '../../app/store';
+import { feetToMm, mmToFeet } from '../../lib/conversions';
 
 const Properties = () => {
   const planState = useSelectDefaultPlan();
   const plan = PlanReduxAdapter.stateToPlan(planState);
   const [show, setShow] = useState(true);
   const [name, setName] = useState(plan.name || '');
-  const [length, setLength] = useState(plan.room.length.toString() || '');
-  const [width, setWidth] = useState(plan.room.width.toString() || '');
+  const [length, setLength] = useState(
+    mmToFeet(plan.room.length).toString() || ''
+  );
+  const [width, setWidth] = useState(
+    mmToFeet(plan.room.width).toString() || ''
+  );
   const dispatch = useDispatch();
 
   if (!isDemoMode()) return null;
@@ -35,8 +40,8 @@ const Properties = () => {
         changes: {
           name,
           room: {
-            length: parseInt(length),
-            width: parseInt(width),
+            length: feetToMm(parseInt(length)),
+            width: feetToMm(parseInt(width)),
             offset: plan.room.offset,
           },
         },
@@ -69,7 +74,7 @@ const Properties = () => {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <label htmlFor="length-input">Length (mm)</label>
+          <label htmlFor="length-input">Length (ft)</label>
           <input
             id="length-input"
             name="length"
@@ -77,7 +82,7 @@ const Properties = () => {
             onChange={(e) => setLength(e.target.value)}
           />
 
-          <label htmlFor="name-input">Width (mm)</label>
+          <label htmlFor="name-input">Width (ft)</label>
           <input
             id="width-input"
             name="width"

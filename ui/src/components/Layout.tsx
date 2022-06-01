@@ -9,6 +9,7 @@ import Sidebar from './Sidebar';
 import { useSelectDefaultPlan } from '../features/plans/planSelectors';
 import Link from './Link';
 import Inventory from './Inventory';
+import { isDemoMode } from '../app/store';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ export default function Layout(props: LayoutProps) {
           </Link>
         </div>
         <div id="header-name">
-          <h1>Name: {plan.name}</h1>
+          {isDemoMode() ? null : <h1>Name: {plan.name}</h1>}
         </div>
         <div id="header-auth">
           <LogoutButton />
