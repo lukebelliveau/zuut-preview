@@ -18,7 +18,7 @@ import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 
 export const isDemoMode = () => window.location.href.includes('demo');
-export const ZUUT_STATE = 'zuut-state';
+export const ZUUT_DEMO_STATE = 'zuut-state';
 
 export const browserHistory = createBrowserHistory<unknown>();
 const reduxLoggerEnabled = false;
@@ -59,8 +59,8 @@ export function createAppStore() {
 }
 
 export function getDemoModeStore() {
-  const persistentState = localStorage.getItem(ZUUT_STATE)
-    ? JSON.parse(localStorage.getItem(ZUUT_STATE) || '')
+  const persistentState = localStorage.getItem(ZUUT_DEMO_STATE)
+    ? JSON.parse(localStorage.getItem(ZUUT_DEMO_STATE) || '')
     : {};
 
   return configureStore({
@@ -85,6 +85,6 @@ if (isDemoMode()) {
   store.subscribe(() => {
     const state = store.getState();
     const serializedState = JSON.stringify(state);
-    localStorage.setItem(ZUUT_STATE, serializedState);
+    localStorage.setItem(ZUUT_DEMO_STATE, serializedState);
   });
 }

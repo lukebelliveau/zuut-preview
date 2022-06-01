@@ -1,4 +1,5 @@
 import Modal from 'react-modal';
+import { new_demo_path } from '../../App';
 import { isDemoMode } from '../../app/store';
 import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
 import Link from '../Link';
@@ -15,6 +16,8 @@ const customStyles = {
   },
 };
 
+Modal.setAppElement('#root');
+
 const ResetPlaygroundModal = ({
   open,
   closeModal,
@@ -22,7 +25,7 @@ const ResetPlaygroundModal = ({
   open: boolean;
   closeModal: () => void;
 }) => {
-  const link = `${new_playground_path()}/${isDemoMode() ? 'demo' : null}`;
+  const link = isDemoMode() ? new_demo_path() : new_playground_path();
 
   return (
     <Modal

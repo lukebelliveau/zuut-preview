@@ -93,7 +93,7 @@ export default function ShowPlayground() {
   }));
 
   if (isDemoMode() && !playground.plan) {
-    createDemoPlan(dispatch);
+    dispatch(createDemoPlan());
 
     return <Loading />;
   } else if (isDemoMode() && playground.plan) {

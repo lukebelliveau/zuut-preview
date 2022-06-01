@@ -24,7 +24,7 @@ import {
 import useQuery from '../../app/useQuery';
 import { removeAllItems } from '../../features/items/itemsSlice';
 import { ActionCreators } from 'redux-undo';
-import { isDemoMode, ZUUT_STATE as ZUUT_DEMO_STATE } from '../../app/store';
+import { isDemoMode, ZUUT_DEMO_STATE } from '../../app/store';
 import { useHistory } from 'react-router';
 
 export const new_playground_path = () => '/playgrounds/new';
@@ -47,13 +47,6 @@ export default function NewPlayground() {
     if (!isFirstLoad && !resetPlayground) {
       dispatch(loadCurrentPlaygroundIfPresent(true));
       setIsFirstLoad(true);
-    } else if (isDemoMode()) {
-      dispatch(removeAllPlans());
-      dispatch(removeAllItems(true));
-      localStorage.removeItem(ZUUT_DEMO_STATE);
-      createDemoPlan(dispatch);
-      history.push(demo_playground_path());
-      return;
     } else if (resetPlayground && jwt) {
       dispatch(deleteAllPlans(true));
       dispatch(removeAllItems(true));

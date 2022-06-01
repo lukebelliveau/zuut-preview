@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 
-import { AppDispatch, RootState } from '../../app/store';
+import { AppDispatch, isDemoMode, RootState } from '../../app/store';
 import { assertDefined } from '../../lib/assert';
 import { feetToMm } from '../../lib/conversions';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
@@ -23,6 +23,7 @@ import { create } from '../plans/planSlice';
 import { selectPlaygroundState } from './playgroundSelector';
 
 import { PlaygroundState } from './playgroundState';
+import waitForElement from './waitForElement';
 
 const initialState: PlaygroundState = {
   planId: '0',
@@ -104,8 +105,8 @@ export const resizePlayground = createAsyncThunk(
   'playground/resizePlayground',
   async (_, { dispatch, getState }) => {
     try {
-      const sandbox = window.document.getElementById('sandbox');
-      const toolbar = window.document.getElementById('toolbar');
+      const sandbox = await waitForElement('#sandbox');
+      const toolbar = await waitForElement('#toolbar');
       if (!sandbox || !toolbar)
         throw new Error(
           `tried to resize playground but couldn't find sandbox or toolbar:
@@ -135,13 +136,16 @@ export const resizePlayground = createAsyncThunk(
   }
 );
 
-export const createDemoPlan = (dispatch: AppDispatch) => {
-  const planState = new Plan('Demo Playground', feetToMm(50), feetToMm(50));
-  const plan = PlanReduxAdapter.planToState(planState);
-  dispatch(create(plan));
-  dispatch(setPlan(plan.id));
-  dispatch(resizePlayground());
-};
+export const createDemoPlan = createAsyncThunk(
+  'playground/createDemoPlan',
+  async (_, { dispatch }) => {
+    const planState = new Plan('Demo Playground', feetToMm(50), feetToMm(50));
+    const plan = PlanReduxAdapter.planToState(planState);
+    dispatch(create(plan));
+    dispatch(setPlan(plan.id));
+    dispatch(resizePlayground());
+  }
+);
 
 export const playgroundSlice = createSlice({
   name: 'playground',
@@ -163,6 +167,8 @@ export const playgroundSlice = createSlice({
     resize(state: PlaygroundState, action: PayloadAction<PlaygroundState>) {
       state.displayWidth = action.payload.displayWidth;
       state.displayHeight = action.payload.displayHeight;
+      state.centerX = action.payload.centerX;
+      state.centerY = action.payload.centerY;
       state.scale = action.payload.scale;
     },
     setPlan(state: PlaygroundState, action: PayloadAction<string>) {

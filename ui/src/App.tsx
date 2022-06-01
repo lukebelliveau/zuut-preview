@@ -1,9 +1,9 @@
 import { ConnectedRouter } from 'connected-react-router';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Route, useHistory } from 'react-router';
+import { Redirect, Route, useHistory } from 'react-router';
 
-import { browserHistory } from './app/store';
+import { browserHistory, isDemoMode, ZUUT_DEMO_STATE } from './app/store';
 import RequireAuth from './components/RequireAuth';
 import AccessDenied from './routes/AccessDenied';
 import Home, { homePath } from './routes/Home';
@@ -17,7 +17,32 @@ import ShowPlayground, {
 import Workplace from './routes/Workplace';
 import AppErrorBoundary from './components/ErrorFallback';
 import SessionExpired from './routes/SessionExpired';
+import { useDispatch } from 'react-redux';
+import {
+  createPlan,
+  deleteAllPlans,
+  removeAll as removeAllPlans,
+} from './features/plans/planSlice';
+import { removeAllItems } from './features/items/itemsSlice';
+import { createDemoPlan } from './features/playgrounds/playgroundSlice';
+import { useEffect } from 'react';
 
+export const new_demo_path = () => '/newdemo';
+const NewDemoPlayground = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(removeAllPlans());
+    dispatch(removeAllItems(true));
+    localStorage.removeItem(ZUUT_DEMO_STATE);
+    dispatch(createDemoPlan());
+  });
+
+  if (!isDemoMode()) {
+    return <Redirect to={new_playground_path()} />;
+  }
+
+  return <Redirect to={demo_playground_path()} />;
+};
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
@@ -30,6 +55,9 @@ function App() {
             <RequireAuth>
               <NewPlayground />
             </RequireAuth>
+          </Route>
+          <Route path={new_demo_path()}>
+            <NewDemoPlayground />
           </Route>
           <Route path={playground_path()}>
             <RequireAuth>
