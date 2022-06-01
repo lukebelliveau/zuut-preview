@@ -67,6 +67,7 @@ function Toolbar() {
     const displayWidth = playground.displayWidth;
     playground.displayWidth = displayWidth - 1;
     dispatch(update(PlaygroundReduxAdapter.playgroundToState(playground)));
+    dispatch(resizePlayground());
   };
 
   const undoStack = useSelectUndoStack();
