@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { update as updatePlan } from '../../features/plans/planSlice';
 import { isDemoMode } from '../../app/store';
 import { feetToMm, mmToFeet } from '../../lib/conversions';
+import { hackyRecenterPlayground } from '../../features/playgrounds/playgroundSlice';
 
 const Properties = () => {
   const planState = useSelectDefaultPlan();
@@ -49,6 +50,7 @@ const Properties = () => {
     );
 
     e.preventDefault();
+    dispatch(hackyRecenterPlayground());
   };
 
   return (
@@ -102,7 +104,6 @@ const Properties = () => {
               )
             }
             aria-label="update properties"
-            tabIndex={-1}
           >
             Update Properties
           </button>

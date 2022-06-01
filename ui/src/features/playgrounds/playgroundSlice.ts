@@ -150,6 +150,27 @@ export const createDemoPlan = createAsyncThunk(
   }
 );
 
+/**
+ * A gross hack to re-center the Playground (Konva stage)
+ * Slightly changing a value on playground causes the ShowPlayground
+ * component to re-render, which will re-center the grid. Sorry...
+ */
+export const hackyRecenterPlayground = createAsyncThunk(
+  'playground/hackyRecenterPlayground',
+  async (_, { dispatch, getState }) => {
+    const playgroundState = selectPlaygroundState(getState() as RootState);
+    const planState = selectDefaultPlan(getState() as RootState);
+    const playground = PlaygroundReduxAdapter.playgroundFromState(
+      planState,
+      playgroundState
+    );
+    const displayWidth = playground.displayWidth;
+    playground.displayWidth = displayWidth - 1;
+    dispatch(update(PlaygroundReduxAdapter.playgroundToState(playground)));
+    dispatch(resizePlayground());
+  }
+);
+
 export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,

@@ -13,8 +13,24 @@ describe('DuctItem', () => {
     it('has CONFLICTED collision state when colliding with a LightItem', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct = new DuctItem('duct', v4(), 0, 0, 1, 1, 1);
-      const light = new LightItem('light', v4(), 0, 0, 1, 1, 1);
+      const duct = new DuctItem(
+        'duct',
+        v4(),
+        0,
+        0,
+        feetToMm(1),
+        feetToMm(1),
+        feetToMm(1)
+      );
+      const light = new LightItem(
+        'light',
+        v4(),
+        0,
+        0,
+        feetToMm(1),
+        feetToMm(1),
+        feetToMm(1)
+      );
       const itemList = [];
       itemList.push(duct);
       itemList.push(light);

@@ -16,12 +16,8 @@ import { toggleLayer } from '../../features/interactions/interactionsSlice';
 import ResetPlaygroundModal from './ResetPlaygroundModal';
 import { useState } from 'react';
 import Modal from 'react-modal';
-import {
-  resizePlayground,
-  update,
-} from '../../features/playgrounds/playgroundSlice';
+import { hackyRecenterPlayground } from '../../features/playgrounds/playgroundSlice';
 import { useBuildPlayground } from '../../app/builderHooks';
-import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
 
 function Toolbar() {
   const dispatch = useDispatch();
@@ -58,16 +54,8 @@ function Toolbar() {
     }
   };
 
-  /**
-   * A gross hack to re-center the Playground (Konva stage)
-   * Slightly changing a value on playground causes the ShowPlayground
-   * component to re-render, which will re-center the grid. Sorry...
-   */
   const recenterPlayground = () => {
-    const displayWidth = playground.displayWidth;
-    playground.displayWidth = displayWidth - 1;
-    dispatch(update(PlaygroundReduxAdapter.playgroundToState(playground)));
-    dispatch(resizePlayground());
+    dispatch(hackyRecenterPlayground());
   };
 
   const undoStack = useSelectUndoStack();

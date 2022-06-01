@@ -53,6 +53,10 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     this.updateCollisions(items, playground);
   }
 
+  isCollidingWithPlanWall() {
+    return false;
+  }
+
   createPlacementShadowOnClosestWall(playground: Playground): PlacementShadow {
     if (!playground || !playground.plan || !playground.plan.room)
       throw new Error('Missing room!');
@@ -65,6 +69,8 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
         const offsetObject = {
           x: wallPosition.x - this.width / 2,
           y: wallPosition.y,
+          width: this.width,
+          length: this.length,
           offset: this.offset,
         };
         return {
@@ -82,6 +88,8 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
         const offsetObject = {
           x: wallPosition.x - this.length / 2,
           y: wallPosition.y,
+          width: this.width,
+          length: this.length,
           offset: this.offset,
         };
         return {
@@ -101,6 +109,8 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
         const offsetObject = {
           x: wallPosition.x,
           y: wallPosition.y - this.length / 2,
+          width: this.width,
+          length: this.length,
           offset: this.offset,
         };
 
@@ -119,6 +129,8 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
         const offsetObject = {
           x: wallPosition.x,
           y: wallPosition.y - this.width / 2,
+          width: this.width,
+          length: this.length,
           offset: this.offset,
         };
 

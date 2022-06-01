@@ -151,6 +151,8 @@ export default class PlaceableItem
     const offsetObject = {
       x: snappedPosition.x,
       y: snappedPosition.y,
+      width: this.width,
+      length: this.length,
       offset: this.offset,
     };
 

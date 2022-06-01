@@ -270,6 +270,8 @@ export interface OffsetObject {
   x: number;
   y: number;
   offset: Point;
+  width: number;
+  length: number;
   rotation?: number;
 }
 
@@ -300,79 +302,58 @@ export const computeNorthWest = (offsetObject: OffsetObject): Point => {
 };
 
 export const computeNorthEast = (offsetObject: OffsetObject): Point => {
+  const northWest = computeNorthWest(offsetObject);
   if (
     !offsetObject.rotation ||
     offsetObject.rotation === 0 ||
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x + offsetObject.offset.x)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y - offsetObject.offset.y)
-      ),
+      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.width),
+      y: normalizeMmTo3InchesIfEnabled(northWest.y),
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x + offsetObject.offset.y)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y - offsetObject.offset.x)
-      ),
+      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.length),
+      y: normalizeMmTo3InchesIfEnabled(northWest.y),
     };
   }
 };
 
 export const computeSouthWest = (offsetObject: OffsetObject): Point => {
+  const northWest = computeNorthWest(offsetObject);
   if (
     !offsetObject.rotation ||
     offsetObject.rotation === 0 ||
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x - offsetObject.offset.x)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y + offsetObject.offset.y)
-      ),
+      x: normalizeMmTo3InchesIfEnabled(northWest.x),
+      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.length),
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x - offsetObject.offset.y)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y + offsetObject.offset.x)
-      ),
+      x: normalizeMmTo3InchesIfEnabled(northWest.x),
+      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.width),
     };
   }
 };
 
 export const computeSouthEast = (offsetObject: OffsetObject): Point => {
+  const northWest = computeNorthWest(offsetObject);
   if (
     !offsetObject.rotation ||
     offsetObject.rotation === 0 ||
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x + offsetObject.offset.x)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y + offsetObject.offset.y)
-      ),
+      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.width),
+      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.length),
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x + offsetObject.offset.y)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y + offsetObject.offset.x)
-      ),
+      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.length),
+      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.width),
     };
   }
 };
