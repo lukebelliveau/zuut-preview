@@ -76,7 +76,7 @@ export const sortItems = (
 
   // ... unless the ceiling layer is disabled
   if (showLayer[Layer.FLOOR] === true && showLayer[Layer.CEILING] === false) {
-    sortedItems.reverse();
+    sortedItems = sortedItems.reverse().sort(sortGrowspaceToBottom);
   }
 
   // lastly, selected items go on top
