@@ -1,4 +1,4 @@
-/* #properties {
+#properties {
   left: 0;
   top: 70%;
   height: 30%;
@@ -7,10 +7,6 @@
   transition: all 1s;
   overflow-y: hidden;
   z-index: 1;
-} */
-
-#properties {
-  margin: 5px 0px;
 }
 
 #properties form {
@@ -40,10 +36,10 @@
   text-align: center;
   text-transform: uppercase;
 }
-/* #properties h2::after {
+#properties h2::after {
   margin-left: 1rem;
   content: url('../../images/triangle-upside-down.svg');
-} */
+}
 #properties h2 button {
   background-color: var(--purple-1);
   border: 0;
@@ -103,8 +99,6 @@
 
 .properties-body button {
   margin: 15px 0px;
-  font-size: 10px;
-  padding: 0px;
 }
 
 .properties-body button:disabled {

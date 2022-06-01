@@ -66,13 +66,17 @@ const Properties = () => {
 
       <form onSubmit={updateProperties}>
         <div className="properties-body">
-          <label htmlFor="name-input">Name</label>
-          <input
-            id="name-input"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          {isDemoMode() ? null : (
+            <>
+              <label htmlFor="name-input">Name</label>
+              <input
+                id="name-input"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </>
+          )}
 
           <label htmlFor="length-input">Length (ft)</label>
           <input
@@ -93,7 +97,6 @@ const Properties = () => {
           <button
             disabled={
               !(
-                name !== plan.name ||
                 parseInt(width) !== plan.room.width ||
                 parseInt(length) !== plan.room.length
               )

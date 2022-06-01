@@ -7,6 +7,7 @@ import DoorItem from '../../lib/item/doorItem';
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import PlaceableItem from '../../lib/item/placeableItem';
 import WindowItem from '../../lib/item/windowitem';
+import Properties from '../Properties/Properties';
 
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
@@ -26,6 +27,7 @@ export default function LayoutTab() {
 
   return (
     <SidebarTab>
+      <Properties />
       <MenuSection title="Layout">
         {layoutItems.map((item) => (
           <PlaceableLibraryItem
