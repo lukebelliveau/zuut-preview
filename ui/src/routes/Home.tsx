@@ -47,11 +47,13 @@ function Home() {
       <div id="content">
         <section id="intro">
           <h5>ZUUT Grower Playground</h5>
-          <h2>Design and plan your grow.</h2>
+          <h4>Design your grow.</h4>
+          <h4>Pick your parts.</h4>
+          <h4>Share with the Community.</h4>
           <p>
-            ZUUT empowers first time growers &amp; seasonded cultivators to
-            design &amp; plan your grow while maximizing yields &amp; minimizing
-            costs.
+            ZUUT empowers you to design the perfect grow that is right for you,
+            to choose top rated compatible parts for the cheapest prices, and to
+            share your experience with the community.
           </p>
           <Link
             className="button go"
