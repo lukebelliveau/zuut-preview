@@ -125,6 +125,9 @@ export const resizePlayground = createAsyncThunk(
         sandbox.offsetHeight - toolbar.offsetHeight
       );
 
+      playground.centerX = 10;
+      playground.centerY = 10;
+
       dispatch(
         playgroundSlice.actions.resize(
           PlaygroundReduxAdapter.playgroundToState(playground)
@@ -157,13 +160,6 @@ export const playgroundSlice = createSlice({
       state.planId = action.payload.planId;
       state.scale = action.payload.scale;
     },
-    // toggleLayer(state: PlaygroundState, action: PayloadAction<Layer>) {
-    //   if (action.payload === Layer.BOTH) return;
-    //   state.showLayer[action.payload] = !state.showLayer[action.payload];
-    // },
-    // setVisibleLayer(state: PlaygroundState, action: PayloadAction<Layer>) {
-    //   state.showLayer[action.payload] = true;
-    // },
     resize(state: PlaygroundState, action: PayloadAction<PlaygroundState>) {
       state.displayWidth = action.payload.displayWidth;
       state.displayHeight = action.payload.displayHeight;

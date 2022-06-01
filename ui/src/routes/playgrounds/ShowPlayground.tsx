@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { Fragment, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';

@@ -16,10 +16,17 @@ import { toggleLayer } from '../../features/interactions/interactionsSlice';
 import ResetPlaygroundModal from './ResetPlaygroundModal';
 import { useState } from 'react';
 import Modal from 'react-modal';
+import {
+  resizePlayground,
+  update,
+} from '../../features/playgrounds/playgroundSlice';
+import { useBuildPlayground } from '../../app/builderHooks';
+import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
 
 function Toolbar() {
   const dispatch = useDispatch();
   const showLayer = useSelectShowLayer();
+  const playground = useBuildPlayground();
   const [modalIsOpen, setIsOpen] = useState(false);
   function openModal() {
     setIsOpen(true);
@@ -49,6 +56,17 @@ function Toolbar() {
     if (e.key === 'Return' || e.key === 'Enter') {
       callbackIfEnter();
     }
+  };
+
+  /**
+   * A gross hack to re-center the Playground (Konva stage)
+   * Slightly changing a value on playground causes the ShowPlayground
+   * component to re-render, which will re-center the grid. Sorry...
+   */
+  const recenterPlayground = () => {
+    const displayWidth = playground.displayWidth;
+    playground.displayWidth = displayWidth - 1;
+    dispatch(update(PlaygroundReduxAdapter.playgroundToState(playground)));
   };
 
   const undoStack = useSelectUndoStack();
@@ -95,6 +113,9 @@ function Toolbar() {
         aria-label="Ceiling plane"
       >
         Ceiling Plane
+      </button>
+      <button className="tool" onClick={recenterPlayground}>
+        Recenter playground
       </button>
       <button className="tool" onClick={openModal}>
         Reset playground
