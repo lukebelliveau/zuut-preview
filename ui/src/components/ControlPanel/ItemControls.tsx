@@ -91,7 +91,7 @@ const ModifierControls = ({ item }: { item: PlaceableItem }) => {
       {Object.keys(item.modifiers).map((modifierName) => {
         return (
           <div className="modifier-row" key={modifierName}>
-            <span>{modifierName}</span>
+            <span title={modifierName}>{modifierName}</span>
             <div className="modifier-buttons">
               <button
                 onClick={() => decrementModifier(modifierName)}
