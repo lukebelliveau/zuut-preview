@@ -20,20 +20,28 @@ export default function Layout(props: LayoutProps) {
   if (!plan) return <></>;
 
   return (
-    <div className="wrapper">
-      <header>
-        <div id="header-logo">
-          <Link to="/">
-            <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
-          </Link>
-        </div>
-        <div id="header-name">
-          {isDemoMode() ? null : <h1>Name: {plan.name}</h1>}
-        </div>
-        <div id="header-auth">
-          <LogoutButton />
-        </div>
-      </header>
+    <div className={isDemoMode() ? 'wrapper demo' : 'wrapper'}>
+      {isDemoMode() ? null : (
+        <header>
+          <div id="header-logo">
+            <Link to="/">
+              <img
+                id="logo"
+                src={ZuutLogo}
+                alt="Zuut Logo"
+                aria-hidden="true"
+              />
+            </Link>
+          </div>
+          <div id="header-name">
+            <h1>Name: {plan.name}</h1>
+          </div>
+          <div id="header-auth">
+            <LogoutButton />
+          </div>
+        </header>
+      )}
+
       <div id="sidebar">
         <Sidebar />
       </div>

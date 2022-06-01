@@ -104,7 +104,7 @@ function Toolbar() {
         Ceiling Plane
       </button>
       <button className="tool text" onClick={recenterPlayground}>
-        Recenter playground
+        Recenter
       </button>
       <button className="tool text" onClick={openModal}>
         Reset playground
