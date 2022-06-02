@@ -163,6 +163,7 @@
 .modifier-row button img {
   height: 12px;
   cursor: pointer;
+  margin-right: 0px;
 }
 
 .modifier-buttons {

@@ -42,7 +42,7 @@ export function ItemControls({ itemState }: { itemState?: ItemState }) {
           <ItemImage item={item} />
           <div>
             <h3>{item.name}</h3>
-            <p>{item.description}</p>
+            {/* <p>{item.description}</p> */}
           </div>
         </div>
       </div>
