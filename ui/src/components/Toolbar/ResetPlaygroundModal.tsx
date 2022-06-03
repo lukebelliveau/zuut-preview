@@ -1,7 +1,10 @@
 import Modal from 'react-modal';
 import { new_demo_path } from '../../App';
 import { isDemoMode } from '../../app/store';
-import { new_playground_path } from '../../routes/playgrounds/NewPlayground';
+import {
+  new_playground_path,
+  reset_playground_path,
+} from '../../routes/playgrounds/NewPlayground';
 import Link from '../Link';
 import './Toolbar.css';
 
@@ -27,7 +30,7 @@ const ResetPlaygroundModal = ({
   open: boolean;
   closeModal: () => void;
 }) => {
-  const link = isDemoMode() ? new_demo_path() : new_playground_path();
+  const link = isDemoMode() ? new_demo_path() : reset_playground_path();
 
   return (
     <Modal
