@@ -8,9 +8,7 @@ type MenuSectionProps = {
 };
 
 export default function MenuSection({ title, children }: MenuSectionProps) {
-  const [open, setOpen] = useState(
-    process.env.NODE_ENV === 'test' ? true : false
-  );
+  const [open, setOpen] = useState(false);
 
   // Fix CSS for accordion panels
   return (
