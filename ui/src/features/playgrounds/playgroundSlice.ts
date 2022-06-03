@@ -159,7 +159,23 @@ export const hackyRecenterPlayground = createAsyncThunk(
   'playground/hackyRecenterPlayground',
   async (_, { dispatch, getState }) => {
     const playgroundState = selectPlaygroundState(getState() as RootState);
-    const planState = selectDefaultPlan(getState() as RootState);
+    let planState;
+    if (isDemoMode()) {
+      planState = selectDefaultPlan(getState() as RootState);
+    } else {
+      const state = getState() as RootState;
+      const jwt = state.user.jwt || loadJwt();
+
+      if (!jwt) {
+        dispatch(push(new_playground_path()));
+        return;
+      }
+
+      const adapter = new PlanGraphqlAdapter(jwt);
+      planState = await adapter.current();
+      console.log(planState);
+    }
+
     const playground = PlaygroundReduxAdapter.playgroundFromState(
       planState,
       playgroundState
