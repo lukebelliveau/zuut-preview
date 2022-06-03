@@ -1,4 +1,4 @@
-import { GeometryObject } from './geometry/geometry';
+import { GeometryObject } from './geometry/GeometryObject';
 import { Point } from './point';
 
 export interface IRoom {

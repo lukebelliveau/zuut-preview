@@ -9,7 +9,6 @@ import {
   computeNorthWest,
   computeSouthEast,
   computeSouthWest,
-  GeometryObject,
   isStraddlingBoundary,
 } from '../geometry/geometry';
 import Playground from '../playground';
@@ -19,6 +18,7 @@ import ModifierItem from './modifierItem';
 import { Layer } from '../layer';
 import { LayerState } from '../../features/interactions/interactionsState';
 import { normalizeMmTo3Inches } from '../conversions';
+import { GeometryObject } from '../geometry/GeometryObject';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;

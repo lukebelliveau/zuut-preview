@@ -159,6 +159,17 @@ export default function ShowPlayground() {
               ref={stageRef}
               width={playground.displayWidth}
               height={playground.displayHeight}
+              /**
+               * TODO: the "recenter playground" function is super hacked together
+               * it is probably because of the console warning you see whenever you run the app/tests
+               *
+               * `ReactKonva: You have a Konva node with draggable = true and position defined but no onDragMove or onDragEnd events are handled.`
+               *
+               * We probably need to use the onDragMove/End events to pass a new (x,y) to the Stage component
+               * whenever the user drags, then recentering will be done by recentering the (x,y)
+               *
+               * or not, just riffing, I haven't tried this yet
+               */
               x={playground.centerX}
               y={playground.centerY}
               scaleX={scale}
