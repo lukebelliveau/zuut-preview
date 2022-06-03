@@ -4,6 +4,7 @@ import PlaceableItem from '../../lib/item/placeableItem';
 import { itemGroup } from '../../lib/itemsLibrary';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
+import InventoryCandidate from './InventoryCandidate';
 import SidebarTab from './SidebarTab';
 import { useBuildPlayground } from '../../app/builderHooks';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';

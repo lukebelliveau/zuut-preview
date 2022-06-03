@@ -22,23 +22,23 @@ jobs:
         run: npm test -- --reporters=default --reporters=jest-junit
         working-directory: ./ui
 
-  # browser_tests:
-  #   runs-on: ubuntu-18.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: browser-tests
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '15.14.0'
-  #         cache: 'npm'
-  #     - run: npm ci
-  #     - run: cd e2e && npm ci && npx cypress verify
-  #     - run: docker compose build
-  #     - run: docker compose up -d
-  #     - run: npm run e2e
-  #       env:
-  #         CYPRESS_AUTH_USERNAME: ${{ secrets.CYPRESS_AUTH_USERNAME }}
-  #         CYPRESS_AUTH_PASSWORD: ${{ secrets.CYPRESS_AUTH_PASSWORD }}
+  browser_tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: browser-tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+      - run: cd e2e && npm ci && npx cypress verify
+      - run: docker compose build
+      - run: docker compose up -d
+      - run: npm run e2e
+        env:
+          CYPRESS_AUTH_USERNAME: ${{ secrets.CYPRESS_AUTH_USERNAME }}
+          CYPRESS_AUTH_PASSWORD: ${{ secrets.CYPRESS_AUTH_PASSWORD }}
 
   backend_unit_test:
     runs-on: ubuntu-18.04
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-18.04
     needs:
       - ui_unit_test
-      # - browser_tests
+      - browser_tests
       - backend_unit_test
     steps:
       - uses: actions/checkout@v2
