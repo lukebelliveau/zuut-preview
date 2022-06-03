@@ -62,7 +62,7 @@ const Properties = () => {
     >
       <h2>
         <button onClick={toggleShow} onKeyDown={onReturnKey(toggleShow)}>
-          Properties
+          Dimensions
         </button>
       </h2>
 

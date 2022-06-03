@@ -13,7 +13,6 @@ import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import Playground from '../playground';
 import { areExactlySharingBorder } from '../geometry/geometry';
 import { isGrowspace } from './growspace';
-import { feetToMm, normalizeMmTo3InchesIfEnabled } from '../conversions';
 
 export const DUCT_ITEM_TYPE = 'DuctItem';
 

@@ -17,7 +17,7 @@ describe('Grid', () => {
   describe('#snapPostition', () => {
     it('returns the same position for an item aligned along a grid line', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 304.8, y: 304.8 })).toEqual({
+      expect(grid.snapPosition({ x: 304.8, y: 304.8 })).toEqual({
         x: 304.8,
         y: 304.8,
       });
@@ -25,7 +25,7 @@ describe('Grid', () => {
 
     it('returns the closest position for an item closer to an X gridline on the left', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 314.8, y: 304.8 })).toEqual({
+      expect(grid.snapPosition({ x: 314.8, y: 304.8 })).toEqual({
         x: 304.8,
         y: 304.8,
       });
@@ -33,7 +33,7 @@ describe('Grid', () => {
 
     it('returns the closest position for an item closer to an X gridline on the right', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 280.8, y: 304.8 })).toEqual({
+      expect(grid.snapPosition({ x: 280.8, y: 304.8 })).toEqual({
         x: 304.8,
         y: 304.8,
       });
@@ -41,7 +41,7 @@ describe('Grid', () => {
 
     it('returns the closest position for an item closer to a Y gridline on the top', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 304.8, y: 284.8 })).toEqual({
+      expect(grid.snapPosition({ x: 304.8, y: 284.8 })).toEqual({
         x: 304.8,
         y: 304.8,
       });
@@ -49,7 +49,7 @@ describe('Grid', () => {
 
     it('returns the closest position for an item closer to a Y gridline on the bototm', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 304.8, y: 344.8 })).toEqual({
+      expect(grid.snapPosition({ x: 304.8, y: 344.8 })).toEqual({
         x: 304.8,
         y: 304.8,
       });
@@ -57,7 +57,7 @@ describe('Grid', () => {
 
     it('returns the same position for an item equidistant from two X gridlines', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 152.4, y: 304.8 })).toEqual({
+      expect(grid.snapPosition({ x: 152.4, y: 304.8 })).toEqual({
         x: 304.8,
         y: 304.8,
       });
@@ -65,7 +65,7 @@ describe('Grid', () => {
 
     it('returns the same position for an item equidistant from two Y gridlines', () => {
       const grid = new Grid(609.6, 609.6, feetToMm(1));
-      expect(grid.snapPostition({ x: 304.8, y: 152.4 })).toEqual({
+      expect(grid.snapPosition({ x: 304.8, y: 152.4 })).toEqual({
         x: 304.8,
         y: 304.8,
       });

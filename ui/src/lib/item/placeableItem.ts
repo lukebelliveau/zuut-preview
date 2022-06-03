@@ -18,7 +18,7 @@ import { IItem, Item } from '../item';
 import ModifierItem from './modifierItem';
 import { Layer } from '../layer';
 import { LayerState } from '../../features/interactions/interactionsState';
-import { normalizeMmTo3InchesIfEnabled } from '../conversions';
+import { normalizeMmTo3Inches } from '../conversions';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;
@@ -147,7 +147,12 @@ export default class PlaceableItem
     if (!playground.plan || !playground.plan.grid)
       throw new Error('Missing grid!');
 
-    const snappedPosition = playground.plan.grid.snapPostition(position);
+    // const snappedPosition = playground.plan.grid.snapPosition(position);
+    const snappedPosition = playground.plan.grid.snapOffsetPosition(
+      position,
+      this.offset,
+      this.rotation !== 0 && this.rotation !== 180
+    );
     const offsetObject = {
       x: snappedPosition.x,
       y: snappedPosition.y,
@@ -289,8 +294,9 @@ export default class PlaceableItem
 
     items.filter(isPlaceableItem).forEach((itemToCompare: IPlaceableItem) => {
       if (itemToCompare.id === this.id) return;
-      if (areColliding(this, itemToCompare))
+      if (areColliding(this, itemToCompare)) {
         collidingWithItem.push(itemToCompare);
+      }
       if (
         this.placementShadow &&
         areColliding(this.placementShadow, itemToCompare)
@@ -362,25 +368,41 @@ export default class PlaceableItem
 
   get offset(): Point {
     return {
-      x: normalizeMmTo3InchesIfEnabled(this.width / 2),
-      y: normalizeMmTo3InchesIfEnabled(this.length / 2),
+      x: this.width / 2,
+      y: this.length / 2,
     };
   }
 
   get northWest(): Point {
-    return computeNorthWest(this);
+    const { x, y } = computeNorthWest(this);
+    return {
+      x: normalizeMmTo3Inches(x),
+      y: normalizeMmTo3Inches(y),
+    };
   }
 
   get northEast(): Point {
-    return computeNorthEast(this);
+    const { x, y } = computeNorthEast(this);
+    return {
+      x: normalizeMmTo3Inches(x),
+      y: normalizeMmTo3Inches(y),
+    };
   }
 
   get southWest(): Point {
-    return computeSouthWest(this);
+    const { x, y } = computeSouthWest(this);
+    return {
+      x: normalizeMmTo3Inches(x),
+      y: normalizeMmTo3Inches(y),
+    };
   }
 
   get southEast(): Point {
-    return computeSouthEast(this);
+    const { x, y } = computeSouthEast(this);
+    return {
+      x: normalizeMmTo3Inches(x),
+      y: normalizeMmTo3Inches(y),
+    };
   }
 
   opacity(layerState: LayerState): number {

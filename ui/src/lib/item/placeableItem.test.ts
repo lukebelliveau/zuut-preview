@@ -120,9 +120,23 @@ describe('PlaceableItem', () => {
       item.drag({ x: 300, y: 600 }, [], playground);
 
       const { placementShadow } = item;
+
       expect(placementShadow).not.toBeUndefined();
-      expect(placementShadow?.x).toBe(feetToMm(1));
-      expect(placementShadow?.y).toBe(feetToMm(2));
+      /**
+       * 309.8 === 304.8 (300mm from placementShadow, normalized to 3inches) + 5 (placementShadow.width)
+       * placementShadow instantiated at {x: 300, y: 600}
+       * must adjust for 3inch increments, and item offset (width and height divided by two)
+       *
+       * so, expect(placementShadow.x).toBe === (300mm in 3inches = 304.8) + (item width / 2)
+       * = 304.8 + (10 / 2)
+       * = 309.8
+       *
+       * expect (placementShadow.y).toBe === (600mm in 3inches = 612.8) + (item length / 2)
+       * = 609.6 + (20 / 2)
+       * = 619.6
+       */
+      expect(placementShadow?.x).toBe(309.8);
+      expect(placementShadow?.y).toBe(619.6);
       expect(placementShadow?.height).toBe(item.height);
       expect(placementShadow?.length).toBe(item.length);
       expect(placementShadow?.width).toBe(item.width);
@@ -606,8 +620,21 @@ describe('PlaceableItem', () => {
         playground
       );
 
-      expect(placementShadow.x).toBe(feetToMm(1));
-      expect(placementShadow.y).toBe(feetToMm(2));
+      /**
+       * 309.8 === 304.8 (300mm from placementShadow, normalized to 3inches) + 5 (placementShadow.width)
+       * placementShadow instantiated at {x: 300, y: 600}
+       * must adjust for 3inch increments, and item offset (width and height divided by two)
+       *
+       * so, expect(placementShadow.x).toBe === (300mm in 3inches = 304.8) + (item width / 2)
+       * = 304.8 + (10 / 2)
+       * = 309.8
+       *
+       * expect (placementShadow.y).toBe === (600mm in 3inches = 612.8) + (item length / 2)
+       * = 609.6 + (20 / 2)
+       * = 619.6
+       */
+      expect(placementShadow.x).toBe(309.8);
+      expect(placementShadow.y).toBe(619.6);
       expect(placementShadow.height).toBe(item.height);
       expect(placementShadow.length).toBe(item.length);
       expect(placementShadow.width).toBe(item.width);

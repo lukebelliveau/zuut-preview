@@ -1,5 +1,5 @@
-import { normalizeMmTo3InchesIfEnabled } from '../conversions';
 import { Point } from '../point';
+import { normalizeMmTo3Inches } from '../conversions';
 
 /**
  * Pure functions handy for checking the spatial relationship between two objects
@@ -18,8 +18,14 @@ export const isStraddlingBoundary = (
   item1: GeometryObject,
   item2: GeometryObject
 ) => {
-  const isBetweenTopAndBottom = itemIsBetweenTopAndBottomWall(item1, item2);
-  const isBetweenLeftAndRight = itemIsBetweenLeftAndRightWall(item1, item2);
+  const isBetweenTopAndBottom = itemIsBetweenTopAndBottomWallInclusive(
+    item1,
+    item2
+  );
+  const isBetweenLeftAndRight = itemIsBetweenLeftAndRightWallInclusive(
+    item1,
+    item2
+  );
   const isAlignedWithLeftWall = itemStraddlesLeftYAxis(item1, item2);
   const isAlignedWithRightWall = itemIsAlignedWithRightWall(item1, item2);
   const isAlignedWithBottomWall = itemIsAlignedWithBottomWall(item1, item2);
@@ -54,30 +60,53 @@ export const itemStraddlesLeftYAxis = (
   room: GeometryObject
 ) => {
   return (
-    item.northWest.x < room.northWest.x && room.northWest.x < item.northEast.x
+    Math.floor(item.northWest.x) < Math.floor(room.northWest.x) &&
+    Math.floor(room.northWest.x) < Math.floor(item.northEast.x)
   );
 };
 export const itemIsAlignedWithRightWall = (
   item: GeometryObject,
   room: GeometryObject
-) => item.northWest.x < room.northEast.x && room.northEast.x < item.northEast.x;
+) =>
+  Math.floor(item.northWest.x) < Math.floor(room.northEast.x) &&
+  Math.floor(room.northEast.x) < Math.floor(item.northEast.x);
 export const itemIsBetweenTopAndBottomWall = (
   item: GeometryObject,
   room: GeometryObject
-) => room.northWest.y < item.northWest.y && item.southWest.y < room.southWest.y;
+) =>
+  Math.floor(room.northWest.y) < Math.floor(item.northWest.y) &&
+  Math.floor(item.southWest.y) < Math.floor(room.southWest.y);
+export const itemIsBetweenTopAndBottomWallInclusive = (
+  item: GeometryObject,
+  room: GeometryObject
+) =>
+  Math.floor(room.northWest.y) <= Math.floor(item.northWest.y) &&
+  Math.floor(item.southWest.y) <= Math.floor(room.southWest.y);
 
 export const itemIsAlignedWithBottomWall = (
   item: GeometryObject,
   room: GeometryObject
-) => item.northWest.y < room.southWest.y && room.southWest.y < item.southWest.y;
+) =>
+  Math.floor(item.northWest.y) < Math.floor(room.southWest.y) &&
+  Math.floor(room.southWest.y) < Math.floor(item.southWest.y);
 export const itemIsAlignedWithTopWall = (
   item: GeometryObject,
   room: GeometryObject
-) => item.northWest.y < room.northWest.y && room.northWest.y < item.southWest.y;
+) =>
+  Math.floor(item.northWest.y) < Math.floor(room.northWest.y) &&
+  Math.floor(room.northWest.y) < Math.floor(item.southWest.y);
 export const itemIsBetweenLeftAndRightWall = (
   item: GeometryObject,
   room: GeometryObject
-) => room.northWest.x < item.northWest.x && item.northEast.x < room.northEast.x;
+) =>
+  Math.floor(room.northWest.x) < Math.floor(item.northWest.x) &&
+  Math.floor(item.northEast.x) < Math.floor(room.northEast.x);
+export const itemIsBetweenLeftAndRightWallInclusive = (
+  item: GeometryObject,
+  room: GeometryObject
+) =>
+  Math.floor(room.northWest.x) <= Math.floor(item.northWest.x) &&
+  Math.floor(item.northEast.x) <= Math.floor(room.northEast.x);
 
 export const itemHasVerticalOrientation = (item: GeometryObject) =>
   item.length > item.width;
@@ -102,36 +131,36 @@ export const areExactlySharingBorder = (
 ): boolean => {
   // item1's right border and item2's left border
   if (
-    Math.floor(item1.northEast.x) === Math.floor(item2.northWest.x) &&
-    Math.floor(item1.northWest.y) === Math.floor(item2.northWest.y) &&
-    Math.floor(item1.length) === Math.floor(item2.length)
+    Math.round(item1.northEast.x) === Math.round(item2.northWest.x) &&
+    Math.round(item1.northWest.y) === Math.round(item2.northWest.y) &&
+    Math.round(item1.length) === Math.round(item2.length)
   ) {
     return true;
   }
 
   // item1's left border and item2's right border
   if (
-    Math.floor(item2.northEast.x) === Math.floor(item1.northWest.x) &&
-    Math.floor(item1.northWest.y) === Math.floor(item2.northWest.y) &&
-    Math.floor(item1.length) === Math.floor(item2.length)
+    Math.round(item2.northEast.x) === Math.round(item1.northWest.x) &&
+    Math.round(item1.northWest.y) === Math.round(item2.northWest.y) &&
+    Math.round(item1.length) === Math.round(item2.length)
   ) {
     return true;
   }
 
   // item1's top border and item2's bottom border
   if (
-    Math.floor(item1.northWest.y) === Math.floor(item2.southWest.y) &&
-    Math.floor(item1.northWest.x) === Math.floor(item2.northWest.x) &&
-    Math.floor(item1.width) === Math.floor(item2.width)
+    Math.round(item1.northWest.y) === Math.round(item2.southWest.y) &&
+    Math.round(item1.northWest.x) === Math.round(item2.northWest.x) &&
+    Math.round(item1.width) === Math.round(item2.width)
   ) {
     return true;
   }
 
   // item1's bottom border and item2's top border
   if (
-    Math.floor(item2.northWest.y) === Math.floor(item1.southWest.y) &&
-    Math.floor(item1.northWest.x) === Math.floor(item2.northWest.x) &&
-    Math.floor(item1.width) === Math.floor(item2.width)
+    Math.round(item2.northWest.y) === Math.round(item1.southWest.y) &&
+    Math.round(item1.northWest.x) === Math.round(item2.northWest.x) &&
+    Math.round(item1.width) === Math.round(item2.width)
   ) {
     return true;
   }
@@ -282,21 +311,13 @@ export const computeNorthWest = (offsetObject: OffsetObject): Point => {
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x - offsetObject.offset.x)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y - offsetObject.offset.y)
-      ),
+      x: Math.round(offsetObject.x - offsetObject.offset.x),
+      y: Math.round(offsetObject.y - offsetObject.offset.y),
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.x - offsetObject.offset.y)
-      ),
-      y: normalizeMmTo3InchesIfEnabled(
-        Math.round(offsetObject.y - offsetObject.offset.x)
-      ),
+      x: Math.round(offsetObject.x - offsetObject.offset.y),
+      y: Math.round(offsetObject.y - offsetObject.offset.x),
     };
   }
 };
@@ -309,13 +330,13 @@ export const computeNorthEast = (offsetObject: OffsetObject): Point => {
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.width),
-      y: normalizeMmTo3InchesIfEnabled(northWest.y),
+      x: northWest.x + offsetObject.width,
+      y: northWest.y,
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.length),
-      y: normalizeMmTo3InchesIfEnabled(northWest.y),
+      x: northWest.x + offsetObject.length,
+      y: northWest.y,
     };
   }
 };
@@ -328,13 +349,13 @@ export const computeSouthWest = (offsetObject: OffsetObject): Point => {
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(northWest.x),
-      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.length),
+      x: northWest.x,
+      y: northWest.y + offsetObject.length,
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(northWest.x),
-      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.width),
+      x: northWest.x,
+      y: northWest.y + offsetObject.width,
     };
   }
 };
@@ -347,13 +368,13 @@ export const computeSouthEast = (offsetObject: OffsetObject): Point => {
     offsetObject.rotation === 180
   ) {
     return {
-      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.width),
-      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.length),
+      x: northWest.x + offsetObject.width,
+      y: northWest.y + offsetObject.length,
     };
   } else {
     return {
-      x: normalizeMmTo3InchesIfEnabled(northWest.x + offsetObject.length),
-      y: normalizeMmTo3InchesIfEnabled(northWest.y + offsetObject.width),
+      x: northWest.x + offsetObject.length,
+      y: northWest.y + offsetObject.width,
     };
   }
 };
