@@ -159,7 +159,7 @@ const ItemsLibrary: IItemGroup[] = [
         undefined,
         undefined,
         feetToMm_REQUIRE_3_INCHES(1),
-        feetToMm_REQUIRE_3_INCHES(0.75),
+        feetToMm_REQUIRE_3_INCHES(1),
         feetToMm_REQUIRE_3_INCHES(0.75),
         '5 Gallon Pot - Up to 30" plant height'
       ),
