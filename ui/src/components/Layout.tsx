@@ -21,26 +21,21 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <div className={isDemoMode() ? 'wrapper demo' : 'wrapper'}>
-      {isDemoMode() ? null : (
-        <header>
-          <div id="header-logo">
-            <Link to="/">
-              <img
-                id="logo"
-                src={ZuutLogo}
-                alt="Zuut Logo"
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
-          <div id="header-name">
-            <h1>Name: {plan.name}</h1>
-          </div>
+      <header>
+        <div id="header-logo">
+          <Link to="/">
+            <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
+          </Link>
+        </div>
+        <div id="header-name">
+          <h1>Name: {plan.name}</h1>
+        </div>
+        {!isDemoMode() && (
           <div id="header-auth">
             <LogoutButton />
           </div>
-        </header>
-      )}
+        )}
+      </header>
 
       <div id="sidebar">
         <Sidebar />
