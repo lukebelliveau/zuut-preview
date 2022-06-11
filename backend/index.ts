@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from 'fs';
 import http from 'http';
 import winston from 'winston';
 import expressWinston from 'express-winston';
-import * as forceSSL from 'express-force-ssl';
+const forceSSL = require('express-force-ssl');
 
 import { getEnv } from './src/env';
 import { UI_BUILD_DIR } from './src/paths';
