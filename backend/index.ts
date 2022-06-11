@@ -6,6 +6,7 @@ import { existsSync, readFileSync } from 'fs';
 import http from 'http';
 import winston from 'winston';
 import expressWinston from 'express-winston';
+import * as forceSSL from 'express-force-ssl';
 
 import { getEnv } from './src/env';
 import { UI_BUILD_DIR } from './src/paths';
@@ -54,25 +55,35 @@ async function listen(port: number) {
     app.use('/', express.static(UI_BUILD_DIR));
   }
 
+  if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
+    /**
+     * force http -> https, because heroku doesn't do this
+     */
+    console.log('detected deployment environment, forcing HTTPS!');
+    app.use(forceSSL);
+  }
+
   server.applyMiddleware({ app });
 
   if (NODE_ENV === 'development') {
     const proxyUrl = `http://localhost:${PORT + 100}`;
     console.log(`Proxying web requests to ${proxyUrl}`);
     app.use('/', proxy(proxyUrl));
-  } else if (NODE_ENV === 'production') {
-    /**
-     * redirect non-https requests to https
-     * because heroku doesn't do this for us
-     * https://jaketrent.com/post/https-redirect-node-heroku
-     */
-    app.use((req, res, next) => {
-      console.log('REDIRECTING');
-      if (req.header('x-forwarded-proto') !== 'https') {
-        res.redirect(`https://${req.header('host')}${req.url}`);
-      } else next();
-    });
-  } else {
+  }
+  // else if (NODE_ENV === 'production') {
+  //   /**
+  //    * redirect non-https requests to https
+  //    * because heroku doesn't do this for us
+  //    * https://jaketrent.com/post/https-redirect-node-heroku
+  //    */
+  //   app.use((req, res, next) => {
+  //     console.log('REDIRECTING');
+  //     if (req.header('x-forwarded-proto') !== 'https') {
+  //       res.redirect(`https://${req.header('host')}${req.url}`);
+  //     } else next();
+  //   });
+  // }
+  else {
     console.log('SENDING INDEX PAGE');
     app.use('/*', (_, res) => {
       res.setHeader('content-type', 'text/html; charset=UTF-8');

@@ -13,6 +13,7 @@
   "keywords": [],
   "author": "Zuut",
   "dependencies": {
+    "express-force-ssl": "^0.3.2",
     "foreman": "^3.0.1",
     "react-scripts": "5.0.1"
   },
