@@ -20,7 +20,6 @@
     "apollo-server-core": "^3.6.3",
     "apollo-server-express": "^3.6.3",
     "express": "^4.17.2",
-    "express-force-ssl": "^0.3.2",
     "express-http-proxy": "^1.6.3",
     "express-jwt": "^6.1.0",
     "express-winston": "^4.2.0",
