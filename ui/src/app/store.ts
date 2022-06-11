@@ -47,11 +47,12 @@ const reducers = {
 };
 
 /**
- * exclude immutableCheck
+ * exclude immutableCheck if it starts slowing things down
  */
 const getAppDefaultMiddleware = (
   getDefaultMiddleware: CurriedGetDefaultMiddleware
-) => getDefaultMiddleware({ immutableCheck: false });
+  // ) => getDefaultMiddleware({ immutableCheck: true });
+) => getDefaultMiddleware();
 
 export function createAppStore() {
   return configureStore({

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import PlaceableItem from '../../lib/item/placeableItem';
+import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
 import { itemGroup } from '../../lib/itemsLibrary';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
@@ -15,18 +15,21 @@ import {
   select,
   setVisibleLayer,
 } from '../../features/interactions/interactionsSlice';
+import { IItem } from '../../lib/item';
 
 export default function LayoutTab() {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const dispatchAddItem = useDispatchAddItem();
 
-  function placeItem(item: PlaceableItem) {
+  function placeItem(item: IItem) {
     if (isCeilingPlaceableItem(item)) dispatch(setVisibleLayer(Layer.CEILING));
     else dispatch(setVisibleLayer(Layer.FLOOR));
 
     mixpanelTrack(mixpanelEvents.PLACE_ITEM, { itemName: item.name });
-    item.place(playground.place());
+    if (isPlaceableItem(item)) {
+      item.place(playground.place());
+    }
     const itemCopy = item.copy();
     dispatchAddItem(itemCopy);
     dispatch(select(itemCopy.id));
