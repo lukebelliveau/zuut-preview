@@ -54,18 +54,6 @@ async function listen(port: number) {
     app.use('/', express.static(UI_BUILD_DIR));
   }
 
-  const forwardHerokuHttpToHttps: RequestHandler = (req, res, next) => {
-    if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
-      if (req.header('x-forwarded-proto') !== 'https') {
-        res.redirect(`https://${req.header('host')}${req.url}`);
-      } else {
-        next();
-      }
-    }
-  };
-
-  // app.use('/*', forwardHerokuHttpToHttps);
-
   server.applyMiddleware({ app });
 
   if (NODE_ENV === 'development') {
@@ -73,28 +61,11 @@ async function listen(port: number) {
     console.log(`Proxying web requests to ${proxyUrl}`);
     app.use('/', proxy(proxyUrl));
   } else {
-    app.use('/*', (req, res, next) => {
-      console.log('index branch...');
-      console.log(req);
-      if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
-        console.log('deploy branch...');
-        if (req.header('x-forwarded-proto') !== 'https') {
-          console.log('redirecting branch...');
-          res.redirect(`https://${req.header('host')}${req.url}`);
-        } else {
-          console.log('forward index branch...');
-          res.setHeader('content-type', 'text/html; charset=UTF-8');
-          res.send(indexHtml);
-        }
-      }
+    app.use('/*', (_, res) => {
+      res.setHeader('content-type', 'text/html; charset=UTF-8');
+      res.send(indexHtml);
     });
   }
-  // else {
-  //   app.use('/*', (_, res) => {
-  //     res.setHeader('content-type', 'text/html; charset=UTF-8');
-  //     res.send(indexHtml);
-  //   });
-  // }
 
   app.use((err: any, req: any, res: any, next: any) => {
     res.status(err.status).json(err);

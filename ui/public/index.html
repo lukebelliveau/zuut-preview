@@ -46,14 +46,13 @@
 
     <!-- hack to get http to forward to https in Heroku -->
     <script>
-      // var host = 'www.zuut.co' || 'zuut.co';
-      // if (
-      //   host == window.location.host &&
-      //   window.location.protocol != 'https:'
-      // ) {
-      //   window.location.protocol = 'https';
-      // }
-      window.location.protocol = 'https';
+      var host = 'www.zuut.co' || 'zuut.co';
+      if (
+        host == window.location.host &&
+        window.location.protocol != 'https:'
+      ) {
+        window.location.protocol = 'https';
+      }
     </script>
   </head>
   <body>
