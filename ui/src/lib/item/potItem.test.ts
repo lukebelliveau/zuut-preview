@@ -20,7 +20,10 @@ describe('PotItem', () => {
       expect(modifierImages).toStrictEqual([]);
     });
 
-    it('includes soil modifier if there is one soil modifier', () => {
+    /**
+     * skipped because we don't have modifier images right now
+     */
+    it.skip('includes soil modifier if there is one soil modifier', () => {
       const potItem = new PotItem('pot', v4(), 0, 0, 100, 100, 100, '', 0, {
         Soil: [v4()],
       });
@@ -29,7 +32,10 @@ describe('PotItem', () => {
       expect(modifierImages).toStrictEqual(['soilMod.svg']);
     });
 
-    it('includes soil modifier if there are multiple soil modifiers', () => {
+    /**
+     * skipped because we don't have modifier images right now
+     */
+    it.skip('includes soil modifier if there are multiple soil modifiers', () => {
       const potItem = new PotItem('pot', v4(), 0, 0, 100, 100, 100, '', 0, {
         Soil: [v4(), v4()],
       });
