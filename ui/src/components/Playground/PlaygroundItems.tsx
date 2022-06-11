@@ -23,6 +23,7 @@ import {
 import { useAppSelector } from '../../app/hooks';
 import {
   select,
+  selectOrDeselectAllIfSelected,
   setVisibleLayer,
   toggleSelect,
 } from '../../features/interactions/interactionsSlice';
@@ -118,7 +119,7 @@ const useHandleItemClicks = (
       if (e.metaKey) {
         dispatch(toggleSelect(item.id));
       } else {
-        dispatch(select(item.id));
+        dispatch(selectOrDeselectAllIfSelected(item.id));
       }
     };
 

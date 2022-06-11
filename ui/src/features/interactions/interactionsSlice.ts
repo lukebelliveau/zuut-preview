@@ -25,6 +25,16 @@ export const interactionsSlice = createSlice({
     select: (state: InteractionsState, action: PayloadAction<string>) => {
       state.selected = [action.payload];
     },
+    selectOrDeselectAllIfSelected: (
+      state: InteractionsState,
+      action: PayloadAction<string>
+    ) => {
+      if (state.selected?.includes(action.payload)) {
+        state.selected = [];
+      } else {
+        state.selected = [action.payload];
+      }
+    },
     selectMany: (state: InteractionsState, action: PayloadAction<string[]>) => {
       state.selected = action.payload;
     },
@@ -59,5 +69,6 @@ export const {
   selectMany,
   toggleLayer,
   setVisibleLayer,
+  selectOrDeselectAllIfSelected,
 } = interactionsSlice.actions;
 export default interactionsSlice.reducer;

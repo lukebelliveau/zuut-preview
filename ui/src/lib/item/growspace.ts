@@ -10,7 +10,7 @@ import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import { Layer } from '../layer';
 import { isDuctItem } from './ductItem';
-import GrowspaceImage from '../../images/items/growspace.svg';
+import GrowspaceImage from '../../images/items/growspace.png';
 import { LayerState } from '../../features/interactions/interactionsState';
 
 export const GROWSPACE_TYPE = 'Growspace';
