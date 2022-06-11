@@ -4,7 +4,6 @@ import PlaceableItem from '../../lib/item/placeableItem';
 import { itemGroup } from '../../lib/itemsLibrary';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
-import InventoryCandidate from './InventoryCandidate';
 import SidebarTab from './SidebarTab';
 import { useBuildPlayground } from '../../app/builderHooks';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';
@@ -64,6 +63,15 @@ export default function LayoutTab() {
       </MenuSection>
       <MenuSection title="Climate">
         {itemGroup('climate').map((item) => (
+          <PlaceableLibraryItem
+            key={item.name}
+            item={item as PlaceableItem}
+            placeItem={placeItem}
+          />
+        ))}
+      </MenuSection>
+      <MenuSection title="Water">
+        {itemGroup('water').map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}

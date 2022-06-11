@@ -15,6 +15,7 @@ export const itemsSlice = createSlice({
   reducers: {
     addOne: itemsAdapter.addOne,
     addOneWithoutHistory: itemsAdapter.addOne,
+    addMany: itemsAdapter.addMany,
     updateOne: itemsAdapter.updateOne,
     updateOneWithoutHistory: itemsAdapter.updateOne,
     removeOne: itemsAdapter.removeOne,
@@ -28,6 +29,7 @@ export const itemsSlice = createSlice({
 export const {
   addOne,
   addOneWithoutHistory,
+  addMany,
   updateOne,
   updateOneWithoutHistory,
   removeOne,

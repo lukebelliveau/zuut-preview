@@ -9,6 +9,7 @@ import GrowspaceItem from './item/growspaceItem';
 import CarbonFilterItem from './item/carbonFilterItem';
 import WaterItem from './item/waterItem';
 import ExhaustFanItem from './item/exhaustFanItem';
+import MiscItem from './item/miscItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -356,7 +357,7 @@ const ItemsLibrary: IItemGroup[] = [
     ],
   },
   {
-    itemGroup: 'misc',
+    itemGroup: 'water',
     items: [
       new WaterItem(
         'Water Container',
@@ -368,6 +369,10 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(3)
       ),
     ],
+  },
+  {
+    itemGroup: 'misc',
+    items: [new MiscItem('Misc')],
   },
 ];
 

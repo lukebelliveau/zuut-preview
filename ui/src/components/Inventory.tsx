@@ -17,6 +17,7 @@ import './Inventory.css';
 import {
   select,
   selectMany,
+  selectOrDeselectAllIfSelected,
   setVisibleLayer,
   toggleSelect,
   unselect,
@@ -59,7 +60,7 @@ export default function Inventory() {
   };
 
   const selectItemFromInventory = (item: Item) => {
-    dispatch(select(item.id));
+    dispatch(selectOrDeselectAllIfSelected(item.id));
     if (isPlaceableItem(item)) {
       dispatch(setVisibleLayer(item.layer));
     }

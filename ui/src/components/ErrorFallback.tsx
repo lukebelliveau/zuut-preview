@@ -4,6 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useHistory } from 'react-router';
 import { mixpanelEvents } from '../analytics/mixpanelEvents';
 import { mixpanelTrack } from '../analytics/mixpanelTrack';
+import { new_demo_path } from '../App';
+import { isDemoMode } from '../app/store';
 import { new_playground_path } from '../routes/playgrounds/NewPlayground';
 
 function ErrorFallback({
@@ -35,12 +37,18 @@ const AppErrorBoundary = ({ children }: { children: ReactNode }) => {
   const history = useHistory();
   const { user } = useAuth0();
 
+  const onReset = () => {
+    if (isDemoMode()) {
+      history.push(new_demo_path());
+    } else {
+      history.push(`${new_playground_path()}?reset-playground=true`);
+    }
+  };
+
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
-      onReset={() => {
-        history.push(`${new_playground_path()}?reset-playground=true`);
-      }}
+      onReset={onReset}
       onError={(error: Error, info: { componentStack: string }) => {
         mixpanelTrack(mixpanelEvents.ERROR, {
           error,

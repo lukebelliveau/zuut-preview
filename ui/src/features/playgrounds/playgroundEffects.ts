@@ -1,22 +1,43 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useBuildPlayground } from '../../app/builderHooks';
-import { isDemoMode } from '../../app/store';
-import { feetToMm } from '../../lib/conversions';
-import Plan from '../../lib/plan';
-import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
-import { create } from '../plans/planSlice';
-import { resizePlayground, setPlan } from './playgroundSlice';
+import { isDemoMode, ZUUT_DEMO_STATE } from '../../app/store';
+import { addMany } from '../items/itemsSlice';
+import { create as createPlan } from '../plans/planSlice';
+import { createDemoPlan, resizePlayground, setPlan } from './playgroundSlice';
 
 export const useLoadDemoPlan = () => {
-  const playground = useBuildPlayground();
   const dispatch = useDispatch();
-  if (isDemoMode() && !playground.plan) {
-    const plan = new Plan('Demo Playground', feetToMm(50), feetToMm(50));
-    dispatch(create(PlanReduxAdapter.planToState(plan)));
-    dispatch(setPlan(plan.id));
+
+  if (isDemoMode()) {
+    const persistentState = localStorage.getItem(ZUUT_DEMO_STATE)
+      ? JSON.parse(localStorage.getItem(ZUUT_DEMO_STATE) || '')
+      : {};
+
+    try {
+      const { playground, plans, items } = persistentState;
+      const plan = plans.entities[playground.planId];
+
+      if (
+        playground !== undefined &&
+        plan !== undefined &&
+        items !== undefined
+      ) {
+        // load plan
+        dispatch(createPlan(plan));
+        // set playground planId to that plan
+        dispatch(setPlan(plan.id));
+        // load items
+        dispatch(addMany(items.present.entities));
+        return;
+      }
+    } catch (e) {
+      console.error('ERROR building demo playground: ' + e);
+    }
+
+    dispatch(createDemoPlan());
   }
 };
+
 export const useResizePlaygroundOnWindowResize = () => {
   const [firstLoad, setFirstLoad] = useState(true);
   const dispatch = useDispatch();
