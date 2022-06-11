@@ -16,6 +16,7 @@ import plansReducer from '../features/plans/planSlice';
 import interactionsReducer from '../features/interactions/interactionsSlice';
 import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
+import { CurriedGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 
 export const isDemoMode = () => window.location.href.includes('demo');
 export const ZUUT_DEMO_STATE = 'zuut-state';
@@ -45,11 +46,18 @@ const reducers = {
   router: connectRouter<LocationState>(browserHistory),
 };
 
+/**
+ * exclude immutableCheck
+ */
+const getAppDefaultMiddleware = (
+  getDefaultMiddleware: CurriedGetDefaultMiddleware
+) => getDefaultMiddleware({ immutableCheck: false });
+
 export function createAppStore() {
   return configureStore({
     reducer: reducers,
     middleware: (getDefaultMiddleware) => {
-      let middlewares = getDefaultMiddleware();
+      let middlewares = getAppDefaultMiddleware(getDefaultMiddleware);
       if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
       return middlewares
         .concat(routerMiddleware(browserHistory))
@@ -66,7 +74,7 @@ export function getDemoModeStore() {
   return configureStore({
     reducer: reducers,
     middleware: (getDefaultMiddleware) => {
-      let middlewares = getDefaultMiddleware();
+      let middlewares = getAppDefaultMiddleware(getDefaultMiddleware);
       if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
       return middlewares
         .concat(routerMiddleware(browserHistory))

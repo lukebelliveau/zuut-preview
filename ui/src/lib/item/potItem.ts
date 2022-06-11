@@ -66,14 +66,14 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     return PotImage;
   }
 
-  get modifierImages() {
-    const modifierImages = [];
-    if (this.modifiers.Soil.length > 0) {
-      modifierImages.push(SoilModImage);
-    }
+  // get modifierImages() {
+  //   const modifierImages = [];
+  //   if (this.modifiers.Soil.length > 0) {
+  //     modifierImages.push(SoilModImage);
+  //   }
 
-    return modifierImages;
-  }
+  //   return modifierImages;
+  // }
 
   removeAllModifiers(): void {
     this.modifiers = defaultPotModifiers;

@@ -15,12 +15,15 @@ export const interactionsSlice = createSlice({
   name: 'interactions',
   initialState,
   reducers: {
+    // select: (state: InteractionsState, action: PayloadAction<string>) => {
+    //   if (state.selected.length === 1 && state.selected[0] === action.payload) {
+    //     state.selected = [];
+    //   } else {
+    //     state.selected = [action.payload];
+    //   }
+    // },
     select: (state: InteractionsState, action: PayloadAction<string>) => {
-      if (state.selected.length === 1 && state.selected[0] === action.payload) {
-        state.selected = [];
-      } else {
-        state.selected = [action.payload];
-      }
+      state.selected = [action.payload];
     },
     selectMany: (state: InteractionsState, action: PayloadAction<string[]>) => {
       state.selected = action.payload;
