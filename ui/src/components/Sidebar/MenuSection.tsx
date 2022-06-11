@@ -12,7 +12,10 @@ export default function MenuSection({ title, children }: MenuSectionProps) {
 
   // Fix CSS for accordion panels
   return (
-    <div className={`accordion-item ${open ? 'active' : ''}`}>
+    <div
+      className={`accordion-item ${open ? 'active' : ''}`}
+      id={`${title}-section`}
+    >
       <div className="accordion-title">
         <button onClick={() => setOpen(!open)}>
           {title}

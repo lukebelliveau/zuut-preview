@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "cypress:open": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run",
+    "cypress:local": "CYPRESS_baseUrl=http://localhost:3000 CYPRESS_AUTH_USERNAME=zuuttestuser@gmail.com CYPRESS_AUTH_PASSWORD=ZUUTtester123! cypress open"
   },
   "keywords": [],
   "author": "Zuut",

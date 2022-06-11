@@ -31,6 +31,9 @@ describe('app', () => {
 
     cy.findByText('Objects').click();
 
+    // open Pots object section
+    cy.findByText('Pots').click();
+
     // add item
     cy.findByRole('button', { name: /2 Gallon Pot/i }).click();
 

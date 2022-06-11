@@ -19,6 +19,9 @@ describe('LayoutTab', () => {
     testStore.dispatch(setUser('jwt'));
     renderWithContext(<LayoutTab />, testStore);
 
+    const layoutTab = screen.getByText('Layout');
+    fireEvent.click(layoutTab);
+
     screen.getByText('Window');
   });
 
@@ -30,6 +33,9 @@ describe('LayoutTab', () => {
     testStore.dispatch(setPlan(plan.id));
     testStore.dispatch(setUser('jwt'));
     renderWithContext(<LayoutTab />, testStore);
+
+    const layoutTab = screen.getByText('Layout');
+    fireEvent.click(layoutTab);
 
     const windowMenuItem = screen.getByText('Window');
     fireEvent.click(windowMenuItem);

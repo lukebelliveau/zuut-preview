@@ -51,6 +51,9 @@ describe('ShowPlayground', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
+    const potsTab = screen.getByText('Pots');
+    fireEvent.click(potsTab);
+
     const addPotButton = await screen.findByRole('button', {
       name: /2 Gallon Pot/i,
     });
@@ -84,6 +87,9 @@ describe('ShowPlayground', () => {
 
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
+
+    const potsTab = screen.getByText('Pots');
+    fireEvent.click(potsTab);
 
     const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
     fireEvent.click(addPotButton);
@@ -132,6 +138,9 @@ describe('modifiers', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
+    const potsTab = screen.getByText('Pots');
+    fireEvent.click(potsTab);
+
     const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
     fireEvent.click(addPotButton);
 
@@ -172,6 +181,9 @@ describe('modifiers', () => {
 
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
+
+    const potsTab = screen.getByText('Pots');
+    fireEvent.click(potsTab);
 
     const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
     fireEvent.click(addPotButton);
