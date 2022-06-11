@@ -74,10 +74,15 @@ async function listen(port: number) {
     app.use('/', proxy(proxyUrl));
   } else {
     app.use('/*', (req, res, next) => {
+      console.log('index branch...');
+      console.log(req);
       if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
+        console.log('deploy branch...');
         if (req.header('x-forwarded-proto') !== 'https') {
+          console.log('redirecting branch...');
           res.redirect(`https://${req.header('host')}${req.url}`);
         } else {
+          console.log('forward index branch...');
           res.setHeader('content-type', 'text/html; charset=UTF-8');
           res.send(indexHtml);
         }
