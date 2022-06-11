@@ -43,6 +43,18 @@
       gtag('config', 'G-P1864WEF55');
     </script>
     <!-- end of google analytics -->
+
+    <!-- hack to get http to forward to https in Heroku -->
+    <script>
+      // var host = 'www.zuut.co' || 'zuut.co';
+      // if (
+      //   host == window.location.host &&
+      //   window.location.protocol != 'https:'
+      // ) {
+      //   window.location.protocol = 'https';
+      // }
+      window.location.protocol = 'https';
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
