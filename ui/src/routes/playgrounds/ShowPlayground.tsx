@@ -32,8 +32,6 @@ import {
 } from '../../app/interactionHandlers';
 import { useDispatchAddItem } from '../../features/items/itemsHooks';
 
-import Feedback from 'feeder-react-feedback';
-import 'feeder-react-feedback/dist/feeder-react-feedback.css';
 import './ShowPlayground.css';
 import Toolbar from '../../components/Toolbar/Toolbar';
 import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
@@ -186,11 +184,6 @@ export default function ShowPlayground() {
           </div>
         </Layout>
       </div>
-      <Feedback
-        projectId="6267e6a8b4e0a100041f4471"
-        emailDefaultValue={user?.email}
-        email
-      />
     </Fragment>
   );
 }
