@@ -142,7 +142,7 @@ export const resizePlayground = createAsyncThunk(
 export const createDemoPlan = createAsyncThunk(
   'playground/createDemoPlan',
   async (_, { dispatch }) => {
-    const planState = new Plan('Demo Playground', feetToMm(50), feetToMm(50));
+    const planState = new Plan('Demo Playground', feetToMm(15), feetToMm(10));
     const plan = PlanReduxAdapter.planToState(planState);
     dispatch(create(plan));
     dispatch(setPlan(plan.id));
