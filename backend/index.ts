@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import proxy from 'express-http-proxy';
 import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
@@ -54,7 +54,7 @@ async function listen(port: number) {
     app.use('/', express.static(UI_BUILD_DIR));
   }
 
-  app.use((req, res, next) => {
+  const forwardHerokuHttpToHttps: RequestHandler = (req, res, next) => {
     if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
       if (req.header('x-forwarded-proto') !== 'https') {
         res.redirect(`https://${req.header('host')}${req.url}`);
@@ -62,7 +62,9 @@ async function listen(port: number) {
         next();
       }
     }
-  });
+  };
+
+  // app.use('/*', forwardHerokuHttpToHttps);
 
   server.applyMiddleware({ app });
 
@@ -70,27 +72,24 @@ async function listen(port: number) {
     const proxyUrl = `http://localhost:${PORT + 100}`;
     console.log(`Proxying web requests to ${proxyUrl}`);
     app.use('/', proxy(proxyUrl));
-  }
-  // else if (NODE_ENV === 'production') {
-  //   /**
-  //    * redirect non-https requests to https
-  //    * because heroku doesn't do this for us
-  //    * https://jaketrent.com/post/https-redirect-node-heroku
-  //    */
-  //   app.use((req, res, next) => {
-  //     console.log('REDIRECTING');
-  //     if (req.header('x-forwarded-proto') !== 'https') {
-  //       res.redirect(`https://${req.header('host')}${req.url}`);
-  //     } else next();
-  //   });
-  // }
-  else {
-    console.log('SENDING INDEX PAGE');
-    app.use('/*', (_, res) => {
-      res.setHeader('content-type', 'text/html; charset=UTF-8');
-      res.send(indexHtml);
+  } else {
+    app.use('/*', (req, res, next) => {
+      if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
+        if (req.header('x-forwarded-proto') !== 'https') {
+          res.redirect(`https://${req.header('host')}${req.url}`);
+        } else {
+          res.setHeader('content-type', 'text/html; charset=UTF-8');
+          res.send(indexHtml);
+        }
+      }
     });
   }
+  // else {
+  //   app.use('/*', (_, res) => {
+  //     res.setHeader('content-type', 'text/html; charset=UTF-8');
+  //     res.send(indexHtml);
+  //   });
+  // }
 
   app.use((err: any, req: any, res: any, next: any) => {
     res.status(err.status).json(err);
