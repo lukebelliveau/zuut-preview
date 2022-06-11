@@ -67,11 +67,13 @@ async function listen(port: number) {
      * https://jaketrent.com/post/https-redirect-node-heroku
      */
     app.use((req, res, next) => {
+      console.log('REDIRECTING');
       if (req.header('x-forwarded-proto') !== 'https') {
         res.redirect(`https://${req.header('host')}${req.url}`);
       } else next();
     });
   } else {
+    console.log('SENDING INDEX PAGE');
     app.use('/*', (_, res) => {
       res.setHeader('content-type', 'text/html; charset=UTF-8');
       res.send(indexHtml);
