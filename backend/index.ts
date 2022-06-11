@@ -1,4 +1,4 @@
-import express, { RequestHandler } from 'express';
+import express from 'express';
 import proxy from 'express-http-proxy';
 import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
@@ -53,6 +53,10 @@ async function listen(port: number) {
   if (NODE_ENV !== 'development') {
     app.use('/', express.static(UI_BUILD_DIR));
   }
+
+  app.use('/demo', (req, res) => {
+    res.redirect('/playgrounds/demo');
+  });
 
   server.applyMiddleware({ app });
 
