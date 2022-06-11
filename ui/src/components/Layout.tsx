@@ -28,7 +28,9 @@ export default function Layout(props: LayoutProps) {
           </Link>
         </div>
         <div id="header-name">
-          <h1>Name: {plan.name}</h1>
+          <h1>
+            {isDemoMode() ? '' : 'Name:'} {plan.name}
+          </h1>
         </div>
         {!isDemoMode() && (
           <div id="header-auth">
