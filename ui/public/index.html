@@ -53,7 +53,9 @@
         window.location.protocol != 'https:'
       ) {
         window.location.protocol = 'https';
-        window.location.pathname = pathnameBeforeRedirect;
+        if (pathnameBeforeRedirect !== '/') {
+          window.location.pathname = pathnameBeforeRedirect;
+        }
       }
     </script>
   </head>
