@@ -60,6 +60,17 @@ async function listen(port: number) {
     const proxyUrl = `http://localhost:${PORT + 100}`;
     console.log(`Proxying web requests to ${proxyUrl}`);
     app.use('/', proxy(proxyUrl));
+  } else if (NODE_ENV === 'production') {
+    /**
+     * redirect non-https requests to https
+     * because heroku doesn't do this for us
+     * https://jaketrent.com/post/https-redirect-node-heroku
+     */
+    app.use((req, res, next) => {
+      if (req.header('x-forwarded-proto') !== 'https') {
+        res.redirect(`https://${req.header('host')}${req.url}`);
+      } else next();
+    });
   } else {
     app.use('/*', (_, res) => {
       res.setHeader('content-type', 'text/html; charset=UTF-8');
