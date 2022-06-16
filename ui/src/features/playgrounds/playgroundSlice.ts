@@ -107,11 +107,6 @@ export const resizePlayground = createAsyncThunk(
     try {
       const sandbox = await waitForElement('#sandbox');
       const toolbar = await waitForElement('#toolbar');
-      if (!sandbox || !toolbar)
-        throw new Error(
-          `tried to resize playground but couldn't find sandbox or toolbar:
-          sandbox: ${sandbox} toolbar: ${toolbar}`
-        );
 
       const playgroundState = selectPlaygroundState(getState() as RootState);
       const planState = selectDefaultPlan(getState() as RootState);
@@ -120,9 +115,40 @@ export const resizePlayground = createAsyncThunk(
         playgroundState
       );
 
+      /**
+       * i called this UNSAFE because it's hacking around the fact that it
+       * doesn't need a width/height in the first place, and the app crashes
+       * if it looks for a #sandbox and can't find it
+       *
+       * (it's a hack, fix this TODO)
+       *
+       * leaving the full if/then here so it's legible for me.
+       * the default is "sandbox/toolbar exist",
+       * it just doesn't exist if you start a new session and open a new playground
+       * (to re-pro: click "Demo" from the landing page in a brand new fresh browser)
+       * (force close the browser, and re-open it in a private window)
+       */
+      let UNSAFE_sandboxOffsetWidth = 100;
+      let UNSAFE_sandboxOffsetHeight = 100;
+      let UNSAFE_toolbarOffsetHeight = 100;
+
+      if (!sandbox) {
+        UNSAFE_sandboxOffsetHeight = 100;
+        UNSAFE_sandboxOffsetWidth = 100;
+      } else {
+        UNSAFE_sandboxOffsetHeight = sandbox.offsetHeight;
+        UNSAFE_sandboxOffsetWidth = sandbox.offsetWidth;
+      }
+
+      if (!toolbar) {
+        UNSAFE_toolbarOffsetHeight = 100;
+      } else {
+        UNSAFE_toolbarOffsetHeight = toolbar.offsetHeight;
+      }
+
       playground.setDisplayDimensions(
-        sandbox.offsetWidth,
-        sandbox.offsetHeight - toolbar.offsetHeight
+        UNSAFE_sandboxOffsetWidth,
+        UNSAFE_sandboxOffsetHeight - UNSAFE_toolbarOffsetHeight
       );
 
       playground.centerX = 10;
