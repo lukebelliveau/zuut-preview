@@ -18,7 +18,8 @@ import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 import { CurriedGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 
-export const isDemoMode = () => window.location.href.includes('demo');
+// export const isDemoMode = () => window.location.href.includes('demo');
+export const isDemoMode = () => true;
 export const ZUUT_DEMO_STATE = 'zuut-state';
 
 export const browserHistory = createBrowserHistory<unknown>();

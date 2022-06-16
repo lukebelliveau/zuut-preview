@@ -32,13 +32,13 @@ function Home() {
           <img id="logo" src={ZuutLogo} alt="Zuut Logo" aria-hidden="true" />
         </div>
         <div id="header-auth">
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? (
             <Link to={playground_path()} onClick={onGetStarted}>
               <button className="warning">Playground</button>
             </Link>
           ) : (
             <LoginButton />
-          )}
+          )} */}
           <Link to={demo_playground_path()}>
             <button>Demo</button>
           </Link>{' '}
@@ -55,13 +55,20 @@ function Home() {
             to choose top rated compatible parts for the cheapest prices, and to
             share your experience with the community.
           </p>
-          <Link
+          {/* <Link
             className="button go"
             to={new_playground_path()}
             onClick={onGetStarted}
           >
             Get started
-          </Link>
+          </Link> */}
+          {/* <Link
+            className="button go"
+            to={new_playground_path()}
+            onClick={onGetStarted}
+          >
+            Get started
+          </Link> */}
         </section>
       </div>
     </div>

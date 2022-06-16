@@ -199,7 +199,6 @@ export const hackyRecenterPlayground = createAsyncThunk(
 
       const adapter = new PlanGraphqlAdapter(jwt);
       planState = await adapter.current();
-      console.log(planState);
     }
 
     const playground = PlaygroundReduxAdapter.playgroundFromState(
