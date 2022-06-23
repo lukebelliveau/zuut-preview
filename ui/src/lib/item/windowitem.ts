@@ -1,6 +1,7 @@
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
 import { Item } from '../item';
+import { Layer } from '../layer';
 import { isDuctItem } from './ductItem';
 import {
   CollisionState,
@@ -16,6 +17,7 @@ export function isWindowItem(item: Item): item is WindowItem {
 }
 export default class WindowItem extends WallItem {
   type: string = WINDOW_ITEM_TYPE;
+  layer = Layer.CEILING;
 
   copy(): WindowItem {
     return new WindowItem(

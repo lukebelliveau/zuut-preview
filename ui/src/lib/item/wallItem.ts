@@ -27,7 +27,6 @@ export function isWallItem(item: Item): item is WallItem {
 
 export default class WallItem extends PlaceableItem implements IPlaceableItem {
   type: string = WALL_ITEM_TYPE;
-  layer = Layer.BOTH;
 
   copy(): WallItem {
     return new WallItem(

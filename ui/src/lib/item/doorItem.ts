@@ -3,6 +3,7 @@ import { feetToMm } from '../conversions';
 import { Item } from '../item';
 import WallItem from './wallItem';
 import DoorImage from '../../images/items/door.svg';
+import { Layer } from '../layer';
 
 export const DOOR_ITEM_TYPE = 'DoorItem';
 
@@ -11,6 +12,7 @@ export function isDoorItem(item: Item): item is DoorItem {
 }
 export default class DoorItem extends WallItem {
   type: string = DOOR_ITEM_TYPE;
+  layer = Layer.BOTH;
 
   get image() {
     return DoorImage;
