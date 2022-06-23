@@ -10,7 +10,6 @@ import {
   CollisionState,
   IPlaceableItem,
   isPlaceableItem,
-  PlacementShadow,
 } from '../../lib/item/placeableItem';
 import { useBuildItemList, useBuildPlayground } from '../../app/builderHooks';
 import { Fragment, MutableRefObject, useEffect, useRef } from 'react';
@@ -207,7 +206,12 @@ const Item = ({
         ref={itemRef}
         width={item.width}
         height={item.length}
-        stroke={getCollisionColor(item.collisionState)}
+        // stroke={getCollisionColor(item.collisionState)}
+        stroke={
+          item.collisionState === CollisionState.NEUTRAL
+            ? undefined
+            : getCollisionColor(item.collisionState)
+        }
         strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
         strokeScaleEnabled={false}
         offset={item.offset}
