@@ -98,10 +98,10 @@ import { feetToMm, mmToFeet } from '../../lib/conversions';
 //                 parseInt(length) !== plan.room.length
 //               )
 //             }
-//             aria-label="update properties"
+//             aria-label="update dimensions"
 //             tabIndex={-1}
 //           >
-//             Update Properties
+//             Update Dimensions
 //           </button>
 //         </div>
 //       </form>
@@ -197,10 +197,10 @@ const Properties = () => {
                 parseInt(length) !== plan.room.length
               )
             }
-            aria-label="update properties"
+            aria-label="update dimensions"
             tabIndex={-1}
           >
-            Update Properties
+            Update Dimensions
           </button>
         </div>
       </form>

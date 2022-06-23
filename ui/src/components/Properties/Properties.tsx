@@ -103,9 +103,9 @@ const Properties = () => {
                 parseInt(length) !== plan.room.length
               )
             }
-            aria-label="update properties"
+            aria-label="update dimensions"
           >
-            Update Properties
+            Update Dimensions
           </button>
         </div>
       </form>
