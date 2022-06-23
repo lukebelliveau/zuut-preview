@@ -373,7 +373,6 @@ const ItemsLibrary: IItemGroup[] = [
   {
     itemGroup: 'misc',
     items: [
-      new MiscItem('Misc'),
       new MiscItem('Seedling Trays'),
       new MiscItem('Seedling Heating Map'),
       new MiscItem('Magnifier'),
@@ -417,6 +416,7 @@ const ItemsLibrary: IItemGroup[] = [
       new MiscItem('Spray Handle'),
       new MiscItem('Air pump'),
       new MiscItem('Air stone'),
+      new MiscItem('Starter Plugs'),
     ],
   },
 ];
