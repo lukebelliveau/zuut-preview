@@ -19,7 +19,12 @@ import { ItemState } from '../features/items/itemState';
 import { CurriedGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 
 // export const isDemoMode = () => window.location.href.includes('demo');
-export const isDemoMode = () => true;
+// export const isDemoMode = () => true;
+export const isDemoMode = () => {
+  if (process.env.NODE_ENV === 'production') return true;
+
+  return window.location.href.includes('demo');
+};
 export const ZUUT_DEMO_STATE = 'zuut-state';
 
 export const browserHistory = createBrowserHistory<unknown>();
