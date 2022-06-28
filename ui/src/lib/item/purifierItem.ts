@@ -7,6 +7,7 @@ import PlaceableItem, {
 import { v4 } from 'uuid';
 import { Item } from '../item';
 import PurifierImage from '../../images/items/purifier.png';
+import GrowspaceItem from './growspaceItem';
 
 export const PURIFIER_ITEM_TYPE = 'PurifierItemType';
 
@@ -15,7 +16,7 @@ export function isPurifierItem(item: Item): item is PurifierItem {
 }
 
 export default class PurifierItem
-  extends PlaceableItem
+  extends GrowspaceItem
   implements IPlaceableItem
 {
   type = PURIFIER_ITEM_TYPE;

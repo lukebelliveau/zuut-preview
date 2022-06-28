@@ -7,6 +7,7 @@ import PlaceableItem, {
 import { v4 } from 'uuid';
 import { Item } from '../item';
 import HumidifierImage from '../../images/items/humidifier.png';
+import GrowspaceItem from './growspaceItem';
 
 export const HUMIDIFIER_ITEM_TYPE = 'HumidifierItemType';
 
@@ -15,7 +16,7 @@ export function isHumidifierItem(item: Item): item is HumidifierItem {
 }
 
 export default class HumidifierItem
-  extends PlaceableItem
+  extends GrowspaceItem
   implements IPlaceableItem
 {
   type = HUMIDIFIER_ITEM_TYPE;

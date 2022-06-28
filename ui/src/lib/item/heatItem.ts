@@ -7,6 +7,7 @@ import PlaceableItem, {
 import { v4 } from 'uuid';
 import { Item } from '../item';
 import HeatImage from '../../images/items/heat.png';
+import GrowspaceItem from './growspaceItem';
 
 export const HEAT_ITEM_TYPE = 'HeatItemType';
 
@@ -14,7 +15,7 @@ export function isHeatItem(item: Item): item is HeatItem {
   return (item as HeatItem).type === HEAT_ITEM_TYPE;
 }
 
-export default class HeatItem extends PlaceableItem implements IPlaceableItem {
+export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
   type = HEAT_ITEM_TYPE;
   constructor(
     name: string,
