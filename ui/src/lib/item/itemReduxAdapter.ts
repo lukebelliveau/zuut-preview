@@ -26,6 +26,7 @@ import HumidifierItem, { HUMIDIFIER_ITEM_TYPE } from './humidifierItem';
 import DehumidifierItem, { DEHUMIDIFIER_ITEM_TYPE } from './dehumidifierItem';
 import HeatItem, { HEAT_ITEM_TYPE } from './heatItem';
 import PurifierItem, { PURIFIER_ITEM_TYPE } from './purifierItem';
+import CurvedDuctItem, { CURVED_DUCT_ITEM_TYPE } from './curvedDuctItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
@@ -343,6 +344,21 @@ export default class ItemReduxAdapter {
         );
       case DUCT_ITEM_TYPE:
         return new DuctItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case CURVED_DUCT_ITEM_TYPE:
+        return new CurvedDuctItem(
           itemState.name,
           itemState.id,
           itemState.x,

@@ -4,8 +4,6 @@ import PotItem from './item/potItem';
 import { feetToMm_REQUIRE_3_INCHES } from './conversions';
 import LightItem from './item/lightItem';
 import DuctItem from './item/ductItem';
-import CeilingGrowspaceItem from './item/ceilingGrowspaceItem';
-import GrowspaceItem from './item/growspaceItem';
 import CarbonFilterItem from './item/carbonFilterItem';
 import WaterItem from './item/waterItem';
 import ExhaustFanItem from './item/exhaustFanItem';
@@ -16,6 +14,7 @@ import HeatItem from './item/heatItem';
 import PurifierItem from './item/purifierItem';
 import HumidifierItem from './item/humidifierItem';
 import DehumidifierItem from './item/dehumidifierItem';
+import CurvedDuctItem from './item/curvedDuctItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -286,6 +285,16 @@ const ItemsLibrary: IItemGroup[] = [
         undefined,
         undefined,
         feetToMm_REQUIRE_3_INCHES(1),
+        feetToMm_REQUIRE_3_INCHES(0.75),
+        feetToMm_REQUIRE_3_INCHES(0.75),
+        'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
+      ),
+      new CurvedDuctItem(
+        'Curved Ducting',
+        undefined,
+        undefined,
+        undefined,
+        feetToMm_REQUIRE_3_INCHES(0.75),
         feetToMm_REQUIRE_3_INCHES(0.75),
         feetToMm_REQUIRE_3_INCHES(0.75),
         'An exhaust system often uses ducting to move hot and humid air out of the grow space.'

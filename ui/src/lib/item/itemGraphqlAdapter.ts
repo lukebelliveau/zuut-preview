@@ -13,6 +13,7 @@ import CeilingGrowspaceItem, {
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 import { isPlaceableItem, Modifiers } from './placeableItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
+import CurvedDuctItem, { CURVED_DUCT_ITEM_TYPE } from './curvedDuctItem';
 import WindowItem, { WINDOW_ITEM_TYPE } from './windowitem';
 import ModifierItem, { MODIFIER_ITEM_TYPE } from './modifierItem';
 import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
@@ -121,6 +122,8 @@ export default class ItemGraphqlAdapter {
         return new DoorItem(...itemAttrs);
       case DUCT_ITEM_TYPE:
         return new DuctItem(...itemAttrs);
+      case CURVED_DUCT_ITEM_TYPE:
+        return new CurvedDuctItem(...itemAttrs);
       default:
         throw new Error(`Unknown item type: ${gqlItem.type}`);
     }
