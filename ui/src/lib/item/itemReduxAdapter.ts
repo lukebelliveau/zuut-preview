@@ -22,6 +22,10 @@ import OscillatingFanItem, {
   OSCILLATING_FAN_ITEM_TYPE,
 } from './oscillatingFanItem';
 import FloorACItem, { FLOOR_AC_ITEM_TYPE } from './floorACItem';
+import HumidifierItem, { HUMIDIFIER_ITEM_TYPE } from './humidifierItem';
+import DehumidifierItem, { DEHUMIDIFIER_ITEM_TYPE } from './dehumidifierItem';
+import HeatItem, { HEAT_ITEM_TYPE } from './heatItem';
+import PurifierItem, { PURIFIER_ITEM_TYPE } from './purifierItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
@@ -264,6 +268,66 @@ export default class ItemReduxAdapter {
         );
       case WATER_ITEM_TYPE:
         return new WaterItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case HUMIDIFIER_ITEM_TYPE:
+        return new HumidifierItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case DEHUMIDIFIER_ITEM_TYPE:
+        return new DehumidifierItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case HEAT_ITEM_TYPE:
+        return new HeatItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case PURIFIER_ITEM_TYPE:
+        return new PurifierItem(
           itemState.name,
           itemState.id,
           itemState.x,

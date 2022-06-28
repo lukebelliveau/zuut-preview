@@ -71,8 +71,6 @@ export const useLoadDemoPlan = () => {
       //   console.log(plan);
       // }
       if (playground !== undefined && plan !== undefined) {
-        console.log('ITEMS');
-        console.log(JSON.stringify(items));
         // load plan
         dispatch(createPlan(plan));
         // set playground planId to that plan
@@ -84,9 +82,9 @@ export const useLoadDemoPlan = () => {
 
         return;
       } else {
-        console.log('ELSE');
-        console.log(playground);
-        console.log(plan);
+        // console.log('ELSE');
+        // console.log(playground);
+        // console.log(plan);
       }
     } catch (e) {
       console.error('ERROR building demo playground: ' + e);

@@ -23,6 +23,10 @@ import OscillatingFanItem, {
   OSCILLATING_FAN_ITEM_TYPE,
 } from './oscillatingFanItem';
 import FloorACItem, { FLOOR_AC_ITEM_TYPE } from './floorACItem';
+import HumidifierItem, { HUMIDIFIER_ITEM_TYPE } from './humidifierItem';
+import DehumidifierItem, { DEHUMIDIFIER_ITEM_TYPE } from './dehumidifierItem';
+import HeatItem, { HEAT_ITEM_TYPE } from './heatItem';
+import PurifierItem, { PURIFIER_ITEM_TYPE } from './purifierItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -93,6 +97,14 @@ export default class ItemGraphqlAdapter {
         return new FloorACItem(...itemAttrs);
       case WATER_ITEM_TYPE:
         return new WaterItem(...itemAttrs);
+      case HUMIDIFIER_ITEM_TYPE:
+        return new HumidifierItem(...itemAttrs);
+      case DEHUMIDIFIER_ITEM_TYPE:
+        return new DehumidifierItem(...itemAttrs);
+      case HEAT_ITEM_TYPE:
+        return new HeatItem(...itemAttrs);
+      case PURIFIER_ITEM_TYPE:
+        return new PurifierItem(...itemAttrs);
       case MISC_ITEM_TYPE:
         return new MiscItem(gqlItem.name, gqlItem.id);
       case MODIFIER_ITEM_TYPE:

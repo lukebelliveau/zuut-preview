@@ -12,6 +12,10 @@ import ExhaustFanItem from './item/exhaustFanItem';
 import MiscItem from './item/miscItem';
 import OscillatingFanItem from './item/oscillatingFanItem';
 import FloorACItem from './item/floorACItem';
+import HeatItem from './item/heatItem';
+import PurifierItem from './item/purifierItem';
+import HumidifierItem from './item/humidifierItem';
+import DehumidifierItem from './item/dehumidifierItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -306,7 +310,7 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(2.75),
         'Cannabis does not like temperatures above 85 degrees. Lowers temperature, lowers humidity'
       ),
-      new GrowspaceItem(
+      new HeatItem(
         'Heat',
         undefined,
         undefined,
@@ -316,7 +320,7 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(2.75),
         'Cannabis does not like temperatures below 50 degrees. Raises temperature, lowers humidity'
       ),
-      new GrowspaceItem(
+      new PurifierItem(
         'Purifier',
         undefined,
         undefined,
@@ -326,7 +330,7 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(1.5),
         'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.'
       ),
-      new GrowspaceItem(
+      new HumidifierItem(
         'Humidifier',
         undefined,
         undefined,
@@ -336,7 +340,7 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(1.25),
         'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.'
       ),
-      new GrowspaceItem(
+      new DehumidifierItem(
         'Dehumidifier',
         undefined,
         undefined,
