@@ -18,6 +18,10 @@ import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
 import WaterItem, { WATER_ITEM_TYPE } from './waterItem';
 import ExhaustFanItem, { EXHAUST_FAN_ITEM_TYPE } from './exhaustFanItem';
+import OscillatingFanItem, {
+  OSCILLATING_FAN_ITEM_TYPE,
+} from './oscillatingFanItem';
+import FloorACItem, { FLOOR_AC_ITEM_TYPE } from './floorACItem';
 
 export default class ItemReduxAdapter {
   public static itemStatesToItemList(itemStates: ItemState[]): IItem[] {
@@ -200,6 +204,36 @@ export default class ItemReduxAdapter {
         );
       case EXHAUST_FAN_ITEM_TYPE:
         return new ExhaustFanItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case OSCILLATING_FAN_ITEM_TYPE:
+        return new OscillatingFanItem(
+          itemState.name,
+          itemState.id,
+          itemState.x,
+          itemState.y,
+          itemState.width,
+          itemState.length,
+          itemState.height,
+          itemState.description,
+          itemState.rotation,
+          itemState.modifiers,
+          itemState.collisionState,
+          itemState.placementShadow
+        );
+      case FLOOR_AC_ITEM_TYPE:
+        return new FloorACItem(
           itemState.name,
           itemState.id,
           itemState.x,

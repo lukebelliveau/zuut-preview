@@ -5,7 +5,7 @@ import {
   Modifiers,
   PlacementShadow,
 } from './placeableItem';
-import ExhaustFanImage from '../../images/items/exhaustFan/exhaustFan.svg';
+import ExhaustFanImage from '../../images/items/exhaust_fan.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
 

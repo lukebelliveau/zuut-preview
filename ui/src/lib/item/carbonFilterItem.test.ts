@@ -1,4 +1,4 @@
-import CarbonFilterImage from '../../images/items/carbonFilter/carbonFilter.svg';
+import CarbonFilterImage from '../../images/items/carbon_filter.png';
 import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 
 describe('LightItem', () => {

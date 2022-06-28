@@ -1,27 +1,24 @@
-import CeilingGrowspaceItem from './ceilingGrowspaceItem';
-import {
+import PlaceableItem, {
   CollisionState,
   IPlaceableItem,
   Modifiers,
   PlacementShadow,
 } from './placeableItem';
-import LightImage from '../../images/items/led_light.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
+import FloorACImage from '../../images/items/floor_ac.png';
 
-export const LIGHT_ITEM_TYPE = 'LightItem';
+export const FLOOR_AC_ITEM_TYPE = 'FloorACItemType';
 
-export function isLightItem(item: Item): item is LightItem {
-  return (item as LightItem).type === LIGHT_ITEM_TYPE;
+export function isFloorACItem(item: Item): item is FloorACItem {
+  return (item as FloorACItem).type === FLOOR_AC_ITEM_TYPE;
 }
 
-const defaultLightModifiers = { 'Rope Ratchets': [] };
-
-export default class LightItem
-  extends CeilingGrowspaceItem
+export default class FloorACItem
+  extends PlaceableItem
   implements IPlaceableItem
 {
-  type = LIGHT_ITEM_TYPE;
+  type = FLOOR_AC_ITEM_TYPE;
   constructor(
     name: string,
     id: string = v4(),
@@ -32,7 +29,7 @@ export default class LightItem
     height: number = 915,
     description: string = '',
     rotation: number = 0,
-    modifiers: Modifiers = defaultLightModifiers,
+    modifiers: Modifiers = {},
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
@@ -50,11 +47,11 @@ export default class LightItem
   }
 
   get image() {
-    return LightImage;
+    return FloorACImage;
   }
 
-  copy(): LightItem {
-    return new LightItem(
+  copy(): FloorACItem {
+    return new FloorACItem(
       this.name,
       v4(),
       this.x,

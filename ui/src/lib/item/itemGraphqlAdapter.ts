@@ -19,6 +19,10 @@ import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
 import WaterItem, { WATER_ITEM_TYPE } from './waterItem';
 import ExhaustFanItem, { EXHAUST_FAN_ITEM_TYPE } from './exhaustFanItem';
+import OscillatingFanItem, {
+  OSCILLATING_FAN_ITEM_TYPE,
+} from './oscillatingFanItem';
+import FloorACItem, { FLOOR_AC_ITEM_TYPE } from './floorACItem';
 
 export default class ItemGraphqlAdapter {
   public static itemToGraphql(item: IItem): GraphqlItem {
@@ -83,6 +87,10 @@ export default class ItemGraphqlAdapter {
         return new CarbonFilterItem(...itemAttrs);
       case EXHAUST_FAN_ITEM_TYPE:
         return new ExhaustFanItem(...itemAttrs);
+      case OSCILLATING_FAN_ITEM_TYPE:
+        return new OscillatingFanItem(...itemAttrs);
+      case FLOOR_AC_ITEM_TYPE:
+        return new FloorACItem(...itemAttrs);
       case WATER_ITEM_TYPE:
         return new WaterItem(...itemAttrs);
       case MISC_ITEM_TYPE:

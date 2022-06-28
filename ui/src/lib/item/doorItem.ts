@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
 import { Item } from '../item';
 import WallItem from './wallItem';
-import DoorImage from '../../images/items/door.svg';
+import DoorImage from '../../images/items/door.png';
 import { Layer } from '../layer';
 
 export const DOOR_ITEM_TYPE = 'DoorItem';

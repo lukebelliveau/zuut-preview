@@ -10,6 +10,8 @@ import CarbonFilterItem from './item/carbonFilterItem';
 import WaterItem from './item/waterItem';
 import ExhaustFanItem from './item/exhaustFanItem';
 import MiscItem from './item/miscItem';
+import OscillatingFanItem from './item/oscillatingFanItem';
+import FloorACItem from './item/floorACItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -294,7 +296,7 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(0.75),
         'Connecting a carbon filter to an exhaust fan filters the smells out of the air before it leaves the grow space.'
       ),
-      new GrowspaceItem(
+      new FloorACItem(
         'Floor AC Unit',
         undefined,
         undefined,
@@ -344,7 +346,7 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(1.25),
         'Cannabis does not like humidity higher than 60%. Lowers humidity, raises temperature (slightly)'
       ),
-      new CeilingGrowspaceItem(
+      new OscillatingFanItem(
         'Oscillating fan',
         undefined,
         undefined,

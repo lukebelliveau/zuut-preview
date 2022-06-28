@@ -6,7 +6,7 @@ import {
   Modifiers,
   PlacementShadow,
 } from './placeableItem';
-import PotImage from '../../images/items/pot/pot.svg';
+import PotImage from '../../images/items/pot.png';
 import SoilModImage from '../../images/items/pot/soilMod.svg';
 
 import GrowspaceItem from './growspaceItem';

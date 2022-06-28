@@ -6,6 +6,7 @@ import PlaceableItem, {
 } from './placeableItem';
 import { v4 } from 'uuid';
 import { Item } from '../item';
+import WaterContainerImage from '../../images/items/water_container.png';
 
 export const WATER_ITEM_TYPE = 'WaterItemType';
 
@@ -48,6 +49,10 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
     this.placementShadow = placementShadow;
     this.rotation = rotation;
     this.modifiers = modifiers;
+  }
+
+  get image() {
+    return WaterContainerImage;
   }
 
   copy(): WaterItem {

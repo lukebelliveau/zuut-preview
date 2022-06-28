@@ -1,4 +1,4 @@
-import LightImage from '../../images/items/light.png';
+import LightImage from '../../images/items/led_light.png';
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 
 describe('LightItem', () => {

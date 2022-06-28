@@ -9,6 +9,7 @@ import {
   PlacementShadow,
 } from './placeableItem';
 import WallItem from './wallItem';
+import WindowImage from '../../images/items/window.png';
 
 export const WINDOW_ITEM_TYPE = 'WindowItem';
 
@@ -18,6 +19,10 @@ export function isWindowItem(item: Item): item is WindowItem {
 export default class WindowItem extends WallItem {
   type: string = WINDOW_ITEM_TYPE;
   layer = Layer.CEILING;
+
+  get image() {
+    return WindowImage;
+  }
 
   copy(): WindowItem {
     return new WindowItem(

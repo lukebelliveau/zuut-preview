@@ -5,24 +5,23 @@ import {
   Modifiers,
   PlacementShadow,
 } from './placeableItem';
-import CarbonFilterImage from '../../images/items/carbon_filter.png';
+import OscillatingFanImage from '../../images/items/oscillating_fan.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
-import { feetToMm } from '../conversions';
 
-export const CARBON_FILTER_ITEM_TYPE = 'CarbonFilterItemType';
+export const OSCILLATING_FAN_ITEM_TYPE = 'OscillatingFanItemType';
 
-export function isCarbonFilterItem(item: Item): item is CarbonFilterItem {
-  return (item as CarbonFilterItem).type === CARBON_FILTER_ITEM_TYPE;
+export function isOscillatingFanItem(item: Item): item is OscillatingFanItem {
+  return (item as OscillatingFanItem).type === OSCILLATING_FAN_ITEM_TYPE;
 }
 
-const defaultFilterModifiers = { 'Rope Ratchets': [] };
+const defaultFanModifiers = { 'Rope Ratchets': [] };
 
-export default class CarbonFilterItem
+export default class OscillatingFanItem
   extends CeilingGrowspaceItem
   implements IPlaceableItem
 {
-  type = CARBON_FILTER_ITEM_TYPE;
+  type = OSCILLATING_FAN_ITEM_TYPE;
   constructor(
     name: string,
     id: string = v4(),
@@ -33,7 +32,7 @@ export default class CarbonFilterItem
     height: number = 915,
     description: string = '',
     rotation: number = 0,
-    modifiers: Modifiers = defaultFilterModifiers,
+    modifiers: Modifiers = defaultFanModifiers,
     collisionState: CollisionState = CollisionState.NEUTRAL,
     placementShadow: PlacementShadow | undefined = undefined
   ) {
@@ -54,11 +53,11 @@ export default class CarbonFilterItem
   }
 
   get image() {
-    return CarbonFilterImage;
+    return OscillatingFanImage;
   }
 
-  copy(): CarbonFilterItem {
-    return new CarbonFilterItem(
+  copy(): OscillatingFanItem {
+    return new OscillatingFanItem(
       this.name,
       v4(),
       this.x,

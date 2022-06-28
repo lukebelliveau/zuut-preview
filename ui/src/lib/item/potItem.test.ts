@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import PotImage from '../../images/items/pot.svg';
+import PotImage from '../../images/items/pot.png';
 import PotItem, { POT_ITEM_TYPE } from './potItem';
 
 describe('PotItem', () => {
