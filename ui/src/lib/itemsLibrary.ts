@@ -289,16 +289,16 @@ const ItemsLibrary: IItemGroup[] = [
         feetToMm_REQUIRE_3_INCHES(0.75),
         'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
       ),
-      new CurvedDuctItem(
-        'Curved Ducting',
-        undefined,
-        undefined,
-        undefined,
-        feetToMm_REQUIRE_3_INCHES(0.75),
-        feetToMm_REQUIRE_3_INCHES(0.75),
-        feetToMm_REQUIRE_3_INCHES(0.75),
-        'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
-      ),
+      // new CurvedDuctItem(
+      //   'Curved Ducting',
+      //   undefined,
+      //   undefined,
+      //   undefined,
+      //   feetToMm_REQUIRE_3_INCHES(0.75),
+      //   feetToMm_REQUIRE_3_INCHES(0.75),
+      //   feetToMm_REQUIRE_3_INCHES(0.75),
+      //   'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
+      // ),
       new CarbonFilterItem(
         'Carbon Filter',
         undefined,
