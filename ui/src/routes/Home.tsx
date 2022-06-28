@@ -55,20 +55,15 @@ function Home() {
             to choose top rated compatible parts for the cheapest prices, and to
             share your experience with the community.
           </p>
-          {/* <Link
-            className="button go"
-            to={new_playground_path()}
-            onClick={onGetStarted}
-          >
-            Get started
-          </Link> */}
-          {/* <Link
-            className="button go"
-            to={new_playground_path()}
-            onClick={onGetStarted}
-          >
-            Get started
-          </Link> */}
+          {process.env.NODE_ENV === 'production' ? null : (
+            <Link
+              className="button go"
+              to={new_playground_path()}
+              onClick={onGetStarted}
+            >
+              Get started
+            </Link>
+          )}
         </section>
       </div>
     </div>

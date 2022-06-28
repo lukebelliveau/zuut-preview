@@ -207,7 +207,8 @@ const Item = ({
         ref={itemRef}
         width={item.width}
         height={item.length}
-        stroke={getCollisionColor(item.collisionState)}
+        // stroke={getCollisionColor(item.collisionState)}
+        stroke={showStrokeIfCollidingOrSelected(item, selectedItemIds)}
         strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
         strokeScaleEnabled={false}
         offset={item.offset}
@@ -287,6 +288,16 @@ const getCollisionColor = (collisionState: CollisionState) => {
     case CollisionState.CONNECTED:
       return 'green';
   }
+};
+
+const showStrokeIfCollidingOrSelected = (
+  item: IPlaceableItem,
+  selectedItemIds: string[]
+) => {
+  return item.collisionState !== CollisionState.NEUTRAL ||
+    selectedItemIds?.includes(item.id)
+    ? getCollisionColor(item.collisionState)
+    : undefined;
 };
 
 const Shadow = ({ item }: { item?: IPlaceableItem }) => {
