@@ -335,8 +335,8 @@ const ItemsLibrary: IItemGroup[] = [
         undefined,
         undefined,
         undefined,
-        feetToMm_REQUIRE_3_INCHES(1),
         feetToMm_REQUIRE_3_INCHES(0.75),
+        feetToMm_REQUIRE_3_INCHES(1),
         feetToMm_REQUIRE_3_INCHES(1.25),
         'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.'
       ),
@@ -345,8 +345,8 @@ const ItemsLibrary: IItemGroup[] = [
         undefined,
         undefined,
         undefined,
-        feetToMm_REQUIRE_3_INCHES(1),
         feetToMm_REQUIRE_3_INCHES(0.75),
+        feetToMm_REQUIRE_3_INCHES(1),
         feetToMm_REQUIRE_3_INCHES(1.25),
         'Cannabis does not like humidity higher than 60%. Lowers humidity, raises temperature (slightly)'
       ),
