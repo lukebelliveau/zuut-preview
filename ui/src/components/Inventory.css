@@ -22,6 +22,10 @@
   margin: 0.1rem;
 }
 
+.shopping-cart-button {
+  background-color: var(--green-1);
+}
+
 #inventory-header button {
   font-size: 0.75rem;
   cursor: pointer;

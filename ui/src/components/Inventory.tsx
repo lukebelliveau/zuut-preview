@@ -99,7 +99,11 @@ export default function Inventory() {
           <h2>Inventory</h2>
           <div className="buttons">
             <a href="/cart" target="_blank" rel="noopener noreferrer">
-              <button tabIndex={0} aria-label="Open Shopping Cart">
+              <button
+                tabIndex={0}
+                aria-label="Open Shopping Cart"
+                className="shopping-cart-button"
+              >
                 Open Shopping Cart
               </button>
             </a>
