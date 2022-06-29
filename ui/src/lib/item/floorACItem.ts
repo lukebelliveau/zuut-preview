@@ -7,6 +7,7 @@ import PlaceableItem, {
 import { v4 } from 'uuid';
 import { Item } from '../item';
 import FloorACImage from '../../images/items/floor_ac.png';
+import GrowspaceItem from './growspaceItem';
 
 export const FLOOR_AC_ITEM_TYPE = 'FloorACItemType';
 
@@ -15,7 +16,7 @@ export function isFloorACItem(item: Item): item is FloorACItem {
 }
 
 export default class FloorACItem
-  extends PlaceableItem
+  extends GrowspaceItem
   implements IPlaceableItem
 {
   type = FLOOR_AC_ITEM_TYPE;
