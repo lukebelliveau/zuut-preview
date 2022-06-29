@@ -26,6 +26,7 @@ import {
 import { removeAllItems } from './features/items/itemsSlice';
 import { createDemoPlan } from './features/playgrounds/playgroundSlice';
 import { useEffect } from 'react';
+import ShoppingCart, { shopping_cart_path } from './routes/ShoppingCart';
 
 export const new_demo_path = () => '/newdemo';
 const NewDemoPlayground = () => {
@@ -66,6 +67,9 @@ function App() {
           </Route>
           <Route path={demo_playground_path()}>
             <ShowPlayground />
+          </Route>
+          <Route path={shopping_cart_path()}>
+            <ShoppingCart />
           </Route>
           <Route path="/workplace">
             <RequireAuth>

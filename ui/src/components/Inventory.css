@@ -12,6 +12,16 @@
   border-bottom: 1px solid var(--black);
   width: 75%;
 }
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons button {
+  margin: 0.1rem;
+}
+
 #inventory-header button {
   font-size: 0.75rem;
   cursor: pointer;
