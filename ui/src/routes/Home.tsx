@@ -13,6 +13,7 @@ import {
 } from './playgrounds/ShowPlayground';
 import { getStarted } from '../features/playgrounds/playgroundSlice';
 import { useDispatch } from 'react-redux';
+import MobileWarningModal from '../components/MobileWarningModal';
 
 export const homePath = () => '/';
 
@@ -66,6 +67,7 @@ function Home() {
           )}
         </section>
       </div>
+      <MobileWarningModal />
     </div>
   );
 }

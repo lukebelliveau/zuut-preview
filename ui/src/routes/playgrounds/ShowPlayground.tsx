@@ -43,6 +43,7 @@ import { setVisibleLayer } from '../../features/interactions/interactionsSlice';
 import { useAuth0 } from '@auth0/auth0-react';
 import { isDemoMode } from '../../app/store';
 import { feetToMm } from '../../lib/conversions';
+import MobileWarningModal from '../../components/MobileWarningModal';
 
 export const playground_path = () => '/playgrounds/current';
 export const demo_playground_path = () => '/playgrounds/demo';
@@ -183,6 +184,7 @@ export default function ShowPlayground() {
             </Stage>
           </div>
         </Layout>
+        <MobileWarningModal />
       </div>
     </Fragment>
   );
