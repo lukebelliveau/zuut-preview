@@ -24,11 +24,43 @@ import {
   unselectAll,
 } from '../features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from '../app/interactionHandlers';
-import { Item } from '../lib/item';
+import { IItem, Item } from '../lib/item';
 import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
 import ControlPanel from './ControlPanel/ControlPanel';
 import { isWallItem } from '../lib/item/wallItem';
+
+interface ShoppingCartItem {
+  quantity: number;
+  ASIN: string | null;
+}
+
+const createShoppingCartUrl = (items: IItem[]) => {
+  let shoppingCartItems: { [itemName: string]: ShoppingCartItem } = {};
+
+  items.forEach((item) => {
+    if (shoppingCartItems[item.name]) {
+      shoppingCartItems[item.name].quantity += 1;
+    } else {
+      shoppingCartItems[item.name] = {
+        quantity: 1,
+        ASIN: item.ASIN,
+      };
+    }
+  });
+
+  let addToCartQuery = '';
+  let uniqueItemCount = 0;
+
+  Object.values(shoppingCartItems).forEach((item) => {
+    if (item.ASIN !== null) {
+      uniqueItemCount++;
+      addToCartQuery += `ASIN.${uniqueItemCount}=${item.ASIN}&Quantity.${uniqueItemCount}=${item.quantity}&`;
+    }
+  });
+
+  return `https://www.amazon.com/gp/aws/cart/add.html?${addToCartQuery}`;
+};
 
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
@@ -92,13 +124,24 @@ export default function Inventory() {
     };
   }
 
+  const shoppingCartUrl = createShoppingCartUrl(items);
+
   return (
     <div id="inventory-sidebar">
       <section ref={drop} id="inventory-list" className={className}>
         <div id="inventory-header">
           <h2>Inventory</h2>
           <div className="buttons">
-            <a href="/cart" target="_blank" rel="noopener noreferrer">
+            {/* <a href="/cart" target="_blank" rel="noopener noreferrer">
+              <button
+                tabIndex={0}
+                aria-label="Open Shopping Cart"
+                className="shopping-cart-button"
+              >
+                Open Shopping Cart
+              </button>
+            </a> */}
+            <a href={shoppingCartUrl} target="_blank" rel="noopener noreferrer">
               <button
                 tabIndex={0}
                 aria-label="Open Shopping Cart"

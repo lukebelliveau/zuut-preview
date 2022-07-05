@@ -22,6 +22,7 @@ export type AdditionalEntityFields = {
 
 export type Item = {
   __typename?: 'Item';
+  ASIN?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
@@ -36,6 +37,7 @@ export type Item = {
 };
 
 export type ItemInput = {
+  ASIN?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];
@@ -248,6 +250,7 @@ export type MapDirectiveArgs = {
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type ItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = {
+  ASIN?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   height?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;

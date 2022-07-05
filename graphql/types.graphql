@@ -17,6 +17,7 @@ type Item {
   description: String
   rotation: Float
   modifiers: Modifiers
+  ASIN: String
 }
 
 type Plan {
@@ -47,6 +48,7 @@ input ItemInput {
   description: String
   rotation: Float
   modifiers: Modifiers
+  ASIN: String
 }
 
 input PlanInput {

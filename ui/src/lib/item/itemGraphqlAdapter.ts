@@ -44,12 +44,14 @@ export default class ItemGraphqlAdapter {
         rotation: item.rotation,
         modifiers: item.modifiers,
         description: item.description,
+        ASIN: item.ASIN,
       };
     } else {
       return {
         id: item.id,
         type: item.type,
         name: item.name,
+        ASIN: item.ASIN,
       };
     }
   }

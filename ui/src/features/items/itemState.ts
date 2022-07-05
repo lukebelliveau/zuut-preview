@@ -18,4 +18,5 @@ export type ItemState = {
   placementShadow?: PlacementShadow;
   rotation?: number;
   modifiers?: Modifiers;
+  ASIN: string | null;
 };

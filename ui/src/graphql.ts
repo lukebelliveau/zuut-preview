@@ -16,6 +16,7 @@ export type Scalars = {
 
 export type Item = {
   __typename?: 'Item';
+  ASIN?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
@@ -30,6 +31,7 @@ export type Item = {
 };
 
 export type ItemInput = {
+  ASIN?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];

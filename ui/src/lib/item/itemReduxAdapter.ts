@@ -44,6 +44,7 @@ export default class ItemReduxAdapter {
       type: item.type,
       name: item.name,
       collisionState: CollisionState.NEUTRAL,
+      ASIN: item.ASIN,
     };
 
     if (isPlaceableItem(item)) {
@@ -59,6 +60,7 @@ export default class ItemReduxAdapter {
         rotation: item.rotation,
         modifiers: item.modifiers,
         description: item.description,
+        ASIN: item.ASIN,
       };
     } else {
       return baseItemState;
@@ -98,7 +100,7 @@ export default class ItemReduxAdapter {
           itemState.placementShadow
         );
       case MISC_ITEM_TYPE:
-        return new MiscItem(itemState.name, itemState.id);
+        return new MiscItem(itemState.name, itemState.id, itemState.ASIN);
       case MODIFIER_ITEM_TYPE:
         return new ModifierItem(itemState.name, itemState.id);
       case ROOM_ITEM_TYPE:
