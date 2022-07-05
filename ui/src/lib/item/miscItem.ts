@@ -1,7 +1,6 @@
 import { v4 } from 'uuid';
-import { AmazonProduct } from '../../graphql';
 
-import { Item, IItem, ItemArgs } from '../item';
+import { Item, IItem, ItemArgs, AmazonProduct } from '../item';
 
 export const MISC_ITEM_TYPE = 'MiscItem';
 
@@ -25,8 +24,6 @@ export default class MiscItem implements IItem {
       },
     ],
   }: ItemArgs) {
-    console.log('CONSTRUCTOR');
-    console.log(amazonProducts);
     this.id = id;
     this.name = name;
     this.amazonProducts = amazonProducts;

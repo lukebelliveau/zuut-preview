@@ -42,7 +42,6 @@ const createShoppingCartUrl = (items: IItem[]) => {
     if (shoppingCartItems[item.name]) {
       shoppingCartItems[item.name].quantity += 1;
     } else {
-      console.log(item);
       shoppingCartItems[item.name] = {
         quantity: 1,
         ASIN:
@@ -55,8 +54,6 @@ const createShoppingCartUrl = (items: IItem[]) => {
 
   let addToCartQuery = '';
   let uniqueItemCount = 0;
-
-  console.log(shoppingCartItems);
 
   Object.values(shoppingCartItems).forEach((item) => {
     if (item.ASIN !== undefined) {

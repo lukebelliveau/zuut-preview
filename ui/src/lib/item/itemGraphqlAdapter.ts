@@ -44,6 +44,7 @@ export default class ItemGraphqlAdapter {
         rotation: item.rotation,
         modifiers: item.modifiers,
         description: item.description,
+        amazonProducts: item.amazonProducts,
       };
     } else {
       return {

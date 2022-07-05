@@ -5,10 +5,7 @@ type Room {
 
 scalar Modifiers
 
-type AmazonProduct {
-  ASIN: String!
-  name: String!
-}
+scalar AmazonProducts
 
 type Item {
   id: ID!
@@ -22,6 +19,7 @@ type Item {
   description: String
   rotation: Float
   modifiers: Modifiers
+  amazonProducts: AmazonProducts
 }
 
 type Plan {
@@ -52,6 +50,7 @@ input ItemInput {
   description: String
   rotation: Float
   modifiers: Modifiers
+  amazonProducts: AmazonProducts
 }
 
 input PlanInput {

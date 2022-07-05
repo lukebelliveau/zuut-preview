@@ -1,4 +1,3 @@
-import { AmazonProduct } from '../../graphql';
 import {
   CollisionState,
   Modifiers,

@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  AmazonProducts: any;
   Modifiers: any;
 };
 
@@ -20,15 +21,9 @@ export type AdditionalEntityFields = {
   type?: InputMaybe<Scalars['String']>;
 };
 
-export type AmazonProduct = {
-  __typename?: 'AmazonProduct';
-  ASIN: Scalars['String'];
-  name: Scalars['String'];
-};
-
 export type Item = {
   __typename?: 'Item';
-  amazonProducts?: Maybe<Array<Maybe<AmazonProduct>>>;
+  amazonProducts?: Maybe<Scalars['AmazonProducts']>;
   description?: Maybe<Scalars['String']>;
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
@@ -43,7 +38,7 @@ export type Item = {
 };
 
 export type ItemInput = {
-  amazonProducts?: InputMaybe<Array<InputMaybe<AmazonProduct>>>;
+  amazonProducts?: InputMaybe<Scalars['AmazonProducts']>;
   description?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];
@@ -176,7 +171,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: ResolverTypeWrapper<Scalars['String']>;
-  AmazonProduct: ResolverTypeWrapper<AmazonProduct>;
+  AmazonProducts: ResolverTypeWrapper<Scalars['AmazonProducts']>;
   Item: ResolverTypeWrapper<Item>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
@@ -195,7 +190,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AdditionalEntityFields: AdditionalEntityFields;
   String: Scalars['String'];
-  AmazonProduct: AmazonProduct;
+  AmazonProducts: Scalars['AmazonProducts'];
   Item: Item;
   Float: Scalars['Float'];
   ID: Scalars['ID'];
@@ -257,14 +252,12 @@ export type MapDirectiveArgs = {
 
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type AmazonProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['AmazonProduct'] = ResolversParentTypes['AmazonProduct']> = {
-  ASIN?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+export interface AmazonProductsScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['AmazonProducts'], any> {
+  name: 'AmazonProducts';
+}
 
 export type ItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = {
-  amazonProducts?: Resolver<Maybe<Array<Maybe<ResolversTypes['AmazonProduct']>>>, ParentType, ContextType>;
+  amazonProducts?: Resolver<Maybe<ResolversTypes['AmazonProducts']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   height?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -308,7 +301,7 @@ export type RoomResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type Resolvers<ContextType = any> = {
-  AmazonProduct?: AmazonProductResolvers<ContextType>;
+  AmazonProducts?: GraphQLScalarType;
   Item?: ItemResolvers<ContextType>;
   Modifiers?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;

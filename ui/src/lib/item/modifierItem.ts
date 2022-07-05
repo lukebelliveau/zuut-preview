@@ -1,6 +1,5 @@
 import { v4 } from 'uuid';
-import { AmazonProduct } from '../../graphql';
-import { Item, ItemArgs } from '../item';
+import { AmazonProduct, Item, ItemArgs } from '../item';
 
 export const MODIFIER_ITEM_TYPE = 'ModifierItem';
 
