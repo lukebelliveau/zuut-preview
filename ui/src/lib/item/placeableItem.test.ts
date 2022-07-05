@@ -16,8 +16,15 @@ describe('PlaceableItem', () => {
   describe('addModifier', () => {
     it('throws an error if given an invalid modifier type', () => {
       expect(() => {
-        const soilItem = new ModifierItem({ name: 'soil' });
-        const placeableItem = new PlaceableItem({ name: 'item', id: v4() });
+        const soilItem = new ModifierItem({
+          name: 'soil',
+          amazonProducts: undefined,
+        });
+        const placeableItem = new PlaceableItem({
+          name: 'item',
+          id: v4(),
+          amazonProducts: undefined,
+        });
 
         placeableItem.addModifier(soilItem);
       }).toThrow();

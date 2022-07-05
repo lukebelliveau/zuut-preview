@@ -70,6 +70,7 @@ export default class OscillatingFanItem
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 }

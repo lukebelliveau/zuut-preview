@@ -1,3 +1,4 @@
+import { AmazonProduct } from '../../lib/item';
 import {
   CollisionState,
   Modifiers,
@@ -18,4 +19,5 @@ export type ItemState = {
   placementShadow?: PlacementShadow;
   rotation?: number;
   modifiers?: Modifiers;
+  amazonProducts: AmazonProduct[] | undefined;
 };

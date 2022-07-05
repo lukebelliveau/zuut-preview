@@ -13,7 +13,7 @@ import {
 } from '../geometry/geometry';
 import Playground from '../playground';
 import { Point } from '../point';
-import { IItem, Item, ItemArgs } from '../item';
+import { AmazonProduct, IItem, Item, ItemArgs } from '../item';
 import ModifierItem from './modifierItem';
 import { Layer } from '../layer';
 import { LayerState } from '../../features/interactions/interactionsState';
@@ -57,6 +57,7 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   modifierImages: string[];
   removeAllModifiers(): void;
   description: string;
+  amazonProducts?: AmazonProduct[] | undefined;
 }
 
 export function isPlaceableItem(item: Item): item is PlaceableItem {
@@ -108,6 +109,8 @@ export default class PlaceableItem
     placementShadow = undefined,
   }: PlaceableItemArgs) {
     super({ name, id, amazonProducts });
+    console.log('CONSTRUCTOR PLACEABLE');
+    console.log(amazonProducts);
     this.x = x;
     this.y = y;
     this.width = width;
@@ -375,6 +378,7 @@ export default class PlaceableItem
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 

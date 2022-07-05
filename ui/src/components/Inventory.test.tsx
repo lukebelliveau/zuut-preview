@@ -11,7 +11,10 @@ import { renderWithContext } from '../../tests/renderWithContext';
 describe('Inventory', () => {
   it('toggles item selection with keyboard and mouse', async () => {
     const store = createAppStore();
-    const item = new GrowspaceItem({ name: 'testItem' });
+    const item = new GrowspaceItem({
+      name: 'testItem',
+      amazonProducts: undefined,
+    });
     store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
 
     renderWithContext(<Inventory />, store);
@@ -32,7 +35,10 @@ describe('Inventory', () => {
 
   it('deletes an item with Delete key', async () => {
     const store = createAppStore();
-    const item = new GrowspaceItem({ name: 'testItem' });
+    const item = new GrowspaceItem({
+      name: 'testItem',
+      amazonProducts: undefined,
+    });
     store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
 
     renderWithContext(<Inventory />, store);
@@ -51,7 +57,10 @@ describe('Inventory', () => {
 
   it('deletes an item with Backspace key', async () => {
     const store = createAppStore();
-    const item = new GrowspaceItem({ name: 'testItem' });
+    const item = new GrowspaceItem({
+      name: 'testItem',
+      amazonProducts: undefined,
+    });
     store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
 
     renderWithContext(<Inventory />, store);

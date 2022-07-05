@@ -64,6 +64,7 @@ export default class PurifierItem
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 }

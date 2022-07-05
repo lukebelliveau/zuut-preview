@@ -4,18 +4,18 @@ import PotItem, { POT_ITEM_TYPE } from './potItem';
 
 describe('PotItem', () => {
   it("has a type property set to 'PotItem'", () => {
-    const potItem = new PotItem({ name: 'pot' });
+    const potItem = new PotItem({ name: 'pot', amazonProducts: undefined });
     expect(potItem.type).toEqual(POT_ITEM_TYPE);
   });
 
   it('has an image property set to PotImage', () => {
-    const potItem = new PotItem({ name: 'pot' });
+    const potItem = new PotItem({ name: 'pot', amazonProducts: undefined });
     expect(potItem.image).toEqual(PotImage);
   });
 
   describe('modifierImages', () => {
     it('returns empty array when no modifiers', () => {
-      const potItem = new PotItem({ name: 'pot' });
+      const potItem = new PotItem({ name: 'pot', amazonProducts: undefined });
       const modifierImages = potItem.modifierImages;
       expect(modifierImages).toStrictEqual([]);
     });
@@ -37,6 +37,7 @@ describe('PotItem', () => {
         modifiers: {
           Soil: [v4()],
         },
+        amazonProducts: undefined,
       });
 
       const modifierImages = potItem.modifierImages;
@@ -60,6 +61,7 @@ describe('PotItem', () => {
         modifiers: {
           Soil: [v4(), v4()],
         },
+        amazonProducts: undefined,
       });
 
       const modifierImages = potItem.modifierImages;

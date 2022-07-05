@@ -38,6 +38,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
       length: feetToMm(2),
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 

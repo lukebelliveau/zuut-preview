@@ -14,7 +14,6 @@ import HeatItem from './item/heatItem';
 import PurifierItem from './item/purifierItem';
 import HumidifierItem from './item/humidifierItem';
 import DehumidifierItem from './item/dehumidifierItem';
-import CurvedDuctItem from './item/curvedDuctItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -33,6 +32,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(4),
         length: feetToMm_REQUIRE_3_INCHES(4),
         height: feetToMm_REQUIRE_3_INCHES(6.5),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B01731MNJE',
+          },
+        ],
       }),
       new Growspace({
         name: '5x5x6.5 tent',
@@ -42,6 +47,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(5),
         length: feetToMm_REQUIRE_3_INCHES(5),
         height: feetToMm_REQUIRE_3_INCHES(6.5),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B01DXYM98K',
+          },
+        ],
       }),
       new Growspace({
         name: '4x2x5 tent',
@@ -51,6 +62,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(4),
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(5),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B083WFYZ6K',
+          },
+        ],
       }),
       new Growspace({
         name: '3x3x6 tent',
@@ -60,6 +77,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(3),
         length: feetToMm_REQUIRE_3_INCHES(3),
         height: feetToMm_REQUIRE_3_INCHES(6),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B01DXYMKIO',
+          },
+        ],
       }),
       new Growspace({
         name: '5x2.5x6.5 tent',
@@ -69,6 +92,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(5),
         length: feetToMm_REQUIRE_3_INCHES(2.5),
         height: feetToMm_REQUIRE_3_INCHES(6.5),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B07WK3Q372',
+          },
+        ],
       }),
       new Growspace({
         name: '2x2x3 tent',
@@ -78,6 +107,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(2),
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(3),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B07VRSCVVC',
+          },
+        ],
       }),
       new Growspace({
         name: '2x2x4 tent',
@@ -87,6 +122,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(2),
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(4),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B07PK7J1XZ',
+          },
+        ],
       }),
       new Growspace({
         name: '2.5x2.5x5.25 tent',
@@ -96,6 +137,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(2.5),
         length: feetToMm_REQUIRE_3_INCHES(2.5),
         height: feetToMm_REQUIRE_3_INCHES(5.25),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B01DXYM98K',
+          },
+        ],
       }),
       new Growspace({
         name: '3x1.5x5.25 tent',
@@ -105,6 +152,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(3),
         length: feetToMm_REQUIRE_3_INCHES(1.5),
         height: feetToMm_REQUIRE_3_INCHES(5.25),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B01DXYM98K',
+          },
+        ],
       }),
       new Growspace({
         name: '8x4x6.5 tent',
@@ -114,6 +167,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(8),
         length: feetToMm_REQUIRE_3_INCHES(4),
         height: feetToMm_REQUIRE_3_INCHES(6.5),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B083WFYZ6K',
+          },
+        ],
       }),
       new Growspace({
         name: '8x4x6 tent',
@@ -123,6 +182,12 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(8),
         length: feetToMm_REQUIRE_3_INCHES(4),
         height: feetToMm_REQUIRE_3_INCHES(6),
+        amazonProducts: [
+          {
+            name: 'Tent',
+            ASIN: 'B01DXYM98K',
+          },
+        ],
       }),
     ],
   },
@@ -138,6 +203,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(0.5),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '1 Gallon Pot - Up to 6" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '2 Gallon Pot',
@@ -148,6 +214,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(0.75),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '2 Gallon Pot - Up to 12" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '3 Gallon Pot',
@@ -158,6 +225,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(0.75),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '3 Gallon Pot - Up to 18" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '5 Gallon Pot',
@@ -168,6 +236,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '5 Gallon Pot - Up to 30" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '7 Gallon Pot',
@@ -178,6 +247,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.25),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '7 Gallon Pot - Up to 42" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '10 Gallon Pot',
@@ -188,6 +258,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.25),
         height: feetToMm_REQUIRE_3_INCHES(1),
         description: '10 Gallon Pot - Up to 60" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '15 Gallon Pot',
@@ -198,6 +269,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.75),
         height: feetToMm_REQUIRE_3_INCHES(1),
         description: '15 Gallon Pot - Up to 90" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '20 Gallon Pot',
@@ -208,6 +280,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.75),
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description: '20 Gallon Pot - Up to 120" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '25 Gallon Pot',
@@ -218,6 +291,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.75),
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description: '25 Gallon Pot - Up to 150" plant height',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '30 Gallon Pot',
@@ -228,6 +302,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description: 'For multiple plants',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '50 Gallon Pot',
@@ -238,6 +313,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(2.5),
         height: feetToMm_REQUIRE_3_INCHES(1.5),
         description: 'For multiple plants',
+        amazonProducts: undefined,
       }),
       new PotItem({
         name: '100 Gallon Pot',
@@ -248,6 +324,7 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(3.25),
         height: feetToMm_REQUIRE_3_INCHES(1.75),
         description: 'For multiple plants',
+        amazonProducts: undefined,
       }),
     ],
   },
@@ -264,6 +341,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.5),
         description:
           'A relatively new type of grow light that produces better quality buds and bigger yields while using less electricity and producing less heat than traditional grow lights.',
+        amazonProducts: undefined,
       }),
     ],
   },
@@ -280,6 +358,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description:
           'A steady supply of fresh air helps cannabis grow faster, produce more buds, controls the humidity and temperature, and protects plants from certain pests and molds.',
+        amazonProducts: undefined,
       }),
       new DuctItem({
         name: 'Ducting',
@@ -291,6 +370,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description:
           'An exhaust system often uses ducting to move hot and humid air out of the grow space.',
+        amazonProducts: undefined,
       }),
       // new CurvedDuctItem(
       //   'Curved Ducting',
@@ -312,6 +392,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description:
           'Connecting a carbon filter to an exhaust fan filters the smells out of the air before it leaves the grow space.',
+        amazonProducts: undefined,
       }),
       new FloorACItem({
         name: 'Floor AC Unit',
@@ -323,6 +404,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(2.75),
         description:
           'Cannabis does not like temperatures above 85 degrees. Lowers temperature, lowers humidity',
+        amazonProducts: undefined,
       }),
       new HeatItem({
         name: 'Heat',
@@ -334,6 +416,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(2.75),
         description:
           'Cannabis does not like temperatures below 50 degrees. Raises temperature, lowers humidity',
+        amazonProducts: undefined,
       }),
       new PurifierItem({
         name: 'Purifier',
@@ -345,6 +428,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1.5),
         description:
           'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.',
+        amazonProducts: undefined,
       }),
       new HumidifierItem({
         name: 'Humidifier',
@@ -356,6 +440,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description:
           'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.',
+        amazonProducts: undefined,
       }),
       new DehumidifierItem({
         name: 'Dehumidifier',
@@ -367,6 +452,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description:
           'Cannabis does not like humidity higher than 60%. Lowers humidity, raises temperature (slightly)',
+        amazonProducts: undefined,
       }),
       new OscillatingFanItem({
         name: 'Oscillating fan',
@@ -378,6 +464,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1),
         description:
           'In nature, cannabis plants thrive in a gentle breeze. Air movement protects plants from certain pests and molds.',
+        amazonProducts: undefined,
       }),
     ],
   },
@@ -392,6 +479,7 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(2),
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(3),
+        amazonProducts: undefined,
       }),
     ],
   },

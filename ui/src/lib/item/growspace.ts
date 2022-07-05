@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 import { isStraddlingBoundary } from '../geometry/geometry';
 import PlaceableItem, {
   CollisionState,
+  PlaceableItemArgs,
   PlacementShadow,
 } from './placeableItem';
 import { Item } from '../item';
@@ -38,6 +39,7 @@ export default class Growspace extends PlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 

@@ -10,7 +10,7 @@ export interface IItem {
   type: string;
   name: string;
   copy(): Item;
-  amazonProducts: AmazonProduct[] | undefined;
+  amazonProducts?: AmazonProduct[] | undefined;
 }
 
 export interface ItemArgs {
@@ -23,7 +23,7 @@ export class Item implements IItem {
   id: string;
   type: string = 'Item';
   name: string;
-  amazonProducts: AmazonProduct[] | undefined;
+  amazonProducts?: AmazonProduct[] | undefined;
 
   constructor({ name, id = v4(), amazonProducts = undefined }: ItemArgs) {
     this.id = id;

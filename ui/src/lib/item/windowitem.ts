@@ -34,6 +34,7 @@ export default class WindowItem extends WallItem {
       length: feetToMm(2),
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 

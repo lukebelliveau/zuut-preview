@@ -22,6 +22,7 @@ export default class RoomItem extends PlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
     });
   }
 }

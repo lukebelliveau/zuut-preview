@@ -60,6 +60,7 @@ export default class ItemReduxAdapter {
         rotation: item.rotation,
         modifiers: item.modifiers,
         description: item.description,
+        amazonProducts: item.amazonProducts,
       };
     } else {
       return baseItemState;
@@ -72,6 +73,7 @@ export default class ItemReduxAdapter {
         return new Growspace({
           name: itemState.name,
           id: itemState.id,
+          amazonProducts: itemState.amazonProducts,
           x: itemState.x,
           y: itemState.y,
           width: itemState.width,
