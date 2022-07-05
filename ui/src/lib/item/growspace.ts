@@ -29,16 +29,16 @@ export default class Growspace extends PlaceableItem {
   }
 
   copy(): Growspace {
-    return new Growspace(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description
-    );
+    return new Growspace({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 
   collisionStateBetween(

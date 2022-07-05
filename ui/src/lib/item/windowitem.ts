@@ -25,16 +25,16 @@ export default class WindowItem extends WallItem {
   }
 
   copy(): WindowItem {
-    return new WindowItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      feetToMm(0.2),
-      feetToMm(2),
-      this.height,
-      this.description
-    );
+    return new WindowItem({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: feetToMm(0.2),
+      length: feetToMm(2),
+      height: this.height,
+      description: this.description,
+    });
   }
 
   collisionStateBetween(

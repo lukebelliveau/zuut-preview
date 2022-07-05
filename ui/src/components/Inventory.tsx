@@ -32,7 +32,7 @@ import { isWallItem } from '../lib/item/wallItem';
 
 interface ShoppingCartItem {
   quantity: number;
-  ASIN: string | null;
+  ASIN: string | undefined;
 }
 
 const createShoppingCartUrl = (items: IItem[]) => {

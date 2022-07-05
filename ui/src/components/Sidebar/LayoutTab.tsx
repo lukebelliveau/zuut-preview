@@ -13,7 +13,10 @@ import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
 
-const layoutItems = [new WindowItem('Window'), new DoorItem('Door')];
+const layoutItems = [
+  new WindowItem({ name: 'Window' }),
+  new DoorItem({ name: 'Door' }),
+];
 
 export default function LayoutTab() {
   const dispatch = useDispatch();

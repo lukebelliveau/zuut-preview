@@ -70,310 +70,314 @@ export default class ItemReduxAdapter {
   public static stateToItem(itemState: ItemState): IItem {
     switch (itemState.type) {
       case GROWSPACE_TYPE:
-        return new Growspace(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new Growspace({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case GROWSPACE_ITEM_TYPE:
-        return new GrowspaceItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new GrowspaceItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case MISC_ITEM_TYPE:
-        return new MiscItem(itemState.name, itemState.id, itemState.ASIN);
+        return new MiscItem({
+          name: itemState.name,
+          id: itemState.id,
+          ASIN: itemState.ASIN,
+        });
       case MODIFIER_ITEM_TYPE:
-        return new ModifierItem(itemState.name, itemState.id);
+        return new ModifierItem({ name: itemState.name, id: itemState.id });
       case ROOM_ITEM_TYPE:
-        return new RoomItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new RoomItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
 
       case WALL_ITEM_TYPE:
-        return new WallItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new WallItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case WINDOW_ITEM_TYPE:
-        return new WindowItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new WindowItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case DOOR_ITEM_TYPE:
-        return new DoorItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new DoorItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case POT_ITEM_TYPE:
-        return new PotItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new PotItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case CEILING_GROWSPACE_ITEM_TYPE:
-        return new CeilingGrowspaceItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new CeilingGrowspaceItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case LIGHT_ITEM_TYPE:
-        return new LightItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new LightItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case EXHAUST_FAN_ITEM_TYPE:
-        return new ExhaustFanItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new ExhaustFanItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case OSCILLATING_FAN_ITEM_TYPE:
-        return new OscillatingFanItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new OscillatingFanItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case FLOOR_AC_ITEM_TYPE:
-        return new FloorACItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new FloorACItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case CARBON_FILTER_ITEM_TYPE:
-        return new CarbonFilterItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new CarbonFilterItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case WATER_ITEM_TYPE:
-        return new WaterItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new WaterItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case HUMIDIFIER_ITEM_TYPE:
-        return new HumidifierItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new HumidifierItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case DEHUMIDIFIER_ITEM_TYPE:
-        return new DehumidifierItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new DehumidifierItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case HEAT_ITEM_TYPE:
-        return new HeatItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new HeatItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case PURIFIER_ITEM_TYPE:
-        return new PurifierItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new PurifierItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case DUCT_ITEM_TYPE:
-        return new DuctItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new DuctItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       case CURVED_DUCT_ITEM_TYPE:
-        return new CurvedDuctItem(
-          itemState.name,
-          itemState.id,
-          itemState.x,
-          itemState.y,
-          itemState.width,
-          itemState.length,
-          itemState.height,
-          itemState.description,
-          itemState.rotation,
-          itemState.modifiers,
-          itemState.collisionState,
-          itemState.placementShadow
-        );
+        return new CurvedDuctItem({
+          name: itemState.name,
+          id: itemState.id,
+          x: itemState.x,
+          y: itemState.y,
+          width: itemState.width,
+          length: itemState.length,
+          height: itemState.height,
+          description: itemState.description,
+          rotation: itemState.rotation,
+          modifiers: itemState.modifiers,
+          collisionState: itemState.collisionState,
+          placementShadow: itemState.placementShadow,
+        });
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);
     }

@@ -13,15 +13,15 @@ describe('WallItem', () => {
     const playground = new Playground(1_000, 1_000, undefined, plan);
 
     describe('item horizontally oriented', () => {
-      const horizontalWallItem = new WallItem(
-        'wall',
-        v4(),
-        feetToMm(0),
-        feetToMm(0),
-        feetToMm(10),
-        feetToMm(1),
-        feetToMm(100)
-      );
+      const horizontalWallItem = new WallItem({
+        name: 'wall',
+        id: v4(),
+        x: feetToMm(0),
+        y: feetToMm(0),
+        width: feetToMm(10),
+        length: feetToMm(1),
+        height: feetToMm(100),
+      });
 
       it('rotates and aligns placementShadow when the closest wall is the left wall', () => {
         const items: IItem[] = [];
@@ -105,15 +105,15 @@ describe('WallItem', () => {
     });
 
     describe('item vertically oriented', () => {
-      const verticalWallItem = new WallItem(
-        'wall',
-        v4(),
-        feetToMm(0),
-        feetToMm(0),
-        feetToMm(1),
-        feetToMm(10),
-        feetToMm(100)
-      );
+      const verticalWallItem = new WallItem({
+        name: 'wall',
+        id: v4(),
+        x: feetToMm(0),
+        y: feetToMm(0),
+        width: feetToMm(1),
+        length: feetToMm(10),
+        height: feetToMm(100),
+      });
 
       it('aligns placementShadow without rotation when the closest wall is the left wall', () => {
         const items: IItem[] = [];
@@ -177,15 +177,15 @@ describe('WallItem', () => {
 
       it('aligns and rotates placementShadow when the closest wall is the top wall', () => {
         const items: IItem[] = [];
-        const verticalWallItem = new WallItem(
-          'wall',
-          v4(),
-          feetToMm(0),
-          feetToMm(0),
-          feetToMm(1),
-          feetToMm(10),
-          feetToMm(100)
-        );
+        const verticalWallItem = new WallItem({
+          name: 'wall',
+          id: v4(),
+          x: feetToMm(0),
+          y: feetToMm(0),
+          width: feetToMm(1),
+          length: feetToMm(10),
+          height: feetToMm(100),
+        });
         items.push(verticalWallItem);
 
         verticalWallItem.drag(
@@ -212,14 +212,14 @@ describe('WallItem', () => {
 
     describe('perpendicular & colliding with bottom wall', () => {
       // { x: 50, y: 90 width: 10, length: 50 }
-      const item = new WallItem(
-        'Window',
-        v4(),
-        feetToMm(50),
-        feetToMm(90),
-        feetToMm(10),
-        feetToMm(50)
-      );
+      const item = new WallItem({
+        name: 'Window',
+        id: v4(),
+        x: feetToMm(50),
+        y: feetToMm(90),
+        width: feetToMm(10),
+        length: feetToMm(50),
+      });
       it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);
@@ -233,14 +233,14 @@ describe('WallItem', () => {
 
     describe('perpendicular & colliding with top wall', () => {
       // { x: 50, y: -10 width: 10, length: 50 }
-      const item = new WallItem(
-        'Window',
-        v4(),
-        feetToMm(50),
-        feetToMm(-10),
-        feetToMm(10),
-        feetToMm(50)
-      );
+      const item = new WallItem({
+        name: 'Window',
+        id: v4(),
+        x: feetToMm(50),
+        y: feetToMm(-10),
+        width: feetToMm(10),
+        length: feetToMm(50),
+      });
       it('creates a placementShadow rotated & straddling the Room`s top wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);
@@ -254,14 +254,14 @@ describe('WallItem', () => {
 
     describe('perpendicular & colliding with left wall', () => {
       // { x: 50, y: -10 width: 10, length: 50 }
-      const item = new WallItem(
-        'Window',
-        v4(),
-        feetToMm(-10),
-        feetToMm(10),
-        feetToMm(50),
-        feetToMm(10)
-      );
+      const item = new WallItem({
+        name: 'Window',
+        id: v4(),
+        x: feetToMm(-10),
+        y: feetToMm(10),
+        width: feetToMm(50),
+        length: feetToMm(10),
+      });
       it('creates a placementShadow rotated & straddling the Room`s left wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);
@@ -274,14 +274,14 @@ describe('WallItem', () => {
     });
 
     describe('perpendicular & colliding with right wall', () => {
-      const item = new WallItem(
-        'Window',
-        v4(),
-        feetToMm(95),
-        feetToMm(10),
-        feetToMm(50),
-        feetToMm(10)
-      );
+      const item = new WallItem({
+        name: 'Window',
+        id: v4(),
+        x: feetToMm(95),
+        y: feetToMm(10),
+        width: feetToMm(50),
+        length: feetToMm(10),
+      });
       it('creates a placementShadow rotated & straddling the Room`s right wall', () => {
         const placementShadow =
           item.createPlacementShadowOnClosestWall(playground);

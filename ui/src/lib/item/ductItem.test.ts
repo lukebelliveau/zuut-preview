@@ -13,24 +13,24 @@ describe('DuctItem', () => {
     it('has CONFLICTED collision state when colliding with a LightItem', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct = new DuctItem(
-        'duct',
-        v4(),
-        0,
-        0,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const light = new LightItem(
-        'light',
-        v4(),
-        0,
-        0,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
+      const duct = new DuctItem({
+        name: 'duct',
+        id: v4(),
+        x: 0,
+        y: 0,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const light = new LightItem({
+        name: 'light',
+        id: v4(),
+        x: 0,
+        y: 0,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
       const itemList = [];
       itemList.push(duct);
       itemList.push(light);
@@ -43,7 +43,15 @@ describe('DuctItem', () => {
     it('has CONFLICTED collision state when it collides with nothing', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct = new DuctItem('duct', v4(), 0, 0, 1, 1, 1);
+      const duct = new DuctItem({
+        name: 'duct',
+        id: v4(),
+        x: 0,
+        y: 0,
+        width: 1,
+        length: 1,
+        height: 1,
+      });
       const itemList = [];
       itemList.push(duct);
 
@@ -55,16 +63,21 @@ describe('DuctItem', () => {
     it('has CONNECTED collision state when connected to a window', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct = new DuctItem(
-        'duct',
-        v4(),
-        0,
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const window = new WindowItem('window', v4(), -30, 3600);
+      const duct = new DuctItem({
+        name: 'duct',
+        id: v4(),
+        x: 0,
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const window = new WindowItem({
+        name: 'window',
+        id: v4(),
+        x: -30,
+        y: 3600,
+      });
       const itemList = [];
       itemList.push(duct);
       itemList.push(window);
@@ -77,25 +90,30 @@ describe('DuctItem', () => {
     it('has CONNECTED collision state when connected to another window with CONNECTED collision state', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct1 = new DuctItem(
-        'duct',
-        'duct1',
-        0,
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct2 = new DuctItem(
-        'duct',
-        'duct2',
-        feetToMm(1),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const window = new WindowItem('window', v4(), -30, 3600);
+      const duct1 = new DuctItem({
+        name: 'duct',
+        id: 'duct1',
+        x: 0,
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct2 = new DuctItem({
+        name: 'duct',
+        id: 'duct2',
+        x: feetToMm(1),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const window = new WindowItem({
+        name: 'window',
+        id: v4(),
+        x: -30,
+        y: 3600,
+      });
       const itemList = [];
       itemList.push(duct1);
       itemList.push(duct2);
@@ -121,70 +139,75 @@ describe('DuctItem', () => {
        */
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct0 = new DuctItem(
-        'duct',
-        'duct0',
-        0,
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct1 = new DuctItem(
-        'duct',
-        'duct1',
-        feetToMm(1),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct2 = new DuctItem(
-        'duct',
-        'duct2',
-        feetToMm(2),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct3 = new DuctItem(
-        'duct',
-        'duct3',
-        feetToMm(3),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct4 = new DuctItem(
-        'duct',
-        'duct4',
-        feetToMm(4),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct5 = new DuctItem(
-        'duct',
-        'duct5',
-        feetToMm(5),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct6 = new DuctItem(
-        'duct',
-        'duct6',
-        feetToMm(6),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const window = new WindowItem('window', v4(), -30, 3600);
+      const duct0 = new DuctItem({
+        name: 'duct',
+        id: 'duct0',
+        x: 0,
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct1 = new DuctItem({
+        name: 'duct',
+        id: 'duct1',
+        x: feetToMm(1),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct2 = new DuctItem({
+        name: 'duct',
+        id: 'duct2',
+        x: feetToMm(2),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct3 = new DuctItem({
+        name: 'duct',
+        id: 'duct3',
+        x: feetToMm(3),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct4 = new DuctItem({
+        name: 'duct',
+        id: 'duct4',
+        x: feetToMm(4),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct5 = new DuctItem({
+        name: 'duct',
+        id: 'duct5',
+        x: feetToMm(5),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct6 = new DuctItem({
+        name: 'duct',
+        id: 'duct6',
+        x: feetToMm(6),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const window = new WindowItem({
+        name: 'window',
+        id: v4(),
+        x: -30,
+        y: 3600,
+      });
       const itemList = [];
       itemList.push(duct0);
       itemList.push(duct1);
@@ -225,36 +248,41 @@ describe('DuctItem', () => {
 
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, undefined, plan);
-      const duct0 = new DuctItem(
-        'duct',
-        'duct0',
-        0,
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
-      const duct1 = new DuctItem(
-        'duct',
-        'duct1',
-        feetToMm(1),
-        3800,
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
+      const duct0 = new DuctItem({
+        name: 'duct',
+        id: 'duct0',
+        x: 0,
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
+      const duct1 = new DuctItem({
+        name: 'duct',
+        id: 'duct1',
+        x: feetToMm(1),
+        y: 3800,
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
       // duct2 placed directly under duct1
-      const duct2 = new DuctItem(
-        'duct',
-        'duct2',
-        feetToMm(1),
-        3800 + feetToMm(1),
-        feetToMm(1),
-        feetToMm(1),
-        feetToMm(1)
-      );
+      const duct2 = new DuctItem({
+        name: 'duct',
+        id: 'duct2',
+        x: feetToMm(1),
+        y: 3800 + feetToMm(1),
+        width: feetToMm(1),
+        length: feetToMm(1),
+        height: feetToMm(1),
+      });
 
-      const window = new WindowItem('window', v4(), -30, 3600);
+      const window = new WindowItem({
+        name: 'window',
+        id: v4(),
+        x: -30,
+        y: 3600,
+      });
       const itemList = [];
       itemList.push(duct0);
       itemList.push(duct1);
@@ -275,8 +303,22 @@ describe('DuctItem', () => {
 
 describe('#collisionStateBetween', () => {
   it('does not conflict with growspace', () => {
-    const growspace = new Growspace('', '1', 1001, 1001, 1001, 1001);
-    const duct = new DuctItem('', '2', 950, 950, 2000, 2000);
+    const growspace = new Growspace({
+      name: '',
+      id: '1',
+      x: 1001,
+      y: 1001,
+      width: 1001,
+      length: 1001,
+    });
+    const duct = new DuctItem({
+      name: '',
+      id: '2',
+      x: 950,
+      y: 950,
+      width: 2000,
+      length: 2000,
+    });
 
     expect(duct.collisionStateBetween(duct, growspace)).toBe(
       CollisionState.NEUTRAL

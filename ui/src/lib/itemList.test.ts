@@ -4,9 +4,9 @@ import { sortSelectedToLast } from './itemList';
 
 describe('sortSelectedToLast', () => {
   const itemList: IItem[] = [];
-  const item0 = new PlaceableItem('item0');
-  const item1 = new PlaceableItem('item1');
-  const item2 = new PlaceableItem('item2');
+  const item0 = new PlaceableItem({ name: 'item0' });
+  const item1 = new PlaceableItem({ name: 'item1' });
+  const item2 = new PlaceableItem({ name: 'item2' });
   itemList.push(item0);
   itemList.push(item1);
   itemList.push(item2);

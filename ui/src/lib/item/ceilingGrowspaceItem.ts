@@ -21,16 +21,16 @@ export default class CeilingGrowspaceItem extends CeilingPlaceableItem {
   type = CEILING_GROWSPACE_ITEM_TYPE;
 
   copy(): CeilingGrowspaceItem {
-    return new CeilingGrowspaceItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description
-    );
+    return new CeilingGrowspaceItem({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 
   collisionStateBetween(

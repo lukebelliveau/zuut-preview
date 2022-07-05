@@ -3,6 +3,7 @@ import {
   CollisionState,
   IPlaceableItem,
   Modifiers,
+  PlaceableItemArgs,
   PlacementShadow,
 } from './placeableItem';
 import LightImage from '../../images/items/led_light.png';
@@ -22,26 +23,28 @@ export default class LightItem
   implements IPlaceableItem
 {
   type = LIGHT_ITEM_TYPE;
-  constructor(
-    name: string,
-    id: string = v4(),
-    x: number = 0,
-    y: number = 0,
-    width: number = 610,
-    length: number = 610,
-    height: number = 915,
-    description: string = '',
-    rotation: number = 0,
-    modifiers: Modifiers = defaultLightModifiers,
-    collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined
-  ) {
-    super(name, id);
+
+  constructor({
+    name,
+    id = v4(),
+    ASIN = undefined,
+    x = 0,
+    y = 0,
+    width = 610,
+    length = 610,
+    height = 915,
+    description = '',
+    rotation = 0,
+    modifiers = defaultLightModifiers,
+    collisionState = CollisionState.NEUTRAL,
+    placementShadow = undefined,
+  }: PlaceableItemArgs) {
+    super({ name, id, ASIN, width, length, height });
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.length = length;
-    this.height = height;
+    // this.width = width;
+    // this.length = length;
+    // this.height = height;
     this.description = description;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
@@ -54,15 +57,16 @@ export default class LightItem
   }
 
   copy(): LightItem {
-    return new LightItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description
-    );
+    return new LightItem({
+      name: this.name,
+      id: v4(),
+      ASIN: this.ASIN,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 }

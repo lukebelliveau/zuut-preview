@@ -1,5 +1,10 @@
 import { v4 } from 'uuid';
-import { CollisionState, Modifiers, PlacementShadow } from './placeableItem';
+import {
+  CollisionState,
+  Modifiers,
+  PlaceableItemArgs,
+  PlacementShadow,
+} from './placeableItem';
 import CurvedDuctImage from '../../images/items/curved_duct.png';
 import DuctItem from './ductItem';
 
@@ -10,23 +15,25 @@ const defaultDuctModifiers = { 'Rope Ratchets': [] };
 export default class CurvedDuctItem extends DuctItem {
   type = CURVED_DUCT_ITEM_TYPE;
 
-  constructor(
-    name: string,
-    id: string = v4(),
-    x: number = 0,
-    y: number = 0,
-    width: number = 610,
-    length: number = 610,
-    height: number = 915,
-    description: string = '',
-    rotation: number = 0,
-    modifiers: Modifiers = defaultDuctModifiers,
-    collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined
-  ) {
-    super(
+  constructor({
+    name,
+    id = v4(),
+    ASIN = undefined,
+    x = 0,
+    y = 0,
+    width = 610,
+    length = 610,
+    height = 915,
+    description = '',
+    rotation = 0,
+    modifiers = defaultDuctModifiers,
+    collisionState = CollisionState.NEUTRAL,
+    placementShadow = undefined,
+  }: PlaceableItemArgs) {
+    super({
       name,
       id,
+      ASIN,
       x,
       y,
       width,
@@ -36,8 +43,8 @@ export default class CurvedDuctItem extends DuctItem {
       rotation,
       modifiers,
       collisionState,
-      placementShadow
-    );
+      placementShadow,
+    });
   }
 
   get image() {
@@ -45,15 +52,15 @@ export default class CurvedDuctItem extends DuctItem {
   }
 
   copy(): CurvedDuctItem {
-    return new CurvedDuctItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description
-    );
+    return new CurvedDuctItem({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 }

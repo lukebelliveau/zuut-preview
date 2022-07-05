@@ -13,15 +13,15 @@ export default class RoomItem extends PlaceableItem {
   type: string = ROOM_ITEM_TYPE;
 
   copy(): RoomItem {
-    return new RoomItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description
-    );
+    return new RoomItem({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 }

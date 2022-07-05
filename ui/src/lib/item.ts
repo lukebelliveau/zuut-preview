@@ -5,22 +5,28 @@ export interface IItem {
   type: string;
   name: string;
   copy(): Item;
-  ASIN: string | null;
+  ASIN: string | undefined;
+}
+
+export interface ItemArgs {
+  name: string;
+  id?: string;
+  ASIN?: string;
 }
 
 export class Item implements IItem {
   id: string;
   type: string = 'Item';
   name: string;
-  ASIN: string | null;
+  ASIN: string | undefined;
 
-  constructor(name: string, id: string = v4(), ASIN: string | null = null) {
+  constructor({ name, id = v4(), ASIN = undefined }: ItemArgs) {
     this.id = id;
     this.name = name;
-    this.ASIN = ASIN ? ASIN : null;
+    this.ASIN = ASIN;
   }
 
   copy(): Item {
-    return new Item(this.name, this.id, this.ASIN);
+    return new Item({ name: this.name, id: this.id, ASIN: this.ASIN });
   }
 }

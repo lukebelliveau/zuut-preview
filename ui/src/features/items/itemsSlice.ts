@@ -250,7 +250,7 @@ export const incrementModifier = createAsyncThunk(
       if (!itemState) throw new Error('Item not found');
       const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
 
-      const modifier = new ModifierItem(modifierName);
+      const modifier = new ModifierItem({ name: modifierName });
       dispatch(addItem(ItemReduxAdapter.itemToState(modifier)));
 
       item.addModifier(modifier);

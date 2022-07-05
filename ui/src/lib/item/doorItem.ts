@@ -19,15 +19,15 @@ export default class DoorItem extends WallItem {
   }
 
   copy(): DoorItem {
-    return new DoorItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      feetToMm(0.5),
-      feetToMm(2),
-      this.height,
-      this.description
-    );
+    return new DoorItem({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: feetToMm(0.5),
+      length: feetToMm(2),
+      height: this.height,
+      description: this.description,
+    });
   }
 }

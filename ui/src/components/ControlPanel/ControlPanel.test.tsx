@@ -19,7 +19,7 @@ describe('ControlPanel', () => {
 
   it('shows if there is an item selected', () => {
     const store = createAppStore();
-    const item = new PotItem('2x2 Pot');
+    const item = new PotItem({ name: '2x2 Pot' });
     store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
     store.dispatch(select(item.id));
 
@@ -30,7 +30,7 @@ describe('ControlPanel', () => {
 
   it('deletes an item', () => {
     const store = createAppStore();
-    const item = new PotItem('2x2 Pot');
+    const item = new PotItem({ name: '2x2 Pot' });
     store.dispatch(addOne(ItemReduxAdapter.itemToState(item)));
     store.dispatch(select(item.id));
 

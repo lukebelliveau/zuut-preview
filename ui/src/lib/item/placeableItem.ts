@@ -13,7 +13,7 @@ import {
 } from '../geometry/geometry';
 import Playground from '../playground';
 import { Point } from '../point';
-import { IItem, Item } from '../item';
+import { IItem, Item, ItemArgs } from '../item';
 import ModifierItem from './modifierItem';
 import { Layer } from '../layer';
 import { LayerState } from '../../features/interactions/interactionsState';
@@ -63,6 +63,19 @@ export function isPlaceableItem(item: Item): item is PlaceableItem {
   return (item as PlaceableItem).x !== undefined;
 }
 
+export interface PlaceableItemArgs extends ItemArgs {
+  x?: number;
+  y?: number;
+  width?: number;
+  length?: number;
+  height?: number | undefined;
+  description?: string;
+  rotation?: number;
+  modifiers?: Modifiers;
+  collisionState?: CollisionState;
+  placementShadow?: PlacementShadow | undefined;
+}
+
 export default class PlaceableItem
   extends Item
   implements IPlaceableItem, GeometryObject
@@ -79,21 +92,22 @@ export default class PlaceableItem
   modifiers: Modifiers = {};
   description = '';
 
-  constructor(
-    name: string,
-    id: string = v4(),
-    x: number = 0,
-    y: number = 0,
-    width: number = 610,
-    length: number = 610,
-    height: number = 915,
-    description: string = '',
-    rotation: number = 0,
-    modifiers: Modifiers = {},
-    collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined
-  ) {
-    super(name, id);
+  constructor({
+    name,
+    id = v4(),
+    ASIN = undefined,
+    x = 0,
+    y = 0,
+    width = 610,
+    length = 610,
+    height = 915,
+    description = '',
+    rotation = 0,
+    modifiers = {},
+    collisionState = CollisionState.NEUTRAL,
+    placementShadow = undefined,
+  }: PlaceableItemArgs) {
+    super({ name, id, ASIN });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -352,18 +366,17 @@ export default class PlaceableItem
   }
 
   copy(): IPlaceableItem {
-    return new PlaceableItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description,
-      this.rotation,
-      this.modifiers
-    );
+    return new PlaceableItem({
+      name: this.name,
+      id: v4(),
+      ASIN: this.ASIN,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 
   get offset(): Point {

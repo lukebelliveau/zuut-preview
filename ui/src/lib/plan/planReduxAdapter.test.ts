@@ -24,13 +24,13 @@ describe('PlanReduxAdapter', () => {
             id: '456',
             type: MISC_ITEM_TYPE,
             name: 'Mackerel',
-            ASIN: null,
+            ASIN: undefined,
           },
           {
             id: '789',
             type: MISC_ITEM_TYPE,
             name: 'Canyon',
-            ASIN: null,
+            ASIN: undefined,
           },
         ]
       );

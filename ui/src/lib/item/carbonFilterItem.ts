@@ -3,6 +3,7 @@ import {
   CollisionState,
   IPlaceableItem,
   Modifiers,
+  PlaceableItemArgs,
   PlacementShadow,
 } from './placeableItem';
 import CarbonFilterImage from '../../images/items/carbon_filter.png';
@@ -23,23 +24,26 @@ export default class CarbonFilterItem
   implements IPlaceableItem
 {
   type = CARBON_FILTER_ITEM_TYPE;
-  constructor(
-    name: string,
-    id: string = v4(),
-    x: number = 0,
-    y: number = 0,
-    width: number = 610,
-    length: number = 610,
-    height: number = 915,
-    description: string = '',
-    rotation: number = 0,
-    modifiers: Modifiers = defaultFilterModifiers,
-    collisionState: CollisionState = CollisionState.NEUTRAL,
-    placementShadow: PlacementShadow | undefined = undefined
-  ) {
-    super(
+
+  constructor({
+    name,
+    id = v4(),
+    ASIN = undefined,
+    x = 0,
+    y = 0,
+    width = 610,
+    length = 610,
+    height = 915,
+    description = '',
+    rotation = 0,
+    modifiers = defaultFilterModifiers,
+    collisionState = CollisionState.NEUTRAL,
+    placementShadow = undefined,
+  }: PlaceableItemArgs) {
+    super({
       name,
       id,
+      ASIN,
       x,
       y,
       width,
@@ -49,8 +53,8 @@ export default class CarbonFilterItem
       rotation,
       modifiers,
       collisionState,
-      placementShadow
-    );
+      placementShadow,
+    });
   }
 
   get image() {
@@ -58,15 +62,15 @@ export default class CarbonFilterItem
   }
 
   copy(): CarbonFilterItem {
-    return new CarbonFilterItem(
-      this.name,
-      v4(),
-      this.x,
-      this.y,
-      this.width,
-      this.length,
-      this.height,
-      this.description
-    );
+    return new CarbonFilterItem({
+      name: this.name,
+      id: v4(),
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+    });
   }
 }
