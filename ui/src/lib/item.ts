@@ -1,32 +1,41 @@
 import { v4 } from 'uuid';
 
+export interface AmazonProduct {
+  ASIN: string;
+  name: string;
+}
+
 export interface IItem {
   id: string;
   type: string;
   name: string;
   copy(): Item;
-  ASIN: string | undefined;
+  amazonProducts: AmazonProduct[] | undefined;
 }
 
 export interface ItemArgs {
   name: string;
   id?: string;
-  ASIN?: string;
+  amazonProducts?: AmazonProduct[] | undefined;
 }
 
 export class Item implements IItem {
   id: string;
   type: string = 'Item';
   name: string;
-  ASIN: string | undefined;
+  amazonProducts: AmazonProduct[] | undefined;
 
-  constructor({ name, id = v4(), ASIN = undefined }: ItemArgs) {
+  constructor({ name, id = v4(), amazonProducts = undefined }: ItemArgs) {
     this.id = id;
     this.name = name;
-    this.ASIN = ASIN;
+    this.amazonProducts = amazonProducts;
   }
 
   copy(): Item {
-    return new Item({ name: this.name, id: this.id, ASIN: this.ASIN });
+    return new Item({
+      name: this.name,
+      id: this.id,
+      amazonProducts: this.amazonProducts,
+    });
   }
 }

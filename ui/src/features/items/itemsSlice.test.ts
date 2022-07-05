@@ -41,7 +41,6 @@ describe('items/addItem', () => {
       id: v4(),
       type: POT_ITEM_TYPE,
       name: 'Pot',
-      ASIN: undefined,
     };
 
     store.dispatch(addItem(item));
@@ -68,7 +67,6 @@ describe('items/dropItem', () => {
       collisionState: CollisionState.NEUTRAL,
       rotation: 0,
       modifiers: {},
-      ASIN: undefined,
     };
     const updatedItem: ItemState = {
       id,
@@ -82,7 +80,6 @@ describe('items/dropItem', () => {
       collisionState: CollisionState.CONNECTED,
       rotation: 10,
       modifiers: { Soil: [v4()] },
-      ASIN: undefined,
     };
 
     store.dispatch(addItem(item));
@@ -104,7 +101,6 @@ describe('items/removeItem', () => {
       id,
       type: POT_ITEM_TYPE,
       name: 'Pot',
-      ASIN: undefined,
     };
 
     store.dispatch(addItem(item));
@@ -139,7 +135,6 @@ describe('items/removeItem', () => {
         id: v4(),
         type: MISC_ITEM_TYPE,
         name: 'miscItem',
-        ASIN: undefined,
       })
     );
     store.dispatch(removeItem(item.id));

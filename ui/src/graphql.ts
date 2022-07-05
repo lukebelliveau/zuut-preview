@@ -14,9 +14,15 @@ export type Scalars = {
   Modifiers: any;
 };
 
+export type AmazonProduct = {
+  __typename?: 'AmazonProduct';
+  ASIN: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type Item = {
   __typename?: 'Item';
-  ASIN?: Maybe<Scalars['String']>;
+  amazonProducts?: Maybe<Array<Maybe<AmazonProduct>>>;
   description?: Maybe<Scalars['String']>;
   height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
@@ -31,7 +37,7 @@ export type Item = {
 };
 
 export type ItemInput = {
-  ASIN?: InputMaybe<Scalars['String']>;
+  amazonProducts?: InputMaybe<Array<InputMaybe<AmazonProduct>>>;
   description?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];

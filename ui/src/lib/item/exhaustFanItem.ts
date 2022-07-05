@@ -27,7 +27,7 @@ export default class ExhaustFanItem
   constructor({
     name,
     id = v4(),
-    ASIN = undefined,
+    amazonProducts = undefined,
     x = 0,
     y = 0,
     width = 610,
@@ -42,7 +42,7 @@ export default class ExhaustFanItem
     super({
       name: name,
       id: id,
-      ASIN: ASIN,
+      amazonProducts,
       x: x,
       y: y,
       width: width,
@@ -64,7 +64,6 @@ export default class ExhaustFanItem
     return new ExhaustFanItem({
       name: this.name,
       id: v4(),
-      ASIN: this.ASIN,
       x: this.x,
       y: this.y,
       width: this.width,

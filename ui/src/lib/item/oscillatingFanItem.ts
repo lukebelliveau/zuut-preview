@@ -27,7 +27,7 @@ export default class OscillatingFanItem
   constructor({
     name,
     id = v4(),
-    ASIN = undefined,
+    amazonProducts = undefined,
     x = 0,
     y = 0,
     width = 610,
@@ -42,7 +42,7 @@ export default class OscillatingFanItem
     super({
       name,
       id,
-      ASIN,
+      amazonProducts,
       x,
       y,
       width,

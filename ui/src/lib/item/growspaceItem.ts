@@ -23,7 +23,6 @@ export default class GrowspaceItem extends PlaceableItem {
     return new GrowspaceItem({
       name: this.name,
       id: v4(),
-      ASIN: this.ASIN,
       x: this.x,
       y: this.y,
       width: this.width,

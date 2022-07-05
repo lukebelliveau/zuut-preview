@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { AmazonProduct } from '../../graphql';
 import { Item, ItemArgs } from '../item';
 
 export const MODIFIER_ITEM_TYPE = 'ModifierItem';
@@ -11,15 +12,19 @@ export default class ModifierItem {
   id: string;
   type: string = MODIFIER_ITEM_TYPE;
   name: string;
-  ASIN: string | undefined;
+  amazonProducts: AmazonProduct[] | undefined;
 
-  constructor({ name, id = v4(), ASIN = undefined }: ItemArgs) {
+  constructor({ name, id = v4(), amazonProducts = undefined }: ItemArgs) {
     this.id = id;
     this.name = name;
-    this.ASIN = ASIN;
+    this.amazonProducts = amazonProducts;
   }
 
   copy(): ModifierItem {
-    return new ModifierItem({ name: this.name, id: v4(), ASIN: this.ASIN });
+    return new ModifierItem({
+      name: this.name,
+      id: v4(),
+      amazonProducts: this.amazonProducts,
+    });
   }
 }

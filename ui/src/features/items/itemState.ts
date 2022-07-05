@@ -1,3 +1,4 @@
+import { AmazonProduct } from '../../graphql';
 import {
   CollisionState,
   Modifiers,
@@ -18,5 +19,4 @@ export type ItemState = {
   placementShadow?: PlacementShadow;
   rotation?: number;
   modifiers?: Modifiers;
-  ASIN: string | undefined;
 };

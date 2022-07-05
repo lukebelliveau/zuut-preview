@@ -39,7 +39,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   constructor({
     name,
     id = v4(),
-    ASIN = undefined,
+    amazonProducts = undefined,
     x = 0,
     y = 0,
     width = 610,
@@ -51,7 +51,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, ASIN, width, length, height });
+    super({ name, id, amazonProducts, width, length, height });
     this.x = x;
     this.y = y;
     // this.width = width;
@@ -85,7 +85,6 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     return new PotItem({
       name: this.name,
       id: v4(),
-      ASIN: this.ASIN,
       x: this.x,
       y: this.y,
       width: this.width,

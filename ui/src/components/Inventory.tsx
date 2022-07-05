@@ -42,9 +42,13 @@ const createShoppingCartUrl = (items: IItem[]) => {
     if (shoppingCartItems[item.name]) {
       shoppingCartItems[item.name].quantity += 1;
     } else {
+      console.log(item);
       shoppingCartItems[item.name] = {
         quantity: 1,
-        ASIN: item.ASIN,
+        ASIN:
+          item.amazonProducts && item.amazonProducts[0].ASIN
+            ? item.amazonProducts[0].ASIN
+            : undefined,
       };
     }
   });
@@ -52,8 +56,10 @@ const createShoppingCartUrl = (items: IItem[]) => {
   let addToCartQuery = '';
   let uniqueItemCount = 0;
 
+  console.log(shoppingCartItems);
+
   Object.values(shoppingCartItems).forEach((item) => {
-    if (item.ASIN !== null) {
+    if (item.ASIN !== undefined) {
       uniqueItemCount++;
       addToCartQuery += `ASIN.${uniqueItemCount}=${item.ASIN}&Quantity.${uniqueItemCount}=${item.quantity}&`;
     }

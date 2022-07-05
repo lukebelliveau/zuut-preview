@@ -401,102 +401,442 @@ const ItemsLibrary: IItemGroup[] = [
       new MiscItem({
         name: 'Seedling Trays',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
       new MiscItem({
         name: 'Seedling Heating Map',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Magnifier', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Nutrients', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'pH Tester', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'pH Up/Down', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Magnifier',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Nutrients',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'pH Tester',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'pH Up/Down',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Extension Cord',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
       new MiscItem({
         name: 'Measuring Spoons',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Pipettes', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Syringes', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Pipettes',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Syringes',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Eye Protection',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Zip Ties', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Zip Ties',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Extension Cords',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
       new MiscItem({
         name: 'Pruning Snips',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
       new MiscItem({
         name: 'Vented Cloning Dome',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Wet Vac', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Wet Vac',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Humidity Packs',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Power Strip', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Hygrometer', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Thermometer', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Power Strip',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Hygrometer',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Thermometer',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Insect Buzzers',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Fly Stickers', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Power timer', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Trimmer', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Sprayer', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Fly Stickers',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Power timer',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Trimmer',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Sprayer',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Irrigation System',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
       new MiscItem({
         name: 'Watering globes',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Bamboo Stick', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Saucers', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Trays', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Pot holders', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Soil', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Binder clips', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Plant ties', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Seeds', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Plant Yoyos', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Coco Coir', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Bamboo Stick',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Saucers',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Trays',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Pot holders',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Soil',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Binder clips',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Plant ties',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Seeds',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Plant Yoyos',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Coco Coir',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Rope Ratchets',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
-      new MiscItem({ name: 'Water Pump', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Hose', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Spray Handle', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Air pump', id: undefined, ASIN: 'B08SBN1YJD' }),
-      new MiscItem({ name: 'Air stone', id: undefined, ASIN: 'B08SBN1YJD' }),
+      new MiscItem({
+        name: 'Water Pump',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Hose',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Spray Handle',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Air pump',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
+      new MiscItem({
+        name: 'Air stone',
+        id: undefined,
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
+      }),
       new MiscItem({
         name: 'Starter Plugs',
         id: undefined,
-        ASIN: 'B08SBN1YJD',
+        amazonProducts: [
+          {
+            ASIN: 'B08SBN1YJD',
+            name: 'Starter Plug',
+          },
+        ],
       }),
     ],
   },

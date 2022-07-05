@@ -24,7 +24,7 @@ export default class HumidifierItem
   constructor({
     name,
     id = v4(),
-    ASIN = undefined,
+    amazonProducts = undefined,
     x = 0,
     y = 0,
     width = 610,
@@ -36,7 +36,7 @@ export default class HumidifierItem
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, ASIN });
+    super({ name, id, amazonProducts });
     this.x = x;
     this.y = y;
     this.width = width;
