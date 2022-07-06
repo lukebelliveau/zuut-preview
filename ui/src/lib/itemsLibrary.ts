@@ -418,7 +418,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description:
           'A steady supply of fresh air helps cannabis grow faster, produce more buds, controls the humidity and temperature, and protects plants from certain pests and molds.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Exhaust Fan', ASIN: 'B07J9PTYRN' }],
       }),
       new DuctItem({
         name: 'Ducting',
@@ -430,7 +430,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description:
           'An exhaust system often uses ducting to move hot and humid air out of the grow space.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Ducting', ASIN: 'B07WNK7N7F' }],
       }),
       // new CurvedDuctItem(
       //   'Curved Ducting',
@@ -452,7 +452,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description:
           'Connecting a carbon filter to an exhaust fan filters the smells out of the air before it leaves the grow space.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Carbon Filter', ASIN: 'B01DXYMHWS' }],
       }),
       new FloorACItem({
         name: 'Floor AC Unit',
@@ -464,7 +464,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(2.75),
         description:
           'Cannabis does not like temperatures above 85 degrees. Lowers temperature, lowers humidity',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Floor AC Unit', ASIN: 'B06ZZZY74N' }],
       }),
       new HeatItem({
         name: 'Heat',
@@ -476,7 +476,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(2.75),
         description:
           'Cannabis does not like temperatures below 50 degrees. Raises temperature, lowers humidity',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Heat', ASIN: 'B08PF3Q1S5' }],
       }),
       new PurifierItem({
         name: 'Purifier',
@@ -488,7 +488,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1.5),
         description:
           'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Purifier', ASIN: 'B081NWVMCH' }],
       }),
       new HumidifierItem({
         name: 'Humidifier',
@@ -500,7 +500,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description:
           'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Humidifer', ASIN: 'B08KXW1KRJ' }],
       }),
       new DehumidifierItem({
         name: 'Dehumidifier',
@@ -512,7 +512,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description:
           'Cannabis does not like humidity higher than 60%. Lowers humidity, raises temperature (slightly)',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Dehumidifer', ASIN: 'B01DC5PPWM' }],
       }),
       new OscillatingFanItem({
         name: 'Oscillating fan',
@@ -524,7 +524,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(1),
         description:
           'In nature, cannabis plants thrive in a gentle breeze. Air movement protects plants from certain pests and molds.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Oscillating Fan', ASIN: 'B07VNMT9TT' }],
       }),
     ],
   },
@@ -539,7 +539,7 @@ const ItemsLibrary: IItemGroup[] = [
         width: feetToMm_REQUIRE_3_INCHES(2),
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(3),
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'Water Container', ASIN: 'B00A1LUFEY' }],
       }),
     ],
   },
@@ -551,7 +551,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07XNQT52F',
             name: 'Starter Plug',
           },
         ],
@@ -561,7 +561,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B00P7U259C',
             name: 'Starter Plug',
           },
         ],
@@ -571,7 +571,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07VK1LVKX',
             name: 'Starter Plug',
           },
         ],
@@ -581,7 +581,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B00572026S',
             name: 'Starter Plug',
           },
         ],
@@ -591,7 +591,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B01M5IASHD',
             name: 'Starter Plug',
           },
         ],
@@ -601,7 +601,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B000BNKWZY',
             name: 'Starter Plug',
           },
         ],
@@ -611,7 +611,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B073R2D51S',
             name: 'Starter Plug',
           },
         ],
@@ -621,7 +621,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B00EZQQEMS',
             name: 'Starter Plug',
           },
         ],
@@ -631,7 +631,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07F3ZN56V',
             name: 'Starter Plug',
           },
         ],
@@ -641,7 +641,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07PHRWTSS',
             name: 'Starter Plug',
           },
         ],
@@ -651,7 +651,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B08KGXC4TW',
             name: 'Starter Plug',
           },
         ],
@@ -661,17 +661,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Extension Cords',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B08TVLYB3Q',
             name: 'Starter Plug',
           },
         ],
@@ -681,7 +671,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B087CR7H9S',
             name: 'Starter Plug',
           },
         ],
@@ -691,7 +681,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07XNQT52F',
             name: 'Starter Plug',
           },
         ],
@@ -701,7 +691,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07QXWG93C',
             name: 'Starter Plug',
           },
         ],
@@ -711,7 +701,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07VWD9FP5',
             name: 'Starter Plug',
           },
         ],
@@ -721,7 +711,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B0080Z7974',
             name: 'Starter Plug',
           },
         ],
@@ -731,7 +721,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07QPP1GRC',
             name: 'Starter Plug',
           },
         ],
@@ -741,7 +731,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07QPP1GRC',
             name: 'Starter Plug',
           },
         ],
@@ -751,7 +741,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09C8KNZ6R',
             name: 'Starter Plug',
           },
         ],
@@ -761,7 +751,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09Y93X59S',
             name: 'Starter Plug',
           },
         ],
@@ -771,7 +761,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B00MVFF59S',
             name: 'Starter Plug',
           },
         ],
@@ -781,7 +771,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09KL22B3T',
             name: 'Starter Plug',
           },
         ],
@@ -791,7 +781,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07QTHF3QK',
             name: 'Starter Plug',
           },
         ],
@@ -801,7 +791,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B01H6ZN0NU',
             name: 'Starter Plug',
           },
         ],
@@ -811,7 +801,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B08CDWY8WP',
             name: 'Starter Plug',
           },
         ],
@@ -821,7 +811,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09JT32X7B',
             name: 'Starter Plug',
           },
         ],
@@ -831,7 +821,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B07ZVG9RZB',
             name: 'Starter Plug',
           },
         ],
@@ -841,7 +831,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09H6ZFYC4',
             name: 'Starter Plug',
           },
         ],
@@ -851,7 +841,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09H6ZFYC4',
             name: 'Starter Plug',
           },
         ],
@@ -861,7 +851,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B01KVLYW9M',
             name: 'Starter Plug',
           },
         ],
@@ -871,7 +861,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B074XTRX7G',
             name: 'Starter Plug',
           },
         ],
@@ -881,7 +871,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B00W6EJ9IW',
             name: 'Starter Plug',
           },
         ],
@@ -901,7 +891,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B08NT2DMZJ',
             name: 'Starter Plug',
           },
         ],
@@ -911,7 +901,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B01N1YP8O6',
             name: 'Starter Plug',
           },
         ],
@@ -921,7 +911,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B0098R0600',
             name: 'Starter Plug',
           },
         ],
@@ -931,7 +921,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B00318D7K8',
             name: 'Starter Plug',
           },
         ],
@@ -941,7 +931,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09RZHVB6M',
             name: 'Starter Plug',
           },
         ],
@@ -951,7 +941,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B09RZHVB6M',
             name: 'Starter Plug',
           },
         ],
@@ -961,7 +951,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B078YDFYFD',
             name: 'Starter Plug',
           },
         ],
@@ -971,7 +961,7 @@ const ItemsLibrary: IItemGroup[] = [
         id: undefined,
         amazonProducts: [
           {
-            ASIN: 'B08SBN1YJD',
+            ASIN: 'B002JLA83C',
             name: 'Starter Plug',
           },
         ],
