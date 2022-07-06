@@ -182,6 +182,7 @@ export default class ItemReduxAdapter {
           modifiers: itemState.modifiers,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          amazonProducts: itemState.amazonProducts,
         });
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem({

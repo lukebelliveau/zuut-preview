@@ -203,7 +203,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(0.5),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '1 Gallon Pot - Up to 6" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B08HRVR5TV',
+          },
+        ],
       }),
       new PotItem({
         name: '2 Gallon Pot',
@@ -214,7 +219,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(0.75),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '2 Gallon Pot - Up to 12" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B08HRS2TDC',
+          },
+        ],
       }),
       new PotItem({
         name: '3 Gallon Pot',
@@ -225,7 +235,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(0.75),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '3 Gallon Pot - Up to 18" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B08HRR1ZJM',
+          },
+        ],
       }),
       new PotItem({
         name: '5 Gallon Pot',
@@ -236,7 +251,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '5 Gallon Pot - Up to 30" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B00TF9E6XE',
+          },
+        ],
       }),
       new PotItem({
         name: '7 Gallon Pot',
@@ -247,7 +267,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.25),
         height: feetToMm_REQUIRE_3_INCHES(0.75),
         description: '7 Gallon Pot - Up to 42" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B08HRVMPX9',
+          },
+        ],
       }),
       new PotItem({
         name: '10 Gallon Pot',
@@ -258,7 +283,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.25),
         height: feetToMm_REQUIRE_3_INCHES(1),
         description: '10 Gallon Pot - Up to 60" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B00VWU30PO',
+          },
+        ],
       }),
       new PotItem({
         name: '15 Gallon Pot',
@@ -269,7 +299,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.75),
         height: feetToMm_REQUIRE_3_INCHES(1),
         description: '15 Gallon Pot - Up to 90" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B00VWU37QG',
+          },
+        ],
       }),
       new PotItem({
         name: '20 Gallon Pot',
@@ -280,7 +315,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.75),
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description: '20 Gallon Pot - Up to 120" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B097PJW1QP',
+          },
+        ],
       }),
       new PotItem({
         name: '25 Gallon Pot',
@@ -291,7 +331,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(1.75),
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description: '25 Gallon Pot - Up to 150" plant height',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B097PHG8PV',
+          },
+        ],
       }),
       new PotItem({
         name: '30 Gallon Pot',
@@ -302,7 +347,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(2),
         height: feetToMm_REQUIRE_3_INCHES(1.25),
         description: 'For multiple plants',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B097PJS964',
+          },
+        ],
       }),
       new PotItem({
         name: '50 Gallon Pot',
@@ -313,7 +363,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(2.5),
         height: feetToMm_REQUIRE_3_INCHES(1.5),
         description: 'For multiple plants',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B07SVYP3V5',
+          },
+        ],
       }),
       new PotItem({
         name: '100 Gallon Pot',
@@ -324,7 +379,12 @@ const ItemsLibrary: IItemGroup[] = [
         length: feetToMm_REQUIRE_3_INCHES(3.25),
         height: feetToMm_REQUIRE_3_INCHES(1.75),
         description: 'For multiple plants',
-        amazonProducts: undefined,
+        amazonProducts: [
+          {
+            name: 'Pot',
+            ASIN: 'B07SQQQPYY',
+          },
+        ],
       }),
     ],
   },
