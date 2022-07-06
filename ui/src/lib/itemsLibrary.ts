@@ -401,7 +401,7 @@ const ItemsLibrary: IItemGroup[] = [
         height: feetToMm_REQUIRE_3_INCHES(0.5),
         description:
           'A relatively new type of grow light that produces better quality buds and bigger yields while using less electricity and producing less heat than traditional grow lights.',
-        amazonProducts: undefined,
+        amazonProducts: [{ name: 'LED Light', ASIN: 'B08772CTK7' }],
       }),
     ],
   },
