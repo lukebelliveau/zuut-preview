@@ -38,9 +38,6 @@ interface ShoppingCartItem {
 const createShoppingCartUrl = (items: IItem[]) => {
   let shoppingCartItems: { [itemName: string]: ShoppingCartItem } = {};
 
-  console.log('ITEMS');
-  console.log(items);
-
   items.forEach((item) => {
     if (shoppingCartItems[item.name]) {
       shoppingCartItems[item.name].quantity += 1;
@@ -57,9 +54,6 @@ const createShoppingCartUrl = (items: IItem[]) => {
 
   let addToCartQuery = '';
   let uniqueItemCount = 0;
-
-  console.log('SHOPPING CART ITEMS');
-  console.log(shoppingCartItems);
 
   Object.values(shoppingCartItems).forEach((item) => {
     if (item.ASIN !== undefined) {

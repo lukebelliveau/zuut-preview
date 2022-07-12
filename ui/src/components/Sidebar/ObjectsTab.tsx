@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import PlaceableItem, { isPlaceableItem } from '../../lib/item/placeableItem';
-import { itemGroup } from '../../lib/itemsLibrary';
+import { itemGroup, useQueryItemsLibrary } from '../../lib/itemsLibrary';
 import MenuSection from './MenuSection';
 import PlaceableLibraryItem from './PlaceableLibraryItem';
 import SidebarTab from './SidebarTab';
@@ -22,6 +22,13 @@ export default function LayoutTab() {
   const playground = useBuildPlayground();
   const dispatchAddItem = useDispatchAddItem();
 
+  const {
+    isLoading,
+    isError,
+    data: itemGroups,
+    error,
+  } = useQueryItemsLibrary();
+
   function placeItem(item: IItem) {
     if (isCeilingPlaceableItem(item)) dispatch(setVisibleLayer(Layer.CEILING));
     else dispatch(setVisibleLayer(Layer.FLOOR));
@@ -35,19 +42,29 @@ export default function LayoutTab() {
     dispatch(select(itemCopy.id));
   }
 
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error!</span>;
+  }
+
   return (
     <SidebarTab>
       <MenuSection title="Tents">
-        {itemGroup('tents').map((item) => (
-          <PlaceableLibraryItem
-            key={item.name}
-            item={item as PlaceableItem}
-            placeItem={placeItem}
-          />
-        ))}
+        {isLoading
+          ? null
+          : itemGroup('tents', itemGroups).map((item) => (
+              <PlaceableLibraryItem
+                key={item.name}
+                item={item as PlaceableItem}
+                placeItem={placeItem}
+              />
+            ))}
       </MenuSection>
       <MenuSection title="Pots">
-        {itemGroup('pots').map((item) => (
+        {itemGroup('pots', itemGroups).map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}
@@ -56,7 +73,7 @@ export default function LayoutTab() {
         ))}
       </MenuSection>
       <MenuSection title="Lights">
-        {itemGroup('lights').map((item) => (
+        {itemGroup('lights', itemGroups).map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}
@@ -65,7 +82,7 @@ export default function LayoutTab() {
         ))}
       </MenuSection>
       <MenuSection title="Climate">
-        {itemGroup('climate').map((item) => (
+        {itemGroup('climate', itemGroups).map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}
@@ -74,7 +91,7 @@ export default function LayoutTab() {
         ))}
       </MenuSection>
       <MenuSection title="Water">
-        {itemGroup('water').map((item) => (
+        {itemGroup('water', itemGroups).map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}
@@ -83,7 +100,7 @@ export default function LayoutTab() {
         ))}
       </MenuSection>
       <MenuSection title="Misc">
-        {itemGroup('misc').map((item) => (
+        {itemGroup('misc', itemGroups).map((item) => (
           <PlaceableLibraryItem
             key={item.name}
             item={item as PlaceableItem}

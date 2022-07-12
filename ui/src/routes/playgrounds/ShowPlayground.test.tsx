@@ -15,8 +15,18 @@ import Plan from '../../lib/plan';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import ShowPlayground from './ShowPlayground';
 import getItemsOfType from '../../../tests/getItemsOfType';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import airtableApi from '../../airtable/airtableApi';
+import airtablePots from '../../../tests/responseBodies/airtablePots';
 
 jest.mock('../../lib/plan/planService');
+jest.mock('../../airtable/airtableApi');
+
+beforeEach(() => {
+  jest.spyOn(airtableApi, 'selectPots').mockImplementation(() => {
+    return Promise.resolve(airtablePots);
+  });
+});
 
 /**
  * the react-konva stage prints a faulty error about react-dom's act() when rendered in a test.
@@ -51,17 +61,18 @@ describe('ShowPlayground', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const potsTab = screen.getByText('Pots');
+    const potsTab = await screen.findByText('Pots');
+    // done();
     fireEvent.click(potsTab);
 
     const addPotButton = await screen.findByRole('button', {
-      name: /2 Gallon Pot/i,
+      name: /2 Gallon/i,
     });
     fireEvent.click(addPotButton);
 
     // item in inventory list
     const item = await screen.findByRole('menuitem', {
-      name: /2 Gallon Pot/i,
+      name: /2 Gallon/i,
     });
 
     // user sees Control Panel
@@ -70,9 +81,7 @@ describe('ShowPlayground', () => {
 
     // delete item
     fireEvent.keyDown(item, { key: 'Delete' });
-    expect(
-      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
-    ).toBeNull();
+    expect(screen.queryByRole('menuitem', { name: /2 Gallon/i })).toBeNull();
   });
 
   it('can undo and redo', async () => {
@@ -88,44 +97,40 @@ describe('ShowPlayground', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const potsTab = screen.getByText('Pots');
+    const potsTab = await screen.findByText('Pots');
     fireEvent.click(potsTab);
 
-    const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
+    const addPotButton = screen.getByRole('button', { name: /2 Gallon/i });
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
-    screen.getByRole('menuitem', { name: /2 Gallon Pot/i });
+    screen.getByRole('menuitem', { name: /2 Gallon/i });
 
     const playgroundContainer = screen.getByTestId('playground-container');
 
     fireKeyboardUndoOn(playgroundContainer);
-    expect(
-      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
-    ).toBeNull();
+    expect(screen.queryByRole('menuitem', { name: /2 Gallon/i })).toBeNull();
 
     fireKeyboardRedoOn(playgroundContainer);
     expect(
-      screen.getByRole('menuitem', { name: /2 Gallon Pot/i })
+      screen.getByRole('menuitem', { name: /2 Gallon/i })
     ).toBeInTheDocument();
 
     const undoButton = screen.getByLabelText('undo');
     const redoButton = screen.getByLabelText('redo');
 
     fireEvent.click(undoButton);
-    expect(
-      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
-    ).toBeNull();
+    expect(screen.queryByRole('menuitem', { name: /2 Gallon/i })).toBeNull();
 
     fireEvent.click(redoButton);
     expect(
-      screen.getByRole('menuitem', { name: /2 Gallon Pot/i })
+      screen.getByRole('menuitem', { name: /2 Gallon/i })
     ).toBeInTheDocument();
   });
 });
 
 describe('modifiers', () => {
-  it('increments and decrements a modifier', () => {
+  it('increments and decrements a modifier', async () => {
     const store = createAppStore();
     const plan = new Plan();
     const planState = PlanReduxAdapter.planToState(plan);
@@ -138,14 +143,14 @@ describe('modifiers', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const potsTab = screen.getByText('Pots');
+    const potsTab = await screen.findByText('Pots');
     fireEvent.click(potsTab);
 
-    const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
+    const addPotButton = screen.getByRole('button', { name: /2 Gallon/i });
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
-    screen.getByRole('menuitem', { name: /2 Gallon Pot/i });
+    screen.getByRole('menuitem', { name: /2 Gallon/i });
 
     const incrementSoilButton = screen.getByLabelText('increment Soil');
     const decrementSoilButton = screen.getByLabelText('decrement Soil');
@@ -182,15 +187,15 @@ describe('modifiers', () => {
     const objectsTab = screen.getByText('Objects');
     fireEvent.click(objectsTab);
 
-    const potsTab = screen.getByText('Pots');
+    const potsTab = await screen.findByText('Pots');
     fireEvent.click(potsTab);
 
-    const addPotButton = screen.getByRole('button', { name: /2 Gallon Pot/i });
+    const addPotButton = screen.getByRole('button', { name: /2 Gallon/i });
     fireEvent.click(addPotButton);
 
     // item created, shows in inventory list
     const potInventoryItem = screen.getByRole('menuitem', {
-      name: /2 Gallon Pot/i,
+      name: /2 Gallon/i,
     });
 
     const incrementSoilButton = screen.getByLabelText('increment Soil');
@@ -209,9 +214,7 @@ describe('modifiers', () => {
     // delete pot
     fireEvent.keyDown(potInventoryItem, { key: 'Delete' });
 
-    expect(
-      screen.queryByRole('menuitem', { name: /2 Gallon Pot/i })
-    ).toBeNull();
+    expect(screen.queryByRole('menuitem', { name: /2 Gallon/i })).toBeNull();
     expect(screen.queryByText(/Soil \(/)).toBeNull();
     await waitFor(() =>
       expect(store.getState().items.present.ids.length).toBe(0)
@@ -236,12 +239,15 @@ const fireKeyboardUndoOn = (container: HTMLElement) => {
 
 const renderWithContext = (children: JSX.Element, store?: EnhancedStore) => {
   const testStore = store ? store : createAppStore();
+  const queryClient = new QueryClient();
 
   render(
-    <HelmetProvider>
-      <Provider store={testStore}>
-        <DndProvider backend={HTML5Backend}>{children}</DndProvider>
-      </Provider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <Provider store={testStore}>
+          <DndProvider backend={HTML5Backend}>{children}</DndProvider>
+        </Provider>
+      </HelmetProvider>
+    </QueryClientProvider>
   );
 };

@@ -21,7 +21,7 @@ import {
   createDemoPlan,
   loadCurrentPlaygroundIfPresent,
 } from '../../features/playgrounds/playgroundSlice';
-import useQuery from '../../app/useQuery';
+import useQueryParams from '../../app/useQuery';
 import { removeAllItems } from '../../features/items/itemsSlice';
 import { ActionCreators } from 'redux-undo';
 import { isDemoMode, ZUUT_DEMO_STATE } from '../../app/store';
@@ -37,7 +37,7 @@ export default function NewPlayground() {
   const { isAuthenticated } = useAuth0();
   const { register, handleSubmit } = useForm<FormParams>();
   const [isFirstLoad, setIsFirstLoad] = useState(false);
-  let query = useQuery();
+  let query = useQueryParams();
   const history = useHistory();
 
   const resetPlayground = query.get('reset-playground');

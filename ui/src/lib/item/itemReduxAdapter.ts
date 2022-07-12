@@ -97,6 +97,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -119,6 +120,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -135,6 +137,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -150,6 +153,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -165,6 +169,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -196,6 +201,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -229,6 +235,7 @@ export default class ItemReduxAdapter {
           modifiers: itemState.modifiers,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          amazonProducts: itemState.amazonProducts,
         });
       case OSCILLATING_FAN_ITEM_TYPE:
         return new OscillatingFanItem({
@@ -242,6 +249,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -257,6 +265,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -272,6 +281,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -287,6 +297,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -302,6 +313,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -317,6 +329,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -332,6 +345,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -347,6 +361,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -362,6 +377,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -377,6 +393,7 @@ export default class ItemReduxAdapter {
           description: itemState.description,
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
+          amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });

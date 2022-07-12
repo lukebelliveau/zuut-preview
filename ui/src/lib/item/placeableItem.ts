@@ -109,8 +109,6 @@ export default class PlaceableItem
     placementShadow = undefined,
   }: PlaceableItemArgs) {
     super({ name, id, amazonProducts });
-    console.log('CONSTRUCTOR PLACEABLE');
-    console.log(amazonProducts);
     this.x = x;
     this.y = y;
     this.width = width;

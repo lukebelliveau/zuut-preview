@@ -15,10 +15,16 @@ export function inchesToMm(inches: number) {
 }
 
 export function feetToMm_REQUIRE_3_INCHES(feet: number) {
-  if (feet % 0.25 !== 0)
+  if (feet % 0.25 !== 0) {
+    console.error('Tried to convert non-multiple of 3 to mm: ', feet);
     throw new Error('Tried to convert non-multiple of 0.25 feet to mm');
+  }
   return feet * 304.8;
 }
+
+export const inchesToFeet = (inches: number) => {
+  return inches / 12;
+};
 
 // round to nearest 3 inches, then return value in mm
 export const normalizeMmTo3Inches = (mm: number) => {

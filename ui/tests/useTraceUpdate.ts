@@ -1,5 +1,8 @@
 import { useRef, useEffect } from 'react';
 
+/**
+ * use this Hook in a component to view which props change on a re-render
+ */
 function useTraceUpdate(props: any) {
   const prev = useRef(props);
   useEffect(() => {
