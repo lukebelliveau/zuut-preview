@@ -44,6 +44,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { isDemoMode } from '../../app/store';
 import { feetToMm } from '../../lib/conversions';
 import MobileWarningModal from '../../components/MobileWarningModal';
+import { useQueryItemsLibrary } from '../../lib/itemsLibrary';
 
 export const playground_path = () => '/playgrounds/current';
 export const demo_playground_path = () => '/playgrounds/demo';
@@ -56,6 +57,7 @@ export default function ShowPlayground() {
   const store = useStore();
   const dispatchAddItem = useDispatchAddItem();
   const { user } = useAuth0();
+  useQueryItemsLibrary();
 
   /**
    * Ugh. I'm not able to get the react-dnd useDrop() hook to update
