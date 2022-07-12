@@ -29,10 +29,19 @@ const fetchPots = async (): Promise<Item[]> => {
   const pots: any = [];
   potData
     .sort((a: IPlaceableItem, b: IPlaceableItem) => {
-      // get number value of Pot (1, 3, 5 gallon etc)
-      const aValue = a.name.split(' ')[0];
-      const bValue = b.name.split(' ')[0];
-      return parseInt(aValue) > parseInt(bValue);
+      try {
+        // get number value of Pot (1, 3, 5 gallon etc)
+        const aValue = a.name.split(' ')[0];
+        const bValue = b.name.split(' ')[0];
+        return parseInt(aValue) > parseInt(bValue);
+      } catch (e) {
+        console.error(
+          'Error creating Pot Item from airtable data. Skipping pot: ',
+          a,
+          b
+        );
+        console.error(e);
+      }
     })
     .forEach((pot: any) => {
       try {
@@ -55,7 +64,10 @@ const fetchPots = async (): Promise<Item[]> => {
           })
         );
       } catch (e) {
-        console.error('Error creating Pot Item from airtable data:');
+        console.error(
+          'Error creating Pot Item from airtable data. Skipping pot: ',
+          pot
+        );
         console.error(e);
       }
     });
