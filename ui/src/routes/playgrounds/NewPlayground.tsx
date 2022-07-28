@@ -85,7 +85,16 @@ export default function NewPlayground() {
       <Helmet>
         <title>Zuut - Create a new grow</title>
       </Helmet>
-      <FullPage ref={fullPageRef}>
+      <div>Coming soon!</div>
+      {/**
+       * Removed this because react-full-page has not been updated to support React 18.
+       * We'll need to find another implementation of fullpage.js here, or roll our own.
+       *
+       * This looks promising, but had some issues here too and this page isn't MVP anyway. - Luke
+       *
+       * https://www.npmjs.com/package/@fullpage/react-fullpage
+       */}
+      {/* <FullPage ref={fullPageRef}>
         <Slide>
           <EnterName name={register('name')} nextPage={nextPage} />
         </Slide>
@@ -96,7 +105,7 @@ export default function NewPlayground() {
             onSubmit={handleSubmit(onSubmit)}
           />
         </Slide>
-      </FullPage>
+      </FullPage> */}
     </>
   );
 }

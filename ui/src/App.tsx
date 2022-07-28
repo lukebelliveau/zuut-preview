@@ -1,4 +1,3 @@
-import { ConnectedRouter } from 'connected-react-router';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Redirect, Route, useHistory } from 'react-router';
@@ -27,6 +26,7 @@ import { removeAllItems } from './features/items/itemsSlice';
 import { createDemoPlan } from './features/playgrounds/playgroundSlice';
 import { useEffect } from 'react';
 import ShoppingCart, { shopping_cart_path } from './routes/ShoppingCart';
+import { Router } from 'react-router-dom';
 
 export const new_demo_path = () => '/newdemo';
 const NewDemoPlayground = () => {
@@ -47,7 +47,7 @@ const NewDemoPlayground = () => {
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <ConnectedRouter history={browserHistory}>
+      <Router history={browserHistory}>
         <AppErrorBoundary>
           <Route exact path={homePath()}>
             <Home />
@@ -83,7 +83,7 @@ function App() {
             <SessionExpired />
           </Route>
         </AppErrorBoundary>
-      </ConnectedRouter>
+      </Router>
     </DndProvider>
   );
 }
