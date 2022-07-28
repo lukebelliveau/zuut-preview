@@ -23,7 +23,7 @@ jest.mock('../../lib/plan/planService');
 jest.mock('../../airtable/airtableApi');
 
 beforeEach(() => {
-  jest.spyOn(airtableApi, 'selectPots').mockImplementation(() => {
+  jest.spyOn(airtableApi, 'selectAllPots').mockImplementation(() => {
     return Promise.resolve(airtablePots);
   });
 });

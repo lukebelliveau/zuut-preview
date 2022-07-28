@@ -17,7 +17,7 @@ import DehumidifierItem from './item/dehumidifierItem';
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
 import { IPlaceableItem } from './item/placeableItem';
-import { PotRecord } from '../airtable/pots';
+import { PotRecord, potRecordComparator } from '../airtable/pots';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -25,59 +25,38 @@ export type IItemGroup = {
 };
 
 const fetchPots = async (): Promise<Item[]> => {
-  const potData = await airtableApi.selectPots();
+  const potData = await airtableApi.selectAllPots();
 
   const pots: PotItem[] = [];
-  potData
-    .sort((a: PotRecord, b: PotRecord) => {
-      try {
-        if (a.name === undefined || b.name === undefined) {
-          throw Error('Tried to sort pots by name, but name is undefined');
-        }
-        // get number value of Pot (1, 3, 5 gallon etc)
-        const aValue = a.name.split(' ')[0];
-        const bValue = b.name.split(' ')[0];
-        if (parseInt(aValue) > parseInt(bValue)) return 1;
-        else return -1;
-      } catch (e) {
-        console.error(
-          'Error creating Pot Item from airtable data. Skipping pot: ',
-          a,
-          b
-        );
-        console.error(e);
-        return 0;
-      }
-    })
-    .forEach((pot: PotRecord) => {
-      try {
-        pots.push(
-          new PotItem({
-            name: pot.name,
-            recordId: pot.recordId,
-            id: undefined,
-            x: undefined,
-            y: undefined,
-            width: inchesToFeet(feetToMm_REQUIRE_3_INCHES(pot.width)),
-            length: inchesToFeet(feetToMm_REQUIRE_3_INCHES(pot.length)),
-            height: pot.height,
-            description: pot.description,
-            amazonProducts: [
-              {
-                name: 'Pot',
-                ASIN: pot.amazonProductASINs[0],
-              },
-            ],
-          })
-        );
-      } catch (e) {
-        console.error(
-          'Error creating Pot Item from airtable data. Skipping pot: ',
-          pot
-        );
-        console.error(e);
-      }
-    });
+  potData.sort(potRecordComparator).forEach((pot: PotRecord) => {
+    try {
+      pots.push(
+        new PotItem({
+          name: pot.name,
+          recordId: pot.recordId,
+          id: undefined,
+          x: undefined,
+          y: undefined,
+          width: inchesToFeet(feetToMm_REQUIRE_3_INCHES(pot.width)),
+          length: inchesToFeet(feetToMm_REQUIRE_3_INCHES(pot.length)),
+          height: pot.height,
+          description: pot.description,
+          amazonProducts: [
+            {
+              name: 'Pot',
+              ASIN: pot.amazonProducts[0],
+            },
+          ],
+        })
+      );
+    } catch (e) {
+      console.error(
+        'Error creating Pot Item from airtable data. Skipping pot: ',
+        pot
+      );
+      console.error(e);
+    }
+  });
 
   return pots;
 };

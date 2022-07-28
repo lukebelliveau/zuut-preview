@@ -18,8 +18,6 @@ import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 import { CurriedGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 
-// export const isDemoMode = () => window.location.href.includes('demo');
-// export const isDemoMode = () => true;
 export const isDemoMode = () => {
   if (process.env.NODE_ENV === 'production') return true;
 

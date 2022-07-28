@@ -13,4 +13,5 @@ export const airtableBase = Airtable.base(AIRTABLE_OBJECTS_LIBRARY);
 export const airtableTables = {
   tents: 'Tents',
   pots: 'Pots',
+  amazonProducts: 'amazonProducts',
 };

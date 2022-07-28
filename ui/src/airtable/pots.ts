@@ -1,4 +1,6 @@
+import { useQuery } from 'react-query';
 import { airtableBase, airtableTables } from './airtableBase';
+import { selectAllAmazonProducts } from './amazonProducts';
 
 export interface PotRecord {
   name: string;
@@ -6,11 +8,94 @@ export interface PotRecord {
   length: number;
   height: number;
   description: string;
+  amazonProducts: string[];
   amazonProductASINs: string[];
   recordId: string;
 }
 
-export const selectPots = async (): Promise<PotRecord[]> => {
+export const useQueryCartItems = ({ recordIds }: { recordIds: string[] }) => {
+  return useQuery(['cartItems', { recordIds }], () =>
+    selectPotsByRecordIdWithASINs(recordIds)
+  );
+};
+
+export const selectPotsByRecordId = async (
+  recordIds: string[]
+): Promise<PotRecord[]> => {
+  const allPots = await selectAllPots();
+
+  const selectedPots: PotRecord[] = [];
+
+  recordIds.forEach((recordId) => {
+    const pot = allPots.find((pot) => pot.recordId === recordId);
+    if (pot) {
+      selectedPots.push(pot);
+    }
+  });
+
+  return selectedPots;
+};
+
+export const potRecordComparator = (a: PotRecord, b: PotRecord) => {
+  try {
+    if (a.name === undefined || b.name === undefined) {
+      throw Error('Tried to sort pots by name, but name is undefined');
+    }
+    // get number value of Pot (1, 3, 5 gallon etc)
+    const aValue = a.name.split(' ')[0];
+    const bValue = b.name.split(' ')[0];
+    if (parseInt(aValue) > parseInt(bValue)) return 1;
+    else return -1;
+  } catch (e) {
+    console.error(
+      'Error creating Pot Item from airtable data. Skipping pot: ',
+      a,
+      b
+    );
+    console.error(e);
+    return 0;
+  }
+};
+
+export const selectPotsByRecordIdWithASINs = async (
+  recordIds: string[]
+): Promise<PotRecord[]> => {
+  const allPotsPromise = selectAllPots();
+  const amazonProductsPromise = selectAllAmazonProducts();
+
+  const [allPots, amazonProducts] = await Promise.all([
+    allPotsPromise,
+    amazonProductsPromise,
+  ]);
+
+  const selectedPots: PotRecord[] = [];
+
+  recordIds.forEach((recordId) => {
+    const pot = allPots.find((pot) => pot.recordId === recordId);
+    if (pot) {
+      selectedPots.push(pot);
+    }
+  });
+
+  selectedPots.forEach((pot) => {
+    const amazonProductRecordIds = pot.amazonProducts;
+    const associatedProducts = amazonProducts.filter((amazonProduct) => {
+      return pot.amazonProducts.includes(amazonProduct.recordId);
+    });
+    associatedProducts.forEach((product) => {
+      pot.amazonProductASINs.push(product.ASIN);
+    });
+  });
+
+  console.log('SELECTED POTS WITH ASINs:');
+  console.log(selectedPots);
+
+  selectedPots.sort(potRecordComparator);
+
+  return selectedPots;
+};
+
+export const selectAllPots = async (): Promise<PotRecord[]> => {
   const pots: PotRecord[] = [];
   try {
     const potRecords = await airtableBase(airtableTables.pots)
@@ -21,7 +106,7 @@ export const selectPots = async (): Promise<PotRecord[]> => {
           'length',
           'height',
           'description',
-          'amazonProductASINs',
+          'amazonProducts',
           'recordId',
         ],
       })
@@ -33,7 +118,7 @@ export const selectPots = async (): Promise<PotRecord[]> => {
       const length = record.get('length');
       const height = record.get('height');
       const description = record.get('description');
-      const amazonProductASINs = record.get('amazonProductASINs');
+      const amazonProducts = record.get('amazonProducts');
       const recordId = record.get('recordId');
 
       /**
@@ -45,7 +130,7 @@ export const selectPots = async (): Promise<PotRecord[]> => {
         length === undefined ||
         height === undefined ||
         description === undefined ||
-        amazonProductASINs === undefined ||
+        amazonProducts === undefined ||
         recordId === undefined
       ) {
         throw new Error(
@@ -59,8 +144,9 @@ export const selectPots = async (): Promise<PotRecord[]> => {
         length: parseInt(length.toString()),
         height: parseInt(height.toString()),
         description: description.toString(),
-        amazonProductASINs: amazonProductASINs.toString()?.split(','),
+        amazonProducts: amazonProducts.toString()?.split(','),
         recordId: recordId.toString(),
+        amazonProductASINs: [],
       });
     });
 

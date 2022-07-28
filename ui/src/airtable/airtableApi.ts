@@ -1,7 +1,8 @@
-import { selectPots } from './pots';
+import { selectAllPots, selectPotsByRecordId } from './pots';
 
 const airtableApi = {
-  selectPots,
+  selectAllPots,
+  selectPotsByRecordId,
 };
 
 export default airtableApi;
