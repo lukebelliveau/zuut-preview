@@ -97,6 +97,7 @@ export default class PlaceableItem
     name,
     id = v4(),
     amazonProducts = undefined,
+    recordId,
     x = 0,
     y = 0,
     width = 610,
@@ -119,6 +120,7 @@ export default class PlaceableItem
     this.placementShadow = placementShadow;
     this.rotation = rotation;
     this.modifiers = modifiers;
+    this.recordId = recordId;
   }
 
   place(position: Point) {

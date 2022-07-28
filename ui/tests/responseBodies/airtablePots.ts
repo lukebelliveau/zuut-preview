@@ -1,11 +1,14 @@
-const airtablePots = [
+import { PotRecord } from '../../src/airtable/pots';
+
+const airtablePots: PotRecord[] = [
   {
     name: '1 Gallon',
     width: 6,
     length: 6,
     height: 7.9,
     description: 'Up to 6" plant height',
-    ASIN: 'B08HRVR5TV',
+    amazonProductASINs: ['recbCJpZr8TbCS5S6'],
+    recordId: 'recTe3Bcz4mhqgQqN',
   },
   {
     name: '2 Gallon',
@@ -13,7 +16,8 @@ const airtablePots = [
     length: 9,
     height: 7.9,
     description: 'Up to 12" plant height',
-    ASIN: 'B08HRS2TDC',
+    amazonProductASINs: ['recj7vL54wZUsMh0Y'],
+    recordId: 'recWkZUqlHT1MQlmY',
   },
   {
     name: '3 Gallon',
@@ -21,7 +25,8 @@ const airtablePots = [
     length: 9,
     height: 9.9,
     description: 'Up to 18" plant height',
-    ASIN: 'B08HRR1ZJM',
+    amazonProductASINs: ['recgOXQCD44T4P6vC'],
+    recordId: 'recpXtK8fdcyxpnxS',
   },
   {
     name: '5 Gallon',
@@ -29,7 +34,8 @@ const airtablePots = [
     length: 12,
     height: 9.9,
     description: 'Up to 30" plant height',
-    ASIN: 'B00TF9E6XE',
+    amazonProductASINs: ['recuTHEUoRKSE1dMe'],
+    recordId: 'rectoPyGtsFtEPdsq',
   },
   {
     name: '7 Gallon',
@@ -37,7 +43,8 @@ const airtablePots = [
     length: 15,
     height: 9.9,
     description: 'Up to 42" plant height',
-    ASIN: 'B08HRVMPX9',
+    amazonProductASINs: ['recofj5jNIFF4DIQp'],
+    recordId: 'recc5Q1cf0W9XcmjA',
   },
   {
     name: '10 Gallon',
@@ -45,7 +52,8 @@ const airtablePots = [
     length: 15,
     height: 11.9,
     description: 'Up to 60" plant height',
-    ASIN: 'B00VWU30PO',
+    amazonProductASINs: ['recR0RCgGhHQ5UnEG'],
+    recordId: 'recCxLaIt2v41uXCi',
   },
   {
     name: '15 Gallon',
@@ -53,7 +61,8 @@ const airtablePots = [
     length: 21,
     height: 11.9,
     description: 'Up to 90" plant height',
-    ASIN: 'B00VWU37QG',
+    amazonProductASINs: ['recI7XgdRexF6EU8y'],
+    recordId: 'rec5Ke5yanmuoF0m0',
   },
   {
     name: '20 Gallon',
@@ -61,7 +70,8 @@ const airtablePots = [
     length: 21,
     height: 15.9,
     description: 'Up to 120" plant height',
-    ASIN: 'B097PJW1QP',
+    amazonProductASINs: ['recfV70miedJp9bf0'],
+    recordId: 'recqx30FEvLQUgzzO',
   },
   {
     name: '25 Gallon',
@@ -69,7 +79,8 @@ const airtablePots = [
     length: 21,
     height: 15.9,
     description: 'Up to 150" plant height',
-    ASIN: 'B097PHG8PV',
+    amazonProductASINs: ['recdyHhOgP0Tnb8fF'],
+    recordId: 'rec8ZyS7LbXLwXBss',
   },
   {
     name: '30 Gallon',
@@ -77,7 +88,8 @@ const airtablePots = [
     length: 24,
     height: 15.9,
     description: 'For multiple plants',
-    ASIN: 'B097PJS964',
+    amazonProductASINs: ['recUJ72nHihEQa7IS'],
+    recordId: 'recVCGQDNiJ6GQK0J',
   },
   {
     name: '50 Gallon',
@@ -85,7 +97,8 @@ const airtablePots = [
     length: 30,
     height: 19.1,
     description: 'For multiple plants',
-    ASIN: 'B07SVYP3V5',
+    amazonProductASINs: ['rec9CjHOb3hpPUK8X'],
+    recordId: 'recpzNPTyUT6dT8Hp',
   },
   {
     name: '100 Gallon',
@@ -93,7 +106,8 @@ const airtablePots = [
     length: 39,
     height: 19.9,
     description: 'For multiple plants',
-    ASIN: 'B07SQQQPYY',
+    amazonProductASINs: ['recIyjjlN9f7JHRkF'],
+    recordId: 'rec2YeERza71U3WZV',
   },
 ];
 

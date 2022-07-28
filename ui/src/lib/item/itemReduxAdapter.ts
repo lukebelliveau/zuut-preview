@@ -45,6 +45,7 @@ export default class ItemReduxAdapter {
       name: item.name,
       collisionState: CollisionState.NEUTRAL,
       amazonProducts: item.amazonProducts,
+      recordId: item.recordId,
     };
 
     if (isPlaceableItem(item)) {
@@ -188,6 +189,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           amazonProducts: itemState.amazonProducts,
+          recordId: itemState.recordId,
         });
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem({

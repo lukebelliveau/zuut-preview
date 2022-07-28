@@ -17,6 +17,7 @@ import DehumidifierItem from './item/dehumidifierItem';
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
 import { IPlaceableItem } from './item/placeableItem';
+import { PotRecord } from '../airtable/pots';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -26,14 +27,18 @@ export type IItemGroup = {
 const fetchPots = async (): Promise<Item[]> => {
   const potData = await airtableApi.selectPots();
 
-  const pots: any = [];
+  const pots: PotItem[] = [];
   potData
-    .sort((a: IPlaceableItem, b: IPlaceableItem) => {
+    .sort((a: PotRecord, b: PotRecord) => {
       try {
+        if (a.name === undefined || b.name === undefined) {
+          throw Error('Tried to sort pots by name, but name is undefined');
+        }
         // get number value of Pot (1, 3, 5 gallon etc)
         const aValue = a.name.split(' ')[0];
         const bValue = b.name.split(' ')[0];
-        return parseInt(aValue) > parseInt(bValue);
+        if (parseInt(aValue) > parseInt(bValue)) return 1;
+        else return -1;
       } catch (e) {
         console.error(
           'Error creating Pot Item from airtable data. Skipping pot: ',
@@ -41,13 +46,15 @@ const fetchPots = async (): Promise<Item[]> => {
           b
         );
         console.error(e);
+        return 0;
       }
     })
-    .forEach((pot: any) => {
+    .forEach((pot: PotRecord) => {
       try {
         pots.push(
           new PotItem({
             name: pot.name,
+            recordId: pot.recordId,
             id: undefined,
             x: undefined,
             y: undefined,
@@ -58,7 +65,7 @@ const fetchPots = async (): Promise<Item[]> => {
             amazonProducts: [
               {
                 name: 'Pot',
-                ASIN: pot.ASIN,
+                ASIN: pot.amazonProductASINs[0],
               },
             ],
           })

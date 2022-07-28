@@ -39,6 +39,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   constructor({
     name,
     id = v4(),
+    recordId,
     amazonProducts = undefined,
     x = 0,
     y = 0,
@@ -51,12 +52,9 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, width, length, height });
+    super({ name, id, amazonProducts, width, length, height, recordId });
     this.x = x;
     this.y = y;
-    // this.width = width;
-    // this.length = length;
-    // this.height = height;
     this.description = description;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
@@ -82,8 +80,9 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   }
 
   copy(): PotItem {
-    return new PotItem({
+    const copiedPotItem = new PotItem({
       name: this.name,
+      recordId: this.recordId,
       id: v4(),
       x: this.x,
       y: this.y,
@@ -95,5 +94,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
       modifiers: this.modifiers,
       amazonProducts: this.amazonProducts,
     });
+
+    return copiedPotItem;
   }
 }

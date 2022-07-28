@@ -20,4 +20,5 @@ export type ItemState = {
   rotation?: number;
   modifiers?: Modifiers;
   amazonProducts: AmazonProduct[] | undefined;
+  recordId?: string;
 };
