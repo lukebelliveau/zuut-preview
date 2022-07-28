@@ -1,6 +1,5 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import mixpanel from 'mixpanel-browser';
 
 import './index.css';
@@ -47,8 +46,7 @@ const Zuut = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root') as HTMLDivElement);
-root.render(<Zuut />);
+ReactDOM.render(<Zuut />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
