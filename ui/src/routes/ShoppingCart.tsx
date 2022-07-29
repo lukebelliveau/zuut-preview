@@ -6,12 +6,8 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import {
-  PotRecord,
-  selectPotsByRecordId,
-  useQueryCartItems,
-} from '../airtable/pots';
+import { ItemRecord } from '../airtable/ItemRecord';
+import { useQueryCartItems } from '../airtable/pots';
 import useQueryParams from '../app/useQuery';
 import ZuutLogo from '../images/zuut-logo.svg';
 
@@ -26,7 +22,7 @@ interface ShoppingCartItem {
   ASIN: string | undefined;
 }
 
-const createShoppingCartUrl = (items: PotRecord[]) => {
+const createShoppingCartUrl = (items: ItemRecord[]) => {
   let shoppingCartItems: { [itemName: string]: ShoppingCartItem } = {};
 
   items.forEach((item) => {

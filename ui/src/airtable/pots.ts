@@ -1,17 +1,11 @@
 import { useQuery } from 'react-query';
-import { airtableBase, airtableTables } from './airtableBase';
+import {
+  airtableBase,
+  airtableTables,
+  defaultItemFields,
+} from './airtableBase';
 import { selectAllAmazonProducts } from './amazonProducts';
-
-export interface PotRecord {
-  name: string;
-  width: number;
-  length: number;
-  height: number;
-  description: string;
-  amazonProducts: string[];
-  amazonProductASINs: string[];
-  recordId: string;
-}
+import { ItemRecord } from './ItemRecord';
 
 export const useQueryCartItems = ({ recordIds }: { recordIds: string[] }) => {
   return useQuery(['cartItems', { recordIds }], () =>
@@ -21,10 +15,10 @@ export const useQueryCartItems = ({ recordIds }: { recordIds: string[] }) => {
 
 export const selectPotsByRecordId = async (
   recordIds: string[]
-): Promise<PotRecord[]> => {
+): Promise<ItemRecord[]> => {
   const allPots = await selectAllPots();
 
-  const selectedPots: PotRecord[] = [];
+  const selectedPots: ItemRecord[] = [];
 
   recordIds.forEach((recordId) => {
     const pot = allPots.find((pot) => pot.recordId === recordId);
@@ -36,7 +30,7 @@ export const selectPotsByRecordId = async (
   return selectedPots;
 };
 
-export const potRecordComparator = (a: PotRecord, b: PotRecord) => {
+export const potRecordComparator = (a: ItemRecord, b: ItemRecord) => {
   try {
     if (a.name === undefined || b.name === undefined) {
       throw Error('Tried to sort pots by name, but name is undefined');
@@ -59,7 +53,7 @@ export const potRecordComparator = (a: PotRecord, b: PotRecord) => {
 
 export const selectPotsByRecordIdWithASINs = async (
   recordIds: string[]
-): Promise<PotRecord[]> => {
+): Promise<ItemRecord[]> => {
   const allPotsPromise = selectAllPots();
   const amazonProductsPromise = selectAllAmazonProducts();
 
@@ -68,7 +62,7 @@ export const selectPotsByRecordIdWithASINs = async (
     amazonProductsPromise,
   ]);
 
-  const selectedPots: PotRecord[] = [];
+  const selectedPots: ItemRecord[] = [];
 
   recordIds.forEach((recordId) => {
     const pot = allPots.find((pot) => pot.recordId === recordId);
@@ -87,28 +81,17 @@ export const selectPotsByRecordIdWithASINs = async (
     });
   });
 
-  console.log('SELECTED POTS WITH ASINs:');
-  console.log(selectedPots);
-
   selectedPots.sort(potRecordComparator);
 
   return selectedPots;
 };
 
-export const selectAllPots = async (): Promise<PotRecord[]> => {
-  const pots: PotRecord[] = [];
+export const selectAllPots = async (): Promise<ItemRecord[]> => {
+  const pots: ItemRecord[] = [];
   try {
-    const potRecords = await airtableBase(airtableTables.pots)
+    const potRecords = await airtableBase(airtableTables.pots.id)
       .select({
-        fields: [
-          'name',
-          'width',
-          'length',
-          'height',
-          'description',
-          'amazonProducts',
-          'recordId',
-        ],
+        fields: defaultItemFields,
       })
       .all();
 
@@ -152,7 +135,7 @@ export const selectAllPots = async (): Promise<PotRecord[]> => {
 
     return pots;
   } catch (e) {
-    console.error('Error fetching Tent data:');
+    console.error('Error fetching Pot data:');
     console.error(e);
 
     return pots;

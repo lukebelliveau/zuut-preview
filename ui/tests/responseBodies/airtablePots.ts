@@ -1,6 +1,6 @@
-import { PotRecord } from '../../src/airtable/pots';
+import { ItemRecord } from '../../src/airtable/ItemRecord';
 
-const airtablePots: PotRecord[] = [
+const airtablePots: ItemRecord[] = [
   {
     name: '1 Gallon',
     width: 6,

@@ -17,7 +17,8 @@ import DehumidifierItem from './item/dehumidifierItem';
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
 import { IPlaceableItem } from './item/placeableItem';
-import { PotRecord, potRecordComparator } from '../airtable/pots';
+import { potRecordComparator } from '../airtable/pots';
+import { ItemRecord } from '../airtable/ItemRecord';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -28,7 +29,7 @@ const fetchPots = async (): Promise<Item[]> => {
   const potData = await airtableApi.selectAllPots();
 
   const pots: PotItem[] = [];
-  potData.sort(potRecordComparator).forEach((pot: PotRecord) => {
+  potData.sort(potRecordComparator).forEach((pot: ItemRecord) => {
     try {
       pots.push(
         new PotItem({
@@ -59,6 +60,43 @@ const fetchPots = async (): Promise<Item[]> => {
   });
 
   return pots;
+};
+
+const fetchLights = async (): Promise<Item[]> => {
+  const lightData = await airtableApi.selectAllLights();
+
+  const lights: LightItem[] = [];
+  lightData.forEach((light: ItemRecord) => {
+    try {
+      lights.push(
+        new LightItem({
+          name: light.name,
+          recordId: light.recordId,
+          id: undefined,
+          x: undefined,
+          y: undefined,
+          width: inchesToFeet(feetToMm_REQUIRE_3_INCHES(light.width)),
+          length: inchesToFeet(feetToMm_REQUIRE_3_INCHES(light.length)),
+          height: light.height,
+          description: light.description,
+          amazonProducts: [
+            {
+              name: 'Light',
+              ASIN: light.amazonProducts[0],
+            },
+          ],
+        })
+      );
+    } catch (e) {
+      console.error(
+        'Error creating Light Item from airtable data. Skipping light: ',
+        light
+      );
+      console.error(e);
+    }
+  });
+
+  return lights;
 };
 
 const StaticItemsLibrary: IItemGroup[] = [
@@ -233,23 +271,6 @@ const StaticItemsLibrary: IItemGroup[] = [
     ],
   },
 
-  {
-    itemGroup: 'lights',
-    items: [
-      new LightItem({
-        name: 'LED Light',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1),
-        length: feetToMm_REQUIRE_3_INCHES(2),
-        height: feetToMm_REQUIRE_3_INCHES(0.5),
-        description:
-          'A relatively new type of grow light that produces better quality buds and bigger yields while using less electricity and producing less heat than traditional grow lights.',
-        amazonProducts: [{ name: 'LED Light', ASIN: 'B08772CTK7' }],
-      }),
-    ],
-  },
   {
     itemGroup: 'climate',
     items: [
@@ -827,11 +848,16 @@ const StaticItemsLibrary: IItemGroup[] = [
 
 const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
   const pots = await fetchPots();
+  const lights = await fetchLights();
   const itemsLibrary = [
     ...StaticItemsLibrary,
     {
       itemGroup: 'pots',
       items: pots,
+    },
+    {
+      itemGroup: 'lights',
+      items: lights,
     },
   ];
 

@@ -10,7 +10,7 @@ export const selectAllAmazonProducts = async (): Promise<
 > => {
   const amazonProducts: AmazonProductRecord[] = [];
   try {
-    const potRecords = await airtableBase(airtableTables.amazonProducts)
+    const potRecords = await airtableBase(airtableTables.amazonProducts.id)
       .select({
         fields: ['ASIN', 'recordId'],
       })

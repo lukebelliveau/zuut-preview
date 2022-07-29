@@ -10,8 +10,32 @@ Airtable.configure({
 
 export const airtableBase = Airtable.base(AIRTABLE_OBJECTS_LIBRARY);
 
-export const airtableTables = {
-  tents: 'Tents',
-  pots: 'Pots',
-  amazonProducts: 'amazonProducts',
+interface AirtableTable {
+  id: string;
+}
+
+export const airtableTables: { [key: string]: AirtableTable } = {
+  tents: {
+    id: 'tblB29LfvCS1sCwba',
+  },
+  pots: {
+    id: 'tblxv8s5syk4uuthK',
+  },
+  lights: {
+    id: 'tblCgDy8e4HkBUqaS',
+  },
+  amazonProducts: {
+    id: 'tblO3b5pFgR1PtnIc',
+  },
 };
+
+export const defaultItemFields = [
+  'name',
+  'width',
+  'length',
+  'height',
+  'description',
+  'amazonProducts',
+  'recordId',
+  'linkedASINs',
+];
