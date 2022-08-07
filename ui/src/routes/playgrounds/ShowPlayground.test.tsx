@@ -17,7 +17,8 @@ import ShowPlayground from './ShowPlayground';
 import getItemsOfType from '../../../tests/getItemsOfType';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import airtableApi from '../../airtable/airtableApi';
-import airtablePots from '../../../tests/responseBodies/airtablePots';
+import airtablePots from '../../../tests/responseBodies/airtable/airtablePots';
+import airtableLights from '../../../tests/responseBodies/airtable/airtableLights';
 
 jest.mock('../../lib/plan/planService');
 jest.mock('../../airtable/airtableApi');
@@ -25,6 +26,10 @@ jest.mock('../../airtable/airtableApi');
 beforeEach(() => {
   jest.spyOn(airtableApi, 'selectAllPots').mockImplementation(() => {
     return Promise.resolve(airtablePots);
+  });
+
+  jest.spyOn(airtableApi, 'selectAllLights').mockImplementation(() => {
+    return Promise.resolve(airtableLights);
   });
 });
 

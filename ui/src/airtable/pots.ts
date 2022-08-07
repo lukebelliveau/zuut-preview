@@ -77,7 +77,7 @@ export const selectPotsByRecordIdWithASINs = async (
       return pot.amazonProducts.includes(amazonProduct.recordId);
     });
     associatedProducts.forEach((product) => {
-      pot.amazonProductASINs.push(product.ASIN);
+      pot.linkedASINs.push(product.ASIN);
     });
   });
 
@@ -129,7 +129,7 @@ export const selectAllPots = async (): Promise<ItemRecord[]> => {
         description: description.toString(),
         amazonProducts: amazonProducts.toString()?.split(','),
         recordId: recordId.toString(),
-        amazonProductASINs: [],
+        linkedASINs: [],
       });
     });
 

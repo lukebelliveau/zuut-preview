@@ -31,7 +31,7 @@ const createShoppingCartUrl = (items: ItemRecord[]) => {
     } else {
       shoppingCartItems[item.name] = {
         quantity: 1,
-        ASIN: item.amazonProductASINs[0],
+        ASIN: item.linkedASINs[0],
       };
     }
   });
@@ -57,8 +57,6 @@ const ShoppingCart = () => {
     throw Error('Attempted to load a shopping cart with no items.');
 
   const recordIds = JSON.parse(recordIdString);
-
-  console.log(recordIds);
 
   const {
     isLoading,
@@ -107,9 +105,7 @@ const ShoppingCart = () => {
                     </TableCell>
                     <TableCell>
                       <a
-                        href={constructAmazonLinkWithASIN(
-                          item.amazonProductASINs[0]
-                        )}
+                        href={constructAmazonLinkWithASIN(item.linkedASINs[0])}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

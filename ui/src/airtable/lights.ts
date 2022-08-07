@@ -49,7 +49,7 @@ export const selectAllLights = async (): Promise<ItemRecord[]> => {
         description: description.toString(),
         amazonProducts: amazonProducts.toString()?.split(','),
         recordId: recordId.toString(),
-        amazonProductASINs: [],
+        linkedASINs: [],
       });
     });
 

@@ -1,4 +1,4 @@
-import { ItemRecord } from '../../src/airtable/ItemRecord';
+import { ItemRecord } from '../../../src/airtable/ItemRecord';
 
 const airtablePots: ItemRecord[] = [
   {
@@ -8,7 +8,7 @@ const airtablePots: ItemRecord[] = [
     height: 7.9,
     description: 'Up to 6" plant height',
     amazonProducts: ['recbCJpZr8TbCS5S6'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recTe3Bcz4mhqgQqN',
   },
   {
@@ -18,7 +18,7 @@ const airtablePots: ItemRecord[] = [
     height: 7.9,
     description: 'Up to 12" plant height',
     amazonProducts: ['recj7vL54wZUsMh0Y'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recWkZUqlHT1MQlmY',
   },
   {
@@ -28,7 +28,7 @@ const airtablePots: ItemRecord[] = [
     height: 9.9,
     description: 'Up to 18" plant height',
     amazonProducts: ['recgOXQCD44T4P6vC'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recpXtK8fdcyxpnxS',
   },
   {
@@ -38,7 +38,7 @@ const airtablePots: ItemRecord[] = [
     height: 9.9,
     description: 'Up to 30" plant height',
     amazonProducts: ['recuTHEUoRKSE1dMe'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'rectoPyGtsFtEPdsq',
   },
   {
@@ -48,7 +48,7 @@ const airtablePots: ItemRecord[] = [
     height: 9.9,
     description: 'Up to 42" plant height',
     amazonProducts: ['recofj5jNIFF4DIQp'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recc5Q1cf0W9XcmjA',
   },
   {
@@ -58,7 +58,7 @@ const airtablePots: ItemRecord[] = [
     height: 11.9,
     description: 'Up to 60" plant height',
     amazonProducts: ['recR0RCgGhHQ5UnEG'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recCxLaIt2v41uXCi',
   },
   {
@@ -68,7 +68,7 @@ const airtablePots: ItemRecord[] = [
     height: 11.9,
     description: 'Up to 90" plant height',
     amazonProducts: ['recI7XgdRexF6EU8y'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'rec5Ke5yanmuoF0m0',
   },
   {
@@ -78,7 +78,7 @@ const airtablePots: ItemRecord[] = [
     height: 15.9,
     description: 'Up to 120" plant height',
     amazonProducts: ['recfV70miedJp9bf0'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recqx30FEvLQUgzzO',
   },
   {
@@ -88,7 +88,7 @@ const airtablePots: ItemRecord[] = [
     height: 15.9,
     description: 'Up to 150" plant height',
     amazonProducts: ['recdyHhOgP0Tnb8fF'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'rec8ZyS7LbXLwXBss',
   },
   {
@@ -98,7 +98,7 @@ const airtablePots: ItemRecord[] = [
     height: 15.9,
     description: 'For multiple plants',
     amazonProducts: ['recUJ72nHihEQa7IS'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recVCGQDNiJ6GQK0J',
   },
   {
@@ -108,7 +108,7 @@ const airtablePots: ItemRecord[] = [
     height: 19.1,
     description: 'For multiple plants',
     amazonProducts: ['rec9CjHOb3hpPUK8X'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'recpzNPTyUT6dT8Hp',
   },
   {
@@ -118,7 +118,7 @@ const airtablePots: ItemRecord[] = [
     height: 19.9,
     description: 'For multiple plants',
     amazonProducts: ['recIyjjlN9f7JHRkF'],
-    amazonProductASINs: ['B07QQQQQQQ'],
+    linkedASINs: ['B07QQQQQQQ'],
     recordId: 'rec2YeERza71U3WZV',
   },
 ];
