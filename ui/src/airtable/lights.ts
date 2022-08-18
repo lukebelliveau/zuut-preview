@@ -1,7 +1,7 @@
 import { airtableTables } from './airtableBase';
-import { ItemRecord } from './ItemRecord';
+import { PlaceableItemRecord } from './Record';
 import selectAllOfItemType from './selectAllOfItemType';
 
-export const selectAllLights = async (): Promise<ItemRecord[]> => {
+export const selectAllLights = async (): Promise<PlaceableItemRecord[]> => {
   return selectAllOfItemType(airtableTables.lights.id);
 };

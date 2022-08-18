@@ -5,15 +5,15 @@ import {
   defaultItemFields,
 } from './airtableBase';
 import { selectAllAmazonProducts } from './amazonProducts';
-import { ItemRecord } from './ItemRecord';
+import { PlaceableItemRecord } from './Record';
 import selectAllOfItemType from './selectAllOfItemType';
 
 export const selectPotsByRecordId = async (
   recordIds: string[]
-): Promise<ItemRecord[]> => {
+): Promise<PlaceableItemRecord[]> => {
   const allPots = await selectAllPots();
 
-  const selectedPots: ItemRecord[] = [];
+  const selectedPots: PlaceableItemRecord[] = [];
 
   recordIds.forEach((recordId) => {
     const pot = allPots.find((pot) => pot.recordId === recordId);
@@ -25,7 +25,10 @@ export const selectPotsByRecordId = async (
   return selectedPots;
 };
 
-export const potRecordComparator = (a: ItemRecord, b: ItemRecord) => {
+export const potRecordComparator = (
+  a: PlaceableItemRecord,
+  b: PlaceableItemRecord
+) => {
   try {
     if (a.name === undefined || b.name === undefined) {
       throw Error('Tried to sort pots by name, but name is undefined');
@@ -48,7 +51,7 @@ export const potRecordComparator = (a: ItemRecord, b: ItemRecord) => {
 
 export const selectPotsByRecordIdWithASINs = async (
   recordIds: string[]
-): Promise<ItemRecord[]> => {
+): Promise<PlaceableItemRecord[]> => {
   const allPotsPromise = selectAllPots();
   const amazonProductsPromise = selectAllAmazonProducts();
 
@@ -57,7 +60,7 @@ export const selectPotsByRecordIdWithASINs = async (
     amazonProductsPromise,
   ]);
 
-  const selectedPots: ItemRecord[] = [];
+  const selectedPots: PlaceableItemRecord[] = [];
 
   recordIds.forEach((recordId) => {
     const pot = allPots.find((pot) => pot.recordId === recordId);
@@ -80,6 +83,6 @@ export const selectPotsByRecordIdWithASINs = async (
   return selectedPots;
 };
 
-export const selectAllPots = async (): Promise<ItemRecord[]> => {
+export const selectAllPots = async (): Promise<PlaceableItemRecord[]> => {
   return selectAllOfItemType(airtableTables.pots.id);
 };

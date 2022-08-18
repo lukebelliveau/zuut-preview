@@ -1,23 +1,17 @@
-import { airtableBase, defaultItemFields } from './airtableBase';
-import { PlaceableItemRecord } from './Record';
+import { airtableBase, airtableTables } from './airtableBase';
+import { MiscItemRecord } from './Record';
 
-const selectAllOfItemType = async (
-  itemTypeId: string
-): Promise<PlaceableItemRecord[]> => {
-  const items: PlaceableItemRecord[] = [];
+export const selectAllMiscItems = async (): Promise<MiscItemRecord[]> => {
+  const items: MiscItemRecord[] = [];
   try {
-    const itemRecords = await airtableBase(itemTypeId)
+    const itemRecords = await airtableBase(airtableTables.misc.id)
       .select({
-        fields: defaultItemFields,
+        fields: ['name', 'amazonProducts', 'recordId'],
       })
       .all();
 
     itemRecords.forEach((record) => {
       const name = record.get('name');
-      const width = record.get('width');
-      const length = record.get('length');
-      const height = record.get('height');
-      const description = record.get('description');
       const amazonProducts = record.get('amazonProducts');
       const recordId = record.get('recordId');
 
@@ -26,10 +20,6 @@ const selectAllOfItemType = async (
        */
       if (
         name === undefined ||
-        width === undefined ||
-        length === undefined ||
-        height === undefined ||
-        description === undefined ||
         amazonProducts === undefined ||
         recordId === undefined
       ) {
@@ -40,10 +30,6 @@ const selectAllOfItemType = async (
       } else {
         items.push({
           name: name.toString(),
-          width: parseInt(width.toString()),
-          length: parseInt(length.toString()),
-          height: parseInt(height.toString()),
-          description: description.toString(),
           amazonProducts: amazonProducts.toString()?.split(','),
           recordId: recordId.toString(),
           linkedASINs: [],
@@ -59,5 +45,3 @@ const selectAllOfItemType = async (
     return items;
   }
 };
-
-export default selectAllOfItemType;

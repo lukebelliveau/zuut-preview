@@ -108,6 +108,7 @@ export default class ItemReduxAdapter {
         return new MiscItem({
           name: itemState.name,
           id: itemState.id,
+          recordId: itemState.recordId,
         });
       case MODIFIER_ITEM_TYPE:
         return new ModifierItem({ name: itemState.name, id: itemState.id });

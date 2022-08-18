@@ -1,6 +1,6 @@
-import { ItemRecord } from '../../../src/airtable/ItemRecord';
+import { PlaceableItemRecord } from '../../../src/airtable/Record';
 
-const airtableLights: ItemRecord[] = [
+const airtableLights: PlaceableItemRecord[] = [
   {
     name: 'LED',
     width: 12,

@@ -1,6 +1,6 @@
-import { ItemRecord } from '../../../src/airtable/ItemRecord';
+import { PlaceableItemRecord } from '../../../src/airtable/Record';
 
-const airtablePots: ItemRecord[] = [
+const airtablePots: PlaceableItemRecord[] = [
   {
     name: '1 Gallon',
     width: 6,

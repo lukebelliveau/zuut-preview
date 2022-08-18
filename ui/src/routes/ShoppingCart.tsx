@@ -7,9 +7,9 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { useQueryCartItems } from '../airtable/airtableApi';
-import { ItemRecord } from '../airtable/ItemRecord';
 import useQueryParams from '../app/useQuery';
 import ZuutLogo from '../images/zuut-logo.svg';
+import { Record, PlaceableItemRecord } from '../airtable/Record';
 
 export const shopping_cart_path = () => '/cart';
 
@@ -22,7 +22,7 @@ interface ShoppingCartItem {
   ASIN: string | undefined;
 }
 
-const createShoppingCartUrl = (items: ItemRecord[]) => {
+const createShoppingCartUrl = (items: Record[]) => {
   let shoppingCartItems: { [itemName: string]: ShoppingCartItem } = {};
 
   items.forEach((item) => {
@@ -47,6 +47,19 @@ const createShoppingCartUrl = (items: ItemRecord[]) => {
   });
 
   return `https://www.amazon.com/gp/aws/cart/add.html?${addToCartQuery}`;
+};
+
+const renderDimensionsIfPlaceableItem = (item: Record) => {
+  if (
+    'width' in item &&
+    'height' in item &&
+    'width' in item &&
+    'description' in item
+  ) {
+    return `${item.length} in * ${item.width} in`;
+  }
+
+  return '';
 };
 
 const ShoppingCart = () => {
@@ -101,7 +114,7 @@ const ShoppingCart = () => {
                       {item.name}
                     </TableCell>
                     <TableCell>
-                      {item.length} in * {item.width} in
+                      {renderDimensionsIfPlaceableItem(item)}
                     </TableCell>
                     <TableCell>
                       <a

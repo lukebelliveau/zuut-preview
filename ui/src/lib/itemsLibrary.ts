@@ -17,7 +17,7 @@ import DehumidifierItem from './item/dehumidifierItem';
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
 import { potRecordComparator } from '../airtable/pots';
-import { ItemRecord } from '../airtable/ItemRecord';
+import { PlaceableItemRecord, MiscItemRecord } from '../airtable/Record';
 import queryKeys from './queryKeys';
 
 export type IItemGroup = {
@@ -29,7 +29,7 @@ const fetchTents = async (): Promise<Item[]> => {
   const tentData = await airtableApi.selectAllTents();
 
   const tents: Growspace[] = [];
-  tentData.forEach((tent: ItemRecord) => {
+  tentData.forEach((tent: PlaceableItemRecord) => {
     try {
       tents.push(
         new Growspace({
@@ -62,11 +62,44 @@ const fetchTents = async (): Promise<Item[]> => {
   return tents;
 };
 
+const fetchMiscItems = async (): Promise<Item[]> => {
+  const miscItemData = await airtableApi.selectAllMiscItems();
+
+  console.log(miscItemData);
+
+  const miscItems: MiscItem[] = [];
+  miscItemData.forEach((miscItem: MiscItemRecord) => {
+    try {
+      miscItems.push(
+        new MiscItem({
+          name: miscItem.name,
+          recordId: miscItem.recordId,
+          id: undefined,
+          amazonProducts: [
+            {
+              name: 'Misc',
+              ASIN: miscItem.amazonProducts[0],
+            },
+          ],
+        })
+      );
+    } catch (e) {
+      console.error(
+        'Error creating Misc Item from airtable data. Skipping misc: ',
+        miscItem
+      );
+      console.error(e);
+    }
+  });
+
+  return miscItems;
+};
+
 const fetchPots = async (): Promise<Item[]> => {
   const potData = await airtableApi.selectAllPots();
 
   const pots: PotItem[] = [];
-  potData.sort(potRecordComparator).forEach((pot: ItemRecord) => {
+  potData.sort(potRecordComparator).forEach((pot: PlaceableItemRecord) => {
     try {
       pots.push(
         new PotItem({
@@ -103,7 +136,7 @@ const fetchLights = async (): Promise<Item[]> => {
   const lightData = await airtableApi.selectAllLights();
 
   const lights: LightItem[] = [];
-  lightData.forEach((light: ItemRecord) => {
+  lightData.forEach((light: PlaceableItemRecord) => {
     try {
       lights.push(
         new LightItem({
@@ -275,447 +308,13 @@ const StaticItemsLibrary: IItemGroup[] = [
       }),
     ],
   },
-  {
-    itemGroup: 'misc',
-    items: [
-      new MiscItem({
-        name: 'Seedling Trays',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07XNQT52F',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Seedling Heating Map',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B00P7U259C',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Magnifier',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07VK1LVKX',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Nutrients',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B00572026S',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'pH Tester',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B01M5IASHD',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'pH Up/Down',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B000BNKWZY',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Extension Cord',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B073R2D51S',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Measuring Spoons',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B00EZQQEMS',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Pipettes',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07F3ZN56V',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Syringes',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07PHRWTSS',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Eye Protection',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08KGXC4TW',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Zip Ties',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08TVLYB3Q',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Pruning Snips',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B087CR7H9S',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Vented Cloning Dome',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07XNQT52F',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Wet Vac',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07QXWG93C',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Humidity Packs',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07VWD9FP5',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Power Strip',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B0080Z7974',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Hygrometer',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07QPP1GRC',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Thermometer',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07QPP1GRC',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Insect Buzzers',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09C8KNZ6R',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Fly Stickers',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09Y93X59S',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Power timer',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B00MVFF59S',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Trimmer',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09KL22B3T',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Sprayer',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07QTHF3QK',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Irrigation System',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B01H6ZN0NU',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Watering globes',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08CDWY8WP',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Bamboo Stick',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09JT32X7B',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Saucers',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B07ZVG9RZB',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Trays',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09H6ZFYC4',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Pot holders',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09H6ZFYC4',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Soil',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B01KVLYW9M',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Binder clips',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B074XTRX7G',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Plant ties',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B00W6EJ9IW',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Seeds',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08SBN1YJD',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Plant Yoyos',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08NT2DMZJ',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Coco Coir',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B01N1YP8O6',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Rope Ratchets',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B0098R0600',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Water Pump',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B00318D7K8',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Hose',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09RZHVB6M',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Spray Handle',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B09RZHVB6M',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Air pump',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B078YDFYFD',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Air stone',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B002JLA83C',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-      new MiscItem({
-        name: 'Starter Plugs',
-        id: undefined,
-        amazonProducts: [
-          {
-            ASIN: 'B08SBN1YJD',
-            name: 'Starter Plug',
-          },
-        ],
-      }),
-    ],
-  },
 ];
 
 const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
   const pots = await fetchPots();
   const lights = await fetchLights();
   const tents = await fetchTents();
+  const miscItems = await fetchMiscItems();
 
   const itemsLibrary = [
     ...StaticItemsLibrary,
@@ -730,6 +329,10 @@ const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
     {
       itemGroup: 'tents',
       items: tents,
+    },
+    {
+      itemGroup: 'misc',
+      items: miscItems,
     },
   ];
 

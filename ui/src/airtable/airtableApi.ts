@@ -1,23 +1,26 @@
 import { selectAllAmazonProducts } from './amazonProducts';
 import { selectAllLights } from './lights';
 import { selectAllPots, selectPotsByRecordId } from './pots';
-import { ItemRecord } from './ItemRecord';
 import { useQuery } from 'react-query';
 import queryKeys from '../lib/queryKeys';
 import { selectAllTents } from './tents';
+import { selectAllMiscItems } from './misc';
+import { Record } from './Record';
 
-const selectAllItems = async (): Promise<ItemRecord[]> => {
+const selectAllItems = async (): Promise<Record[]> => {
   const allPotsPromise = selectAllPots();
   const allLightsPromise = selectAllLights();
   const allTentsPromise = selectAllTents();
+  const allMiscItemsPromise = selectAllMiscItems();
 
-  const [allPots, allLights, allTents] = await Promise.all([
+  const [allPots, allLights, allTents, allMiscItems] = await Promise.all([
     allPotsPromise,
     allLightsPromise,
     allTentsPromise,
+    allMiscItemsPromise,
   ]);
 
-  return [...allPots, ...allLights, ...allTents];
+  return [...allPots, ...allLights, ...allTents, ...allMiscItems];
 };
 
 export const selectItemsByRecordId = async (recordIds: string[]) => {
@@ -29,7 +32,7 @@ export const selectItemsByRecordId = async (recordIds: string[]) => {
     amazonProductsPromise,
   ]);
 
-  const selectedItems: ItemRecord[] = [];
+  const selectedItems: Record[] = [];
 
   recordIds.forEach((recordId) => {
     const item = allItems.find((item) => item.recordId === recordId);
@@ -66,6 +69,7 @@ const airtableApi = {
   selectPotsByRecordId,
   selectAllLights,
   selectAllTents,
+  selectAllMiscItems,
   useQueryCartItems,
 };
 

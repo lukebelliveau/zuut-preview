@@ -1,6 +1,6 @@
-import { ItemRecord } from '../../../src/airtable/ItemRecord';
+import { PlaceableItemRecord } from '../../../src/airtable/Record';
 
-const airtableTents: ItemRecord[] = [
+const airtableTents: PlaceableItemRecord[] = [
   {
     name: '3x3x6',
     width: 36,

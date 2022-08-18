@@ -24,6 +24,9 @@ export const airtableTables: { [key: string]: AirtableTable } = {
   lights: {
     id: 'tblCgDy8e4HkBUqaS',
   },
+  misc: {
+    id: 'tbll6Oi3Hfvh07amT',
+  },
   amazonProducts: {
     id: 'tblO3b5pFgR1PtnIc',
   },
