@@ -29,6 +29,7 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
     name,
     id = v4(),
     amazonProducts = undefined,
+    recordId,
     x = 0,
     y = 0,
     width = 610,
@@ -51,6 +52,7 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
     this.placementShadow = placementShadow;
     this.rotation = rotation;
     this.modifiers = modifiers;
+    this.recordId = recordId;
   }
 
   get image() {
@@ -68,6 +70,7 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      recordId: this.recordId,
     });
   }
 }

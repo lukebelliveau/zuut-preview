@@ -20,6 +20,7 @@ import airtableApi from '../../airtable/airtableApi';
 import airtablePots from '../../../tests/responseBodies/airtable/airtablePots';
 import airtableLights from '../../../tests/responseBodies/airtable/airtableLights';
 import airtableTents from '../../../tests/responseBodies/airtable/airtableTents';
+import airtableWater from '../../../tests/responseBodies/airtable/airtableWater';
 
 jest.mock('../../lib/plan/planService');
 jest.mock('../../airtable/airtableApi');
@@ -39,6 +40,10 @@ beforeEach(() => {
 
   jest.spyOn(airtableApi, 'selectAllMiscItems').mockImplementation(() => {
     return Promise.resolve(airtableTents);
+  });
+
+  jest.spyOn(airtableApi, 'selectAllWaterItems').mockImplementation(() => {
+    return Promise.resolve(airtableWater);
   });
 });
 

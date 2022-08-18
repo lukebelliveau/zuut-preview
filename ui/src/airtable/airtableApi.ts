@@ -6,21 +6,31 @@ import queryKeys from '../lib/queryKeys';
 import { selectAllTents } from './tents';
 import { selectAllMiscItems } from './misc';
 import { Record } from './Record';
+import { selectAllWaterItems } from './water';
 
 const selectAllItems = async (): Promise<Record[]> => {
   const allPotsPromise = selectAllPots();
   const allLightsPromise = selectAllLights();
   const allTentsPromise = selectAllTents();
+  const allWaterItemsPromise = selectAllWaterItems();
   const allMiscItemsPromise = selectAllMiscItems();
 
-  const [allPots, allLights, allTents, allMiscItems] = await Promise.all([
-    allPotsPromise,
-    allLightsPromise,
-    allTentsPromise,
-    allMiscItemsPromise,
-  ]);
+  const [allPots, allLights, allTents, allWaterItems, allMiscItems] =
+    await Promise.all([
+      allPotsPromise,
+      allLightsPromise,
+      allTentsPromise,
+      allWaterItemsPromise,
+      allMiscItemsPromise,
+    ]);
 
-  return [...allPots, ...allLights, ...allTents, ...allMiscItems];
+  return [
+    ...allPots,
+    ...allLights,
+    ...allTents,
+    ...allWaterItems,
+    ...allMiscItems,
+  ];
 };
 
 export const selectItemsByRecordId = async (recordIds: string[]) => {
@@ -70,6 +80,7 @@ const airtableApi = {
   selectAllLights,
   selectAllTents,
   selectAllMiscItems,
+  selectAllWaterItems,
   useQueryCartItems,
 };
 

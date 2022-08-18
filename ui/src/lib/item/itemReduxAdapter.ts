@@ -306,6 +306,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case HUMIDIFIER_ITEM_TYPE:
         return new HumidifierItem({

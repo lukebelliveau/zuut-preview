@@ -53,7 +53,7 @@ const selectAllOfItemType = async (
 
     return items;
   } catch (e) {
-    console.error('Error fetching Item data:');
+    console.error(`Error fetching Item data, table ID ${itemTypeId}:`);
     console.error(e);
 
     return items;

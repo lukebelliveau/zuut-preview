@@ -7,7 +7,6 @@ import DuctItem from './item/ductItem';
 import CarbonFilterItem from './item/carbonFilterItem';
 import WaterItem from './item/waterItem';
 import ExhaustFanItem from './item/exhaustFanItem';
-import MiscItem from './item/miscItem';
 import OscillatingFanItem from './item/oscillatingFanItem';
 import FloorACItem from './item/floorACItem';
 import HeatItem from './item/heatItem';
@@ -67,11 +66,11 @@ const fetchMiscItems = async (): Promise<Item[]> => {
 
   console.log(miscItemData);
 
-  const miscItems: MiscItem[] = [];
+  const miscItems: WaterItem[] = [];
   miscItemData.forEach((miscItem: MiscItemRecord) => {
     try {
       miscItems.push(
-        new MiscItem({
+        new WaterItem({
           name: miscItem.name,
           recordId: miscItem.recordId,
           id: undefined,
@@ -93,6 +92,37 @@ const fetchMiscItems = async (): Promise<Item[]> => {
   });
 
   return miscItems;
+};
+
+const fetchWaterItems = async (): Promise<Item[]> => {
+  const waterItemData = await airtableApi.selectAllWaterItems();
+
+  const waterItems: WaterItem[] = [];
+  waterItemData.forEach((waterItem: PlaceableItemRecord) => {
+    try {
+      waterItems.push(
+        new WaterItem({
+          name: waterItem.name,
+          recordId: waterItem.recordId,
+          id: undefined,
+          amazonProducts: [
+            {
+              name: 'Water',
+              ASIN: waterItem.amazonProducts[0],
+            },
+          ],
+        })
+      );
+    } catch (e) {
+      console.error(
+        'Error creating Water Item from airtable data. Skipping water item: ',
+        waterItem
+      );
+      console.error(e);
+    }
+  });
+
+  return waterItems;
 };
 
 const fetchPots = async (): Promise<Item[]> => {
@@ -293,28 +323,22 @@ const StaticItemsLibrary: IItemGroup[] = [
       }),
     ],
   },
-  {
-    itemGroup: 'water',
-    items: [
-      new WaterItem({
-        name: 'Water Container',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(2),
-        length: feetToMm_REQUIRE_3_INCHES(2),
-        height: feetToMm_REQUIRE_3_INCHES(3),
-        amazonProducts: [{ name: 'Water Container', ASIN: 'B00A1LUFEY' }],
-      }),
-    ],
-  },
 ];
 
 const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
-  const pots = await fetchPots();
-  const lights = await fetchLights();
-  const tents = await fetchTents();
-  const miscItems = await fetchMiscItems();
+  const potsPromise = await fetchPots();
+  const lightsPromise = await fetchLights();
+  const tentsPromise = await fetchTents();
+  const miscItemsPromise = await fetchMiscItems();
+  const waterItemsPromise = await fetchWaterItems();
+
+  const [pots, lights, tents, miscItems, waterItems] = await Promise.all([
+    potsPromise,
+    lightsPromise,
+    tentsPromise,
+    miscItemsPromise,
+    waterItemsPromise,
+  ]);
 
   const itemsLibrary = [
     ...StaticItemsLibrary,
@@ -329,6 +353,10 @@ const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
     {
       itemGroup: 'tents',
       items: tents,
+    },
+    {
+      itemGroup: 'water',
+      items: waterItems,
     },
     {
       itemGroup: 'misc',
