@@ -19,6 +19,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import airtableApi from '../../airtable/airtableApi';
 import airtablePots from '../../../tests/responseBodies/airtable/airtablePots';
 import airtableLights from '../../../tests/responseBodies/airtable/airtableLights';
+import airtableTents from '../../../tests/responseBodies/airtable/airtableTents';
 
 jest.mock('../../lib/plan/planService');
 jest.mock('../../airtable/airtableApi');
@@ -30,6 +31,10 @@ beforeEach(() => {
 
   jest.spyOn(airtableApi, 'selectAllLights').mockImplementation(() => {
     return Promise.resolve(airtableLights);
+  });
+
+  jest.spyOn(airtableApi, 'selectAllTents').mockImplementation(() => {
+    return Promise.resolve(airtableTents);
   });
 });
 

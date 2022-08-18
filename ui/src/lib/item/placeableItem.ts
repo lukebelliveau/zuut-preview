@@ -109,7 +109,7 @@ export default class PlaceableItem
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts });
+    super({ name, id, amazonProducts, recordId });
     this.x = x;
     this.y = y;
     this.width = width;

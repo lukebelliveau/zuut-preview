@@ -25,6 +25,43 @@ export type IItemGroup = {
   items: Item[];
 };
 
+const fetchTents = async (): Promise<Item[]> => {
+  const tentData = await airtableApi.selectAllTents();
+
+  const tents: Growspace[] = [];
+  tentData.forEach((tent: ItemRecord) => {
+    try {
+      tents.push(
+        new Growspace({
+          name: tent.name,
+          recordId: tent.recordId,
+          id: undefined,
+          x: undefined,
+          y: undefined,
+          width: inchesToFeet(feetToMm_REQUIRE_3_INCHES(tent.width)),
+          length: inchesToFeet(feetToMm_REQUIRE_3_INCHES(tent.length)),
+          height: tent.height,
+          description: tent.description,
+          amazonProducts: [
+            {
+              name: 'Tent',
+              ASIN: tent.amazonProducts[0],
+            },
+          ],
+        })
+      );
+    } catch (e) {
+      console.error(
+        'Error creating Tent Item from airtable data. Skipping tent: ',
+        tent
+      );
+      console.error(e);
+    }
+  });
+
+  return tents;
+};
+
 const fetchPots = async (): Promise<Item[]> => {
   const potData = await airtableApi.selectAllPots();
 
@@ -100,177 +137,6 @@ const fetchLights = async (): Promise<Item[]> => {
 };
 
 const StaticItemsLibrary: IItemGroup[] = [
-  {
-    itemGroup: 'tents',
-    items: [
-      new Growspace({
-        name: '4x4x6.5 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(4),
-        length: feetToMm_REQUIRE_3_INCHES(4),
-        height: feetToMm_REQUIRE_3_INCHES(6.5),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B01731MNJE',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '5x5x6.5 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(5),
-        length: feetToMm_REQUIRE_3_INCHES(5),
-        height: feetToMm_REQUIRE_3_INCHES(6.5),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B01DXYM98K',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '4x2x5 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(4),
-        length: feetToMm_REQUIRE_3_INCHES(2),
-        height: feetToMm_REQUIRE_3_INCHES(5),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B083WFYZ6K',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '3x3x6 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(3),
-        length: feetToMm_REQUIRE_3_INCHES(3),
-        height: feetToMm_REQUIRE_3_INCHES(6),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B01DXYMKIO',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '5x2.5x6.5 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(5),
-        length: feetToMm_REQUIRE_3_INCHES(2.5),
-        height: feetToMm_REQUIRE_3_INCHES(6.5),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B07WK3Q372',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '2x2x3 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(2),
-        length: feetToMm_REQUIRE_3_INCHES(2),
-        height: feetToMm_REQUIRE_3_INCHES(3),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B07VRSCVVC',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '2x2x4 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(2),
-        length: feetToMm_REQUIRE_3_INCHES(2),
-        height: feetToMm_REQUIRE_3_INCHES(4),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B07PK7J1XZ',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '2.5x2.5x5.25 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(2.5),
-        length: feetToMm_REQUIRE_3_INCHES(2.5),
-        height: feetToMm_REQUIRE_3_INCHES(5.25),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B01DXYM98K',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '3x1.5x5.25 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(3),
-        length: feetToMm_REQUIRE_3_INCHES(1.5),
-        height: feetToMm_REQUIRE_3_INCHES(5.25),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B01DXYM98K',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '8x4x6.5 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(8),
-        length: feetToMm_REQUIRE_3_INCHES(4),
-        height: feetToMm_REQUIRE_3_INCHES(6.5),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B083WFYZ6K',
-          },
-        ],
-      }),
-      new Growspace({
-        name: '8x4x6 tent',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(8),
-        length: feetToMm_REQUIRE_3_INCHES(4),
-        height: feetToMm_REQUIRE_3_INCHES(6),
-        amazonProducts: [
-          {
-            name: 'Tent',
-            ASIN: 'B01DXYM98K',
-          },
-        ],
-      }),
-    ],
-  },
-
   {
     itemGroup: 'climate',
     items: [
@@ -849,6 +715,8 @@ const StaticItemsLibrary: IItemGroup[] = [
 const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
   const pots = await fetchPots();
   const lights = await fetchLights();
+  const tents = await fetchTents();
+
   const itemsLibrary = [
     ...StaticItemsLibrary,
     {
@@ -858,6 +726,10 @@ const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
     {
       itemGroup: 'lights',
       items: lights,
+    },
+    {
+      itemGroup: 'tents',
+      items: tents,
     },
   ];
 

@@ -4,17 +4,20 @@ import { selectAllPots, selectPotsByRecordId } from './pots';
 import { ItemRecord } from './ItemRecord';
 import { useQuery } from 'react-query';
 import queryKeys from '../lib/queryKeys';
+import { selectAllTents } from './tents';
 
 const selectAllItems = async (): Promise<ItemRecord[]> => {
   const allPotsPromise = selectAllPots();
   const allLightsPromise = selectAllLights();
+  const allTentsPromise = selectAllTents();
 
-  const [allPots, allLights] = await Promise.all([
+  const [allPots, allLights, allTents] = await Promise.all([
     allPotsPromise,
     allLightsPromise,
+    allTentsPromise,
   ]);
 
-  return [...allPots, ...allLights];
+  return [...allPots, ...allLights, ...allTents];
 };
 
 export const selectItemsByRecordId = async (recordIds: string[]) => {
@@ -62,6 +65,7 @@ const airtableApi = {
   selectAllPots,
   selectPotsByRecordId,
   selectAllLights,
+  selectAllTents,
   useQueryCartItems,
 };
 

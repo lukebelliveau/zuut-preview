@@ -40,6 +40,7 @@ export default class Growspace extends PlaceableItem {
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      recordId: this.recordId,
     });
   }
 

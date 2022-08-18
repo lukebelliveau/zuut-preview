@@ -85,6 +85,7 @@ export default class ItemReduxAdapter {
           modifiers: itemState.modifiers,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem({
@@ -101,6 +102,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case MISC_ITEM_TYPE:
         return new MiscItem({
