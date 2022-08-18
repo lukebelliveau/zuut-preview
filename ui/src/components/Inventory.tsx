@@ -80,6 +80,7 @@ export default function Inventory() {
 
   const shoppingCartUrlWithRecordIds = () => {
     const recordIds: string[] = [];
+
     items.forEach((item) => {
       if (item.recordId) recordIds.push(item.recordId);
     });

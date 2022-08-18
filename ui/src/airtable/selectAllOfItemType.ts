@@ -4,15 +4,15 @@ import { ItemRecord } from './ItemRecord';
 const selectAllOfItemType = async (
   itemTypeId: string
 ): Promise<ItemRecord[]> => {
-  const pots: ItemRecord[] = [];
+  const items: ItemRecord[] = [];
   try {
-    const potRecords = await airtableBase(itemTypeId)
+    const itemRecords = await airtableBase(itemTypeId)
       .select({
         fields: defaultItemFields,
       })
       .all();
 
-    potRecords.forEach((record) => {
+    itemRecords.forEach((record) => {
       const name = record.get('name');
       const width = record.get('width');
       const length = record.get('length');
@@ -33,29 +33,30 @@ const selectAllOfItemType = async (
         amazonProducts === undefined ||
         recordId === undefined
       ) {
-        throw new Error(
-          'Attempted to fetch pot records from Airtable, but one or more of the values was undefined'
+        console.error(
+          'Attempted to fetch item records from Airtable, but one or more of the values was undefined.'
         );
+        console.error(record);
+      } else {
+        items.push({
+          name: name.toString(),
+          width: parseInt(width.toString()),
+          length: parseInt(length.toString()),
+          height: parseInt(height.toString()),
+          description: description.toString(),
+          amazonProducts: amazonProducts.toString()?.split(','),
+          recordId: recordId.toString(),
+          linkedASINs: [],
+        });
       }
-
-      pots.push({
-        name: name.toString(),
-        width: parseInt(width.toString()),
-        length: parseInt(length.toString()),
-        height: parseInt(height.toString()),
-        description: description.toString(),
-        amazonProducts: amazonProducts.toString()?.split(','),
-        recordId: recordId.toString(),
-        linkedASINs: [],
-      });
     });
 
-    return pots;
+    return items;
   } catch (e) {
-    console.error('Error fetching Pot data:');
+    console.error('Error fetching Item data:');
     console.error(e);
 
-    return pots;
+    return items;
   }
 };
 
