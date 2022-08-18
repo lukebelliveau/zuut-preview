@@ -222,6 +222,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           amazonProducts: itemState.amazonProducts,
+          recordId: itemState.recordId,
         });
       case EXHAUST_FAN_ITEM_TYPE:
         return new ExhaustFanItem({

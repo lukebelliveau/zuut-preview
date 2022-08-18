@@ -27,6 +27,7 @@ export default class LightItem
   constructor({
     name,
     id = v4(),
+    recordId,
     amazonProducts = undefined,
     x = 0,
     y = 0,
@@ -39,7 +40,7 @@ export default class LightItem
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, width, length, height });
+    super({ name, id, amazonProducts, width, length, height, recordId });
     this.x = x;
     this.y = y;
     // this.width = width;
@@ -67,6 +68,7 @@ export default class LightItem
       length: this.length,
       height: this.height,
       description: this.description,
+      recordId: this.recordId,
     });
   }
 }

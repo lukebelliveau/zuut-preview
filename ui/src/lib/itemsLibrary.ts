@@ -16,9 +16,9 @@ import HumidifierItem from './item/humidifierItem';
 import DehumidifierItem from './item/dehumidifierItem';
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
-import { IPlaceableItem } from './item/placeableItem';
 import { potRecordComparator } from '../airtable/pots';
 import { ItemRecord } from '../airtable/ItemRecord';
+import queryKeys from './queryKeys';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -865,7 +865,7 @@ const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
 };
 
 export const useQueryItemsLibrary = () => {
-  return useQuery('pots', fetchItemsLibrary);
+  return useQuery([queryKeys.itemsLibrary], fetchItemsLibrary);
 };
 
 export function itemGroup(name: string, itemGroups: any): Item[] {

@@ -7,12 +7,6 @@ import {
 import { selectAllAmazonProducts } from './amazonProducts';
 import { ItemRecord } from './ItemRecord';
 
-export const useQueryCartItems = ({ recordIds }: { recordIds: string[] }) => {
-  return useQuery(['cartItems', { recordIds }], () =>
-    selectPotsByRecordIdWithASINs(recordIds)
-  );
-};
-
 export const selectPotsByRecordId = async (
   recordIds: string[]
 ): Promise<ItemRecord[]> => {
@@ -72,7 +66,6 @@ export const selectPotsByRecordIdWithASINs = async (
   });
 
   selectedPots.forEach((pot) => {
-    const amazonProductRecordIds = pot.amazonProducts;
     const associatedProducts = amazonProducts.filter((amazonProduct) => {
       return pot.amazonProducts.includes(amazonProduct.recordId);
     });

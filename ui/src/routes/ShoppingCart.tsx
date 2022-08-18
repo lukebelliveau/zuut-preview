@@ -6,8 +6,8 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import { useQueryCartItems } from '../airtable/airtableApi';
 import { ItemRecord } from '../airtable/ItemRecord';
-import { useQueryCartItems } from '../airtable/pots';
 import useQueryParams from '../app/useQuery';
 import ZuutLogo from '../images/zuut-logo.svg';
 
