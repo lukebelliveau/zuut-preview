@@ -30,6 +30,7 @@ export default class DuctItem extends CeilingPlaceableItem {
     name,
     id = v4(),
     amazonProducts = undefined,
+    recordId,
     x = 0,
     y = 0,
     width = 610,
@@ -55,6 +56,7 @@ export default class DuctItem extends CeilingPlaceableItem {
       modifiers,
       collisionState,
       placementShadow,
+      recordId,
     });
   }
 
@@ -72,6 +74,7 @@ export default class DuctItem extends CeilingPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
+      recordId: this.recordId,
     });
   }
 

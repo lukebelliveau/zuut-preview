@@ -36,8 +36,9 @@ export default class PurifierItem
     modifiers = {},
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
+    recordId,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts });
+    super({ name, id, amazonProducts, recordId });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -65,6 +66,7 @@ export default class PurifierItem
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      recordId: this.recordId,
     });
   }
 }

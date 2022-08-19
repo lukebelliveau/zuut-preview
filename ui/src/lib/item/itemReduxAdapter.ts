@@ -242,6 +242,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           amazonProducts: itemState.amazonProducts,
+          recordId: itemState.recordId,
         });
       case OSCILLATING_FAN_ITEM_TYPE:
         return new OscillatingFanItem({
@@ -258,6 +259,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case FLOOR_AC_ITEM_TYPE:
         return new FloorACItem({
@@ -274,6 +276,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case CARBON_FILTER_ITEM_TYPE:
         return new CarbonFilterItem({
@@ -290,6 +293,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case WATER_ITEM_TYPE:
         return new WaterItem({
@@ -323,6 +327,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case DEHUMIDIFIER_ITEM_TYPE:
         return new DehumidifierItem({
@@ -339,6 +344,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case HEAT_ITEM_TYPE:
         return new HeatItem({
@@ -355,6 +361,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case PURIFIER_ITEM_TYPE:
         return new PurifierItem({
@@ -371,6 +378,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case DUCT_ITEM_TYPE:
         return new DuctItem({
@@ -387,6 +395,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       case CURVED_DUCT_ITEM_TYPE:
         return new CurvedDuctItem({
@@ -403,6 +412,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          recordId: itemState.recordId,
         });
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);

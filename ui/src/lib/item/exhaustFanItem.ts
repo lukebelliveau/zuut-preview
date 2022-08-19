@@ -28,6 +28,7 @@ export default class ExhaustFanItem
     name,
     id = v4(),
     amazonProducts = undefined,
+    recordId,
     x = 0,
     y = 0,
     width = 610,
@@ -53,6 +54,7 @@ export default class ExhaustFanItem
       modifiers: modifiers,
       collisionState: collisionState,
       placementShadow: placementShadow,
+      recordId,
     });
   }
 
@@ -70,6 +72,7 @@ export default class ExhaustFanItem
       length: this.length,
       height: this.height,
       description: this.description,
+      recordId: this.recordId,
     });
   }
 }

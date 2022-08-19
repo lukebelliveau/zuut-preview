@@ -45,6 +45,10 @@ beforeEach(() => {
   jest.spyOn(airtableApi, 'selectAllWaterItems').mockImplementation(() => {
     return Promise.resolve(airtableWater);
   });
+
+  jest.spyOn(airtableApi, 'selectAllClimateItems').mockImplementation(() => {
+    return Promise.resolve(airtableWater);
+  });
 });
 
 /**

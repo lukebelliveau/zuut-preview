@@ -7,6 +7,7 @@ export interface PlaceableItemRecord {
   amazonProducts: string[];
   linkedASINs: string[];
   recordId: string;
+  itemType?: string;
 }
 
 export interface MiscItemRecord {

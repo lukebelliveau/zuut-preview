@@ -2,14 +2,11 @@ import CeilingGrowspaceItem from './ceilingGrowspaceItem';
 import {
   CollisionState,
   IPlaceableItem,
-  Modifiers,
   PlaceableItemArgs,
-  PlacementShadow,
 } from './placeableItem';
 import CarbonFilterImage from '../../images/items/carbon_filter.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
-import { feetToMm } from '../conversions';
 
 export const CARBON_FILTER_ITEM_TYPE = 'CarbonFilterItemType';
 
@@ -39,6 +36,7 @@ export default class CarbonFilterItem
     modifiers = defaultFilterModifiers,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
+    recordId,
   }: PlaceableItemArgs) {
     super({
       name,
@@ -54,6 +52,7 @@ export default class CarbonFilterItem
       modifiers,
       collisionState,
       placementShadow,
+      recordId,
     });
   }
 
@@ -71,6 +70,7 @@ export default class CarbonFilterItem
       length: this.length,
       height: this.height,
       description: this.description,
+      recordId: this.recordId,
     });
   }
 }

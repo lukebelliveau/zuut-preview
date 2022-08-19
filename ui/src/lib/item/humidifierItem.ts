@@ -25,6 +25,7 @@ export default class HumidifierItem
     name,
     id = v4(),
     amazonProducts = undefined,
+    recordId,
     x = 0,
     y = 0,
     width = 610,
@@ -36,7 +37,7 @@ export default class HumidifierItem
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts });
+    super({ name, id, amazonProducts, recordId });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -62,6 +63,7 @@ export default class HumidifierItem
       length: this.length,
       height: this.height,
       description: this.description,
+      recordId: this.recordId,
     });
   }
 }

@@ -28,6 +28,7 @@ export default class OscillatingFanItem
     name,
     id = v4(),
     amazonProducts = undefined,
+    recordId,
     x = 0,
     y = 0,
     width = 610,
@@ -43,6 +44,7 @@ export default class OscillatingFanItem
       name,
       id,
       amazonProducts,
+      recordId,
       x,
       y,
       width,
@@ -71,6 +73,7 @@ export default class OscillatingFanItem
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      recordId: this.recordId,
     });
   }
 }

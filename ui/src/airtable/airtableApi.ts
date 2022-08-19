@@ -7,28 +7,40 @@ import { selectAllTents } from './tents';
 import { selectAllMiscItems } from './misc';
 import { Record } from './Record';
 import { selectAllWaterItems } from './water';
+import selectAllClimateItems from './climate';
 
 const selectAllItems = async (): Promise<Record[]> => {
   const allPotsPromise = selectAllPots();
   const allLightsPromise = selectAllLights();
   const allTentsPromise = selectAllTents();
   const allWaterItemsPromise = selectAllWaterItems();
+  const allClimateItemsPromise = selectAllClimateItems();
   const allMiscItemsPromise = selectAllMiscItems();
 
-  const [allPots, allLights, allTents, allWaterItems, allMiscItems] =
-    await Promise.all([
-      allPotsPromise,
-      allLightsPromise,
-      allTentsPromise,
-      allWaterItemsPromise,
-      allMiscItemsPromise,
-    ]);
+  const [
+    allPots,
+    allLights,
+    allTents,
+    allWaterItems,
+    allClimateItems,
+    allMiscItems,
+  ] = await Promise.all([
+    allPotsPromise,
+    allLightsPromise,
+    allTentsPromise,
+    allWaterItemsPromise,
+    allClimateItemsPromise,
+    allMiscItemsPromise,
+  ]);
+
+  console.log(allClimateItems);
 
   return [
     ...allPots,
     ...allLights,
     ...allTents,
     ...allWaterItems,
+    ...allClimateItems,
     ...allMiscItems,
   ];
 };
@@ -81,6 +93,7 @@ const airtableApi = {
   selectAllTents,
   selectAllMiscItems,
   selectAllWaterItems,
+  selectAllClimateItems,
   useQueryCartItems,
 };
 

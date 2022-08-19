@@ -33,8 +33,9 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
     modifiers = {},
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
+    recordId,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts });
+    super({ name, id, amazonProducts, recordId });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -61,6 +62,7 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
+      recordId: this.recordId,
     });
   }
 }

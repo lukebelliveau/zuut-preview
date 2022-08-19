@@ -3,21 +3,28 @@ import { Item } from './item';
 import PotItem from './item/potItem';
 import { feetToMm_REQUIRE_3_INCHES, inchesToFeet } from './conversions';
 import LightItem from './item/lightItem';
-import DuctItem from './item/ductItem';
-import CarbonFilterItem from './item/carbonFilterItem';
+import DuctItem, { DUCT_ITEM_TYPE } from './item/ductItem';
+import CarbonFilterItem, {
+  CARBON_FILTER_ITEM_TYPE,
+} from './item/carbonFilterItem';
 import WaterItem from './item/waterItem';
-import ExhaustFanItem from './item/exhaustFanItem';
-import OscillatingFanItem from './item/oscillatingFanItem';
-import FloorACItem from './item/floorACItem';
-import HeatItem from './item/heatItem';
-import PurifierItem from './item/purifierItem';
-import HumidifierItem from './item/humidifierItem';
-import DehumidifierItem from './item/dehumidifierItem';
+import ExhaustFanItem, { EXHAUST_FAN_ITEM_TYPE } from './item/exhaustFanItem';
+import OscillatingFanItem, {
+  OSCILLATING_FAN_ITEM_TYPE,
+} from './item/oscillatingFanItem';
+import FloorACItem, { FLOOR_AC_ITEM_TYPE } from './item/floorACItem';
+import HeatItem, { HEAT_ITEM_TYPE } from './item/heatItem';
+import PurifierItem, { PURIFIER_ITEM_TYPE } from './item/purifierItem';
+import HumidifierItem, { HUMIDIFIER_ITEM_TYPE } from './item/humidifierItem';
+import DehumidifierItem, {
+  DEHUMIDIFIER_ITEM_TYPE,
+} from './item/dehumidifierItem';
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
 import { potRecordComparator } from '../airtable/pots';
 import { PlaceableItemRecord, MiscItemRecord } from '../airtable/Record';
 import queryKeys from './queryKeys';
+import PlaceableItem from './item/placeableItem';
 
 export type IItemGroup = {
   itemGroup: string;
@@ -59,6 +66,74 @@ const fetchTents = async (): Promise<Item[]> => {
   });
 
   return tents;
+};
+
+const createClimateItem = (item: PlaceableItemRecord): PlaceableItem | null => {
+  if (item.itemType === undefined) {
+    console.error('Attempted to create climate item with undefined itemType');
+    return null;
+  }
+
+  const constructorArgs = {
+    name: item.name,
+    recordId: item.recordId,
+    id: undefined,
+    x: undefined,
+    y: undefined,
+    width: inchesToFeet(feetToMm_REQUIRE_3_INCHES(item.width)),
+    length: inchesToFeet(feetToMm_REQUIRE_3_INCHES(item.length)),
+    height: item.height,
+    description: item.description,
+    amazonProducts: [
+      {
+        name: 'Climate',
+        ASIN: item.amazonProducts[0],
+      },
+    ],
+  };
+
+  switch (item.itemType) {
+    case EXHAUST_FAN_ITEM_TYPE:
+      return new ExhaustFanItem(constructorArgs);
+    case OSCILLATING_FAN_ITEM_TYPE:
+      return new OscillatingFanItem(constructorArgs);
+    case FLOOR_AC_ITEM_TYPE:
+      return new FloorACItem(constructorArgs);
+    case HEAT_ITEM_TYPE:
+      return new HeatItem(constructorArgs);
+    case PURIFIER_ITEM_TYPE:
+      return new PurifierItem(constructorArgs);
+    case HUMIDIFIER_ITEM_TYPE:
+      return new HumidifierItem(constructorArgs);
+    case DEHUMIDIFIER_ITEM_TYPE:
+      return new DehumidifierItem(constructorArgs);
+    case DUCT_ITEM_TYPE:
+      return new DuctItem(constructorArgs);
+    case CARBON_FILTER_ITEM_TYPE:
+      return new CarbonFilterItem(constructorArgs);
+    default:
+      return null;
+  }
+};
+
+const fetchClimateItems = async (): Promise<Item[]> => {
+  const climateItemData = await airtableApi.selectAllClimateItems();
+
+  const climateItems: PlaceableItem[] = [];
+  climateItemData.forEach((item: PlaceableItemRecord) => {
+    try {
+      const climateItem = createClimateItem(item);
+      if (climateItem !== null) climateItems.push(climateItem);
+    } catch (e) {
+      console.error(
+        'Error creating Climate Item from airtable data. Skipping item: ',
+        item
+      );
+      console.error(e);
+    }
+  });
+
+  return climateItems;
 };
 
 const fetchMiscItems = async (): Promise<Item[]> => {
@@ -199,131 +274,7 @@ const fetchLights = async (): Promise<Item[]> => {
   return lights;
 };
 
-const StaticItemsLibrary: IItemGroup[] = [
-  {
-    itemGroup: 'climate',
-    items: [
-      new ExhaustFanItem({
-        name: 'Exhaust Fan',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1),
-        length: feetToMm_REQUIRE_3_INCHES(0.75),
-        height: feetToMm_REQUIRE_3_INCHES(0.75),
-        description:
-          'A steady supply of fresh air helps cannabis grow faster, produce more buds, controls the humidity and temperature, and protects plants from certain pests and molds.',
-        amazonProducts: [{ name: 'Exhaust Fan', ASIN: 'B07J9PTYRN' }],
-      }),
-      new DuctItem({
-        name: 'Ducting',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1),
-        length: feetToMm_REQUIRE_3_INCHES(0.75),
-        height: feetToMm_REQUIRE_3_INCHES(0.75),
-        description:
-          'An exhaust system often uses ducting to move hot and humid air out of the grow space.',
-        amazonProducts: [{ name: 'Ducting', ASIN: 'B07WNK7N7F' }],
-      }),
-      // new CurvedDuctItem(
-      //   'Curved Ducting',
-      //   undefined,
-      //   undefined,
-      //   undefined,
-      //   feetToMm_REQUIRE_3_INCHES(0.75),
-      //   feetToMm_REQUIRE_3_INCHES(0.75),
-      //   feetToMm_REQUIRE_3_INCHES(0.75),
-      //   'An exhaust system often uses ducting to move hot and humid air out of the grow space.'
-      // ),
-      new CarbonFilterItem({
-        name: 'Carbon Filter',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1.75),
-        length: feetToMm_REQUIRE_3_INCHES(0.75),
-        height: feetToMm_REQUIRE_3_INCHES(0.75),
-        description:
-          'Connecting a carbon filter to an exhaust fan filters the smells out of the air before it leaves the grow space.',
-        amazonProducts: [{ name: 'Carbon Filter', ASIN: 'B01DXYMHWS' }],
-      }),
-      new FloorACItem({
-        name: 'Floor AC Unit',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1.75),
-        length: feetToMm_REQUIRE_3_INCHES(1.25),
-        height: feetToMm_REQUIRE_3_INCHES(2.75),
-        description:
-          'Cannabis does not like temperatures above 85 degrees. Lowers temperature, lowers humidity',
-        amazonProducts: [{ name: 'Floor AC Unit', ASIN: 'B06ZZZY74N' }],
-      }),
-      new HeatItem({
-        name: 'Heat',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1.75),
-        length: feetToMm_REQUIRE_3_INCHES(1.25),
-        height: feetToMm_REQUIRE_3_INCHES(2.75),
-        description:
-          'Cannabis does not like temperatures below 50 degrees. Raises temperature, lowers humidity',
-        amazonProducts: [{ name: 'Heat', ASIN: 'B08PF3Q1S5' }],
-      }),
-      new PurifierItem({
-        name: 'Purifier',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(1),
-        length: feetToMm_REQUIRE_3_INCHES(0.75),
-        height: feetToMm_REQUIRE_3_INCHES(1.5),
-        description:
-          'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.',
-        amazonProducts: [{ name: 'Purifier', ASIN: 'B081NWVMCH' }],
-      }),
-      new HumidifierItem({
-        name: 'Humidifier',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(0.75),
-        length: feetToMm_REQUIRE_3_INCHES(1),
-        height: feetToMm_REQUIRE_3_INCHES(1.25),
-        description:
-          'Air purifiers destroy and prevent organic air pollutants while leaving behind CO2 and water vapor.',
-        amazonProducts: [{ name: 'Humidifer', ASIN: 'B08KXW1KRJ' }],
-      }),
-      new DehumidifierItem({
-        name: 'Dehumidifier',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(0.75),
-        length: feetToMm_REQUIRE_3_INCHES(1),
-        height: feetToMm_REQUIRE_3_INCHES(1.25),
-        description:
-          'Cannabis does not like humidity higher than 60%. Lowers humidity, raises temperature (slightly)',
-        amazonProducts: [{ name: 'Dehumidifer', ASIN: 'B01DC5PPWM' }],
-      }),
-      new OscillatingFanItem({
-        name: 'Oscillating fan',
-        id: undefined,
-        x: undefined,
-        y: undefined,
-        width: feetToMm_REQUIRE_3_INCHES(0.5),
-        length: feetToMm_REQUIRE_3_INCHES(0.75),
-        height: feetToMm_REQUIRE_3_INCHES(1),
-        description:
-          'In nature, cannabis plants thrive in a gentle breeze. Air movement protects plants from certain pests and molds.',
-        amazonProducts: [{ name: 'Oscillating Fan', ASIN: 'B07VNMT9TT' }],
-      }),
-    ],
-  },
-];
+const StaticItemsLibrary: IItemGroup[] = [];
 
 const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
   const potsPromise = await fetchPots();
@@ -331,14 +282,17 @@ const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
   const tentsPromise = await fetchTents();
   const miscItemsPromise = await fetchMiscItems();
   const waterItemsPromise = await fetchWaterItems();
+  const climateItemsPromise = await fetchClimateItems();
 
-  const [pots, lights, tents, miscItems, waterItems] = await Promise.all([
-    potsPromise,
-    lightsPromise,
-    tentsPromise,
-    miscItemsPromise,
-    waterItemsPromise,
-  ]);
+  const [pots, lights, tents, miscItems, waterItems, climateItems] =
+    await Promise.all([
+      potsPromise,
+      lightsPromise,
+      tentsPromise,
+      miscItemsPromise,
+      waterItemsPromise,
+      climateItemsPromise,
+    ]);
 
   const itemsLibrary = [
     ...StaticItemsLibrary,
@@ -357,6 +311,10 @@ const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
     {
       itemGroup: 'water',
       items: waterItems,
+    },
+    {
+      itemGroup: 'climate',
+      items: climateItems,
     },
     {
       itemGroup: 'misc',

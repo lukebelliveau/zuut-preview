@@ -30,6 +30,9 @@ export const airtableTables: { [key: string]: AirtableTable } = {
   water: {
     id: 'tbloPr7FlevJquXKe',
   },
+  climate: {
+    id: 'tblNHtTZxPyJTS6hO',
+  },
   amazonProducts: {
     id: 'tblO3b5pFgR1PtnIc',
   },
