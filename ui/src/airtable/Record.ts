@@ -13,4 +13,10 @@ export interface PlaceableItemRecord extends ItemRecord {
   itemType?: string;
 }
 
+export const isPlaceableItemRecord = (
+  record: ItemRecord | PlaceableItemRecord
+): record is PlaceableItemRecord => {
+  return (record as PlaceableItemRecord).width !== undefined;
+};
+
 export type AirtableRecord = PlaceableItemRecord | ItemRecord;

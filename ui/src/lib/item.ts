@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 
 export interface AmazonProduct {
   ASIN: string;
-  name: string;
+  name?: string;
 }
 
 export interface IItem {

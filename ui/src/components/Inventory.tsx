@@ -31,41 +31,6 @@ import ControlPanel from './ControlPanel/ControlPanel';
 import { isWallItem } from '../lib/item/wallItem';
 import { shoppingCartUrlWithRecordIds } from '../lib/url';
 
-interface ShoppingCartItem {
-  quantity: number;
-  ASIN: string | undefined;
-}
-
-const createShoppingCartUrl = (items: IItem[]) => {
-  let shoppingCartItems: { [itemName: string]: ShoppingCartItem } = {};
-
-  items.forEach((item) => {
-    if (shoppingCartItems[item.name]) {
-      shoppingCartItems[item.name].quantity += 1;
-    } else {
-      shoppingCartItems[item.name] = {
-        quantity: 1,
-        ASIN:
-          item.amazonProducts && item.amazonProducts[0].ASIN
-            ? item.amazonProducts[0].ASIN
-            : undefined,
-      };
-    }
-  });
-
-  let addToCartQuery = '';
-  let uniqueItemCount = 0;
-
-  Object.values(shoppingCartItems).forEach((item) => {
-    if (item.ASIN !== undefined) {
-      uniqueItemCount++;
-      addToCartQuery += `ASIN.${uniqueItemCount}=${item.ASIN}&Quantity.${uniqueItemCount}=${item.quantity}&`;
-    }
-  });
-
-  return `https://www.amazon.com/gp/aws/cart/add.html?${addToCartQuery}`;
-};
-
 export default function Inventory() {
   const [hidden, setHidden] = useState(false);
   const className = hidden ? 'hidden' : undefined;
@@ -136,15 +101,6 @@ export default function Inventory() {
         <div id="inventory-header">
           <h2>Inventory</h2>
           <div className="buttons">
-            {/* <a href="/cart" target="_blank" rel="noopener noreferrer">
-              <button
-                tabIndex={0}
-                aria-label="Open Shopping Cart"
-                className="shopping-cart-button"
-              >
-                Open Shopping Cart
-              </button>
-            </a> */}
             <a href={shoppingCartUrl} target="_blank" rel="noopener noreferrer">
               <button
                 tabIndex={0}
