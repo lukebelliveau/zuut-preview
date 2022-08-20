@@ -5,11 +5,11 @@ import { useQuery } from 'react-query';
 import queryKeys from '../lib/queryKeys';
 import { selectAllTents } from './tents';
 import { selectAllMiscItems } from './misc';
-import { Record } from './Record';
+import { AirtableRecord } from './Record';
 import { selectAllWaterItems } from './water';
 import selectAllClimateItems from './climate';
 
-const selectAllItems = async (): Promise<Record[]> => {
+const selectAllItems = async (): Promise<AirtableRecord[]> => {
   const allPotsPromise = selectAllPots();
   const allLightsPromise = selectAllLights();
   const allTentsPromise = selectAllTents();
@@ -54,7 +54,7 @@ export const selectItemsByRecordId = async (recordIds: string[]) => {
     amazonProductsPromise,
   ]);
 
-  const selectedItems: Record[] = [];
+  const selectedItems: AirtableRecord[] = [];
 
   recordIds.forEach((recordId) => {
     const item = allItems.find((item) => item.recordId === recordId);

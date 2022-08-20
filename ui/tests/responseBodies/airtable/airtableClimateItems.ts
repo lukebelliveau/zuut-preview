@@ -110,3 +110,5 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     itemType: 'OscillatingFanItemType',
   },
 ];
+
+export default airtableClimateItems;

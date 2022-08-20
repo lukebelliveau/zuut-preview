@@ -21,7 +21,7 @@ import {
   createDemoPlan,
   loadCurrentPlaygroundIfPresent,
 } from '../../features/playgrounds/playgroundSlice';
-import useQueryParams from '../../app/useQuery';
+import useQueryParams from '../../lib/url';
 import { removeAllItems } from '../../features/items/itemsSlice';
 import { ActionCreators } from 'redux-undo';
 import { isDemoMode, ZUUT_DEMO_STATE } from '../../app/store';

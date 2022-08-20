@@ -22,7 +22,7 @@ import DehumidifierItem, {
 import airtableApi from '../airtable/airtableApi';
 import { useQuery } from 'react-query';
 import { potRecordComparator } from '../airtable/pots';
-import { PlaceableItemRecord, MiscItemRecord } from '../airtable/Record';
+import { PlaceableItemRecord, ItemRecord } from '../airtable/Record';
 import queryKeys from './queryKeys';
 import PlaceableItem from './item/placeableItem';
 
@@ -139,10 +139,8 @@ const fetchClimateItems = async (): Promise<Item[]> => {
 const fetchMiscItems = async (): Promise<Item[]> => {
   const miscItemData = await airtableApi.selectAllMiscItems();
 
-  console.log(miscItemData);
-
   const miscItems: WaterItem[] = [];
-  miscItemData.forEach((miscItem: MiscItemRecord) => {
+  miscItemData.forEach((miscItem: ItemRecord) => {
     try {
       miscItems.push(
         new WaterItem({

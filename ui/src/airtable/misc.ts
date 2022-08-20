@@ -1,8 +1,8 @@
 import { airtableBase, airtableTables } from './airtableBase';
-import { MiscItemRecord } from './Record';
+import { ItemRecord } from './Record';
 
-export const selectAllMiscItems = async (): Promise<MiscItemRecord[]> => {
-  const items: MiscItemRecord[] = [];
+export const selectAllMiscItems = async (): Promise<ItemRecord[]> => {
+  const items: ItemRecord[] = [];
   try {
     const itemRecords = await airtableBase(airtableTables.misc.id)
       .select({

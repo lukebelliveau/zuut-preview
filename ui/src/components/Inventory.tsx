@@ -29,8 +29,7 @@ import { isModiferItem } from '../lib/item/modifierItem';
 import { isPlaceableItem } from '../lib/item/placeableItem';
 import ControlPanel from './ControlPanel/ControlPanel';
 import { isWallItem } from '../lib/item/wallItem';
-import { useHistory } from 'react-router';
-import { shopping_cart_path } from '../routes/ShoppingCart';
+import { shoppingCartUrlWithRecordIds } from '../lib/url';
 
 interface ShoppingCartItem {
   quantity: number;
@@ -77,18 +76,6 @@ export default function Inventory() {
 
   const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
   const itemIds = useSelectAllItemIds();
-
-  const shoppingCartUrlWithRecordIds = () => {
-    const recordIds: string[] = [];
-
-    items.forEach((item) => {
-      if (item.recordId) recordIds.push(item.recordId);
-    });
-
-    const serializedRecordIds = JSON.stringify(recordIds);
-
-    return `${shopping_cart_path()}?recordIds=${serializedRecordIds}`;
-  };
 
   const [_, drop] = useDrop(() => ({
     accept: MISC_ITEM_TYPE,
@@ -141,8 +128,7 @@ export default function Inventory() {
     };
   }
 
-  // const shoppingCartUrl = createShoppingCartUrl(items);
-  const shoppingCartUrl = shoppingCartUrlWithRecordIds();
+  const shoppingCartUrl = shoppingCartUrlWithRecordIds(items);
 
   return (
     <div id="inventory-sidebar">

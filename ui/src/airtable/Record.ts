@@ -1,20 +1,16 @@
-export interface PlaceableItemRecord {
+export interface ItemRecord {
   name: string;
+  amazonProducts: string[];
+  linkedASINs: string[];
+  recordId: string;
+}
+
+export interface PlaceableItemRecord extends ItemRecord {
   width: number;
   length: number;
   height: number;
   description: string;
-  amazonProducts: string[];
-  linkedASINs: string[];
-  recordId: string;
   itemType?: string;
 }
 
-export interface MiscItemRecord {
-  name: string;
-  amazonProducts: string[];
-  linkedASINs: string[];
-  recordId: string;
-}
-
-export type Record = PlaceableItemRecord | MiscItemRecord;
+export type AirtableRecord = PlaceableItemRecord | ItemRecord;
