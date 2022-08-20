@@ -1,8 +1,7 @@
 import { v4 } from 'uuid';
 
 export interface AmazonProduct {
-  ASIN: string;
-  name?: string;
+  recordId: string;
 }
 
 export interface IItem {

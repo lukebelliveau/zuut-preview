@@ -46,18 +46,18 @@ interface ItemConstructorArgs {
   length?: number;
   height?: number | undefined;
   description?: string;
-  amazonProductRecords: AmazonProduct[];
+  amazonProducts: AmazonProduct[];
 }
 
 const constructorArgs = (item: ItemRecord): ItemConstructorArgs => {
   const amazonProducts: AmazonProduct[] = item.amazonProducts.map(
     (product) => ({
-      ASIN: product,
+      recordId: product,
     })
   );
   const constructorArgs: ItemConstructorArgs = {
     name: item.name,
-    amazonProductRecords: amazonProducts,
+    amazonProducts: amazonProducts,
     recordId: item.recordId,
   };
 
@@ -155,8 +155,7 @@ const fetchMiscItems = async (): Promise<Item[]> => {
           id: undefined,
           amazonProducts: [
             {
-              name: 'Misc',
-              ASIN: miscItem.amazonProducts[0],
+              recordId: miscItem.amazonProducts[0],
             },
           ],
         })

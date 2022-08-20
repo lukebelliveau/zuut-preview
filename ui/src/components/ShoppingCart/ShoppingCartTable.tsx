@@ -6,17 +6,19 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 import { useQueryCartItems } from '../../airtable/airtableApi';
-import { AirtableRecord, PlaceableItemRecord } from '../../airtable/Record';
+import { useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
+import { AirtableRecord, isPlaceableItemRecord } from '../../airtable/Record';
 import useQueryParams, { paramKeys } from '../../lib/url';
 
-interface ShoppingCartItem {
+interface ShoppingCartUrlItem {
   quantity: number;
   ASIN: string | undefined;
 }
 
-const createShoppingCartUrl = (items: AirtableRecord[]) => {
-  let shoppingCartItems: { [itemName: string]: ShoppingCartItem } = {};
+const createShoppingCartUrl = (items: CartItem[]) => {
+  let shoppingCartItems: { [itemName: string]: ShoppingCartUrlItem } = {};
 
   items.forEach((item) => {
     if (shoppingCartItems[item.name]) {
@@ -24,7 +26,7 @@ const createShoppingCartUrl = (items: AirtableRecord[]) => {
     } else {
       shoppingCartItems[item.name] = {
         quantity: 1,
-        ASIN: item.linkedASINs[0],
+        ASIN: item.selectedASIN,
       };
     }
   });
@@ -50,13 +52,47 @@ const renderDimensionsIfPlaceableItem = (item: AirtableRecord) => {
   if (
     'width' in item &&
     'height' in item &&
-    'width' in item &&
+    'length' in item &&
     'description' in item
   ) {
     return `${item.length} in * ${item.width} in`;
   }
 
   return '';
+};
+
+interface CartItem {
+  name: string;
+  amazonProducts: string[];
+  linkedASINs: string[];
+  recordId: string;
+  selectedASIN: string;
+  width?: number;
+  length?: number;
+  description?: string;
+}
+
+const createCartItems = (cartItems: AirtableRecord[] | undefined) => {
+  if (cartItems === undefined) return [];
+
+  let cartItemsArray: CartItem[] = [];
+  cartItems.forEach((item) => {
+    const cartItem: CartItem = {
+      name: item.name,
+      amazonProducts: item.amazonProducts,
+      linkedASINs: item.linkedASINs,
+      recordId: item.recordId,
+      selectedASIN: item.linkedASINs[0],
+    };
+    if (isPlaceableItemRecord(item)) {
+      cartItem.width = item.width;
+      cartItem.length = item.length;
+      cartItem.description = item.description;
+    }
+    cartItemsArray.push(cartItem);
+  });
+
+  return cartItemsArray;
 };
 
 const ShoppingCartTable = () => {
@@ -71,48 +107,54 @@ const ShoppingCartTable = () => {
   const {
     isLoading,
     error,
-    data: cartItems,
+    data: cartRecords,
   } = useQueryCartItems({ recordIds });
 
-  if (isLoading || error || cartItems === undefined) {
+  const [cartItems, setCartItems] = useState<CartItem[]>(
+    createCartItems(cartRecords)
+  );
+
+  useEffect(() => {
+    setCartItems(createCartItems(cartRecords));
+  }, [cartRecords]);
+
+  if (isLoading || error || cartRecords === undefined) {
     if (isLoading) return <div>Loading cart...</div>;
     if (error) return <div>Error!</div>;
-    if (cartItems === undefined) return <div>Loading cart...</div>;
+    if (cartRecords === undefined) return <div>Loading cart...</div>;
   }
 
   const shoppingCartUrl = createShoppingCartUrl(cartItems);
+
+  const changeSelectedASIN = (ASIN: string, index: number) => {
+    let newCartItems = [...cartItems];
+    newCartItems[index].selectedASIN = ASIN;
+    setCartItems(newCartItems);
+  };
 
   return (
     <>
       <TableContainer>
         <Table
-          style={{ minWidth: 650, backgroundColor: 'white' }}
+          style={{ minWidth: 850, backgroundColor: 'white' }}
           aria-label="simple table"
         >
           <TableHead>
             <TableRow>
               <TableCell>Generic Item Name</TableCell>
+              <TableCell>Selected Amazon Product</TableCell>
               <TableCell>Dimensions (length x width)</TableCell>
               <TableCell>Amazon Link</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {cartItems.map((item) => (
-              <TableRow key={item.recordId} style={{}}>
-                <TableCell component="th" scope="row">
-                  {item.name}
-                </TableCell>
-                <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell>
-                <TableCell>
-                  <a
-                    href={constructAmazonLinkWithASIN(item.linkedASINs[0])}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View on Amazon
-                  </a>
-                </TableCell>
-              </TableRow>
+            {cartItems.map((item, index) => (
+              <ItemRow
+                item={item}
+                key={item.recordId}
+                index={index}
+                changeSelectedASIN={changeSelectedASIN}
+              />
             ))}
           </TableBody>
         </Table>
@@ -127,6 +169,62 @@ const ShoppingCartTable = () => {
         </button>
       </a>
     </>
+  );
+};
+
+const ItemRow = ({
+  item,
+  changeSelectedASIN,
+  index,
+}: {
+  item: CartItem;
+  changeSelectedASIN: (ASIN: string, index: number) => void;
+  index: number;
+}) => {
+  const ASINs = item.linkedASINs;
+
+  const {
+    isLoading,
+    error,
+    data: amazonProducts,
+  } = useQueryAmazonProductsByASIN(ASINs);
+
+  if (isLoading || error || amazonProducts === undefined) {
+    if (isLoading) return <div>Loading products...</div>;
+    if (error) return <div>Error!</div>;
+    if (amazonProducts === undefined) return <div>Loading products...</div>;
+  }
+
+  return (
+    <TableRow key={item.recordId} style={{}}>
+      <TableCell component="th" scope="row">
+        {item.name}
+      </TableCell>
+      <TableCell>
+        <select
+          value={item.selectedASIN}
+          onChange={(event) => changeSelectedASIN(event.target.value, index)}
+        >
+          {Object.values(amazonProducts).map((amazonProduct) => {
+            return (
+              <option key={amazonProduct.ASIN} value={amazonProduct.ASIN}>
+                {amazonProduct.productName}
+              </option>
+            );
+          })}
+        </select>
+      </TableCell>
+      <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell>
+      <TableCell>
+        <a
+          href={constructAmazonLinkWithASIN(item.selectedASIN)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on Amazon
+        </a>
+      </TableCell>
+    </TableRow>
   );
 };
 

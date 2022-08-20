@@ -33,8 +33,6 @@ const selectAllItems = async (): Promise<AirtableRecord[]> => {
     allMiscItemsPromise,
   ]);
 
-  console.log(allClimateItems);
-
   return [
     ...allPots,
     ...allLights,
