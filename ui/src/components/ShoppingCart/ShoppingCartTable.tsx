@@ -19,8 +19,9 @@ interface ShoppingCartUrlItem {
   quantity: number;
   ASIN: string | undefined;
 }
+const amazonZUUTTag = 'zuut004-20';
 
-const createShoppingCartUrl = (items: CartItem[]) => {
+const createAmazonAddToShoppingCartUrl = (items: CartItem[]) => {
   let shoppingCartItems: { [itemName: string]: ShoppingCartUrlItem } = {};
 
   items.forEach((item) => {
@@ -44,11 +45,11 @@ const createShoppingCartUrl = (items: CartItem[]) => {
     }
   });
 
-  return `https://www.amazon.com/gp/aws/cart/add.html?${addToCartQuery}`;
+  return `https://www.amazon.com/gp/aws/cart/add.html?${addToCartQuery}tag=${amazonZUUTTag}`;
 };
 
 const constructAmazonLinkWithASIN = (asin: string) => {
-  return `https://www.amazon.com/dp/${asin}`;
+  return `https://www.amazon.com/dp/${asin}?tag=${amazonZUUTTag}`;
 };
 
 const renderDimensionsIfPlaceableItem = (item: AirtableRecord) => {
@@ -139,7 +140,7 @@ const ShoppingCartTable = () => {
     if (cartRecords === undefined) return <div>Loading cart...</div>;
   }
 
-  const shoppingCartUrl = createShoppingCartUrl(cartItems);
+  const shoppingCartUrl = createAmazonAddToShoppingCartUrl(cartItems);
 
   const changeSelectedASIN = (ASIN: string, index: number) => {
     let newCartItems = [...cartItems];
