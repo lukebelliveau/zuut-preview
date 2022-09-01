@@ -19,7 +19,7 @@ interface ShoppingCartUrlItem {
   quantity: number;
   ASIN: string | undefined;
 }
-const amazonZUUTTag = 'zuut004-20';
+const amazonZUUTTag = 'zuut04-20';
 
 const createAmazonAddToShoppingCartUrl = (items: CartItem[]) => {
   let shoppingCartItems: { [itemName: string]: ShoppingCartUrlItem } = {};
