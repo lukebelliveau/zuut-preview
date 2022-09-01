@@ -20,8 +20,8 @@ export const selectPotsByRecordId = async (
 };
 
 export const potRecordComparator = (
-  a: PlaceableItemRecord,
-  b: PlaceableItemRecord
+  a: { name: string },
+  b: { name: string }
 ) => {
   try {
     if (a.name === undefined || b.name === undefined) {

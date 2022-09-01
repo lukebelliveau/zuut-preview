@@ -9,7 +9,9 @@ import {
 import { useEffect, useState } from 'react';
 import { useQueryCartItems } from '../../airtable/airtableApi';
 import { useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
+import { potRecordComparator } from '../../airtable/pots';
 import { AirtableRecord, isPlaceableItemRecord } from '../../airtable/Record';
+import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import useQueryParams, { paramKeys } from '../../lib/url';
 import ProductModal from './ProductModal';
 
@@ -98,6 +100,13 @@ const createCartItems = (cartItems: AirtableRecord[] | undefined) => {
   return cartItemsArray;
 };
 
+const cartItemsComparator = (a: CartItem, b: CartItem) => {
+  if (a.itemType === POT_ITEM_TYPE && b.itemType === POT_ITEM_TYPE) {
+    return potRecordComparator(a, b);
+  }
+  return a.itemType.localeCompare(b.itemType);
+};
+
 const ShoppingCartTable = () => {
   const query = useQueryParams();
   const [indexOfProductModal, setIndexOfProductModal] = useState<null | number>(
@@ -138,6 +147,8 @@ const ShoppingCartTable = () => {
     setCartItems(newCartItems);
   };
 
+  const sortedCartItems = cartItems.sort(cartItemsComparator);
+
   return (
     <>
       <TableContainer>
@@ -155,7 +166,7 @@ const ShoppingCartTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cartItems.map((item, index) => (
+            {sortedCartItems.map((item, index) => (
               <ItemRow
                 item={item}
                 key={item.recordId}
