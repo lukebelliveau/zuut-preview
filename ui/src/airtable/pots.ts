@@ -1,9 +1,4 @@
-import {
-  airtableBase,
-  airtableTables,
-  defaultItemFields,
-} from './airtableBase';
-import { selectAllAmazonProducts } from './amazonProducts';
+import { airtableTables } from './airtableBase';
 import { PlaceableItemRecord } from './Record';
 import selectAllOfItemType from './selectAllOfItemType';
 
@@ -46,40 +41,6 @@ export const potRecordComparator = (
     console.error(e);
     return 0;
   }
-};
-
-export const selectPotsByRecordIdWithASINs = async (
-  recordIds: string[]
-): Promise<PlaceableItemRecord[]> => {
-  const allPotsPromise = selectAllPots();
-  const amazonProductsPromise = selectAllAmazonProducts();
-
-  const [allPots, amazonProducts] = await Promise.all([
-    allPotsPromise,
-    amazonProductsPromise,
-  ]);
-
-  const selectedPots: PlaceableItemRecord[] = [];
-
-  recordIds.forEach((recordId) => {
-    const pot = allPots.find((pot) => pot.recordId === recordId);
-    if (pot) {
-      selectedPots.push(pot);
-    }
-  });
-
-  selectedPots.forEach((pot) => {
-    const associatedProducts = amazonProducts.filter((amazonProduct) => {
-      return pot.amazonProducts.includes(amazonProduct.recordId);
-    });
-    associatedProducts.forEach((product) => {
-      pot.linkedASINs.push(product.ASIN);
-    });
-  });
-
-  selectedPots.sort(potRecordComparator);
-
-  return selectedPots;
 };
 
 export const selectAllPots = async (): Promise<PlaceableItemRecord[]> => {

@@ -44,14 +44,7 @@ const selectAllItems = async (): Promise<AirtableRecord[]> => {
 };
 
 export const selectItemsByRecordId = async (recordIds: string[]) => {
-  const allItemsPromise = selectAllItems();
-  const amazonProductsPromise = selectAllAmazonProducts();
-
-  const [allItems, amazonProducts] = await Promise.all([
-    allItemsPromise,
-    amazonProductsPromise,
-  ]);
-
+  const allItems = await selectAllItems();
   const selectedItems: AirtableRecord[] = [];
 
   recordIds.forEach((recordId) => {
@@ -59,16 +52,6 @@ export const selectItemsByRecordId = async (recordIds: string[]) => {
     if (item) {
       selectedItems.push(item);
     }
-  });
-
-  selectedItems.forEach((item) => {
-    const associatedProducts = amazonProducts.filter((amazonProduct) => {
-      return item.amazonProducts.includes(amazonProduct.recordId);
-    });
-
-    associatedProducts.forEach((product) => {
-      item.linkedASINs.push(product.ASIN);
-    });
   });
 
   /**

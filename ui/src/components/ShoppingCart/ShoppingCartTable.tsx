@@ -11,6 +11,7 @@ import { useQueryCartItems } from '../../airtable/airtableApi';
 import { useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
 import { AirtableRecord, isPlaceableItemRecord } from '../../airtable/Record';
 import useQueryParams, { paramKeys } from '../../lib/url';
+import ProductModal from './ProductModal';
 
 interface ShoppingCartUrlItem {
   quantity: number;
@@ -61,12 +62,13 @@ const renderDimensionsIfPlaceableItem = (item: AirtableRecord) => {
   return '';
 };
 
-interface CartItem {
+export interface CartItem {
   name: string;
   amazonProducts: string[];
   linkedASINs: string[];
   recordId: string;
   selectedASIN: string;
+  itemType: string;
   width?: number;
   length?: number;
   description?: string;
@@ -83,6 +85,7 @@ const createCartItems = (cartItems: AirtableRecord[] | undefined) => {
       linkedASINs: item.linkedASINs,
       recordId: item.recordId,
       selectedASIN: item.linkedASINs[0],
+      itemType: item.itemType ? item.itemType : '',
     };
     if (isPlaceableItemRecord(item)) {
       cartItem.width = item.width;
@@ -97,6 +100,9 @@ const createCartItems = (cartItems: AirtableRecord[] | undefined) => {
 
 const ShoppingCartTable = () => {
   const query = useQueryParams();
+  const [indexOfProductModal, setIndexOfProductModal] = useState<null | number>(
+    null
+  );
 
   const recordIdString = query.get(paramKeys.recordIds);
   if (recordIdString == null)
@@ -141,6 +147,7 @@ const ShoppingCartTable = () => {
         >
           <TableHead>
             <TableRow>
+              <TableCell></TableCell>
               <TableCell>Generic Item Name</TableCell>
               <TableCell>Selected Amazon Product</TableCell>
               <TableCell>Dimensions (length x width)</TableCell>
@@ -154,6 +161,7 @@ const ShoppingCartTable = () => {
                 key={item.recordId}
                 index={index}
                 changeSelectedASIN={changeSelectedASIN}
+                setIndexOfProductModal={setIndexOfProductModal}
               />
             ))}
           </TableBody>
@@ -168,6 +176,17 @@ const ShoppingCartTable = () => {
           Open Shopping Cart
         </button>
       </a>
+      {indexOfProductModal !== null ? (
+        <ProductModal
+          open={indexOfProductModal !== null}
+          closeModal={() => {
+            setIndexOfProductModal(null);
+          }}
+          item={cartItems[indexOfProductModal]}
+          index={indexOfProductModal}
+          changeSelectedASIN={changeSelectedASIN}
+        />
+      ) : null}
     </>
   );
 };
@@ -176,10 +195,12 @@ const ItemRow = ({
   item,
   changeSelectedASIN,
   index,
+  setIndexOfProductModal,
 }: {
   item: CartItem;
   changeSelectedASIN: (ASIN: string, index: number) => void;
   index: number;
+  setIndexOfProductModal: React.Dispatch<React.SetStateAction<number | null>>;
 }) => {
   const ASINs = item.linkedASINs;
 
@@ -197,6 +218,14 @@ const ItemRow = ({
 
   return (
     <TableRow key={item.recordId} style={{}}>
+      <TableCell>
+        <button
+          style={{ width: 50, height: 50, padding: 0, fontSize: 10 }}
+          onClick={() => setIndexOfProductModal(index)}
+        >
+          Select Product
+        </button>
+      </TableCell>
       <TableCell component="th" scope="row">
         {item.name}
       </TableCell>

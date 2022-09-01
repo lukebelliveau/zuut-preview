@@ -38,13 +38,59 @@ export const airtableTables: { [key: string]: AirtableTable } = {
   },
 };
 
+export const itemFields = {
+  name: 'name',
+  width: 'width',
+  length: 'length',
+  height: 'height',
+  description: 'description',
+  amazonProducts: 'amazonProducts',
+  recordId: 'recordId',
+  linkedASINs: 'linkedASINs',
+
+  itemType: 'itemType',
+};
+
 export const defaultItemFields = [
-  'name',
-  'width',
-  'length',
-  'height',
-  'description',
-  'amazonProducts',
-  'recordId',
-  'linkedASINs',
+  itemFields.name,
+  itemFields.width,
+  itemFields.length,
+  itemFields.height,
+  itemFields.description,
+  itemFields.amazonProducts,
+  itemFields.recordId,
+  itemFields.linkedASINs,
+  itemFields.itemType,
 ];
+
+interface AmazonProductField {
+  name: string;
+  fieldId: string;
+}
+
+export const amazonProductFields: { [key: string]: AmazonProductField } = {
+  ASIN: {
+    name: 'ASIN',
+    fieldId: 'fldARd6UByZLzWf07',
+  },
+  recordId: {
+    name: 'recordId',
+    fieldId: 'fldSlaUspbEdX758v',
+  },
+  productName: {
+    name: 'productName',
+    fieldId: 'fld2PD38Q14VyC8DQ',
+  },
+  shape: {
+    name: 'shape',
+    fieldId: 'fldPdKKjFcHBAIA3Y',
+  },
+  material: {
+    name: 'material',
+    fieldId: 'flduGS4gJeW1FW1jh',
+  },
+  handles: {
+    name: 'handles',
+    fieldId: 'fldqOD7nQBT6DcufY',
+  },
+};

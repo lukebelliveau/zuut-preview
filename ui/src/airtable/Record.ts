@@ -3,6 +3,7 @@ export interface ItemRecord {
   amazonProducts: string[];
   linkedASINs: string[];
   recordId: string;
+  itemType?: string;
 }
 
 export interface PlaceableItemRecord extends ItemRecord {

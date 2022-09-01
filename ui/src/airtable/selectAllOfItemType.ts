@@ -1,4 +1,4 @@
-import { airtableBase, defaultItemFields } from './airtableBase';
+import { airtableBase, defaultItemFields, itemFields } from './airtableBase';
 import { PlaceableItemRecord } from './Record';
 
 const selectAllOfItemType = async (
@@ -13,13 +13,15 @@ const selectAllOfItemType = async (
       .all();
 
     itemRecords.forEach((record) => {
-      const name = record.get('name');
-      const width = record.get('width');
-      const length = record.get('length');
-      const height = record.get('height');
-      const description = record.get('description');
-      const amazonProducts = record.get('amazonProducts');
-      const recordId = record.get('recordId');
+      const name = record.get(itemFields.name);
+      const width = record.get(itemFields.width);
+      const length = record.get(itemFields.length);
+      const height = record.get(itemFields.height);
+      const description = record.get(itemFields.description);
+      const amazonProducts = record.get(itemFields.amazonProducts);
+      const recordId = record.get(itemFields.recordId);
+      const linkedASINs = record.get(itemFields.linkedASINs);
+      const itemType = record.get(itemFields.itemType);
 
       /**
        * if any of the above values are undefined, throw an error
@@ -46,7 +48,8 @@ const selectAllOfItemType = async (
           description: description.toString(),
           amazonProducts: amazonProducts.toString()?.split(','),
           recordId: recordId.toString(),
-          linkedASINs: [],
+          linkedASINs: linkedASINs ? linkedASINs?.toString()?.split(',') : [],
+          itemType: itemType ? itemType.toString() : undefined,
         });
       }
     });

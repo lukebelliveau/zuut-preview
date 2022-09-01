@@ -1,11 +1,22 @@
 import { useQuery } from 'react-query';
 import queryKeys from '../lib/queryKeys';
-import { airtableBase, airtableTables } from './airtableBase';
+import {
+  airtableBase,
+  airtableTables,
+  amazonProductFields,
+} from './airtableBase';
+
+export interface AmazonProductMap {
+  [ASIN: string]: AmazonProductRecord;
+}
 
 export interface AmazonProductRecord {
   ASIN: string;
   recordId: string;
   productName: string;
+  shape: string;
+  material: string;
+  handles: string;
 }
 
 export const useQueryAmazonProductsByASIN = (ASINs: string[]) => {
@@ -16,18 +27,18 @@ export const useQueryAmazonProductsByASIN = (ASINs: string[]) => {
 
   return useQuery(
     [queryKeys.amazonProducts, { ASINs }],
-    () => selectAmazonProdutsByASIN(ASINs),
+    () => selectAmazonProductsByASIN(ASINs),
     {
       enabled: !!allAmazonProducts,
     }
   );
 };
 
-const selectAmazonProdutsByASIN = async (
+const selectAmazonProductsByASIN = async (
   ASINs: string[]
-): Promise<{ [ASIN: string]: AmazonProductRecord }> => {
+): Promise<AmazonProductMap> => {
   const allAmazonProducts = await selectAllAmazonProducts();
-  const amazonProducts: { [ASIN: string]: AmazonProductRecord } = {};
+  const amazonProducts: AmazonProductMap = {};
 
   allAmazonProducts.forEach((amazonProduct) => {
     if (ASINs.includes(amazonProduct.ASIN)) {
@@ -38,6 +49,8 @@ const selectAmazonProdutsByASIN = async (
   return amazonProducts;
 };
 
+const NOT_AVAILABLE = 'Not Available';
+
 export const selectAllAmazonProducts = async (): Promise<
   AmazonProductRecord[]
 > => {
@@ -47,14 +60,25 @@ export const selectAllAmazonProducts = async (): Promise<
       airtableTables.amazonProducts.id
     )
       .select({
-        fields: ['ASIN', 'recordId', 'productName'],
+        fields: [
+          amazonProductFields.ASIN.fieldId,
+          amazonProductFields.recordId.fieldId,
+          amazonProductFields.productName.fieldId,
+
+          amazonProductFields.shape.fieldId,
+          amazonProductFields.material.fieldId,
+          amazonProductFields.handles.fieldId,
+        ],
       })
       .all();
 
     amazonProductRecords.forEach((record) => {
-      const ASIN = record.get('ASIN');
-      const recordId = record.get('recordId');
-      const productName = record.get('productName');
+      const ASIN = record.get(amazonProductFields.ASIN.name);
+      const recordId = record.get(amazonProductFields.recordId.name);
+      const productName = record.get(amazonProductFields.productName.name);
+      const shape = record.get(amazonProductFields.shape.name);
+      const material = record.get(amazonProductFields.material.name);
+      const handles = record.get(amazonProductFields.handles.name);
 
       /**
        * if any of the above values are undefined, throw an error
@@ -75,6 +99,9 @@ export const selectAllAmazonProducts = async (): Promise<
         ASIN: ASIN.toString(),
         recordId: recordId.toString(),
         productName: productName.toString(),
+        shape: shape ? shape.toString() : NOT_AVAILABLE,
+        material: material ? material.toString() : NOT_AVAILABLE,
+        handles: handles ? handles.toString() : NOT_AVAILABLE,
       });
     });
 
