@@ -13,7 +13,7 @@ import CeilingPlaceableItem from './ceilingPlaceableItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import Playground from '../playground';
 import { areExactlySharingBorder } from '../geometry/geometry';
-import { isGrowspace } from './growspace';
+import { isTent } from './tentItem';
 
 export const DUCT_ITEM_TYPE = 'DuctItem';
 
@@ -155,7 +155,7 @@ export default class DuctItem extends CeilingPlaceableItem {
       }
     } else if (isWindowItem(otherItem)) {
       return CollisionState.CONNECTED;
-    } else if (isGrowspace(otherItem)) {
+    } else if (isTent(otherItem)) {
       return CollisionState.NEUTRAL;
     }
 

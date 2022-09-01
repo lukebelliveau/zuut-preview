@@ -3,7 +3,7 @@ import { feetToMm } from '../conversions';
 import Plan from '../plan';
 import Playground from '../playground';
 import DuctItem from './ductItem';
-import Growspace from './growspace';
+import Tent from './tentItem';
 import LightItem from './lightItem';
 import { CollisionState } from './placeableItem';
 import WindowItem from './windowitem';
@@ -303,7 +303,7 @@ describe('DuctItem', () => {
 
 describe('#collisionStateBetween', () => {
   it('does not conflict with growspace', () => {
-    const growspace = new Growspace({
+    const growspace = new Tent({
       name: '',
       id: '1',
       x: 1001,

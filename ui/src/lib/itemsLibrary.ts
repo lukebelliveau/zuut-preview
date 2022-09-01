@@ -1,4 +1,4 @@
-import Growspace from './item/growspace';
+import Tent from './item/tentItem';
 import { AmazonProduct, Item } from './item';
 import PotItem from './item/potItem';
 import { feetToMm_REQUIRE_3_INCHES, inchesToFeet } from './conversions';
@@ -76,10 +76,10 @@ const constructorArgs = (item: ItemRecord): ItemConstructorArgs => {
 const fetchTents = async (): Promise<Item[]> => {
   const tentData = await airtableApi.selectAllTents();
 
-  const tents: Growspace[] = [];
+  const tents: Tent[] = [];
   tentData.forEach((tent: PlaceableItemRecord) => {
     try {
-      tents.push(new Growspace(constructorArgs(tent)));
+      tents.push(new Tent(constructorArgs(tent)));
     } catch (e) {
       console.error(
         'Error creating Tent Item from airtable data. Skipping tent: ',

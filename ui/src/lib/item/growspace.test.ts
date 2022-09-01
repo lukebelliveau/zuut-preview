@@ -1,13 +1,13 @@
 import { feetToMm } from '../conversions';
 import DuctItem from './ductItem';
-import Growspace from './growspace';
+import Tent from './tentItem';
 import GrowspaceItem from './growspaceItem';
 import { CollisionState } from './placeableItem';
 
 describe('Growspace', () => {
   describe('#collisionStateBetween', () => {
     it('conflicts with other growspaces', () => {
-      const growspace = new Growspace({
+      const growspace = new Tent({
         name: '',
         id: '1',
         x: feetToMm(100),
@@ -15,7 +15,7 @@ describe('Growspace', () => {
         width: feetToMm(100),
         length: feetToMm(100),
       });
-      const other = new Growspace({
+      const other = new Tent({
         name: '',
         id: '2',
         x: feetToMm(100),
@@ -28,7 +28,7 @@ describe('Growspace', () => {
       );
     });
     it('does not conflict with growspace items when item is placed inside growspace', () => {
-      const growspace = new Growspace({
+      const growspace = new Tent({
         name: '',
         id: '2',
         x: feetToMm(1001),
@@ -49,7 +49,7 @@ describe('Growspace', () => {
       );
     });
     it('does not conflict with ducts', () => {
-      const growspace = new Growspace({
+      const growspace = new Tent({
         name: '',
         id: '1',
         x: feetToMm(1001),
@@ -71,7 +71,7 @@ describe('Growspace', () => {
       );
     });
     it('conflicts when GrowspaceItem is on growspace boundary', () => {
-      const growspace = new Growspace({
+      const growspace = new Tent({
         name: '',
         id: '1',
         x: feetToMm(950),

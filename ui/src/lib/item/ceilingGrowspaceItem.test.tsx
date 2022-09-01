@@ -1,4 +1,4 @@
-import Growspace from './growspace';
+import Tent from './tentItem';
 import CeilingGrowspaceItem from './ceilingGrowspaceItem';
 import GrowspaceItem from './growspaceItem';
 import { CollisionState } from './placeableItem';
@@ -49,7 +49,7 @@ describe('CeilingGrowspaceItem', () => {
     );
   });
   it('does not conflict with growspaces', () => {
-    const item = new Growspace({
+    const item = new Tent({
       name: '',
       id: '1',
       x: feetToMm(100),
@@ -78,7 +78,7 @@ describe('CeilingGrowspaceItem', () => {
       width: feetToMm(100),
       length: feetToMm(100),
     });
-    const other = new Growspace({
+    const other = new Tent({
       name: '',
       id: '1',
       x: feetToMm(0),
@@ -99,7 +99,7 @@ describe('CeilingGrowspaceItem', () => {
       width: feetToMm(200),
       length: feetToMm(200),
     });
-    const other = new Growspace({
+    const other = new Tent({
       name: '',
       id: '1',
       x: feetToMm(500),
@@ -121,7 +121,7 @@ describe('CeilingGrowspaceItem', () => {
       width: feetToMm(100),
       length: feetToMm(100),
     });
-    const other = new Growspace({
+    const other = new Tent({
       name: '',
       id: '1',
       x: feetToMm(500),
@@ -143,7 +143,7 @@ describe('CeilingGrowspaceItem', () => {
       width: feetToMm(100),
       length: feetToMm(100),
     });
-    const other = new Growspace({
+    const other = new Tent({
       name: '',
       id: '1',
       x: feetToMm(0),

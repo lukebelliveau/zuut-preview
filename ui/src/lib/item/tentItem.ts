@@ -11,26 +11,26 @@ import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import { Layer } from '../layer';
 import { isDuctItem } from './ductItem';
-import GrowspaceImage from '../../images/items/tent.png';
+import TentImage from '../../images/items/tent.png';
 import { LayerState } from '../../features/interactions/interactionsState';
 
-export const GROWSPACE_TYPE = 'Growspace';
+export const TENT_ITEM_TYPE = 'TentItem';
 
-export function isGrowspace(item: Item): item is Growspace {
-  return (item as Growspace).type === GROWSPACE_TYPE;
+export function isTent(item: Item): item is Tent {
+  return (item as Tent).type === TENT_ITEM_TYPE;
 }
 
-export default class Growspace extends PlaceableItem {
-  type: string = GROWSPACE_TYPE;
+export default class Tent extends PlaceableItem {
+  type: string = TENT_ITEM_TYPE;
   layer = Layer.FLOOR;
   description = 'Place a tent to start your grow.';
 
   get image() {
-    return GrowspaceImage;
+    return TentImage;
   }
 
-  copy(): Growspace {
-    return new Growspace({
+  copy(): Tent {
+    return new Tent({
       name: this.name,
       id: v4(),
       x: this.x,

@@ -1,7 +1,7 @@
 import { IItem, Item } from '../item';
 import { Item as GraphqlItem } from '../../graphql';
 import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
-import Growspace, { GROWSPACE_TYPE } from './growspace';
+import Tent, { TENT_ITEM_TYPE } from './tentItem';
 import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
 import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
@@ -83,8 +83,8 @@ export default class ItemGraphqlAdapter {
     switch (unwrapOrError(gqlItem.type)) {
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem(itemAttrs);
-      case GROWSPACE_TYPE:
-        return new Growspace(itemAttrs);
+      case TENT_ITEM_TYPE:
+        return new Tent(itemAttrs);
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem(itemAttrs);
       case LIGHT_ITEM_TYPE:

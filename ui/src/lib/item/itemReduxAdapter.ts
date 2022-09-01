@@ -1,5 +1,5 @@
 import { ItemState } from '../../features/items/itemState';
-import Growspace, { GROWSPACE_TYPE } from './growspace';
+import Tent, { TENT_ITEM_TYPE } from './tentItem';
 import GrowspaceItem, { GROWSPACE_ITEM_TYPE } from './growspaceItem';
 import { IItem, Item } from '../item';
 import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
@@ -70,8 +70,8 @@ export default class ItemReduxAdapter {
 
   public static stateToItem(itemState: ItemState): IItem {
     switch (itemState.type) {
-      case GROWSPACE_TYPE:
-        return new Growspace({
+      case TENT_ITEM_TYPE:
+        return new Tent({
           name: itemState.name,
           id: itemState.id,
           amazonProducts: itemState.amazonProducts,
