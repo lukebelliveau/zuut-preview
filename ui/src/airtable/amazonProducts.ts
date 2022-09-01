@@ -14,9 +14,16 @@ export interface AmazonProductRecord {
   ASIN: string;
   recordId: string;
   productName: string;
+
   shape: string;
   material: string;
   handles: string;
+
+  dimensions: string;
+  squareFootage: string;
+  cubicFootage: string;
+  weightCapacity: string;
+  height: string;
 }
 
 export const useQueryAmazonProductsByASIN = (ASINs: string[]) => {
@@ -68,6 +75,12 @@ export const selectAllAmazonProducts = async (): Promise<
           amazonProductFields.shape.fieldId,
           amazonProductFields.material.fieldId,
           amazonProductFields.handles.fieldId,
+
+          amazonProductFields.dimensions.fieldId,
+          amazonProductFields.squareFootage.fieldId,
+          amazonProductFields.cubicFootage.fieldId,
+          amazonProductFields.weightCapacity.fieldId,
+          amazonProductFields.height.fieldId,
         ],
       })
       .all();
@@ -76,9 +89,18 @@ export const selectAllAmazonProducts = async (): Promise<
       const ASIN = record.get(amazonProductFields.ASIN.name);
       const recordId = record.get(amazonProductFields.recordId.name);
       const productName = record.get(amazonProductFields.productName.name);
+
       const shape = record.get(amazonProductFields.shape.name);
       const material = record.get(amazonProductFields.material.name);
       const handles = record.get(amazonProductFields.handles.name);
+
+      const dimensions = record.get(amazonProductFields.dimensions.name);
+      const squareFootage = record.get(amazonProductFields.squareFootage.name);
+      const cubicFootage = record.get(amazonProductFields.cubicFootage.name);
+      const weightCapacity = record.get(
+        amazonProductFields.weightCapacity.name
+      );
+      const height = record.get(amazonProductFields.height.name);
 
       /**
        * if any of the above values are undefined, throw an error
@@ -99,9 +121,18 @@ export const selectAllAmazonProducts = async (): Promise<
         ASIN: ASIN.toString(),
         recordId: recordId.toString(),
         productName: productName.toString(),
+
         shape: shape ? shape.toString() : NOT_AVAILABLE,
         material: material ? material.toString() : NOT_AVAILABLE,
         handles: handles ? handles.toString() : NOT_AVAILABLE,
+
+        dimensions: dimensions ? dimensions.toString() : NOT_AVAILABLE,
+        squareFootage: squareFootage ? squareFootage.toString() : NOT_AVAILABLE,
+        cubicFootage: cubicFootage ? cubicFootage.toString() : NOT_AVAILABLE,
+        weightCapacity: weightCapacity
+          ? weightCapacity.toString()
+          : NOT_AVAILABLE,
+        height: height ? height.toString() : NOT_AVAILABLE,
       });
     });
 

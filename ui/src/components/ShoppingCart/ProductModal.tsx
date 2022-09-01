@@ -4,7 +4,10 @@ import {
   AmazonProductMap,
   useQueryAmazonProductsByASIN,
 } from '../../airtable/amazonProducts';
-import PotProductTable from './PotProductTable';
+import PotProductTable from './productTables/PotProductTable';
+import { POT_ITEM_TYPE } from '../../lib/item/potItem';
+import { TENT_ITEM_TYPE } from '../../lib/item/tentItem';
+import TentProductTable from './productTables/TentProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -48,8 +51,12 @@ const ProductModal = ({
   );
 
   switch (item.itemType) {
-    case 'PotItem':
+    case POT_ITEM_TYPE:
       ProductTable = PotProductTable;
+      break;
+    case TENT_ITEM_TYPE:
+      ProductTable = TentProductTable;
+      break;
   }
 
   return (

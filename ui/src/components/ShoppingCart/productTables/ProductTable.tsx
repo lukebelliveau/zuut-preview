@@ -6,27 +6,36 @@ import {
   TableBody,
   Table,
 } from '@material-ui/core';
-import { AmazonProductMap } from '../../airtable/amazonProducts';
-import { CartItem } from './ShoppingCartTable';
+import {
+  AmazonProductMap,
+  AmazonProductRecord,
+} from '../../../airtable/amazonProducts';
+import { CartItem } from '../ShoppingCartTable';
 
-const PotProductTable = ({
+export interface ProductColumn {
+  name: string;
+  property: keyof AmazonProductRecord;
+}
+
+const ProductTable = ({
   item,
   amazonProducts,
   changeSelectedProductASIN,
+  columns,
 }: {
   item: CartItem;
   amazonProducts: AmazonProductMap;
   changeSelectedProductASIN: (ASIN: string) => void;
+  columns: ProductColumn[];
 }) => {
   return (
     <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Product Name</TableCell>
-            <TableCell>Shape</TableCell>
-            <TableCell>Material</TableCell>
-            <TableCell>Handles</TableCell>
+            {columns.map((column) => {
+              return <TableCell>{column.name}</TableCell>;
+            })}
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -34,10 +43,9 @@ const PotProductTable = ({
           {Object.values(amazonProducts).map((product) => {
             return (
               <TableRow key={product.ASIN}>
-                <TableCell>{product.productName}</TableCell>
-                <TableCell>{product.shape}</TableCell>
-                <TableCell>{product.material}</TableCell>
-                <TableCell>{product.handles}</TableCell>
+                {columns.map((column) => {
+                  return <TableCell>{product[column.property]}</TableCell>;
+                })}
                 <TableCell>
                   {product.ASIN === item.selectedASIN ? (
                     <button
@@ -77,4 +85,4 @@ const PotProductTable = ({
   );
 };
 
-export default PotProductTable;
+export default ProductTable;

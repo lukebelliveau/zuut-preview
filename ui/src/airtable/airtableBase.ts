@@ -81,6 +81,7 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
     name: 'productName',
     fieldId: 'fld2PD38Q14VyC8DQ',
   },
+
   shape: {
     name: 'shape',
     fieldId: 'fldPdKKjFcHBAIA3Y',
@@ -92,5 +93,26 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
   handles: {
     name: 'handles',
     fieldId: 'fldqOD7nQBT6DcufY',
+  },
+
+  dimensions: {
+    name: 'dimensions',
+    fieldId: 'fldWixq28v9Ijrg8D',
+  },
+  squareFootage: {
+    name: 'squareFootage',
+    fieldId: 'fldQjLz2TchKI49Zz',
+  },
+  cubicFootage: {
+    name: 'cubicFootage',
+    fieldId: 'fldWioAwsaCAizo5E',
+  },
+  weightCapacity: {
+    name: 'weightCapacity',
+    fieldId: 'fldBusXlLOo1x1z9K',
+  },
+  height: {
+    name: 'height',
+    fieldId: 'fldwr8IxJwIdPLIOV',
   },
 };
