@@ -220,7 +220,7 @@ const ItemRow = ({
     isLoading,
     error,
     data: amazonProducts,
-  } = useQueryAmazonProductsByASIN(ASINs);
+  } = useQueryAmazonProductsByASIN(ASINs, item.name);
 
   if (isLoading || error || amazonProducts === undefined) {
     if (isLoading) return <div>Loading products...</div>;

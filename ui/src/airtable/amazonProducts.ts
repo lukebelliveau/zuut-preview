@@ -49,10 +49,13 @@ export interface AmazonProductRecord {
   price: string;
 }
 
-export const useQueryAmazonProductsByASIN = (ASINs: string[]) => {
-  return useQuery([queryKeys.amazonProductsByASIN], () =>
-    selectAmazonProductRecordsByASIN(ASINs)
-  );
+export const useQueryAmazonProductsByASIN = (
+  ASINs: string[],
+  itemName: string
+) => {
+  return useQuery([queryKeys.amazonProductsByASIN, itemName], () => {
+    return selectAmazonProductRecordsByASIN(ASINs);
+  });
 };
 
 const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
@@ -96,10 +99,6 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
     const timer = record.get(amazonProductFields.timer.name);
     const rating = record.get(amazonProductFields.rating.name);
     const price = record.get(amazonProductFields.price.name);
-
-    /**
-     * if any of the above values are undefined, throw an error
-     */
 
     if (ASIN === undefined) {
       console.log('Skipping record because ASIN is undefined', record);
@@ -165,9 +164,11 @@ const NOT_AVAILABLE = 'Not Available';
 export const selectAmazonProductRecordsByASIN = async (
   ASINs: string[]
 ): Promise<AmazonProductMap> => {
+  if (ASINs.length === 0) return {};
+
   let filterByFormula = 'OR(';
-  ASINs.forEach((recordId) => {
-    filterByFormula += `ASIN = '${recordId}', `;
+  ASINs.forEach((ASIN) => {
+    filterByFormula += `ASIN = '${ASIN}', `;
   });
   filterByFormula = filterByFormula.slice(0, -2);
   filterByFormula += ')';
