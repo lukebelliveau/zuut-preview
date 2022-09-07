@@ -1,3 +1,4 @@
+import { FieldSet, Records } from 'airtable';
 import { useQuery } from 'react-query';
 import queryKeys from '../lib/queryKeys';
 import {
@@ -49,30 +50,111 @@ export interface AmazonProductRecord {
 }
 
 export const useQueryAmazonProductsByASIN = (ASINs: string[]) => {
-  const { data: allAmazonProducts } = useQuery(
-    [queryKeys.allAmazonProducts],
-    selectAllAmazonProducts
-  );
-
-  return useQuery(
-    [queryKeys.amazonProducts, { ASINs }],
-    () => selectAmazonProductsByASIN(ASINs),
-    {
-      enabled: !!allAmazonProducts,
-    }
+  return useQuery([queryKeys.amazonProductsByASIN], () =>
+    selectAmazonProductRecordsByASIN(ASINs)
   );
 };
 
-const selectAmazonProductsByASIN = async (
-  ASINs: string[]
-): Promise<AmazonProductMap> => {
-  const allAmazonProducts = await selectAllAmazonProducts();
+const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
   const amazonProducts: AmazonProductMap = {};
 
-  allAmazonProducts.forEach((amazonProduct) => {
-    if (ASINs.includes(amazonProduct.ASIN)) {
-      amazonProducts[amazonProduct.ASIN] = amazonProduct;
+  amazonProductRecords.forEach((record) => {
+    const ASIN = record.get(amazonProductFields.ASIN.name);
+    const recordId = record.get(amazonProductFields.recordId.name);
+    const productName = record.get(amazonProductFields.productName.name);
+
+    const shape = record.get(amazonProductFields.shape.name);
+    const material = record.get(amazonProductFields.material.name);
+    const handles = record.get(amazonProductFields.handles.name);
+
+    const dimensions = record.get(amazonProductFields.dimensions.name);
+    const squareFootage = record.get(amazonProductFields.squareFootage.name);
+    const cubicFootage = record.get(amazonProductFields.cubicFootage.name);
+    const weightCapacity = record.get(amazonProductFields.weightCapacity.name);
+    const height = record.get(amazonProductFields.height.name);
+
+    const spectrum = record.get(amazonProductFields.spectrum.name);
+    const dimming = record.get(amazonProductFields.dimming.name);
+    const wattage = record.get(amazonProductFields.wattage.name);
+    const daisyChain = record.get(amazonProductFields.daisyChain.name);
+
+    const airFlowRating = record.get(amazonProductFields.airFlowRating.name);
+    const width = record.get(amazonProductFields.width.name);
+    const speedAdjustable = record.get(
+      amazonProductFields.speedAdjustable.name
+    );
+    const btu = record.get(amazonProductFields.btu.name);
+    const thermostat = record.get(amazonProductFields.thermostat.name);
+    const control = record.get(amazonProductFields.control.name);
+    const dehumidifier = record.get(amazonProductFields.dehumidifier.name);
+    const filter = record.get(amazonProductFields.filter.name);
+    const noiseLevel = record.get(amazonProductFields.noiseLevel.name);
+    const exhuast = record.get(amazonProductFields.exhuast.name);
+    const coverage = record.get(amazonProductFields.coverage.name);
+    const capacity = record.get(amazonProductFields.capacity.name);
+    const humiditySensor = record.get(amazonProductFields.humiditySensor.name);
+    const timer = record.get(amazonProductFields.timer.name);
+    const rating = record.get(amazonProductFields.rating.name);
+    const price = record.get(amazonProductFields.price.name);
+
+    /**
+     * if any of the above values are undefined, throw an error
+     */
+
+    if (ASIN === undefined) {
+      console.log('Skipping record because ASIN is undefined', record);
+      return;
+    } else if (recordId === undefined || productName === undefined) {
+      console.error(
+        'Attempted to fetch amazonProducts records from Airtable, but one or more of the values was undefined:',
+        record
+      );
+      return;
     }
+
+    amazonProducts[ASIN.toString()] = {
+      ASIN: ASIN.toString(),
+      recordId: recordId.toString(),
+      productName: productName.toString(),
+
+      shape: shape ? shape.toString() : NOT_AVAILABLE,
+      material: material ? material.toString() : NOT_AVAILABLE,
+      handles: handles ? handles.toString() : NOT_AVAILABLE,
+
+      dimensions: dimensions ? dimensions.toString() : NOT_AVAILABLE,
+      squareFootage: squareFootage ? squareFootage.toString() : NOT_AVAILABLE,
+      cubicFootage: cubicFootage ? cubicFootage.toString() : NOT_AVAILABLE,
+      weightCapacity: weightCapacity
+        ? weightCapacity.toString()
+        : NOT_AVAILABLE,
+      height: height ? height.toString() : NOT_AVAILABLE,
+
+      spectrum: spectrum ? spectrum.toString() : NOT_AVAILABLE,
+      dimming: dimming ? dimming.toString() : NOT_AVAILABLE,
+      wattage: wattage ? wattage.toString() : NOT_AVAILABLE,
+      daisyChain: daisyChain ? daisyChain.toString() : NOT_AVAILABLE,
+
+      airFlowRating: airFlowRating ? airFlowRating.toString() : NOT_AVAILABLE,
+      width: width ? width.toString() : NOT_AVAILABLE,
+      speedAdjustable: speedAdjustable
+        ? speedAdjustable.toString()
+        : NOT_AVAILABLE,
+      btu: btu ? btu.toString() : NOT_AVAILABLE,
+      thermostat: thermostat ? thermostat.toString() : NOT_AVAILABLE,
+      control: control ? control.toString() : NOT_AVAILABLE,
+      dehumidifier: dehumidifier ? dehumidifier.toString() : NOT_AVAILABLE,
+      filter: filter ? filter.toString() : NOT_AVAILABLE,
+      noiseLevel: noiseLevel ? noiseLevel.toString() : NOT_AVAILABLE,
+      exhuast: exhuast ? exhuast.toString() : NOT_AVAILABLE,
+      coverage: coverage ? coverage.toString() : NOT_AVAILABLE,
+      capacity: capacity ? capacity.toString() : NOT_AVAILABLE,
+      humiditySensor: humiditySensor
+        ? humiditySensor.toString()
+        : NOT_AVAILABLE,
+      timer: timer ? timer.toString() : NOT_AVAILABLE,
+      rating: rating ? rating.toString() : NOT_AVAILABLE,
+      price: price ? price.toString() : NOT_AVAILABLE,
+    };
   });
 
   return amazonProducts;
@@ -80,10 +162,17 @@ const selectAmazonProductsByASIN = async (
 
 const NOT_AVAILABLE = 'Not Available';
 
-export const selectAllAmazonProducts = async (): Promise<
-  AmazonProductRecord[]
-> => {
-  const amazonProducts: AmazonProductRecord[] = [];
+export const selectAmazonProductRecordsByASIN = async (
+  ASINs: string[]
+): Promise<AmazonProductMap> => {
+  let filterByFormula = 'OR(';
+  ASINs.forEach((recordId) => {
+    filterByFormula += `ASIN = '${recordId}', `;
+  });
+  filterByFormula = filterByFormula.slice(0, -2);
+  filterByFormula += ')';
+  console.log(filterByFormula);
+
   try {
     const amazonProductRecords = await airtableBase(
       airtableTables.amazonProducts.id
@@ -126,119 +215,17 @@ export const selectAllAmazonProducts = async (): Promise<
           amazonProductFields.rating.fieldId,
           amazonProductFields.price.fieldId,
         ],
+        filterByFormula,
       })
       .all();
 
-    console.log(amazonProductRecords);
-
-    amazonProductRecords.forEach((record) => {
-      const ASIN = record.get(amazonProductFields.ASIN.name);
-      const recordId = record.get(amazonProductFields.recordId.name);
-      const productName = record.get(amazonProductFields.productName.name);
-
-      const shape = record.get(amazonProductFields.shape.name);
-      const material = record.get(amazonProductFields.material.name);
-      const handles = record.get(amazonProductFields.handles.name);
-
-      const dimensions = record.get(amazonProductFields.dimensions.name);
-      const squareFootage = record.get(amazonProductFields.squareFootage.name);
-      const cubicFootage = record.get(amazonProductFields.cubicFootage.name);
-      const weightCapacity = record.get(
-        amazonProductFields.weightCapacity.name
-      );
-      const height = record.get(amazonProductFields.height.name);
-
-      const spectrum = record.get(amazonProductFields.spectrum.name);
-      const dimming = record.get(amazonProductFields.dimming.name);
-      const wattage = record.get(amazonProductFields.wattage.name);
-      const daisyChain = record.get(amazonProductFields.daisyChain.name);
-
-      const airFlowRating = record.get(amazonProductFields.airFlowRating.name);
-      const width = record.get(amazonProductFields.width.name);
-      const speedAdjustable = record.get(
-        amazonProductFields.speedAdjustable.name
-      );
-      const btu = record.get(amazonProductFields.btu.name);
-      const thermostat = record.get(amazonProductFields.thermostat.name);
-      const control = record.get(amazonProductFields.control.name);
-      const dehumidifier = record.get(amazonProductFields.dehumidifier.name);
-      const filter = record.get(amazonProductFields.filter.name);
-      const noiseLevel = record.get(amazonProductFields.noiseLevel.name);
-      const exhuast = record.get(amazonProductFields.exhuast.name);
-      const coverage = record.get(amazonProductFields.coverage.name);
-      const capacity = record.get(amazonProductFields.capacity.name);
-      const humiditySensor = record.get(
-        amazonProductFields.humiditySensor.name
-      );
-      const timer = record.get(amazonProductFields.timer.name);
-      const rating = record.get(amazonProductFields.rating.name);
-      const price = record.get(amazonProductFields.price.name);
-
-      /**
-       * if any of the above values are undefined, throw an error
-       */
-
-      if (ASIN === undefined) {
-        console.log('Skipping record because ASIN is undefined', record);
-        return;
-      } else if (recordId === undefined || productName === undefined) {
-        console.error(
-          'Attempted to fetch amazonProducts records from Airtable, but one or more of the values was undefined:',
-          record
-        );
-        return;
-      }
-
-      amazonProducts.push({
-        ASIN: ASIN.toString(),
-        recordId: recordId.toString(),
-        productName: productName.toString(),
-
-        shape: shape ? shape.toString() : NOT_AVAILABLE,
-        material: material ? material.toString() : NOT_AVAILABLE,
-        handles: handles ? handles.toString() : NOT_AVAILABLE,
-
-        dimensions: dimensions ? dimensions.toString() : NOT_AVAILABLE,
-        squareFootage: squareFootage ? squareFootage.toString() : NOT_AVAILABLE,
-        cubicFootage: cubicFootage ? cubicFootage.toString() : NOT_AVAILABLE,
-        weightCapacity: weightCapacity
-          ? weightCapacity.toString()
-          : NOT_AVAILABLE,
-        height: height ? height.toString() : NOT_AVAILABLE,
-
-        spectrum: spectrum ? spectrum.toString() : NOT_AVAILABLE,
-        dimming: dimming ? dimming.toString() : NOT_AVAILABLE,
-        wattage: wattage ? wattage.toString() : NOT_AVAILABLE,
-        daisyChain: daisyChain ? daisyChain.toString() : NOT_AVAILABLE,
-
-        airFlowRating: airFlowRating ? airFlowRating.toString() : NOT_AVAILABLE,
-        width: width ? width.toString() : NOT_AVAILABLE,
-        speedAdjustable: speedAdjustable
-          ? speedAdjustable.toString()
-          : NOT_AVAILABLE,
-        btu: btu ? btu.toString() : NOT_AVAILABLE,
-        thermostat: thermostat ? thermostat.toString() : NOT_AVAILABLE,
-        control: control ? control.toString() : NOT_AVAILABLE,
-        dehumidifier: dehumidifier ? dehumidifier.toString() : NOT_AVAILABLE,
-        filter: filter ? filter.toString() : NOT_AVAILABLE,
-        noiseLevel: noiseLevel ? noiseLevel.toString() : NOT_AVAILABLE,
-        exhuast: exhuast ? exhuast.toString() : NOT_AVAILABLE,
-        coverage: coverage ? coverage.toString() : NOT_AVAILABLE,
-        capacity: capacity ? capacity.toString() : NOT_AVAILABLE,
-        humiditySensor: humiditySensor
-          ? humiditySensor.toString()
-          : NOT_AVAILABLE,
-        timer: timer ? timer.toString() : NOT_AVAILABLE,
-        rating: rating ? rating.toString() : NOT_AVAILABLE,
-        price: price ? price.toString() : NOT_AVAILABLE,
-      });
-    });
+    const amazonProducts = createAmazonProductMap(amazonProductRecords);
 
     return amazonProducts;
   } catch (e) {
     console.error('Error fetching amazonProduct data:');
     console.error(e);
 
-    return amazonProducts;
+    return {};
   }
 };

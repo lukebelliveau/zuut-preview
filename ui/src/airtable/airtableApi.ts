@@ -1,4 +1,3 @@
-import { selectAllAmazonProducts } from './amazonProducts';
 import { selectAllLights } from './lights';
 import { selectAllPots, selectPotsByRecordId } from './pots';
 import { useQuery } from 'react-query';

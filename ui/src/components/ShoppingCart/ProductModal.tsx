@@ -43,8 +43,6 @@ const ProductModal = ({
     if (amazonProducts === undefined) return <div>Loading products...</div>;
   }
 
-  console.log(amazonProducts);
-
   const changeSelectedProductASIN = (ASIN: string) => {
     changeSelectedASIN(ASIN, index);
     closeModal();
