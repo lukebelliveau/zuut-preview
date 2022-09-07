@@ -246,9 +246,12 @@ const ItemRow = ({
           value={item.selectedASIN}
           onChange={(event) => changeSelectedASIN(event.target.value, index)}
         >
-          {Object.values(amazonProducts).map((amazonProduct) => {
+          {Object.values(amazonProducts).map((amazonProduct, index) => {
             return (
-              <option key={amazonProduct.ASIN} value={amazonProduct.ASIN}>
+              <option
+                key={`${amazonProduct.ASIN}-${index}`}
+                value={amazonProduct.ASIN}
+              >
                 {amazonProduct.productName}
               </option>
             );

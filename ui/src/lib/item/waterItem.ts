@@ -9,7 +9,7 @@ import { v4 } from 'uuid';
 import { Item } from '../item';
 import WaterContainerImage from '../../images/items/water_container.png';
 
-export const WATER_ITEM_TYPE = 'WaterItemType';
+export const WATER_ITEM_TYPE = 'WaterItem';
 
 export function isWaterItem(item: Item): item is WaterItem {
   return (item as WaterItem).type === WATER_ITEM_TYPE;

@@ -115,4 +115,86 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
     name: 'height',
     fieldId: 'fldwr8IxJwIdPLIOV',
   },
+
+  spectrum: {
+    name: 'spectrum',
+    fieldId: 'fldSqmBj1RRY4tMPf',
+  },
+  dimming: {
+    name: 'dimming',
+    fieldId: 'fldyCUaL2v1mzlA93',
+  },
+  wattage: {
+    name: 'wattage',
+    fieldId: 'fldn8sNAgXP5FFBJT',
+  },
+  daisyChain: {
+    name: 'daisyChain',
+    fieldId: 'fldNbiL7vAnH2TC12',
+  },
+
+  airFlowRating: {
+    name: 'airFlowRating',
+    fieldId: 'fldJdh2fkhsxW4sfI',
+  },
+  width: {
+    name: 'width',
+    fieldId: 'fldQpknMGDBNtgdO3',
+  },
+  speedAdjustable: {
+    name: 'speedAdjustable',
+    fieldId: 'fldOkWtF79XEZe79P',
+  },
+  btu: {
+    name: 'btu',
+    fieldId: 'fldzMNAjrpXMmNe4r',
+  },
+  thermostat: {
+    name: 'thermostat',
+    fieldId: 'fldIM0OqrEpBrlPsz',
+  },
+  control: {
+    name: 'control',
+    fieldId: 'fldRUauJSLcS3t8QZ',
+  },
+  dehumidifier: {
+    name: 'dehumidifier',
+    fieldId: 'fld20qCAKAWh7ILXh',
+  },
+  filter: {
+    name: 'filter',
+    fieldId: 'fldY7Jr46M4Q1gGkD',
+  },
+  noiseLevel: {
+    name: 'noiseLevel',
+    fieldId: 'fldvABwQBvFqkWA8d',
+  },
+  exhuast: {
+    name: 'exhuast',
+    fieldId: 'fldGMxnIMZRvuRiSb',
+  },
+  coverage: {
+    name: 'coverage',
+    fieldId: 'flddQqXFeO72oda5O',
+  },
+  capacity: {
+    name: 'capacity',
+    fieldId: 'fldVKQESb3fYw61Cb',
+  },
+  humiditySensor: {
+    name: 'humiditySensor',
+    fieldId: 'fldBCfQJsjAGD09DH',
+  },
+  timer: {
+    name: 'timer',
+    fieldId: 'fldAFFTnsQjKNuEAI',
+  },
+  rating: {
+    name: 'rating',
+    fieldId: 'fldqvnx9YdZsSZZZR',
+  },
+  price: {
+    name: 'price',
+    fieldId: 'fldZTwFcsVubAZIgk',
+  },
 };

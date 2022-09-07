@@ -24,6 +24,28 @@ export interface AmazonProductRecord {
   cubicFootage: string;
   weightCapacity: string;
   height: string;
+
+  spectrum: string;
+  dimming: string;
+  wattage: string;
+  daisyChain: string;
+
+  airFlowRating: string;
+  width: string;
+  speedAdjustable: string;
+  btu: string;
+  thermostat: string;
+  control: string;
+  dehumidifier: string;
+  filter: string;
+  noiseLevel: string;
+  exhuast: string;
+  coverage: string;
+  capacity: string;
+  humiditySensor: string;
+  timer: string;
+  rating: string;
+  price: string;
 }
 
 export const useQueryAmazonProductsByASIN = (ASINs: string[]) => {
@@ -81,9 +103,33 @@ export const selectAllAmazonProducts = async (): Promise<
           amazonProductFields.cubicFootage.fieldId,
           amazonProductFields.weightCapacity.fieldId,
           amazonProductFields.height.fieldId,
+
+          amazonProductFields.spectrum.fieldId,
+          amazonProductFields.dimming.fieldId,
+          amazonProductFields.wattage.fieldId,
+          amazonProductFields.daisyChain.fieldId,
+
+          amazonProductFields.airFlowRating.fieldId,
+          amazonProductFields.width.fieldId,
+          amazonProductFields.speedAdjustable.fieldId,
+          amazonProductFields.btu.fieldId,
+          amazonProductFields.thermostat.fieldId,
+          amazonProductFields.control.fieldId,
+          amazonProductFields.dehumidifier.fieldId,
+          amazonProductFields.filter.fieldId,
+          amazonProductFields.noiseLevel.fieldId,
+          amazonProductFields.exhuast.fieldId,
+          amazonProductFields.coverage.fieldId,
+          amazonProductFields.capacity.fieldId,
+          amazonProductFields.humiditySensor.fieldId,
+          amazonProductFields.timer.fieldId,
+          amazonProductFields.rating.fieldId,
+          amazonProductFields.price.fieldId,
         ],
       })
       .all();
+
+    console.log(amazonProductRecords);
 
     amazonProductRecords.forEach((record) => {
       const ASIN = record.get(amazonProductFields.ASIN.name);
@@ -102,14 +148,40 @@ export const selectAllAmazonProducts = async (): Promise<
       );
       const height = record.get(amazonProductFields.height.name);
 
+      const spectrum = record.get(amazonProductFields.spectrum.name);
+      const dimming = record.get(amazonProductFields.dimming.name);
+      const wattage = record.get(amazonProductFields.wattage.name);
+      const daisyChain = record.get(amazonProductFields.daisyChain.name);
+
+      const airFlowRating = record.get(amazonProductFields.airFlowRating.name);
+      const width = record.get(amazonProductFields.width.name);
+      const speedAdjustable = record.get(
+        amazonProductFields.speedAdjustable.name
+      );
+      const btu = record.get(amazonProductFields.btu.name);
+      const thermostat = record.get(amazonProductFields.thermostat.name);
+      const control = record.get(amazonProductFields.control.name);
+      const dehumidifier = record.get(amazonProductFields.dehumidifier.name);
+      const filter = record.get(amazonProductFields.filter.name);
+      const noiseLevel = record.get(amazonProductFields.noiseLevel.name);
+      const exhuast = record.get(amazonProductFields.exhuast.name);
+      const coverage = record.get(amazonProductFields.coverage.name);
+      const capacity = record.get(amazonProductFields.capacity.name);
+      const humiditySensor = record.get(
+        amazonProductFields.humiditySensor.name
+      );
+      const timer = record.get(amazonProductFields.timer.name);
+      const rating = record.get(amazonProductFields.rating.name);
+      const price = record.get(amazonProductFields.price.name);
+
       /**
        * if any of the above values are undefined, throw an error
        */
-      if (
-        ASIN === undefined ||
-        recordId === undefined ||
-        productName === undefined
-      ) {
+
+      if (ASIN === undefined) {
+        console.log('Skipping record because ASIN is undefined', record);
+        return;
+      } else if (recordId === undefined || productName === undefined) {
         console.error(
           'Attempted to fetch amazonProducts records from Airtable, but one or more of the values was undefined:',
           record
@@ -133,6 +205,32 @@ export const selectAllAmazonProducts = async (): Promise<
           ? weightCapacity.toString()
           : NOT_AVAILABLE,
         height: height ? height.toString() : NOT_AVAILABLE,
+
+        spectrum: spectrum ? spectrum.toString() : NOT_AVAILABLE,
+        dimming: dimming ? dimming.toString() : NOT_AVAILABLE,
+        wattage: wattage ? wattage.toString() : NOT_AVAILABLE,
+        daisyChain: daisyChain ? daisyChain.toString() : NOT_AVAILABLE,
+
+        airFlowRating: airFlowRating ? airFlowRating.toString() : NOT_AVAILABLE,
+        width: width ? width.toString() : NOT_AVAILABLE,
+        speedAdjustable: speedAdjustable
+          ? speedAdjustable.toString()
+          : NOT_AVAILABLE,
+        btu: btu ? btu.toString() : NOT_AVAILABLE,
+        thermostat: thermostat ? thermostat.toString() : NOT_AVAILABLE,
+        control: control ? control.toString() : NOT_AVAILABLE,
+        dehumidifier: dehumidifier ? dehumidifier.toString() : NOT_AVAILABLE,
+        filter: filter ? filter.toString() : NOT_AVAILABLE,
+        noiseLevel: noiseLevel ? noiseLevel.toString() : NOT_AVAILABLE,
+        exhuast: exhuast ? exhuast.toString() : NOT_AVAILABLE,
+        coverage: coverage ? coverage.toString() : NOT_AVAILABLE,
+        capacity: capacity ? capacity.toString() : NOT_AVAILABLE,
+        humiditySensor: humiditySensor
+          ? humiditySensor.toString()
+          : NOT_AVAILABLE,
+        timer: timer ? timer.toString() : NOT_AVAILABLE,
+        rating: rating ? rating.toString() : NOT_AVAILABLE,
+        price: price ? price.toString() : NOT_AVAILABLE,
       });
     });
 

@@ -8,6 +8,8 @@ import PotProductTable from './productTables/PotProductTable';
 import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import { TENT_ITEM_TYPE } from '../../lib/item/tentItem';
 import TentProductTable from './productTables/TentProductTable';
+import { LIGHT_ITEM_TYPE } from '../../lib/item/lightItem';
+import LightProductTable from './productTables/LightProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -41,6 +43,8 @@ const ProductModal = ({
     if (amazonProducts === undefined) return <div>Loading products...</div>;
   }
 
+  console.log(amazonProducts);
+
   const changeSelectedProductASIN = (ASIN: string) => {
     changeSelectedASIN(ASIN, index);
     closeModal();
@@ -56,6 +60,9 @@ const ProductModal = ({
       break;
     case TENT_ITEM_TYPE:
       ProductTable = TentProductTable;
+      break;
+    case LIGHT_ITEM_TYPE:
+      ProductTable = LightProductTable;
       break;
   }
 
