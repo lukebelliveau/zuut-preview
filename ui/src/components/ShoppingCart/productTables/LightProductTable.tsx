@@ -22,6 +22,8 @@ const LightProductTable = ({
         { name: 'Dimming', property: 'dimming' },
         { name: 'Wattage', property: 'wattage' },
         { name: 'Daisy Chain', property: 'daisyChain' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

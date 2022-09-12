@@ -19,6 +19,8 @@ const DuctingProductTable = ({
       columns={[
         { name: 'Product Name', property: 'productName' },
         { name: 'Width', property: 'width' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

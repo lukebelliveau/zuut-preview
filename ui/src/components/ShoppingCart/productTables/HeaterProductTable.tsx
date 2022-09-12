@@ -20,6 +20,8 @@ const HeaterProductTable = ({
         { name: 'Product Name', property: 'productName' },
         { name: 'Thermostat', property: 'thermostat' },
         { name: 'Coverage', property: 'coverage' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

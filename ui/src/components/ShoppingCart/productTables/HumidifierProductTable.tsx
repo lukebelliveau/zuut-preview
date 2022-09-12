@@ -22,6 +22,8 @@ const HumidifierProductTable = ({
         { name: 'Humidity Sensor', property: 'humiditySensor' },
         { name: 'Control', property: 'control' },
         { name: 'Timer', property: 'timer' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

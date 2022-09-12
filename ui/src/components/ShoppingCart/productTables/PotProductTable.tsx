@@ -21,6 +21,8 @@ const PotProductTable = ({
         { name: 'Shape', property: 'shape' },
         { name: 'Material', property: 'material' },
         { name: 'Handles', property: 'handles' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

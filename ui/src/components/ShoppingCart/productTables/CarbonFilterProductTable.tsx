@@ -20,6 +20,8 @@ const CarbonFilterProductTable = ({
         { name: 'Product Name', property: 'productName' },
         { name: 'Air Flow Rating', property: 'airFlowRating' },
         { name: 'Width', property: 'width' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

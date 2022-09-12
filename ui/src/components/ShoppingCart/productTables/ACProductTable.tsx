@@ -25,6 +25,8 @@ const ACProductTable = ({
         { name: 'Noise Level', property: 'noiseLevel' },
         { name: 'Exhaust', property: 'exhaust' },
         { name: 'Coverage', property: 'coverage' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

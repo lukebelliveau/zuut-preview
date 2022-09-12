@@ -21,6 +21,8 @@ const TentProductTable = ({
         { name: 'Square Footage', property: 'squareFootage' },
         { name: 'Cubic Footage', property: 'material' },
         { name: 'Height', property: 'height' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

@@ -21,6 +21,8 @@ const ExhaustFanProductTable = ({
         { name: 'Air Flow Rating', property: 'airFlowRating' },
         { name: 'Width', property: 'width' },
         { name: 'Speed Adjustable', property: 'speedAdjustable' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );

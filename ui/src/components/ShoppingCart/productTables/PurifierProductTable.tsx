@@ -20,6 +20,8 @@ const PurifierProductTable = ({
         { name: 'Product Name', property: 'productName' },
         { name: 'Air Flow Rating', property: 'airFlowRating' },
         { name: 'Noise Level', property: 'noiseLevel' },
+        { name: 'Rating', property: 'rating' },
+        { name: 'Price', property: 'price' },
       ]}
     />
   );
