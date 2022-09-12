@@ -12,6 +12,8 @@ import { LIGHT_ITEM_TYPE } from '../../lib/item/lightItem';
 import LightProductTable from './productTables/LightProductTable';
 import { EXHAUST_FAN_ITEM_TYPE } from '../../lib/item/exhaustFanItem';
 import ExhaustFanProductTable from './productTables/ExhaustFanProductTable';
+import { DUCT_ITEM_TYPE } from '../../lib/item/ductItem';
+import DuctingProductTable from './productTables/DuctingProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -66,6 +68,9 @@ const ProductModal = ({
       break;
     case EXHAUST_FAN_ITEM_TYPE:
       ProductTable = ExhaustFanProductTable;
+      break;
+    case DUCT_ITEM_TYPE:
+      ProductTable = DuctingProductTable;
       break;
   }
 
