@@ -11,7 +11,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recKhI53kiReGvsdZ'],
     recordId: 'rec3NJ0FAFm7HCVn6',
     linkedASINs: [],
-    itemType: 'DehumidifierItemType',
+    itemType: 'DehumidifierItem',
   },
   {
     name: 'Floor Humidifier',
@@ -23,7 +23,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recHAdwYe9tZVrQe6'],
     recordId: 'rec5bpbZMXW0E7PEg',
     linkedASINs: [],
-    itemType: 'HumidifierItemType',
+    itemType: 'HumidifierItem',
   },
   {
     name: 'Floor Heat Unit',
@@ -35,7 +35,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recCj6WQgEYggHD2l'],
     recordId: 'rec7h5PFvnUp16qTF',
     linkedASINs: [],
-    itemType: 'HeatItemType',
+    itemType: 'HeatItem',
   },
   {
     name: 'Carbon Filter',
@@ -47,7 +47,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recCxH7Re20g5htK5'],
     recordId: 'recD7URrmc4apfTwh',
     linkedASINs: [],
-    itemType: 'CarbonFilterItemType',
+    itemType: 'CarbonFilterItem',
   },
   {
     name: 'Exhaust Fan',
@@ -83,7 +83,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recGna6nQEYJ0Tqfr'],
     recordId: 'recQru8K8Iro60NJO',
     linkedASINs: [],
-    itemType: 'PurifierItemType',
+    itemType: 'PurifierItem',
   },
   {
     name: 'Floor AC Unit',
@@ -95,7 +95,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recQ0eoABlNVtryAL'],
     recordId: 'recSbidW8JDoBOV3Z',
     linkedASINs: [],
-    itemType: 'FloorACItemType',
+    itemType: 'FloorACItem',
   },
   {
     name: 'Clip Fan',
@@ -107,7 +107,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recUPXec4mFstzl6g'],
     recordId: 'recw6i6a2tOLUVmdE',
     linkedASINs: [],
-    itemType: 'OscillatingFanItemType',
+    itemType: 'OscillatingFanItem',
   },
 ];
 

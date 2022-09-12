@@ -10,7 +10,7 @@ import OscillatingFanImage from '../../images/items/oscillating_fan.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
 
-export const OSCILLATING_FAN_ITEM_TYPE = 'OscillatingFanItemType';
+export const OSCILLATING_FAN_ITEM_TYPE = 'OscillatingFanItem';
 
 export function isOscillatingFanItem(item: Item): item is OscillatingFanItem {
   return (item as OscillatingFanItem).type === OSCILLATING_FAN_ITEM_TYPE;

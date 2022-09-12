@@ -10,7 +10,7 @@ import { Item } from '../item';
 import HumidifierImage from '../../images/items/humidifier.png';
 import GrowspaceItem from './growspaceItem';
 
-export const HUMIDIFIER_ITEM_TYPE = 'HumidifierItemType';
+export const HUMIDIFIER_ITEM_TYPE = 'HumidifierItem';
 
 export function isHumidifierItem(item: Item): item is HumidifierItem {
   return (item as HumidifierItem).type === HUMIDIFIER_ITEM_TYPE;

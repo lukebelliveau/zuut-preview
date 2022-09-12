@@ -10,7 +10,7 @@ import { Item } from '../item';
 import PurifierImage from '../../images/items/purifier.png';
 import GrowspaceItem from './growspaceItem';
 
-export const PURIFIER_ITEM_TYPE = 'PurifierItemType';
+export const PURIFIER_ITEM_TYPE = 'PurifierItem';
 
 export function isPurifierItem(item: Item): item is PurifierItem {
   return (item as PurifierItem).type === PURIFIER_ITEM_TYPE;

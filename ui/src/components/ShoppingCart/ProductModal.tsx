@@ -18,6 +18,8 @@ import { FLOOR_AC_ITEM_TYPE } from '../../lib/item/floorACItem';
 import ACProductTable from './productTables/ACProductTable';
 import { HEAT_ITEM_TYPE } from '../../lib/item/heatItem';
 import HeaterProductTable from './productTables/HeaterProductTable';
+import { PURIFIER_ITEM_TYPE } from '../../lib/item/purifierItem';
+import PurifierProductTable from './productTables/PurifierProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -81,6 +83,9 @@ const ProductModal = ({
       break;
     case HEAT_ITEM_TYPE:
       ProductTable = HeaterProductTable;
+      break;
+    case PURIFIER_ITEM_TYPE:
+      ProductTable = PurifierProductTable;
       break;
   }
 
