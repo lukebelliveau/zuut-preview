@@ -20,6 +20,10 @@ import { HEAT_ITEM_TYPE } from '../../lib/item/heatItem';
 import HeaterProductTable from './productTables/HeaterProductTable';
 import { PURIFIER_ITEM_TYPE } from '../../lib/item/purifierItem';
 import PurifierProductTable from './productTables/PurifierProductTable';
+import { HUMIDIFIER_ITEM_TYPE } from '../../lib/item/humidifierItem';
+import HumidifierProductTable from './productTables/HumidifierProductTable';
+import { DEHUMIDIFIER_ITEM_TYPE } from '../../lib/item/dehumidifierItem';
+import DehumidifierProductTable from './productTables/DehumidifierProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -86,6 +90,12 @@ const ProductModal = ({
       break;
     case PURIFIER_ITEM_TYPE:
       ProductTable = PurifierProductTable;
+      break;
+    case HUMIDIFIER_ITEM_TYPE:
+      ProductTable = HumidifierProductTable;
+      break;
+    case DEHUMIDIFIER_ITEM_TYPE:
+      ProductTable = DehumidifierProductTable;
       break;
   }
 
