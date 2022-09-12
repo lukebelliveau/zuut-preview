@@ -10,7 +10,7 @@ import { Item } from '../item';
 import HeatImage from '../../images/items/heat.png';
 import GrowspaceItem from './growspaceItem';
 
-export const HEAT_ITEM_TYPE = 'HeatItemType';
+export const HEAT_ITEM_TYPE = 'HeatItem';
 
 export function isHeatItem(item: Item): item is HeatItem {
   return (item as HeatItem).type === HEAT_ITEM_TYPE;

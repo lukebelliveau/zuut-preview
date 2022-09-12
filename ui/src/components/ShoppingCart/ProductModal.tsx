@@ -14,6 +14,10 @@ import { EXHAUST_FAN_ITEM_TYPE } from '../../lib/item/exhaustFanItem';
 import ExhaustFanProductTable from './productTables/ExhaustFanProductTable';
 import { DUCT_ITEM_TYPE } from '../../lib/item/ductItem';
 import DuctingProductTable from './productTables/DuctingProductTable';
+import { FLOOR_AC_ITEM_TYPE } from '../../lib/item/floorACItem';
+import ACProductTable from './productTables/ACProductTable';
+import { HEAT_ITEM_TYPE } from '../../lib/item/heatItem';
+import HeaterProductTable from './productTables/HeaterProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -71,6 +75,12 @@ const ProductModal = ({
       break;
     case DUCT_ITEM_TYPE:
       ProductTable = DuctingProductTable;
+      break;
+    case FLOOR_AC_ITEM_TYPE:
+      ProductTable = ACProductTable;
+      break;
+    case HEAT_ITEM_TYPE:
+      ProductTable = HeaterProductTable;
       break;
   }
 
