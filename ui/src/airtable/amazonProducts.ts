@@ -164,7 +164,6 @@ export const selectAmazonProductRecordsByASIN = async (
   });
   filterByFormula = filterByFormula.slice(0, -2);
   filterByFormula += ')';
-  console.log(filterByFormula);
 
   try {
     const amazonProductRecords = await airtableBase(

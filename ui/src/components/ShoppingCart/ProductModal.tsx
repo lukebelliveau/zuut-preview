@@ -24,6 +24,10 @@ import { HUMIDIFIER_ITEM_TYPE } from '../../lib/item/humidifierItem';
 import HumidifierProductTable from './productTables/HumidifierProductTable';
 import { DEHUMIDIFIER_ITEM_TYPE } from '../../lib/item/dehumidifierItem';
 import DehumidifierProductTable from './productTables/DehumidifierProductTable';
+import { MISC_ITEM_TYPE } from '../../lib/item/miscItem';
+import MiscProductTable from './productTables/MiscProductTable';
+import { WATER_ITEM_TYPE } from '../../lib/item/waterItem';
+import WaterProductTable from './productTables/WaterProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -96,6 +100,12 @@ const ProductModal = ({
       break;
     case DEHUMIDIFIER_ITEM_TYPE:
       ProductTable = DehumidifierProductTable;
+      break;
+    case MISC_ITEM_TYPE:
+      ProductTable = MiscProductTable;
+      break;
+    case WATER_ITEM_TYPE:
+      ProductTable = WaterProductTable;
       break;
   }
 
