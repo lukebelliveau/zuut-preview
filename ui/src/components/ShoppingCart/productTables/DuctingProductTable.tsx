@@ -2,11 +2,6 @@ import { AmazonProductMap } from '../../../airtable/amazonProducts';
 import { CartItem } from '../ShoppingCartTable';
 import ProductTable from './ProductTable';
 
-export interface ProductColumn {
-  name: string;
-  property: ProductColumn;
-}
-
 const DuctingProductTable = ({
   item,
   amazonProducts,

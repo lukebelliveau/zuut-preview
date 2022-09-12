@@ -10,7 +10,7 @@ import { Item } from '../item';
 import FloorACImage from '../../images/items/floor_ac.png';
 import GrowspaceItem from './growspaceItem';
 
-export const FLOOR_AC_ITEM_TYPE = 'FloorACItemType';
+export const FLOOR_AC_ITEM_TYPE = 'FloorACItem';
 
 export function isFloorACItem(item: Item): item is FloorACItem {
   return (item as FloorACItem).type === FLOOR_AC_ITEM_TYPE;

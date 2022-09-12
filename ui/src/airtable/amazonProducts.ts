@@ -38,7 +38,7 @@ export interface AmazonProductRecord {
   control: string;
   dehumidifier: string;
   noiseLevel: string;
-  exhuast: string;
+  exhaust: string;
   coverage: string;
   capacity: string;
   humiditySensor: string;
@@ -88,7 +88,7 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
     const control = record.get(amazonProductFields.control.name);
     const dehumidifier = record.get(amazonProductFields.dehumidifier.name);
     const noiseLevel = record.get(amazonProductFields.noiseLevel.name);
-    const exhuast = record.get(amazonProductFields.exhuast.name);
+    const exhaust = record.get(amazonProductFields.exhaust.name);
     const coverage = record.get(amazonProductFields.coverage.name);
     const capacity = record.get(amazonProductFields.capacity.name);
     const humiditySensor = record.get(amazonProductFields.humiditySensor.name);
@@ -136,7 +136,7 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
       control: control ? control.toString() : NOT_AVAILABLE,
       dehumidifier: dehumidifier ? dehumidifier.toString() : NOT_AVAILABLE,
       noiseLevel: noiseLevel ? noiseLevel.toString() : NOT_AVAILABLE,
-      exhuast: exhuast ? exhuast.toString() : NOT_AVAILABLE,
+      exhaust: exhaust ? exhaust.toString() : NOT_AVAILABLE,
       coverage: coverage ? coverage.toString() : NOT_AVAILABLE,
       capacity: capacity ? capacity.toString() : NOT_AVAILABLE,
       humiditySensor: humiditySensor
@@ -198,7 +198,7 @@ export const selectAmazonProductRecordsByASIN = async (
           amazonProductFields.control.fieldId,
           amazonProductFields.dehumidifier.fieldId,
           amazonProductFields.noiseLevel.fieldId,
-          amazonProductFields.exhuast.fieldId,
+          amazonProductFields.exhaust.fieldId,
           amazonProductFields.coverage.fieldId,
           amazonProductFields.capacity.fieldId,
           amazonProductFields.humiditySensor.fieldId,

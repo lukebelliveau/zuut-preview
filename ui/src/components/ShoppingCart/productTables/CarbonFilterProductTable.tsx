@@ -2,7 +2,7 @@ import { AmazonProductMap } from '../../../airtable/amazonProducts';
 import { CartItem } from '../ShoppingCartTable';
 import ProductTable from './ProductTable';
 
-const ExhaustFanProductTable = ({
+const CarbonFilterProductTable = ({
   item,
   amazonProducts,
   changeSelectedProductASIN,
@@ -20,10 +20,9 @@ const ExhaustFanProductTable = ({
         { name: 'Product Name', property: 'productName' },
         { name: 'Air Flow Rating', property: 'airFlowRating' },
         { name: 'Width', property: 'width' },
-        { name: 'Speed Adjustable', property: 'speedAdjustable' },
       ]}
     />
   );
 };
 
-export default ExhaustFanProductTable;
+export default CarbonFilterProductTable;

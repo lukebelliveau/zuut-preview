@@ -161,8 +161,8 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
     name: 'noiseLevel',
     fieldId: 'fldvABwQBvFqkWA8d',
   },
-  exhuast: {
-    name: 'exhuast',
+  exhaust: {
+    name: 'exhaust',
     fieldId: 'fldGMxnIMZRvuRiSb',
   },
   coverage: {

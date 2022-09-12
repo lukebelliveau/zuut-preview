@@ -8,7 +8,7 @@ import CarbonFilterImage from '../../images/items/carbon_filter.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
 
-export const CARBON_FILTER_ITEM_TYPE = 'CarbonFilterItemType';
+export const CARBON_FILTER_ITEM_TYPE = 'CarbonFilterItem';
 
 export function isCarbonFilterItem(item: Item): item is CarbonFilterItem {
   return (item as CarbonFilterItem).type === CARBON_FILTER_ITEM_TYPE;
