@@ -18,19 +18,17 @@ export const selectAllMiscItems = async (): Promise<ItemRecord[]> => {
       /**
        * if any of the above values are undefined, throw an error
        */
-      if (
-        name === undefined ||
-        amazonProducts === undefined ||
-        recordId === undefined
-      ) {
+      if (name === undefined || recordId === undefined) {
         console.error(
-          'Attempted to fetch item records from Airtable, but one or more of the values was undefined.'
+          'Attempted to fetch misc item records from Airtable, but one or more of the values was undefined.'
         );
         console.error(record);
       } else {
         items.push({
           name: name.toString(),
-          amazonProducts: amazonProducts.toString()?.split(','),
+          amazonProducts: amazonProducts
+            ? amazonProducts.toString()?.split(',')
+            : [],
           recordId: recordId.toString(),
           linkedASINs: [],
         });

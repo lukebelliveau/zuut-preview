@@ -59,7 +59,7 @@ const airtableClimateItems: PlaceableItemRecord[] = [
     amazonProducts: ['recJrLDa3t21KAVgg'],
     recordId: 'recIHn3Z4sX1MrTrp',
     linkedASINs: ['B07J9PTYRN'],
-    itemType: 'ExhaustFanItemType',
+    itemType: 'ExhaustFanItem',
   },
   {
     name: 'Ducting',

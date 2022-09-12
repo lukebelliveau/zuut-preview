@@ -32,11 +32,11 @@ const selectAllOfItemType = async (
         length === undefined ||
         height === undefined ||
         description === undefined ||
-        amazonProducts === undefined ||
         recordId === undefined
       ) {
         console.error(
-          'Attempted to fetch item records from Airtable, but one or more of the values was undefined.'
+          'Attempted to fetch item records from Airtable, but one or more of the values was undefined. Item type ID: ' +
+            itemTypeId
         );
         console.error(record);
       } else {
@@ -46,7 +46,9 @@ const selectAllOfItemType = async (
           length: parseInt(length.toString()),
           height: parseInt(height.toString()),
           description: description.toString(),
-          amazonProducts: amazonProducts.toString()?.split(','),
+          amazonProducts: amazonProducts
+            ? amazonProducts.toString()?.split(',')
+            : [],
           recordId: recordId.toString(),
           linkedASINs: linkedASINs ? linkedASINs?.toString()?.split(',') : [],
           itemType: itemType ? itemType.toString() : undefined,

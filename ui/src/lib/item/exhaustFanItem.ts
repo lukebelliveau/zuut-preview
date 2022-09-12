@@ -10,7 +10,7 @@ import ExhaustFanImage from '../../images/items/exhaust_fan.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
 
-export const EXHAUST_FAN_ITEM_TYPE = 'ExhaustFanItemType';
+export const EXHAUST_FAN_ITEM_TYPE = 'ExhaustFanItem';
 
 export function isExhaustFanItem(item: Item): item is ExhaustFanItem {
   return (item as ExhaustFanItem).type === EXHAUST_FAN_ITEM_TYPE;
