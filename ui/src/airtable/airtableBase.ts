@@ -107,10 +107,6 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
     name: 'cubicFootage',
     fieldId: 'fldWioAwsaCAizo5E',
   },
-  weightCapacity: {
-    name: 'weightCapacity',
-    fieldId: 'fldBusXlLOo1x1z9K',
-  },
   height: {
     name: 'height',
     fieldId: 'fldwr8IxJwIdPLIOV',
@@ -160,10 +156,6 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
   dehumidifier: {
     name: 'dehumidifier',
     fieldId: 'fld20qCAKAWh7ILXh',
-  },
-  filter: {
-    name: 'filter',
-    fieldId: 'fldY7Jr46M4Q1gGkD',
   },
   noiseLevel: {
     name: 'noiseLevel',

@@ -23,7 +23,6 @@ export interface AmazonProductRecord {
   dimensions: string;
   squareFootage: string;
   cubicFootage: string;
-  weightCapacity: string;
   height: string;
 
   spectrum: string;
@@ -38,7 +37,6 @@ export interface AmazonProductRecord {
   thermostat: string;
   control: string;
   dehumidifier: string;
-  filter: string;
   noiseLevel: string;
   exhuast: string;
   coverage: string;
@@ -73,7 +71,6 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
     const dimensions = record.get(amazonProductFields.dimensions.name);
     const squareFootage = record.get(amazonProductFields.squareFootage.name);
     const cubicFootage = record.get(amazonProductFields.cubicFootage.name);
-    const weightCapacity = record.get(amazonProductFields.weightCapacity.name);
     const height = record.get(amazonProductFields.height.name);
 
     const spectrum = record.get(amazonProductFields.spectrum.name);
@@ -90,7 +87,6 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
     const thermostat = record.get(amazonProductFields.thermostat.name);
     const control = record.get(amazonProductFields.control.name);
     const dehumidifier = record.get(amazonProductFields.dehumidifier.name);
-    const filter = record.get(amazonProductFields.filter.name);
     const noiseLevel = record.get(amazonProductFields.noiseLevel.name);
     const exhuast = record.get(amazonProductFields.exhuast.name);
     const coverage = record.get(amazonProductFields.coverage.name);
@@ -123,9 +119,6 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
       dimensions: dimensions ? dimensions.toString() : NOT_AVAILABLE,
       squareFootage: squareFootage ? squareFootage.toString() : NOT_AVAILABLE,
       cubicFootage: cubicFootage ? cubicFootage.toString() : NOT_AVAILABLE,
-      weightCapacity: weightCapacity
-        ? weightCapacity.toString()
-        : NOT_AVAILABLE,
       height: height ? height.toString() : NOT_AVAILABLE,
 
       spectrum: spectrum ? spectrum.toString() : NOT_AVAILABLE,
@@ -142,7 +135,6 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
       thermostat: thermostat ? thermostat.toString() : NOT_AVAILABLE,
       control: control ? control.toString() : NOT_AVAILABLE,
       dehumidifier: dehumidifier ? dehumidifier.toString() : NOT_AVAILABLE,
-      filter: filter ? filter.toString() : NOT_AVAILABLE,
       noiseLevel: noiseLevel ? noiseLevel.toString() : NOT_AVAILABLE,
       exhuast: exhuast ? exhuast.toString() : NOT_AVAILABLE,
       coverage: coverage ? coverage.toString() : NOT_AVAILABLE,
@@ -191,7 +183,6 @@ export const selectAmazonProductRecordsByASIN = async (
           amazonProductFields.dimensions.fieldId,
           amazonProductFields.squareFootage.fieldId,
           amazonProductFields.cubicFootage.fieldId,
-          amazonProductFields.weightCapacity.fieldId,
           amazonProductFields.height.fieldId,
 
           amazonProductFields.spectrum.fieldId,
@@ -206,7 +197,6 @@ export const selectAmazonProductRecordsByASIN = async (
           amazonProductFields.thermostat.fieldId,
           amazonProductFields.control.fieldId,
           amazonProductFields.dehumidifier.fieldId,
-          amazonProductFields.filter.fieldId,
           amazonProductFields.noiseLevel.fieldId,
           amazonProductFields.exhuast.fieldId,
           amazonProductFields.coverage.fieldId,
