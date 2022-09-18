@@ -5,7 +5,7 @@ on:
       - main
 
 env:
-  REGISTRY: 'registry.digitalocean.com/zuut'
+  REGISTRY: 'registry.digitalocean.com/zuut-co'
   IMAGE_NAME: 'zuut-dev'
   ZUUT_DEV_APP_ID: 'c9d10f0e-b9b2-4728-9d36-d565ddaa0d52'
 
