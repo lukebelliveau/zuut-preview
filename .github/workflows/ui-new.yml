@@ -1,26 +1,32 @@
-name: ui-new
+name: dev
 on:
   push:
     branches:
       - ui-new
-jobs:
-  # ui_unit_test:
-  #   runs-on: ubuntu-18.04
-  #   env:
-  #     CI: 'true'
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '15.14.0'
-  #         cache: 'npm'
-  #     - run: npm ci
-  #       working-directory: ./ui
 
-  #     - name: Run unit tests
-  #       run: npm test -- --reporters=default --reporters=jest-junit
-  #       working-directory: ./ui
+env:
+  REGISTRY: 'registry.digitalocean.com/zuut-co'
+  IMAGE_NAME: 'zuut-dev-ui-new'
+  ZUUT_DEV_UI_NEW_APP_ID: '406cc467-b8ab-4d2a-82d7-f7f79486da39'
+
+jobs:
+  ui_unit_test:
+    runs-on: ubuntu-18.04
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+        working-directory: ./ui
+
+      - name: Run unit tests
+        run: npm test -- --reporters=default --reporters=jest-junit
+        working-directory: ./ui
 
   # browser_tests:
   #   runs-on: ubuntu-18.04
@@ -40,40 +46,46 @@ jobs:
   #         CYPRESS_AUTH_USERNAME: ${{ secrets.CYPRESS_AUTH_USERNAME }}
   #         CYPRESS_AUTH_PASSWORD: ${{ secrets.CYPRESS_AUTH_PASSWORD }}
 
-  # backend_unit_test:
-  #   runs-on: ubuntu-18.04
-  #   env:
-  #     CI: 'true'
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '15.14.0'
-  #         cache: 'npm'
-  #     - run: npm ci
-  #       working-directory: ./backend
-
-  #     - name: Run unit tests
-  #       run: npm test -- --reporters=default --reporters=jest-junit
-  #       working-directory: ./backend
-
-  deploy:
+  backend_unit_test:
     runs-on: ubuntu-18.04
-    # needs:
-    #   - ui_unit_test
-    #   # - browser_tests
-    #   - backend_unit_test
+    env:
+      CI: 'true'
     steps:
       - uses: actions/checkout@v2
-      - name: Deploy to development environment
-        uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: 'zuut-dev' #Must be unique in Heroku
-          heroku_email: 'zuutheroku@gmail.com'
-          #healthcheck: true // save for later
-          #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
-        env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-        #timeout-minutes: 2
+          node-version: '15.14.0'
+          cache: 'npm'
+      - run: npm ci
+        working-directory: ./backend
+
+      - name: Run unit tests
+        run: npm test -- --reporters=default --reporters=jest-junit
+        working-directory: ./backend
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Build container image
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME) .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Remove all old images
+        run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME)
+
+      - name: Force redeploy after image is pushed
+        run: doctl apps create-deployment $(echo $ZUUT_DEV_UI_NEW_APP_ID)
