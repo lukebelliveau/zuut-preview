@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - main
+
+env:
+  REGISTRY: 'registry.digitalocean.com/zuut'
+  IMAGE_NAME: 'zuut-dev'
+  ZUUT_DEV_APP_ID: '32b7c206-cb33-48f4-93e0-00437613ac8e'
+
 jobs:
   ui_unit_test:
     runs-on: ubuntu-18.04
@@ -59,21 +65,47 @@ jobs:
         working-directory: ./backend
 
   deploy:
-    runs-on: ubuntu-18.04
-    needs:
-      - ui_unit_test
-      # - browser_tests
-      - backend_unit_test
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to development environment
-        uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Build container image
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME) .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: 'zuut-dev' #Must be unique in Heroku
-          heroku_email: 'zuutheroku@gmail.com'
-          #healthcheck: true // save for later
-          #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
-        env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-        #timeout-minutes: 2
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Remove all old images
+        run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME)
+
+      - name: Force redeploy after image is pushed
+        run: doctl apps create-deployment $(echo $ZUUT_DEV_APP_ID)
+
+  # deploy:
+  #   runs-on: ubuntu-18.04
+  #   needs:
+  #     - ui_unit_test
+  #     # - browser_tests
+  #     - backend_unit_test
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Deploy to development environment
+  #       uses: akhileshns/heroku-deploy@v3.12.12
+  #       with:
+  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #         heroku_app_name: 'zuut-dev' #Must be unique in Heroku
+  #         heroku_email: 'zuutheroku@gmail.com'
+  #         #healthcheck: true // save for later
+  #         #delay: 30 // saving for healthcheck if we want it later, set to 30 secs
+  #       env:
+  #         HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+  #       #timeout-minutes: 2
