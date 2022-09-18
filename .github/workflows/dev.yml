@@ -7,7 +7,7 @@ on:
 env:
   REGISTRY: 'registry.digitalocean.com/zuut'
   IMAGE_NAME: 'zuut-dev'
-  ZUUT_DEV_APP_ID: 'edb30979-3a74-4166-97b3-27e65dbea5e2'
+  ZUUT_DEV_APP_ID: 'c9d10f0e-b9b2-4728-9d36-d565ddaa0d52'
 
 jobs:
   ui_unit_test:
