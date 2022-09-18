@@ -14,7 +14,7 @@ export interface ListItemStyleProps extends ListItemButtonProps {
   depth: number;
 }
 
-export const ListItemStyle = styled(ListItemButton, {
+export const ListItemButtonStyle = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'open',
 })<ListItemStyleProps>(({ active, depth, open, theme }) => {
   const isLight = theme.palette.mode === 'light';

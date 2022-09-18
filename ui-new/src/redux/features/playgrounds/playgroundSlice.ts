@@ -104,7 +104,7 @@ export const resizePlayground = createAsyncThunk(
   async (_, { dispatch, getState }) => {
     try {
       const sandbox = await waitForElement('#sandbox');
-      const toolbar = await waitForElement('#toolbar');
+      const toolbar = await waitForElement('#horizontal-toolbar');
 
       const playgroundState = selectPlaygroundState(getState() as RootState);
       const planState = selectDefaultPlan(getState() as RootState);

@@ -97,6 +97,7 @@ export default function MenuPopover({
   arrow = 'top-right',
   disabledArrow,
   sx,
+  onMouseLeave,
   ...other
 }: Props) {
   return (
@@ -104,6 +105,7 @@ export default function MenuPopover({
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       PaperProps={{
+        onMouseLeave: onMouseLeave,
         sx: {
           p: 1,
           width: 200,

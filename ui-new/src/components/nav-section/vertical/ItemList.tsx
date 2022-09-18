@@ -53,7 +53,6 @@ export default function NavList({
   }
 
   const handleClickItem = () => {
-    console.log('AHHH');
     if (!hasChildren && isPlaceableListItem(data)) {
       // this is an item, not an expandable sublist
       placeItem(data.item);

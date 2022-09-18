@@ -14,10 +14,10 @@
   },
   "rules": {
     "import/extensions": 0,
+    "arrow-body-style": 0,
     "@typescript-eslint/lines-between-class-members": 0,
     "@typescript-eslint/return-await": 0,
     "react/jsx-key": 2,
-    "arrow-body-style": 1,
     "import/no-duplicates": 1,
     "react/self-closing-comp": 1,
     "@typescript-eslint/no-shadow": 0,

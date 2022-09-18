@@ -62,7 +62,6 @@ export const useQueryItemsNavConfig = () => {
 };
 
 export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps['navConfig'] => {
-  console.log('itemGroups', itemGroups);
   const tentItems = itemGroup('tents', itemGroups).map((item) => {
     return { name: item.name, item: item, path: item.name };
   });

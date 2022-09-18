@@ -13,6 +13,7 @@ import GuestGuard from '../guards/GuestGuard';
 import { PATH_AFTER_LOGIN } from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+import NewDemoPlayground from 'src/pages/playground/NewDemoPlayground';
 
 // ----------------------------------------------------------------------
 
@@ -67,6 +68,7 @@ export default function Router() {
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'demo', element: <GeneralPlaygroundApp /> },
+        { path: 'newdemo', element: <NewDemoPlayground /> },
       ],
     },
 

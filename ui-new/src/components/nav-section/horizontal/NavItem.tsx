@@ -10,7 +10,7 @@ import { ICON } from '../../../config';
 //
 import { NavItemProps } from '../type';
 import Iconify from '../../Iconify';
-import { ListItemStyle } from './style';
+import { ListItemButtonStyle } from './style';
 
 // ----------------------------------------------------------------------
 
@@ -22,10 +22,8 @@ const NavItem = forwardRef<HTMLDivElement & HTMLAnchorElement, Props>(
 
     const { name, icon, info, children, disabled, caption, roles } = item;
 
-    console.log('active');
-
     const renderContent = (
-      <ListItemStyle
+      <ListItemButtonStyle
         ref={ref}
         open={open}
         depth={depth}
@@ -85,7 +83,7 @@ const NavItem = forwardRef<HTMLDivElement & HTMLAnchorElement, Props>(
             }}
           />
         )}
-      </ListItemStyle>
+      </ListItemButtonStyle>
     );
 
     return <RoleBasedGuard roles={roles}>{renderContent}</RoleBasedGuard>;

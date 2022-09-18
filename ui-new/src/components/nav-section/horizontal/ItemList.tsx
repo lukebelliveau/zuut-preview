@@ -66,7 +66,6 @@ export default function ItemList({ data, depth, hasChildren }: ItemListRootProps
   };
 
   const handleClickItem = () => {
-    console.log('HANDLE CLICK TIEM');
     if (!hasChildren && isPlaceableListItem(data)) {
       // this is an item, not an expandable sublist
       placeItem(data.item);
@@ -88,7 +87,7 @@ export default function ItemList({ data, depth, hasChildren }: ItemListRootProps
           active={active}
           ref={menuRef}
           onClick={handleClickItem}
-          onMouseEnter={handleOpen}
+          // onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
         />
       )}

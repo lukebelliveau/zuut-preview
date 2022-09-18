@@ -5,7 +5,7 @@ import { Stack } from '@mui/material';
 import { NavSectionProps } from '../type';
 import ItemList from './ItemList';
 import DimensionsPopover from 'src/components/nav-section/horizontal/DimensionsPopover';
-import Toolbar from './Toolbar';
+import ToolbarPopover from './ToolbarPopover';
 
 // ----------------------------------------------------------------------
 
@@ -24,8 +24,8 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
       <Stack
         direction="row"
         justifyContent="center"
-        id="horizontal-item-bar"
         sx={{ bgcolor: 'background.neutral', borderRadius: 1, px: 0.5 }}
+        id="horizontal-toolbar"
       >
         <Stack direction="row" sx={{ ...hideScrollbar, py: 1 }}>
           {navConfig.map((group) => (
@@ -39,18 +39,9 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
                 />
               ))}
               <DimensionsPopover />
+              <ToolbarPopover />
             </Stack>
           ))}
-        </Stack>
-      </Stack>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        id="horizontal-item-bar"
-        sx={{ bgcolor: 'background.neutral', borderRadius: 1, px: 0.5 }}
-      >
-        <Stack direction="row" sx={{ ...hideScrollbar, py: 1 }}>
-          <Toolbar />
         </Stack>
       </Stack>
     </Stack>

@@ -8,36 +8,15 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { IconButtonAnimate } from '../../animate';
 import MenuPopover from '../../MenuPopover';
 import { PATH_DASHBOARD } from 'src/routes/paths';
-import StraightenIcon from '@mui/icons-material/Straighten';
+import EditIcon from '@mui/icons-material/Edit';
 import { ICON, NAVBAR } from 'src/config';
+import Modal from 'react-modal';
 import Dimensions from '../dimensions';
+import Toolbar from 'src/components/nav-section/horizontal/HorizontalToolbar';
 import Iconify from 'src/components/Iconify';
+import ResetPlaygroundModal from 'src/components/playground/Toolbar/ResetPlaygroundModal';
 
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    linkTo: '/',
-  },
-  {
-    label: 'Profile',
-    linkTo: PATH_DASHBOARD.user.profile,
-  },
-  {
-    label: 'Settings',
-    linkTo: PATH_DASHBOARD.user.account,
-  },
-];
-
-const MyThemeComponent = styled(ListItemButton)(({ theme }) => ({
-  color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.primary.main,
-  padding: theme.spacing(1),
-  borderRadius: theme.shape.borderRadius,
-}));
-
-const DimensionsButton = styled(ListItemButton)(({ theme }) => {
-  const isLight = theme.palette.mode === 'light';
-
+const ToolbarButton = styled(ListItemButton)(({ theme }) => {
   const hoverStyle = {
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.action.hover,
@@ -55,21 +34,32 @@ const DimensionsButton = styled(ListItemButton)(({ theme }) => {
   };
 });
 
-export default function DimensionsPopover() {
+export default function ToolbarPopover() {
   const [open, setOpen] = useState<HTMLElement | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const openPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpen(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const closePopover = () => {
     setOpen(null);
   };
+
+  function openModal() {
+    closePopover();
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    Modal.setAppElement('#root');
+    setModalIsOpen(false);
+  }
 
   return (
     <>
       <IconButtonAnimate
-        onClick={handleOpen}
+        onClick={openPopover}
         disableRipple
         sx={{
           p: 0,
@@ -87,7 +77,7 @@ export default function DimensionsPopover() {
           }),
         }}
       >
-        <DimensionsButton>
+        <ToolbarButton>
           <ListItemIcon
             sx={{
               mr: 1,
@@ -96,30 +86,17 @@ export default function DimensionsPopover() {
               height: ICON.NAVBAR_ITEM_HORIZONTAL,
             }}
           >
-            <StraightenIcon />
+            <EditIcon />
           </ListItemIcon>
 
           <ListItemText
-            primary={'Dimensions'}
+            primary={'Edit'}
             primaryTypographyProps={{
               noWrap: true,
               variant: 'body2',
             }}
           />
 
-          {/* {caption && (
-            <Tooltip title={translate(caption)} arrow>
-              <Box component="span" sx={{ ml: 0.5, lineHeight: 0 }}>
-                <Iconify
-                  icon="eva:info-outline"
-                  sx={{
-                    width: ICON.NAVBAR_ITEM_HORIZONTAL / -4,
-                    height: ICON.NAVBAR_ITEM_HORIZONTAL / -4,
-                  }}
-                />
-              </Box>
-            </Tooltip>
-          )} */}
           <Iconify
             icon={'eva:chevron-down-fill'}
             sx={{
@@ -129,19 +106,19 @@ export default function DimensionsPopover() {
               height: ICON.NAVBAR_ITEM_HORIZONTAL,
             }}
           />
-        </DimensionsButton>
+        </ToolbarButton>
       </IconButtonAnimate>
 
       <MenuPopover
         open={Boolean(open)}
         anchorEl={open}
-        onClose={handleClose}
-        onMouseLeave={handleClose}
+        onClose={closePopover}
+        onMouseLeave={closePopover}
         sx={{
           p: 0,
           mt: 1.5,
           ml: 0.75,
-          left: 0,
+          width: 'auto',
           '& .MuiMenuItem-root': {
             typography: 'body2',
             borderRadius: 0.75,
@@ -151,9 +128,10 @@ export default function DimensionsPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          <Dimensions />
+          <Toolbar openResetModal={openModal} />
         </Stack>
       </MenuPopover>
+      <ResetPlaygroundModal open={modalIsOpen} onClose={closeModal} />
     </>
   );
 }
