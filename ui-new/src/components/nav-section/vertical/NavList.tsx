@@ -3,14 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // @mui
 import { List, Collapse, Link } from '@mui/material';
 //
-import { NavListProps } from '../type';
+import { ItemNavListProps } from '../type';
 import NavItem from './NavItem';
 import { getActive, isExternalLink } from '..';
 
 // ----------------------------------------------------------------------
 
 type NavListRootProps = {
-  data: NavListProps;
+  data: ItemNavListProps;
   depth: number;
   hasChildren: boolean;
   isCollapse?: boolean;
@@ -54,13 +54,13 @@ export default function NavList({
         />
       )}
 
-      {!isCollapse && hasChildren && (
+      {!isCollapse && hasChildren && data.children !== undefined ? (
         <Collapse in={open} unmountOnExit>
           <List component="div" disablePadding>
             <NavSubList data={data.children} depth={depth} />
           </List>
         </Collapse>
-      )}
+      ) : null}
     </>
   );
 }
@@ -68,7 +68,7 @@ export default function NavList({
 // ----------------------------------------------------------------------
 
 type NavListSubProps = {
-  data: NavListProps[];
+  data: ItemNavListProps[];
   depth: number;
 };
 
@@ -77,7 +77,7 @@ function NavSubList({ data, depth }: NavListSubProps) {
     <>
       {data.map((list) => (
         <NavList
-          key={list.title + list.path}
+          key={list.name + list.path}
           data={list}
           depth={depth + 1}
           hasChildren={!!list.children}

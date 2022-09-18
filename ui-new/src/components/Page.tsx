@@ -10,7 +10,6 @@ interface Props extends BoxProps {
   meta?: ReactNode;
   title: string;
 }
-
 const Page = forwardRef<HTMLDivElement, Props>(({ children, title = '', meta, ...other }, ref) => (
   <>
     <Helmet>
@@ -18,7 +17,7 @@ const Page = forwardRef<HTMLDivElement, Props>(({ children, title = '', meta, ..
       {meta}
     </Helmet>
 
-    <Box ref={ref} {...other}>
+    <Box ref={ref} {...other} style={{ height: '100%' }}>
       {children}
     </Box>
   </>

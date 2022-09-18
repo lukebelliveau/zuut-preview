@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // @mui
 import { Link } from '@mui/material';
 //
-import { NavListProps } from '../type';
+import { ItemNavListProps } from '../type';
 import { PaperStyle } from './style';
 import NavItem from './NavItem';
 import { getActive, isExternalLink } from '..';
@@ -11,7 +11,7 @@ import { getActive, isExternalLink } from '..';
 // ----------------------------------------------------------------------
 
 type NavListRootProps = {
-  data: NavListProps;
+  data: ItemNavListProps;
   depth: number;
   hasChildren: boolean;
 };
@@ -67,7 +67,7 @@ export default function NavList({ data, depth, hasChildren }: NavListRootProps) 
         />
       )}
 
-      {hasChildren && (
+      {hasChildren && data.children !== undefined ? (
         <PaperStyle
           open={open}
           anchorEl={menuRef.current}
@@ -88,7 +88,7 @@ export default function NavList({ data, depth, hasChildren }: NavListRootProps) 
         >
           <NavSubList data={data.children} depth={depth} />
         </PaperStyle>
-      )}
+      ) : null}
     </>
   );
 }
@@ -96,7 +96,7 @@ export default function NavList({ data, depth, hasChildren }: NavListRootProps) 
 // ----------------------------------------------------------------------
 
 type NavListSubProps = {
-  data: NavListProps[];
+  data: ItemNavListProps[];
   depth: number;
 };
 
@@ -105,7 +105,7 @@ function NavSubList({ data, depth }: NavListSubProps) {
     <>
       {data.map((list) => (
         <NavList
-          key={list.title + list.path}
+          key={list.name + list.path}
           data={list}
           depth={depth + 1}
           hasChildren={!!list.children}

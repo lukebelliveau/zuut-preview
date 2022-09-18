@@ -3,11 +3,15 @@ schema: ./graphql/**/*.graphql
 generates:
   backend/src/graphql.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-resolvers"
-      - "typescript-mongodb"
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-resolvers'
+      - 'typescript-mongodb'
   ui/src/graphql.ts:
     plugins:
-      - "typescript"
-      - "typescript-react-apollo"
+      - 'typescript'
+      - 'typescript-react-apollo'
+  ui-new/src/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-react-apollo'

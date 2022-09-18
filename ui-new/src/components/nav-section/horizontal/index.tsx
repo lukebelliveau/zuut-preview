@@ -28,7 +28,7 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
           <Stack key={group.subheader} direction="row" flexShrink={0}>
             {group.items.map((list) => (
               <NavList
-                key={list.title + list.path}
+                key={list.name + list.path}
                 data={list}
                 depth={1}
                 hasChildren={!!list.children}
