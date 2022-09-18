@@ -13,6 +13,7 @@ import { HEADER, NAVBAR } from '../../config';
 import PlaygroundHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
 import LoadingScreen from 'src/components/LoadingScreen';
+import PlaygroundDrawer from 'src/components/playground/controlPanelDrawer';
 import { useQueryItemsNavConfig } from './navbar/NavConfig';
 
 // ----------------------------------------------------------------------

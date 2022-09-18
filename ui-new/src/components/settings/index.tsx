@@ -4,6 +4,7 @@ import ThemeContrast from './ThemeContrast';
 import ThemeRtlLayout from './ThemeRtlLayout';
 import ThemeColorPresets from './ThemeColorPresets';
 import ThemeLocalization from './ThemeLocalization';
+import PlaygroundDrawer from '../playground/controlPanelDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -19,6 +20,7 @@ export default function ThemeSettings({ children }: Props) {
           <ThemeRtlLayout>
             {children}
             <SettingsDrawer />
+            <PlaygroundDrawer />
           </ThemeRtlLayout>
         </ThemeLocalization>
       </ThemeContrast>
