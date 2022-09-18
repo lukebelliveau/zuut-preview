@@ -1,4 +1,4 @@
-name: dev
+name: ui-new
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: 'registry.digitalocean.com/zuut-co'
-  IMAGE_NAME: 'zuut-dev-ui-neww'
+  IMAGE_NAME: 'zuut-dev-ui-new'
   ZUUT_DEV_UI_NEW_APP_ID: '406cc467-b8ab-4d2a-82d7-f7f79486da39'
 
 jobs:
