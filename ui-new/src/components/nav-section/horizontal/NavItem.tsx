@@ -22,6 +22,8 @@ const NavItem = forwardRef<HTMLDivElement & HTMLAnchorElement, Props>(
 
     const { name, icon, info, children, disabled, caption, roles } = item;
 
+    console.log('active');
+
     const renderContent = (
       <ListItemStyle
         ref={ref}

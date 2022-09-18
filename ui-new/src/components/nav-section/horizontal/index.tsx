@@ -4,6 +4,8 @@ import { Stack } from '@mui/material';
 //
 import { NavSectionProps } from '../type';
 import NavList from './NavList';
+import ItemList from './ItemList';
+import DimensionsPopover from 'src/components/nav-section/horizontal/DimensionsPopover';
 
 // ----------------------------------------------------------------------
 
@@ -27,13 +29,14 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
         {navConfig.map((group) => (
           <Stack key={group.subheader} direction="row" flexShrink={0}>
             {group.items.map((list) => (
-              <NavList
+              <ItemList
                 key={list.name + list.path}
                 data={list}
                 depth={1}
                 hasChildren={!!list.children}
               />
             ))}
+            <DimensionsPopover />
           </Stack>
         ))}
       </Stack>

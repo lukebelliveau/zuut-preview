@@ -99,9 +99,7 @@ const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // PLAYGROUND
-const GeneralPlaygroundApp = Loadable(
-  lazy(() => import('../pages/playground/GeneralPlaygroundApp'))
-);
+const GeneralPlaygroundApp = Loadable(lazy(() => import('../pages/playground/PlaygroundApp')));
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));

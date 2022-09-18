@@ -38,7 +38,6 @@ type Props = {
 };
 
 export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props) {
-  console.log('VERTICAL');
   const theme = useTheme();
   const { pathname } = useLocation();
 
@@ -89,16 +88,11 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props)
             <CollapseButton onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />
           )}
         </Stack>
-
-        {/* <NavbarAccount isCollapse={isCollapse} /> */}
       </Stack>
 
-      {/* <NavSectionVertical navConfig={navConfig} isCollapse={isCollapse} /> */}
       <NavSectionVertical navConfig={itemsNavConfig} isCollapse={isCollapse} />
 
       <Box sx={{ flexGrow: 1 }} />
-
-      {/* {!isCollapse && <NavbarDocs />} */}
     </Scrollbar>
   );
 
