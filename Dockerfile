@@ -23,7 +23,7 @@ COPY backend /app/backend/
 WORKDIR /app/minimal-cc
 
 ADD minimal-cc/package.json minimal-cc/package-lock.json /app/minimal-cc/
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 COPY minimal-cc /app/minimal-cc/
 
 WORKDIR /app

@@ -1,4 +1,4 @@
-name: dev
+name: ui-new
 on:
   push:
     branches:
