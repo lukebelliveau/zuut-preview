@@ -4,4 +4,4 @@ const appRoot = __dirname.includes('dist')
 
 export const GRAPHQL_TYPES = `${appRoot}/graphql/types.graphql`;
 // export const UI_BUILD_DIR = `${appRoot}/ui/build`;
-export const UI_BUILD_DIR = `${appRoot}/minimal-cc/build`;
+export const UI_BUILD_DIR = `${appRoot}/ui-new/build`;

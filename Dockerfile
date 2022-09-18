@@ -20,11 +20,11 @@ ADD backend/package.json backend/package-lock.json /app/backend/
 RUN npm ci
 COPY backend /app/backend/
 
-WORKDIR /app/minimal-cc
+WORKDIR /app/ui-new
 
-ADD minimal-cc/package.json minimal-cc/package-lock.json /app/minimal-cc/
+ADD ui-new/package.json ui-new/package-lock.json /app/ui-new/
 RUN npm ci --legacy-peer-deps
-COPY minimal-cc /app/minimal-cc/
+COPY ui-new /app/ui-new/
 
 WORKDIR /app
 
@@ -38,8 +38,8 @@ WORKDIR /app/backend
 COPY --from=dev /app/backend /app/backend
 RUN npm run build
 
-WORKDIR /app/minimal-cc
-COPY --from=dev /app/minimal-cc /app/minimal-cc
+WORKDIR /app/ui-new
+COPY --from=dev /app/ui-new /app/ui-new
 RUN npm run build
 
 WORKDIR /app
@@ -49,7 +49,7 @@ FROM node:16-alpine AS prod
 EXPOSE 4000
 
 ENV NODE_ENV=production
-ENV UI_DIR=/app/minimal-cc/build
+ENV UI_DIR=/app/ui-new/build
 
 WORKDIR /app
 
@@ -60,6 +60,6 @@ COPY ./graphql /app/graphql/
 WORKDIR /app/backend
 RUN npm ci
 
-COPY --from=build /app/minimal-cc/build /app/minimal-cc/build
+COPY --from=build /app/ui-new/build /app/ui-new/build
 
 CMD npm start
