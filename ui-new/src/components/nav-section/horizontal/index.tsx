@@ -1,6 +1,6 @@
 import { memo } from 'react';
 // @mui
-import { Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 //
 import { NavSectionProps } from '../type';
 import ItemList from './ItemList';
@@ -23,13 +23,13 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
     <Stack>
       <Stack
         direction="row"
-        justifyContent="center"
         sx={{ bgcolor: 'background.neutral', borderRadius: 1, px: 0.5 }}
         id="horizontal-toolbar"
+        justifyContent="space-around"
       >
-        <Stack direction="row" sx={{ ...hideScrollbar, py: 1 }}>
+        <Stack direction="row" sx={{ ...hideScrollbar, py: 1 }} width="100%">
           {navConfig.map((group) => (
-            <Stack key={group.subheader} direction="row" flexShrink={0}>
+            <Stack key={group.subheader} direction="row" flexShrink={0} justifyContent="flex-start">
               {group.items.map((list) => (
                 <ItemList
                   key={list.name + list.path}
@@ -38,10 +38,13 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
                   hasChildren={!!list.children}
                 />
               ))}
-              <DimensionsPopover />
-              <ToolbarPopover />
             </Stack>
           ))}
+          <Divider orientation="vertical" />
+          <Stack direction="row" flexShrink={0} flexGrow={1} justifyContent="flex-end">
+            <DimensionsPopover />
+            <ToolbarPopover />
+          </Stack>
         </Stack>
       </Stack>
     </Stack>

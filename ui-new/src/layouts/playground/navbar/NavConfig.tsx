@@ -10,11 +10,14 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WaterIcon from '@mui/icons-material/LocalDrink';
 import ToolboxIcon from '@mui/icons-material/HomeRepairService';
+import WindowIcon from '@mui/icons-material/Window';
 import { Item } from 'src/lib/item';
 import { fetchItemsLibrary, IItemGroup } from 'src/lib/itemsLibrary';
 import { ItemNavSectionProps } from 'src/components/nav-section';
 import queryKeys from 'src/lib/queryKeys';
 import { useQuery } from '@tanstack/react-query';
+import WindowItem from 'src/lib/item/windowitem';
+import DoorItem from 'src/lib/item/doorItem';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +47,7 @@ const ICONS = {
   climate: <ThermostatIcon />,
   water: <WaterIcon />,
   misc: <ToolboxIcon />,
+  layout: <WindowIcon />,
 };
 
 function itemGroup(name: string, itemGroups: any): Item[] {
@@ -60,6 +64,19 @@ export const useQueryItemsNavConfig = () => {
     return getItemsNavConfig(itemGroups);
   });
 };
+
+const layoutItems = [
+  {
+    name: 'Window',
+    item: new WindowItem({ name: 'Window' }),
+    path: 'Window',
+  },
+  {
+    name: 'Door',
+    item: new DoorItem({ name: 'Door' }),
+    path: 'Door',
+  },
+];
 
 export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps['navConfig'] => {
   const tentItems = itemGroup('tents', itemGroups).map((item) => {
@@ -108,10 +125,24 @@ export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps
     }),
   };
 
+  let layoutItemGroup = {
+    name: 'layout',
+    path: '',
+    icon: ICONS.layout,
+    children: layoutItems,
+  };
+
   return [
     {
       subheader: 'items',
-      items: [tentItemGroup, potItemGroup, lightItemGroup, climateItemGroup, miscItemGroup],
+      items: [
+        tentItemGroup,
+        potItemGroup,
+        lightItemGroup,
+        climateItemGroup,
+        miscItemGroup,
+        layoutItemGroup,
+      ],
     },
   ];
 };
