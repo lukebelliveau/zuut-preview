@@ -15,7 +15,7 @@ export default function PlaygroundApp() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="General: App">
+    <Page title="ZUUT Playground">
       <Container maxWidth={themeStretch ? false : 'xl'} sx={{ height: '100%' }}>
         {/* <Grid container spacing={3}> */}
         {/* <Grid item xs={12} md={8}> */}
