@@ -61,11 +61,12 @@ export default function PlaygroundLayout() {
       <>
         <DashboardHeader onOpenSidebar={() => setOpen(true)} verticalLayout={verticalLayout} />
 
-        {isDesktop ? (
+        <NavbarHorizontal />
+        {/* {isDesktop ? (
           <NavbarHorizontal />
         ) : (
           <NavbarVertical isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-        )}
+        )} */}
 
         <Box
           component="main"

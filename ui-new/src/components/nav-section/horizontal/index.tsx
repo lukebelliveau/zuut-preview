@@ -23,6 +23,7 @@ function NavSectionHorizontal({ navConfig }: NavSectionProps) {
     <Stack
       direction="row"
       justifyContent="center"
+      id="horizontal-item-bar"
       sx={{ bgcolor: 'background.neutral', borderRadius: 1, px: 0.5 }}
     >
       <Stack direction="row" sx={{ ...hideScrollbar, py: 1 }}>

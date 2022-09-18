@@ -50,6 +50,7 @@ import {
   handleSelectAllOnKeyDown,
   handleUndoRedoOnKeyDown,
 } from 'src/utils/interactionHandlers';
+import { NAVBAR } from 'src/config';
 
 // export const playground_path = () => '/playgrounds/current';
 // export const demo_playground_path = () => '/playgrounds/demo';
@@ -152,6 +153,7 @@ export default function ShowPlayground() {
         data-testid="playground-container"
       >
         <div id="sandbox" ref={drop} style={{ height: '100%', width: '100%' }}>
+          <div style={{ minHeight: NAVBAR.DASHBOARD_ITEM_HORIZONTAL_HEIGHT + 100 }} />
           <Toolbar />
           <Stage
             key={v4()}

@@ -1,15 +1,5 @@
-import {
-  Typography,
-  Divider,
-  Stack,
-  MenuItem,
-  Box,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Tooltip,
-} from '@mui/material';
-import { alpha } from '@mui/material/styles';
+import { Divider, Stack, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -17,12 +7,9 @@ import useAuth from 'src/hooks/useAuth';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { IconButtonAnimate } from '../../animate';
 import MenuPopover from '../../MenuPopover';
-import { Link as RouterLink } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'src/routes/paths';
-import { ListItemStyle } from './style';
 import StraightenIcon from '@mui/icons-material/Straighten';
-import { ICON } from 'src/config';
-import Iconify from 'src/components/Iconify';
+import { ICON, NAVBAR } from 'src/config';
 import Dimensions from '../dimensions';
 
 const MENU_OPTIONS = [
@@ -40,7 +27,34 @@ const MENU_OPTIONS = [
   },
 ];
 
-export default function AccountPopover() {
+const MyThemeComponent = styled(ListItemButton)(({ theme }) => ({
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.primary.main,
+  padding: theme.spacing(1),
+  borderRadius: theme.shape.borderRadius,
+}));
+
+const DimensionsButton = styled(ListItemButton)(({ theme }) => {
+  const isLight = theme.palette.mode === 'light';
+
+  const hoverStyle = {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.action.hover,
+    boxShadow: `inset 0 0 1px 1px ${theme.palette.divider}`,
+  };
+
+  return {
+    textTransform: 'capitalize',
+    margin: theme.spacing(0, 0.5),
+    padding: theme.spacing(0, 1),
+    color: theme.palette.text.secondary,
+    borderRadius: theme.shape.borderRadius,
+    height: NAVBAR.DASHBOARD_ITEM_HORIZONTAL_HEIGHT,
+    '&:hover': hoverStyle,
+  };
+});
+
+export default function DimensionsPopover() {
   const navigate = useNavigate();
   const active = false;
 
@@ -64,8 +78,10 @@ export default function AccountPopover() {
     <>
       <IconButtonAnimate
         onClick={handleOpen}
+        disableRipple
         sx={{
           p: 0,
+          padding: '0px 2px',
           ...(open && {
             '&:before': {
               zIndex: 1,
@@ -74,19 +90,12 @@ export default function AccountPopover() {
               height: '100%',
               borderRadius: '50%',
               position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+              // bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
             },
           }),
         }}
       >
-        <ListItemButton
-        // ref={ref}
-        // open={false}
-        // depth={1}
-        // active={active}
-        // disabled={disabled}
-        // {...other}
-        >
+        <DimensionsButton>
           <ListItemIcon
             sx={{
               mr: 1,
@@ -119,7 +128,7 @@ export default function AccountPopover() {
               </Box>
             </Tooltip>
           )} */}
-        </ListItemButton>
+        </DimensionsButton>
       </IconButtonAnimate>
 
       <MenuPopover
