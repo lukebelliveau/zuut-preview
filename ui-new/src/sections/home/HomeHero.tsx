@@ -4,11 +4,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Box, Link, Container, Typography, Stack, StackProps } from '@mui/material';
 // components
-import Image from '../../components/Image';
+
 import Iconify from '../../components/Iconify';
-import TextIconLabel from '../../components/TextIconLabel';
+
 import { MotionContainer, varFade } from '../../components/animate';
 import { PATH_PLAYGROUND } from 'src/routes/paths';
+import { useQueryItemsNavConfig } from 'src/layouts/playground/navbar/NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -68,6 +69,8 @@ const HeroImgStyle = styled(m.img)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomeHero() {
+  useQueryItemsNavConfig();
+
   return (
     <MotionContainer>
       <RootStyle>
@@ -82,12 +85,11 @@ export default function HomeHero() {
         <Container>
           <ContentStyle>
             <m.div variants={varFade().inRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Plan <br />
-                cannabis grows <br /> with
-                <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
-                  &nbsp;ZUUT
-                </Typography>
+              <Typography variant="h1" sx={{ color: 'primary.main' }}>
+                ZUUT&nbsp;
+              </Typography>
+              <Typography variant="h3" sx={{ color: 'common.white' }}>
+                Cannabis Grow Playground
               </Typography>
             </m.div>
 
