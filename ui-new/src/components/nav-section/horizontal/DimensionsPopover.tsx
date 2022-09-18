@@ -55,15 +55,6 @@ const DimensionsButton = styled(ListItemButton)(({ theme }) => {
 });
 
 export default function DimensionsPopover() {
-  const navigate = useNavigate();
-  const active = false;
-
-  const { user, logout } = useAuth();
-
-  const isMountedRef = useIsMountedRef();
-
-  const { enqueueSnackbar } = useSnackbar();
-
   const [open, setOpen] = useState<HTMLElement | null>(null);
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -111,7 +102,7 @@ export default function DimensionsPopover() {
             primary={'Dimensions'}
             primaryTypographyProps={{
               noWrap: true,
-              variant: active ? 'subtitle2' : 'body2',
+              variant: 'body2',
             }}
           />
 
