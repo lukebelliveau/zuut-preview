@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { push } from 'connected-react-router';
+import { push } from 'redux-first-history';
 import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 

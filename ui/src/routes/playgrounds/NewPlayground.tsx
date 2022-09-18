@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { push } from 'connected-react-router';
+import { push } from 'redux-first-history';
 import { createRef, useEffect, useState } from 'react';
 import { FullPage, Slide } from 'react-full-page';
 import { Helmet } from 'react-helmet-async';

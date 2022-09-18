@@ -1,7 +1,7 @@
-import { ConnectedRouter } from 'connected-react-router';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Redirect, Route, useHistory } from 'react-router';
+import { Router } from 'react-router-dom';
 
 import { browserHistory, isDemoMode, ZUUT_DEMO_STATE } from './app/store';
 import RequireAuth from './components/RequireAuth';
@@ -47,7 +47,7 @@ const NewDemoPlayground = () => {
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <ConnectedRouter history={browserHistory}>
+      <Router history={browserHistory}>
         <AppErrorBoundary>
           <Route exact path={homePath()}>
             <Home />
@@ -83,7 +83,7 @@ function App() {
             <SessionExpired />
           </Route>
         </AppErrorBoundary>
-      </ConnectedRouter>
+      </Router>
     </DndProvider>
   );
 }

@@ -1,4 +1,3 @@
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { configureStore, EntityState } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import { createBrowserHistory, LocationState } from 'history';
@@ -17,6 +16,7 @@ import interactionsReducer from '../features/interactions/interactionsSlice';
 import userReducer from '../features/users/userSlice';
 import { ItemState } from '../features/items/itemState';
 import { CurriedGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
+import { createReduxHistoryContext } from 'redux-first-history';
 
 export const isDemoMode = () => {
   if (process.env.NODE_ENV === 'production') return true;
@@ -25,12 +25,17 @@ export const isDemoMode = () => {
 };
 export const ZUUT_DEMO_STATE = 'zuut-state';
 
-export const browserHistory = createBrowserHistory<unknown>();
 const reduxLoggerEnabled = false;
 
 const errorHandlerMiddleware = createThunkErrorHandlerMiddleware({
   onError: console.error,
 });
+
+const { createReduxHistory, routerMiddleware, routerReducer } =
+  createReduxHistoryContext({
+    history: createBrowserHistory(),
+    //other options if needed
+  });
 
 const reducers = {
   items: undoable<EntityState<ItemState>>(itemsReducer, {
@@ -47,7 +52,7 @@ const reducers = {
   playground: playgroundReducer,
   interactions: interactionsReducer,
   user: userReducer,
-  router: connectRouter<LocationState>(browserHistory),
+  router: routerReducer,
 };
 
 /**
@@ -62,11 +67,16 @@ export function createAppStore() {
   return configureStore({
     reducer: reducers,
     middleware: (getDefaultMiddleware) => {
-      let middlewares = getAppDefaultMiddleware(getDefaultMiddleware);
-      if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
-      return middlewares
-        .concat(routerMiddleware(browserHistory))
-        .concat(errorHandlerMiddleware);
+      if (reduxLoggerEnabled) {
+        return getDefaultMiddleware()
+          .concat(routerMiddleware)
+          .concat(errorHandlerMiddleware)
+          .concat(logger);
+      } else {
+        return getDefaultMiddleware()
+          .concat(errorHandlerMiddleware)
+          .concat(routerMiddleware);
+      }
     },
   });
 }
@@ -79,17 +89,23 @@ export function getDemoModeStore() {
   return configureStore({
     reducer: reducers,
     middleware: (getDefaultMiddleware) => {
-      let middlewares = getAppDefaultMiddleware(getDefaultMiddleware);
-      if (reduxLoggerEnabled) middlewares = middlewares.concat(logger);
-      return middlewares
-        .concat(routerMiddleware(browserHistory))
-        .concat(errorHandlerMiddleware);
+      if (reduxLoggerEnabled) {
+        return getDefaultMiddleware()
+          .concat(routerMiddleware)
+          .concat(errorHandlerMiddleware)
+          .concat(logger);
+      } else {
+        return getDefaultMiddleware()
+          .concat(errorHandlerMiddleware)
+          .concat(routerMiddleware);
+      }
     },
     preloadedState: persistentState,
   });
 }
 
 export const store = isDemoMode() ? getDemoModeStore() : createAppStore();
+export const browserHistory = createReduxHistory(store);
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppStore = ReturnType<typeof createAppStore>;

@@ -8,7 +8,7 @@ import {
 import { NetworkError } from '@apollo/client/errors';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import { push } from 'connected-react-router';
+import { push } from 'redux-first-history';
 import { isDemoMode } from '../../app/store';
 
 import { Query } from '../../graphql';

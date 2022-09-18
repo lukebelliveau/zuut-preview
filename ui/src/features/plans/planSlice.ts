@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { push } from 'connected-react-router';
+import { push } from 'redux-first-history';
 import { v4 } from 'uuid';
 import { isDemoMode, RootState } from '../../app/store';
 
