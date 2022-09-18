@@ -12,6 +12,8 @@ import { HEADER, NAVBAR } from '../../config';
 //
 import PlaygroundHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
+import LoadingScreen from 'src/components/LoadingScreen';
+import { useQueryItemsNavConfig } from './navbar/NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -46,12 +48,21 @@ const MainStyle = styled('main', {
 
 export default function PlaygroundLayout() {
   const { collapseClick, isCollapse } = useCollapseDrawer();
-
   const { themeLayout } = useSettings();
 
   const isDesktop = useResponsive('up', 'lg');
 
   const [open, setOpen] = useState(false);
+  const { isLoading, isError, error } = useQueryItemsNavConfig();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (isError) {
+    console.error(error);
+    return <span>Error loading items!</span>;
+  }
 
   const verticalLayout = themeLayout === 'vertical';
 
