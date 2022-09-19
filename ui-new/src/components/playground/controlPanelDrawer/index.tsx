@@ -77,17 +77,17 @@ export default function ControlPanelDrawer() {
       return;
     }
 
-    // if (previousItemRef.current === undefined && item !== undefined) {
-    //   previousItemRef.current = item;
-    //   setOpen(true);
-    //   return;
-    // }
+    if (previousItemRef.current === undefined && item !== undefined) {
+      previousItemRef.current = item;
+      setOpen(true);
+      return;
+    }
 
     if (previousItemRef.current === undefined) return;
 
-    // if (item.id !== previousItemRef.current.id) {
-    //   setOpen(true);
-    // }
+    if (item.id !== previousItemRef.current.id) {
+      setOpen(true);
+    }
 
     previousItemRef.current = item;
   }, [setOpen, item]);
