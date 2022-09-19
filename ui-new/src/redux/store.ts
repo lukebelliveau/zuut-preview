@@ -77,7 +77,11 @@ export function createAppStore() {
           .concat(errorHandlerMiddleware)
           .concat(logger);
       } else {
-        return getDefaultMiddleware().concat(routerMiddleware).concat(errorHandlerMiddleware);
+        return getDefaultMiddleware({
+          immutableCheck: false,
+        })
+          .concat(routerMiddleware)
+          .concat(errorHandlerMiddleware);
       }
     },
   });

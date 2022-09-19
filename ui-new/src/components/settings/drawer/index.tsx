@@ -97,6 +97,8 @@ export default function SettingsDrawer() {
     setOpen(false);
   };
 
+  if (process.env.NODE_ENV === 'production') return null;
+
   return (
     <>
       <Backdrop
@@ -118,7 +120,7 @@ export default function SettingsDrawer() {
                 sx={{ py: 2, pr: 1, pl: 2.5 }}
               >
                 <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-                  Settings
+                  Control Panel
                 </Typography>
 
                 <IconButton onClick={onResetSetting}>

@@ -231,6 +231,22 @@ export const rotate = createAsyncThunk(
   }
 );
 
+export const rotateCcw = createAsyncThunk(
+  'items/rotate',
+  async (itemId: string, { dispatch, getState }) => {
+    const itemState = itemsSelectors.selectById(getState() as RootState, itemId);
+    if (!itemState) throw new Error('Item not found');
+
+    const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
+    item.rotateCcw();
+    dispatch(updateOne({ id: item.id, changes: ItemReduxAdapter.itemToState(item) }));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
 export const incrementModifier = createAsyncThunk(
   'items/incrementModifier',
   async (

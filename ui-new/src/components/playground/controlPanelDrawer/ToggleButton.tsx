@@ -11,18 +11,19 @@ import { ItemState } from 'src/redux/features/items/itemState';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
 import { IPlaceableItem, isPlaceableItem } from 'src/lib/item/placeableItem';
 import Image from 'src/components/Image';
+import { IItem } from 'src/lib/item';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  right: 0,
-  top: '90%',
+  right: 20,
+  bottom: 20,
   position: 'fixed',
   marginTop: theme.spacing(-3),
   padding: theme.spacing(0.5),
   zIndex: theme.zIndex.drawer + 2,
-  borderRadius: '24px 0 20px 24px',
+  borderRadius: '50%',
   boxShadow: `-12px 12px 32px -4px ${alpha(
     theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.common.black,
     0.36
@@ -45,32 +46,23 @@ type Props = {
   open: boolean;
   notDefault: boolean;
   onToggle: VoidFunction;
-  item: ItemState | undefined;
+  item: IItem | undefined;
 };
 
 const ToggleButton = ({
   notDefault,
   open,
   onToggle,
-  item: itemState,
+  item,
 }: {
   open: boolean;
   notDefault: boolean;
   onToggle: VoidFunction;
-  item: ItemState;
+  item: IItem;
 }) => {
-  const item = ItemReduxAdapter.stateToItem(itemState) as IPlaceableItem;
-
   if (!isPlaceableItem(item)) {
     return null;
   }
-
-  if (!item.image) throw new Error('Image not found in ImageItem component');
-
-  // create manually instead of using Konva's `use-image` package.
-  // useImage() asynchronously loads the image every time the component mounts, causing flickering on zoom (because children of the Stage re-mount).
-  const imageObj = new window.Image();
-  imageObj.src = item.image;
 
   return (
     <RootStyle
@@ -104,14 +96,16 @@ const ToggleButton = ({
         >
           <div
             style={{
-              maxWidth: 20,
-              maxHeight: 20,
-              width: 20,
-              height: 20,
-              padding: 0,
+              // maxWidth: 40,
+              // maxHeight: 40,
+              // width: 40,
+              // height: 40,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
             }}
           >
-            <Image src={item.image} maxWidth={20} maxHeight={20} width={20} height={20} />
+            <Image src={item.image} maxWidth={40} maxHeight={40} width={40} height={40} />
           </div>
         </IconButtonAnimate>
       </Tooltip>

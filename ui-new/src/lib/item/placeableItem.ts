@@ -336,6 +336,10 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     this.rotation = (this.rotation + 90) % 360;
   }
 
+  rotateCcw() {
+    this.rotation = (this.rotation + 270) % 360;
+  }
+
   copy(): IPlaceableItem {
     return new PlaceableItem({
       name: this.name,

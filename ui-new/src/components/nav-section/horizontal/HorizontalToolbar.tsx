@@ -19,11 +19,12 @@ import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import {
   alpha,
+  Box,
+  Button,
   ListItemButton,
   ListItemButtonProps,
   ListItemIcon,
@@ -64,13 +65,15 @@ const ToolbarButtonStyles = styled(ListItemButton)<ToolbarButtonStyleProps>(
   }
 );
 
-const hideScrollbar = {
+const stackRow = {
   msOverflowStyle: 'none',
   scrollbarWidth: 'none',
   overflowY: 'scroll',
   '&::-webkit-scrollbar': {
     display: 'none',
   },
+
+  margin: '2px 0px',
 } as const;
 
 export interface ToolbarButtonProps extends ToolbarButtonStyleProps {
@@ -86,6 +89,7 @@ const ToolbarButton = ({ onClick, onKeyDown, label, Icon, ...other }: ToolbarBut
       onKeyDown={onKeyDown}
       aria-label={label}
       {...OtherHousesSharp}
+      {...other}
     >
       <ListItemIcon
         sx={{
@@ -139,56 +143,71 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
   const redoStack = useSelectRedoStack();
 
   return (
-    <Stack direction="row">
-      <Stack sx={{ ...hideScrollbar, py: 1 }} flexShrink={0}>
-        <ToolbarButton
-          tabIndex={0}
-          onClick={undo}
-          onKeyDown={(e) => doIfEnter(e, undo)}
-          label="undo"
-          disabled={undoStack.length === 0}
-          Icon={<UndoIcon />}
-        />
-        <ToolbarButton
-          className={showLayer[Layer.FLOOR] ? 'primary' : 'secondary'}
-          active={showLayer[Layer.FLOOR] ? true : false}
-          tabIndex={0}
-          onClick={() => toggleSelectedLayer(Layer.FLOOR)}
-          onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.FLOOR))}
-          label="Floor plane"
-          Icon={<ArrowDownwardIcon />}
-        />
-        <ToolbarButton
+    <Stack>
+      <Stack direction="row">
+        <Stack sx={{ ...stackRow, py: 1 }} flexShrink={0}>
+          <ToolbarButton
+            tabIndex={0}
+            onClick={undo}
+            onKeyDown={(e) => doIfEnter(e, undo)}
+            label="undo"
+            disabled={undoStack.length === 0}
+            Icon={<UndoIcon />}
+          />
+          <ToolbarButton
+            className={showLayer[Layer.FLOOR] ? 'primary' : 'secondary'}
+            active={showLayer[Layer.FLOOR] ? true : false}
+            tabIndex={0}
+            onClick={() => toggleSelectedLayer(Layer.FLOOR)}
+            onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.FLOOR))}
+            label="Floor plane"
+            Icon={<ArrowDownwardIcon />}
+          />
+          {/* <ToolbarButton
           onClick={recenterPlayground}
           onKeyDown={(e) => doIfEnter(e, recenterPlayground)}
           label="Recenter"
           Icon={<FilterCenterFocusIcon />}
-        />
-      </Stack>
-      <Stack sx={{ ...hideScrollbar, py: 1 }} flexShrink={0}>
-        <ToolbarButton
-          tabIndex={0}
-          onClick={redo}
-          onKeyDown={(e) => doIfEnter(e, redo)}
-          label="redo"
-          disabled={redoStack.length === 0}
-          Icon={<RedoIcon />}
-        />
-        <ToolbarButton
-          active={showLayer[Layer.CEILING] ? true : false}
-          tabIndex={0}
-          onClick={() => toggleSelectedLayer(Layer.CEILING)}
-          onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.CEILING))}
-          label="Ceiling plane"
-          Icon={<ArrowUpwardIcon />}
-        />
-        <ToolbarButton
+        /> */}
+        </Stack>
+        <Stack sx={{ ...stackRow, py: 1 }} flexShrink={0}>
+          <ToolbarButton
+            tabIndex={0}
+            onClick={redo}
+            onKeyDown={(e) => doIfEnter(e, redo)}
+            label="redo"
+            disabled={redoStack.length === 0}
+            Icon={<RedoIcon />}
+          />
+          <ToolbarButton
+            active={showLayer[Layer.CEILING] ? true : false}
+            tabIndex={0}
+            onClick={() => toggleSelectedLayer(Layer.CEILING)}
+            onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.CEILING))}
+            label="Ceiling plane"
+            Icon={<ArrowUpwardIcon />}
+          />
+          {/* <ToolbarButton
           onClick={openResetModal}
           onKeyDown={(e) => doIfEnter(e, openResetModal)}
           label="Reset Playground"
           Icon={<RestartAltIcon />}
-        />
+        /> */}
+        </Stack>
       </Stack>
+      <Box>
+        <Button
+          fullWidth
+          onClick={openResetModal}
+          startIcon={<RestartAltIcon />}
+          variant="outlined"
+          color="error"
+          // onKeyDown={(e) => doIfEnter(e, openResetModal)}
+          // label="Reset Playground"
+        >
+          Reset Playground
+        </Button>
+      </Box>
     </Stack>
   );
 }

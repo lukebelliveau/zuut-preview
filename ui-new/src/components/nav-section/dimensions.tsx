@@ -9,6 +9,8 @@ import { isDemoMode, useDispatch } from '../../redux/store';
 import { feetToMm, mmToFeet } from '../../lib/conversions';
 import { hackyRecenterPlayground } from '../../redux/features/playgrounds/playgroundSlice';
 import { Button, styled, TextField } from '@mui/material';
+import FullScreenButton from './FullScreenButton';
+import RecenterButton from './RecenterButton';
 
 const DimensionTextField = styled(TextField)({
   margin: 10,
@@ -66,7 +68,12 @@ const Dimensions = () => {
       </Typography> */}
 
       <form onSubmit={updateProperties}>
-        <div className="properties-body">
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
           {isDemoMode() ? null : (
             <>
               <DimensionTextField
@@ -102,9 +109,20 @@ const Dimensions = () => {
             }
             aria-label="update dimensions"
             onClick={updateProperties}
+            sx={{
+              display: 'flex',
+            }}
           >
             Update Dimensions
           </Button>
+          <div
+            style={{
+              display: 'flex',
+            }}
+          >
+            <RecenterButton />
+            <FullScreenButton />
+          </div>
         </div>
       </form>
     </div>

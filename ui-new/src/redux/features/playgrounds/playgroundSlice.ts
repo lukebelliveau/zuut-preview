@@ -146,7 +146,7 @@ export const resizePlayground = createAsyncThunk(
 
       playground.setDisplayDimensions(
         UNSAFE_sandboxOffsetWidth,
-        UNSAFE_sandboxOffsetHeight - UNSAFE_toolbarOffsetHeight
+        UNSAFE_sandboxOffsetHeight - UNSAFE_toolbarOffsetHeight - 10
       );
 
       playground.centerX = 10;

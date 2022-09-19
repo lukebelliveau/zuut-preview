@@ -1,5 +1,5 @@
 import { AnimatePresence, m } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Stack, Divider, Backdrop, Typography, IconButton } from '@mui/material';
@@ -15,16 +15,19 @@ import Scrollbar from '../../Scrollbar';
 import { varFade } from '../../animate';
 //
 import AnimatedToggleButton from './ToggleButton';
-import SettingMode from './SettingMode';
+import ControlPanelDescription from './ControlPanelDescription';
 import SettingLayout from './SettingLayout';
 import SettingStretch from './SettingStretch';
-import SettingContrast from './SettingContrast';
+import ControlPanelTransform from './ControlPanelTransform';
 import SettingDirection from './SettingDirection';
 import SettingFullscreen from './SettingFullscreen';
 import SettingColorPresets from './SettingColorPresets';
 import { useSelector } from 'src/redux/store';
 import { selectSelectedItemId } from 'src/redux/features/interactions/interactionsSelectors';
 import { useSelectItemById } from 'src/redux/features/items/itemsSelectors';
+import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
+import usePrevious from 'src/hooks/usePrevious';
+import { IItem } from 'src/lib/item';
 
 // ----------------------------------------------------------------------
 
@@ -61,9 +64,47 @@ export default function ControlPanelDrawer() {
     onResetSetting,
   } = useSettings();
   const selectedItemIds = useSelector(selectSelectedItemId);
-  const item = useSelectItemById(selectedItemIds.length === 1 ? selectedItemIds[0] : undefined);
-
+  const itemState = useSelectItemById(
+    selectedItemIds.length === 1 ? selectedItemIds[0] : undefined
+  );
+  const item = itemState ? ItemReduxAdapter.stateToItem(itemState) : undefined;
   const [open, setOpen] = useState(false);
+  const previousItemRef = useRef<any>();
+
+  useEffect(() => {
+    if (item === undefined) {
+      setOpen(false);
+      return;
+    }
+
+    if (previousItemRef.current === undefined && item !== undefined) {
+      previousItemRef.current = item;
+      setOpen(true);
+      return;
+    }
+
+    if (previousItemRef.current === undefined) return;
+
+    if (item.id !== previousItemRef.current.id) {
+      setOpen(true);
+    }
+
+    previousItemRef.current = item;
+  }, [setOpen, item]);
+
+  useEffect(() => {
+    previousItemRef.current = item;
+  }, [item]);
+
+  // useEffect(() => {
+  //   // if (item === undefined || previousItem === undefined) return;
+  //   // if (item.id !== previousItem.id) {
+  //   //   setOpen(true);
+  //   // } else {
+  //   //   setOpen(false);
+  //   // }
+  //   if (item !== undefined) setOpen(true);
+  // }, [item]);
 
   const notDefault =
     themeMode !== defaultSettings.themeMode ||
@@ -96,11 +137,11 @@ export default function ControlPanelDrawer() {
 
   return (
     <>
-      <Backdrop
+      {/* <Backdrop
         open={open}
         onClick={handleClose}
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      />
+      /> */}
 
       {!open && (
         <AnimatedToggleButton
@@ -114,64 +155,62 @@ export default function ControlPanelDrawer() {
       <AnimatePresence>
         {open && (
           <>
-            <RootStyle {...varSidebar}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                sx={{ py: 2, pr: 1, pl: 2.5 }}
-              >
-                <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-                  Settings
-                </Typography>
+            {item ? (
+              <RootStyle {...varSidebar}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{ py: 2, pr: 1, pl: 2.5 }}
+                >
+                  <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
+                    {item.name}
+                  </Typography>
 
-                <IconButton onClick={onResetSetting}>
-                  <Iconify icon={'ic:round-refresh'} width={20} height={20} />
-                </IconButton>
-
-                <IconButton onClick={handleClose}>
-                  <Iconify icon={'eva:close-fill'} width={20} height={20} />
-                </IconButton>
-              </Stack>
-
-              <Divider sx={{ borderStyle: 'dashed' }} />
-
-              <Scrollbar sx={{ flexGrow: 1 }}>
-                <Stack spacing={3} sx={{ p: 3 }}>
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Mode</Typography>
-                    <SettingMode />
-                  </Stack>
-
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Contrast</Typography>
-                    <SettingContrast />
-                  </Stack>
-
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Direction</Typography>
-                    <SettingDirection />
-                  </Stack>
-
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Layout</Typography>
-                    <SettingLayout />
-                  </Stack>
-
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Presets</Typography>
-                    <SettingColorPresets />
-                  </Stack>
-
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Stretch</Typography>
-                    <SettingStretch />
-                  </Stack>
-
-                  <SettingFullscreen />
+                  <IconButton onClick={handleClose}>
+                    <Iconify icon={'eva:close-fill'} width={20} height={20} />
+                  </IconButton>
                 </Stack>
-              </Scrollbar>
-            </RootStyle>
+
+                <Divider sx={{ borderStyle: 'dashed' }} />
+
+                <Scrollbar sx={{ flexGrow: 1 }}>
+                  <Stack spacing={3} sx={{ p: 3 }}>
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Description</Typography>
+                      <ControlPanelDescription item={item} />
+                    </Stack>
+
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Transform</Typography>
+                      <ControlPanelTransform item={item} />
+                    </Stack>
+
+                    {/* <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Direction</Typography>
+                      <SettingDirection />
+                    </Stack>
+
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Layout</Typography>
+                      <SettingLayout />
+                    </Stack>
+
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Presets</Typography>
+                      <SettingColorPresets />
+                    </Stack>
+
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Stretch</Typography>
+                      <SettingStretch />
+                    </Stack> */}
+
+                    {/* <SettingFullscreen /> */}
+                  </Stack>
+                </Scrollbar>
+              </RootStyle>
+            ) : null}
           </>
         )}
       </AnimatePresence>
