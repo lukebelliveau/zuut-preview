@@ -14,6 +14,7 @@ import { PATH_AFTER_LOGIN } from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import NewDemoPlayground from 'src/pages/playground/NewDemoPlayground';
+import Cart from 'src/pages/cart/Cart';
 import { usePrefetchItemGroups } from 'src/layouts/playground/navbar/NavConfig';
 
 // ----------------------------------------------------------------------
@@ -73,6 +74,11 @@ export default function Router() {
         { path: 'demo', element: <GeneralPlaygroundApp /> },
         { path: 'newdemo', element: <NewDemoPlayground /> },
       ],
+    },
+    {
+      path: '/cart',
+      element: <LogoOnlyLayout />,
+      children: [{ element: <Cart />, index: true }],
     },
 
     // Main Routes
