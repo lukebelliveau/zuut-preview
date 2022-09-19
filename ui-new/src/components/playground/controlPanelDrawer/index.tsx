@@ -21,14 +21,17 @@ import { useSelector } from 'src/redux/store';
 import { selectSelectedItemId } from 'src/redux/features/interactions/interactionsSelectors';
 import { useSelectItemById } from 'src/redux/features/items/itemsSelectors';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
+import QuickAdds from './QuickAdds';
+import PlaceableItem, { isPlaceableItem } from 'src/lib/item/placeableItem';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
   // top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
+  // top: '50%',
+  top: '10%',
   backgroundColor: theme.palette.background.neutral,
-  top: '50%',
   right: 0,
   bottom: 0,
   display: 'flex',
@@ -49,15 +52,8 @@ const RootStyle = styled(m.div)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ControlPanelDrawer() {
-  const {
-    themeMode,
-    themeLayout,
-    themeStretch,
-    themeContrast,
-    themeDirection,
-    themeColorPresets,
-    onResetSetting,
-  } = useSettings();
+  const { themeMode, themeLayout, themeStretch, themeContrast, themeDirection, themeColorPresets } =
+    useSettings();
   const selectedItemIds = useSelector(selectSelectedItemId);
   const itemState = useSelectItemById(
     selectedItemIds.length === 1 ? selectedItemIds[0] : undefined
@@ -166,10 +162,21 @@ export default function ControlPanelDrawer() {
                       <ControlPanelDescription item={item} />
                     </Stack>
 
+                    <Divider />
+
                     <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Transform</Typography>
                       <ControlPanelTransform item={item} />
                     </Stack>
+
+                    <Divider />
+
+                    {isPlaceableItem(item) && Object.keys(item.modifiers).length === 0 ? null : (
+                      <Stack spacing={1.5}>
+                        <Typography variant="subtitle2">Quick Adds</Typography>
+                        <QuickAdds item={item as PlaceableItem} />
+                      </Stack>
+                    )}
 
                     {/* <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Direction</Typography>

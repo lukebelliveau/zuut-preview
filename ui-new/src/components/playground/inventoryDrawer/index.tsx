@@ -23,13 +23,9 @@ import Iconify from '../../Iconify';
 import Scrollbar from '../../Scrollbar';
 import { varFade } from '../../animate';
 import AnimatedToggleButton from './ToggleButton';
-import { AppStore, useDispatch, useSelector } from 'src/redux/store';
+import { AppStore, useDispatch } from 'src/redux/store';
 import { selectSelectedItemId } from 'src/redux/features/interactions/interactionsSelectors';
-import {
-  useSelectAllItemIds,
-  useSelectAllItems,
-  useSelectItemById,
-} from 'src/redux/features/items/itemsSelectors';
+import { useSelectAllItemIds, useSelectAllItems } from 'src/redux/features/items/itemsSelectors';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
 import useAppSelector from 'src/hooks/useAppSelector';
 import { isPlaceableItem } from 'src/lib/item/placeableItem';
@@ -50,6 +46,8 @@ import RemoveDoneIcon from '@mui/icons-material/RemoveDone';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import Select from 'src/theme/overrides/Select';
 import { useTheme } from '@mui/system';
+import { isWallItem } from 'src/lib/item/wallItem';
+import { isModifierItem } from 'src/lib/item/modifierItem';
 
 // ----------------------------------------------------------------------
 
@@ -175,7 +173,7 @@ export default function InventoryDrawer() {
                   to={shoppingCartUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  disabled={selectedIds.length < 1}
+                  disabled={items.length < 1}
                 >
                   Open Shopping Cart
                 </Button>
@@ -185,18 +183,20 @@ export default function InventoryDrawer() {
 
               <Scrollbar sx={{ flexGrow: 1 }}>
                 <List>
-                  {items.map((item) => {
-                    return (
-                      <InventoryItem
-                        key={item.id}
-                        item={item}
-                        selectedIds={selectedIds}
-                        toggleItemSelected={toggleItemSelected}
-                        handleItemKeyDown={handleItemKeyDown}
-                        selectItemFromInventory={selectItemFromInventory}
-                      />
-                    );
-                  })}
+                  {items
+                    .filter((item) => !isModifierItem(item) && !isWallItem(item))
+                    .map((item) => {
+                      return (
+                        <InventoryItem
+                          key={item.id}
+                          item={item}
+                          selectedIds={selectedIds}
+                          toggleItemSelected={toggleItemSelected}
+                          handleItemKeyDown={handleItemKeyDown}
+                          selectItemFromInventory={selectItemFromInventory}
+                        />
+                      );
+                    })}
                 </List>
               </Scrollbar>
             </RootStyle>
@@ -245,7 +245,14 @@ const InventoryItem = ({
         ? Object.entries(item.modifiers).map(([modifierName, modifierIds]) => {
             if (modifierIds.length > 0) {
               return (
-                <ListItem key={modifierName}>
+                <ListItem
+                  key={modifierName}
+                  sx={{
+                    // display: 'flex',
+                    // justifyContent: 'flex-end',
+                    marginLeft: '42px',
+                  }}
+                >
                   <Typography role="menuitem">
                     {`${modifierName} (x${modifierIds.length})`}
                   </Typography>

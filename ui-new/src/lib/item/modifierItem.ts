@@ -3,7 +3,7 @@ import { AmazonProduct, Item, ItemArgs } from '../item';
 
 export const MODIFIER_ITEM_TYPE = 'ModifierItem';
 
-export function isModiferItem(item: Item): item is ModifierItem {
+export function isModifierItem(item: Item): item is ModifierItem {
   return (item as ModifierItem).type === MODIFIER_ITEM_TYPE;
 }
 
