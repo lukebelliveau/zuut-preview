@@ -92,10 +92,10 @@ const ToggleButton = ({
         >
           <div
             style={{
-              // maxWidth: 40,
+              maxWidth: 40,
               maxHeight: 40,
-              // width: 40,
-              // height: 40,
+              width: 40,
+              height: 40,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',

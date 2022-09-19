@@ -1,6 +1,6 @@
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, Container } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Container, CssBaseline } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
@@ -72,7 +72,7 @@ const ItemsHeader = () => {
   );
 };
 
-export default function DashboardHeader({
+export default function PlaygroundHeader({
   onOpenSidebar,
   isCollapse = false,
   verticalLayout = false,
@@ -86,8 +86,11 @@ export default function DashboardHeader({
       <Toolbar
         sx={{
           minHeight: '100% !important',
-          px: { lg: 5 },
+          // px: { lg: 5 },
+          paddingLeft: 5,
+          // paddingRight: 0,
         }}
+        disableGutters
       >
         <Logo sx={{ mr: 2.5 }} />
         {/* {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />}

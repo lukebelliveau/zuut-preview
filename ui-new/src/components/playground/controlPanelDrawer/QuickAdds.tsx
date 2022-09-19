@@ -56,9 +56,9 @@ export default function QuickAdds({ item }: { item: PlaceableItem }) {
 
   return (
     <List disablePadding>
-      {Object.keys(item.modifiers).map((modifierName) => {
+      {Object.keys(item.modifiers).map((modifierName, index) => {
         return (
-          <ListItem key={item.id}>
+          <ListItem key={index}>
             <Stack
               direction="row"
               alignItems="center"

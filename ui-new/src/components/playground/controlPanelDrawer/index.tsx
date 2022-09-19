@@ -23,6 +23,7 @@ import { useSelectItemById } from 'src/redux/features/items/itemsSelectors';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
 import QuickAdds from './QuickAdds';
 import PlaceableItem, { isPlaceableItem } from 'src/lib/item/placeableItem';
+import { INVENTORY_HEADER_BOTTOM } from '../inventoryDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +31,7 @@ const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
   // top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
   // top: '50%',
-  top: '10%',
+  top: INVENTORY_HEADER_BOTTOM,
   backgroundColor: theme.palette.background.neutral,
   right: 0,
   bottom: 0,

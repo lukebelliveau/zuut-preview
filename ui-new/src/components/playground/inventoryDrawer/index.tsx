@@ -51,9 +51,13 @@ import { isModifierItem } from 'src/lib/item/modifierItem';
 
 // ----------------------------------------------------------------------
 
+const INVENTORY_TOP = 40;
+const INVENTORY_HEADER_HEIGHT = 60;
+export const INVENTORY_HEADER_BOTTOM = INVENTORY_TOP + INVENTORY_HEADER_HEIGHT;
+
 const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
-  top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
+  top: INVENTORY_TOP,
   right: 0,
   bottom: 0,
   display: 'flex',
@@ -150,7 +154,7 @@ export default function InventoryDrawer() {
                   direction="row"
                   alignItems="center"
                   justifyContent="space-between"
-                  sx={{ py: 2, pr: 1, pl: 2.5 }}
+                  sx={{ py: 2, pr: 1, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
                 >
                   <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
                     <SelectButtonIcon
