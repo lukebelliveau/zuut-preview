@@ -12,7 +12,7 @@ const DropdownPlaceholder = ({
   icon: ReactElement<any, string | JSXElementConstructor<any>>;
 }) => {
   return (
-    <ListItemButtonStyle open={false} active={false} depth={1}>
+    <ListItemButtonStyle open={false} active={false} depth={1} disabled>
       {icon && (
         <ListItemIcon
           sx={{
