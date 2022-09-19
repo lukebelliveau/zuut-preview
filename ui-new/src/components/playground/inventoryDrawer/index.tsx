@@ -175,6 +175,7 @@ export default function InventoryDrawer() {
                   to={shoppingCartUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  disabled={selectedIds.length < 1}
                 >
                   Open Shopping Cart
                 </Button>

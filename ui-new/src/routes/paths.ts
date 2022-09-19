@@ -7,6 +7,7 @@ function path(root: string, sublink: string) {
 const ROOTS_AUTH = '/auth';
 const ROOTS_DASHBOARD = '/dashboard';
 const ROOTS_PLAYGROUND = '/playground';
+const ROOTS_CART = '/cart';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +45,10 @@ export const PATH_PLAYGROUND = {
     current: path(ROOTS_PLAYGROUND, '/current'),
     reset: path(ROOTS_PLAYGROUND, '/new?reset-playground=true'),
   },
+};
+
+export const PATH_CART = {
+  root: ROOTS_CART,
 };
 
 export const PATH_DASHBOARD = {
