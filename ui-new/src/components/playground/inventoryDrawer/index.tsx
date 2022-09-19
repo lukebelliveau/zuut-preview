@@ -142,7 +142,7 @@ export default function InventoryDrawer() {
 
   return (
     <>
-      {!open && <AnimatedToggleButton open={open} onToggle={handleToggle} />}
+      {<AnimatedToggleButton open={open} onToggle={handleToggle} />}
 
       <AnimatePresence>
         {open && (

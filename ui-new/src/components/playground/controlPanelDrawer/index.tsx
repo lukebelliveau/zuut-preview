@@ -16,6 +16,7 @@ import { varFade } from '../../animate';
 //
 import AnimatedToggleButton from './ToggleButton';
 import ControlPanelDescription from './ControlPanelDescription';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import ControlPanelTransform from './ControlPanelTransform';
 import { useSelector } from 'src/redux/store';
 import { selectSelectedItemId } from 'src/redux/features/interactions/interactionsSelectors';
@@ -125,14 +126,14 @@ export default function ControlPanelDrawer() {
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
       /> */}
 
-      {!open && (
+      {
         <AnimatedToggleButton
           open={open}
           item={item}
           notDefault={notDefault}
           onToggle={handleToggle}
         />
-      )}
+      }
 
       <AnimatePresence>
         {open && (
@@ -145,7 +146,10 @@ export default function ControlPanelDrawer() {
                   justifyContent="space-between"
                   sx={{ py: 2, pr: 1, pl: 2.5 }}
                 >
-                  <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
+                  <IconButton>
+                    <DoneAllIcon sx={{ visibility: 'hidden' }} />
+                  </IconButton>
+                  <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
                     {item.name}
                   </Typography>
 

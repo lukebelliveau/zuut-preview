@@ -1,5 +1,5 @@
 // @mui
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import { Tooltip } from '@mui/material';
 // utils
 import cssStyles from '../../../utils/cssStyles';
@@ -13,8 +13,8 @@ import { IItem } from 'src/lib/item';
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  left: 80,
-  bottom: 20,
+  left: 20,
+  bottom: 80,
   position: 'fixed',
   marginTop: theme.spacing(-3),
   padding: theme.spacing(0.5),
@@ -56,9 +56,12 @@ const ToggleButton = ({
   onToggle: VoidFunction;
   item: IItem;
 }) => {
+  const theme = useTheme();
   if (!isPlaceableItem(item)) {
     return null;
   }
+
+  const hoverColor = open ? theme.palette.secondary.main : theme.palette.primary.main;
 
   return (
     <RootStyle
@@ -69,7 +72,10 @@ const ToggleButton = ({
     >
       {notDefault && !open && <DotStyle />}
 
-      <Tooltip title={`${item.name} Properties`} placement="left">
+      <Tooltip
+        title={open ? `Close ${item.name} Properties` : `Open ${item.name} Properties`}
+        placement="left"
+      >
         <IconButtonAnimate
           color="inherit"
           onClick={onToggle}
@@ -77,10 +83,10 @@ const ToggleButton = ({
             padding: 0,
             p: 1.25,
             transition: (theme) => theme.transitions.create('all'),
+            color: hoverColor,
             '&:hover': {
-              color: 'primary.main',
-              bgcolor: (theme) =>
-                alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+              color: hoverColor,
+              bgcolor: (theme) => alpha(hoverColor, theme.palette.action.hoverOpacity),
             },
             '& .MuiButtonBase-root': {
               padding: 0,

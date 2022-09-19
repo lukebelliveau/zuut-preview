@@ -1,13 +1,11 @@
 // @mui
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import { Tooltip } from '@mui/material';
 // utils
 import cssStyles from '../../../utils/cssStyles';
 
 import { IconButtonAnimate } from '../../animate';
 import { AnimatePresence, m } from 'framer-motion';
-import Image from 'src/components/Image';
-import { IItem } from 'src/lib/item';
 import InventoryIcon from '@mui/icons-material/Inventory';
 
 // ----------------------------------------------------------------------
@@ -52,6 +50,9 @@ const ToggleButton = ({
 
   onToggle: VoidFunction;
 }) => {
+  const theme = useTheme();
+
+  const hoverColor = open ? theme.palette.secondary.main : theme.palette.primary.main;
   return (
     <RootStyle
       initial={{ opacity: 0, scale: 0.5 }}
@@ -59,18 +60,19 @@ const ToggleButton = ({
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      <Tooltip title="Inventory" placement="left">
+      <Tooltip title={open ? 'Close Inventory' : 'Open Inventory'} placement="left">
         <IconButtonAnimate
           color="inherit"
+          // color={theme.palette.error}
           onClick={onToggle}
           sx={{
             padding: 0,
             p: 1.25,
             transition: (theme) => theme.transitions.create('all'),
+            color: hoverColor,
             '&:hover': {
-              color: 'primary.main',
-              bgcolor: (theme) =>
-                alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+              color: hoverColor,
+              bgcolor: (theme) => alpha(hoverColor, theme.palette.action.hoverOpacity),
             },
             '& .MuiButtonBase-root': {
               padding: 0,
