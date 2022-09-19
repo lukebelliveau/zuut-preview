@@ -10,8 +10,6 @@ import { Layer } from '../../../lib/layer';
 import { useSelectShowLayer } from '../../../redux/features/interactions/interactionsSelectors';
 import { toggleLayer } from '../../../redux/features/interactions/interactionsSlice';
 // import ResetPlaygroundModal from './ResetPlaygroundModal';
-import { useState } from 'react';
-import Modal from 'react-modal';
 import { hackyRecenterPlayground } from '../../../redux/features/playgrounds/playgroundSlice';
 import useAppDispatch from 'src/hooks/useAppDispatch';
 // import UndoIcon from 'src/components/playground/Toolbar/UndoIcon';
@@ -163,12 +161,6 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
             label="Floor plane"
             Icon={<ArrowDownwardIcon />}
           />
-          {/* <ToolbarButton
-          onClick={recenterPlayground}
-          onKeyDown={(e) => doIfEnter(e, recenterPlayground)}
-          label="Recenter"
-          Icon={<FilterCenterFocusIcon />}
-        /> */}
         </Stack>
         <Stack sx={{ ...stackRow, py: 1 }} flexShrink={0}>
           <ToolbarButton
@@ -187,12 +179,6 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
             label="Ceiling plane"
             Icon={<ArrowUpwardIcon />}
           />
-          {/* <ToolbarButton
-          onClick={openResetModal}
-          onKeyDown={(e) => doIfEnter(e, openResetModal)}
-          label="Reset Playground"
-          Icon={<RestartAltIcon />}
-        /> */}
         </Stack>
       </Stack>
       <Box>

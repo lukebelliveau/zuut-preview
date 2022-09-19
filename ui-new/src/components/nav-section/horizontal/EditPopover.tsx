@@ -1,18 +1,12 @@
 import { Divider, Stack, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import useAuth from 'src/hooks/useAuth';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { IconButtonAnimate } from '../../animate';
 import MenuPopover from '../../MenuPopover';
-import { PATH_DASHBOARD } from 'src/routes/paths';
 import EditIcon from '@mui/icons-material/Edit';
 import { ICON, NAVBAR } from 'src/config';
 import Modal from 'react-modal';
-import Dimensions from '../dimensions';
-import Toolbar from 'src/components/nav-section/horizontal/HorizontalToolbar';
+import EditButtons from 'src/components/nav-section/horizontal/EditButtons';
 import Iconify from 'src/components/Iconify';
 import ResetPlaygroundModal from 'src/components/playground/Toolbar/ResetPlaygroundModal';
 
@@ -128,7 +122,7 @@ export default function ToolbarPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          <Toolbar openResetModal={openModal} />
+          <EditButtons openResetModal={openModal} />
         </Stack>
       </MenuPopover>
       <ResetPlaygroundModal open={modalIsOpen} onClose={closeModal} />

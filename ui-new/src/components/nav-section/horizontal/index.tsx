@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Divider, Stack } from '@mui/material';
 import ItemList from './ItemList';
 import DimensionsPopover from 'src/components/nav-section/horizontal/DimensionsPopover';
-import ToolbarPopover from './ToolbarPopover';
+import ToolbarPopover from './EditPopover';
 import {
   ICONS,
   useQueryClimateItems,
