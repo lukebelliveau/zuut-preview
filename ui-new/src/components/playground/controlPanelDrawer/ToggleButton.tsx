@@ -13,7 +13,7 @@ import { IItem } from 'src/lib/item';
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  left: 20,
+  left: 80,
   bottom: 20,
   position: 'fixed',
   marginTop: theme.spacing(-3),
@@ -22,7 +22,7 @@ const RootStyle = styled(m.span)(({ theme }) => ({
   borderRadius: '50%',
   boxShadow: `-12px 12px 32px -4px ${alpha(
     theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.common.black,
-    0.36
+    0.2
   )}`,
 }));
 
@@ -92,8 +92,8 @@ const ToggleButton = ({
         >
           <div
             style={{
-              maxWidth: 40,
-              maxHeight: 40,
+              maxWidth: 30,
+              maxHeight: 30,
               width: 40,
               height: 40,
               display: 'flex',

@@ -14,7 +14,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  right: 20,
+  left: 20,
   bottom: 20,
   position: 'fixed',
   marginTop: theme.spacing(-3),

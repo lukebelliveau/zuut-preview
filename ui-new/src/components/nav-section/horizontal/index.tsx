@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Divider, Stack } from '@mui/material';
 import ItemList from './ItemList';
 import DimensionsPopover from 'src/components/nav-section/horizontal/DimensionsPopover';
-import ToolbarPopover from './EditPopover';
+import EditPopover from './EditPopover';
 import {
   ICONS,
   useQueryClimateItems,
@@ -185,9 +185,9 @@ function NavSectionHorizontal() {
           </Stack>
 
           <Divider orientation="vertical" />
-          <Stack direction="row" flexShrink={0} flexGrow={1} justifyContent="flex-end">
+          <Stack direction="row" flexShrink={0} flexGrow={1} justifyContent="flex-start">
             <DimensionsPopover />
-            <ToolbarPopover />
+            <EditPopover />
           </Stack>
         </Stack>
       </Stack>
