@@ -152,7 +152,7 @@ export default function ShowPlayground() {
         data-testid="playground-container"
       >
         <div id="sandbox" ref={drop} style={{ height: '100%', width: '100%' }}>
-          <div style={{ paddingTop: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT }}>
+          <div style={{ paddingTop: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT - 10 }}>
             <Stage
               key={v4()}
               ref={stageRef}

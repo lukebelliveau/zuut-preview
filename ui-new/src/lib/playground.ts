@@ -59,11 +59,11 @@ export default class Playground {
   }
 
   zoomIn(params: ZoomParams) {
-    this.zoom(params, 1.05);
+    this.zoom(params, 1.15);
   }
 
   zoomOut(params: ZoomParams) {
-    this.zoom(params, 0.95);
+    this.zoom(params, 0.85);
   }
 
   private get widthScaleFactor(): number {
