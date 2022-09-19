@@ -12,6 +12,7 @@ import { HEADER, NAVBAR } from '../../config';
 //
 import PlaygroundHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
+import PlaygroundDrawer from '../../components/playground/controlPanelDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -59,6 +60,7 @@ export default function PlaygroundLayout() {
       <>
         <PlaygroundHeader onOpenSidebar={() => setOpen(true)} verticalLayout={verticalLayout} />
 
+        {/* Skip all navbars, the <NavSectionHorizontal /> is in the header component */}
         {/* <NavbarHorizontal /> */}
         {/* {isDesktop ? (
           <NavbarHorizontal />
@@ -85,6 +87,7 @@ export default function PlaygroundLayout() {
           }}
         >
           <Outlet />
+          <PlaygroundDrawer />
         </Box>
       </>
     );

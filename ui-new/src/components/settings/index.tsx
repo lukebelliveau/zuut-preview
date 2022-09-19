@@ -20,7 +20,6 @@ export default function ThemeSettings({ children }: Props) {
           <ThemeRtlLayout>
             {children}
             <SettingsDrawer />
-            <PlaygroundDrawer />
           </ThemeRtlLayout>
         </ThemeLocalization>
       </ThemeContrast>

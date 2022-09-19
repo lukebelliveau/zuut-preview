@@ -8,7 +8,7 @@ import useSettings from '../../../hooks/useSettings';
 // utils
 import cssStyles from '../../../utils/cssStyles';
 // config
-import { NAVBAR, defaultSettings } from '../../../config';
+import { NAVBAR, defaultSettings, HEADER } from '../../../config';
 //
 import Iconify from '../../Iconify';
 import Scrollbar from '../../Scrollbar';
@@ -33,7 +33,7 @@ import { IItem } from 'src/lib/item';
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
-  top: 0,
+  top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
   right: 0,
   bottom: 0,
   display: 'flex',
@@ -85,9 +85,9 @@ export default function ControlPanelDrawer() {
 
     if (previousItemRef.current === undefined) return;
 
-    if (item.id !== previousItemRef.current.id) {
-      setOpen(true);
-    }
+    // if (item.id !== previousItemRef.current.id) {
+    //   setOpen(true);
+    // }
 
     previousItemRef.current = item;
   }, [setOpen, item]);
