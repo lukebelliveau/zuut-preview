@@ -2,13 +2,13 @@ import { AnimatePresence, m } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Stack, Divider, Backdrop, Typography, IconButton } from '@mui/material';
+import { Stack, Divider, Typography, IconButton } from '@mui/material';
 // hooks
 import useSettings from '../../../hooks/useSettings';
 // utils
 import cssStyles from '../../../utils/cssStyles';
 // config
-import { NAVBAR, defaultSettings, HEADER } from '../../../config';
+import { NAVBAR, defaultSettings } from '../../../config';
 //
 import Iconify from '../../Iconify';
 import Scrollbar from '../../Scrollbar';
@@ -16,24 +16,19 @@ import { varFade } from '../../animate';
 //
 import AnimatedToggleButton from './ToggleButton';
 import ControlPanelDescription from './ControlPanelDescription';
-import SettingLayout from './SettingLayout';
-import SettingStretch from './SettingStretch';
 import ControlPanelTransform from './ControlPanelTransform';
-import SettingDirection from './SettingDirection';
-import SettingFullscreen from './SettingFullscreen';
-import SettingColorPresets from './SettingColorPresets';
 import { useSelector } from 'src/redux/store';
 import { selectSelectedItemId } from 'src/redux/features/interactions/interactionsSelectors';
 import { useSelectItemById } from 'src/redux/features/items/itemsSelectors';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
-import usePrevious from 'src/hooks/usePrevious';
-import { IItem } from 'src/lib/item';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
-  top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
+  // top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
+  backgroundColor: theme.palette.background.neutral,
+  top: '50%',
   right: 0,
   bottom: 0,
   display: 'flex',
@@ -95,16 +90,6 @@ export default function ControlPanelDrawer() {
   useEffect(() => {
     previousItemRef.current = item;
   }, [item]);
-
-  // useEffect(() => {
-  //   // if (item === undefined || previousItem === undefined) return;
-  //   // if (item.id !== previousItem.id) {
-  //   //   setOpen(true);
-  //   // } else {
-  //   //   setOpen(false);
-  //   // }
-  //   if (item !== undefined) setOpen(true);
-  // }, [item]);
 
   const notDefault =
     themeMode !== defaultSettings.themeMode ||

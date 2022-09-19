@@ -12,7 +12,16 @@ import { HEADER, NAVBAR } from '../../config';
 //
 import PlaygroundHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
-import PlaygroundDrawer from '../../components/playground/controlPanelDrawer';
+import ControlPanelDrawer from '../../components/playground/controlPanelDrawer';
+import InventoryDrawer from 'src/components/playground/inventoryDrawer';
+import {
+  handleDeleteOnKeyDown,
+  handleEscOnKeyDown,
+  handleSelectAllOnKeyDown,
+  handleUndoRedoOnKeyDown,
+} from 'src/utils/interactionHandlers';
+import { AppStore, store } from 'src/redux/store';
+import { useStore } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -52,8 +61,17 @@ export default function PlaygroundLayout() {
   const isDesktop = useResponsive('up', 'lg');
 
   const [open, setOpen] = useState(false);
+  const store = useStore() as AppStore;
 
   const verticalLayout = themeLayout === 'vertical';
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+    console.log('KEY DOWN INDEX');
+    handleDeleteOnKeyDown(e, store);
+    handleUndoRedoOnKeyDown(e, store);
+    handleSelectAllOnKeyDown(e, store);
+    handleEscOnKeyDown(e, store);
+  };
 
   if (verticalLayout) {
     return (
@@ -85,9 +103,11 @@ export default function PlaygroundLayout() {
             height: '100%',
             width: '100%',
           }}
+          onKeyDown={handleKeyDown}
         >
           <Outlet />
-          <PlaygroundDrawer />
+          <InventoryDrawer />
+          <ControlPanelDrawer />
         </Box>
       </>
     );

@@ -134,20 +134,12 @@ export default function ShowPlayground() {
 
   const { scale } = playground;
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    handleDeleteOnKeyDown(e, store);
-    handleUndoRedoOnKeyDown(e, store);
-    handleSelectAllOnKeyDown(e, store);
-    handleEscOnKeyDown(e, store);
-  };
-
   return (
     <Fragment>
       <div
         role="presentation"
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
-        onKeyDown={handleKeyDown}
         style={{ height: '100%', width: '100%' }}
         data-testid="playground-container"
       >

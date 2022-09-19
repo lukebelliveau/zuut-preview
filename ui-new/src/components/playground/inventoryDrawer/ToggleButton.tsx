@@ -3,17 +3,18 @@ import { alpha, styled } from '@mui/material/styles';
 import { Tooltip } from '@mui/material';
 // utils
 import cssStyles from '../../../utils/cssStyles';
+
 import { IconButtonAnimate } from '../../animate';
 import { AnimatePresence, m } from 'framer-motion';
-import { isPlaceableItem } from 'src/lib/item/placeableItem';
 import Image from 'src/components/Image';
 import { IItem } from 'src/lib/item';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  left: 20,
+  right: 20,
   bottom: 20,
   position: 'fixed',
   marginTop: theme.spacing(-3),
@@ -40,26 +41,17 @@ const DotStyle = styled('span')(({ theme }) => ({
 
 type Props = {
   open: boolean;
-  notDefault: boolean;
   onToggle: VoidFunction;
-  item: IItem | undefined;
 };
 
 const ToggleButton = ({
-  notDefault,
   open,
   onToggle,
-  item,
 }: {
   open: boolean;
-  notDefault: boolean;
-  onToggle: VoidFunction;
-  item: IItem;
-}) => {
-  if (!isPlaceableItem(item)) {
-    return null;
-  }
 
+  onToggle: VoidFunction;
+}) => {
   return (
     <RootStyle
       initial={{ opacity: 0, scale: 0.5 }}
@@ -67,9 +59,7 @@ const ToggleButton = ({
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      {notDefault && !open && <DotStyle />}
-
-      <Tooltip title={`${item.name} Properties`} placement="left">
+      <Tooltip title="Inventory" placement="left">
         <IconButtonAnimate
           color="inherit"
           onClick={onToggle}
@@ -93,7 +83,7 @@ const ToggleButton = ({
           <div
             style={{
               // maxWidth: 40,
-              maxHeight: 40,
+              // maxHeight: 40,
               // width: 40,
               // height: 40,
               display: 'flex',
@@ -101,7 +91,7 @@ const ToggleButton = ({
               justifyContent: 'center',
             }}
           >
-            <Image src={item.image} maxWidth={40} maxHeight={40} width={40} height={40} />
+            <InventoryIcon />
           </div>
         </IconButtonAnimate>
       </Tooltip>
@@ -109,10 +99,10 @@ const ToggleButton = ({
   );
 };
 
-export default function AnimatedToggleButton({ notDefault, open, onToggle, item }: Props) {
+export default function AnimatedToggleButton({ open, onToggle }: Props) {
   return (
     <AnimatePresence>
-      {item && <ToggleButton notDefault={notDefault} open={open} onToggle={onToggle} item={item} />}
+      <ToggleButton open={open} onToggle={onToggle} />
     </AnimatePresence>
   );
 }
