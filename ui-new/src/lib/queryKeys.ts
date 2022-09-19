@@ -7,6 +7,13 @@ const queryKeys = {
   amazonProductsByASIN: 'amazonProductsByASIN',
 
   itemsNavConfig: 'itemsNavConfig',
+
+  potItems: 'potItems',
+  lightItems: 'lightItems',
+  tentItems: 'tentItems',
+  miscItems: 'miscItems',
+  waterItems: 'waterItems',
+  climateItems: 'climateItems',
 };
 
 export default queryKeys;

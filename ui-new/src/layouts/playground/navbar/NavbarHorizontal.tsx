@@ -28,21 +28,10 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 function NavbarHorizontal() {
-  const { isLoading, isError, data: itemsNavConfig, error } = useQueryItemsNavConfig();
-
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    console.error(error);
-    return <span>Error loading items!</span>;
-  }
-
   return (
     <RootStyle>
       <Container maxWidth={false}>
-        <NavSectionHorizontal navConfig={itemsNavConfig} />
+        <NavSectionHorizontal />
       </Container>
     </RootStyle>
   );

@@ -65,20 +65,9 @@ type Props = {
 };
 
 const ItemsHeader = () => {
-  const { isLoading, isError, data: itemsNavConfig, error } = useQueryItemsNavConfig();
-
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    console.error(error);
-    return <span>Error loading items!</span>;
-  }
-
   return (
     <Container maxWidth={false}>
-      <NavSectionHorizontal navConfig={itemsNavConfig} />
+      <NavSectionHorizontal />
     </Container>
   );
 };

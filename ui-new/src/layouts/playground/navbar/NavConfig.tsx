@@ -12,10 +12,19 @@ import WaterIcon from '@mui/icons-material/LocalDrink';
 import ToolboxIcon from '@mui/icons-material/HomeRepairService';
 import WindowIcon from '@mui/icons-material/Window';
 import { Item } from 'src/lib/item';
-import { fetchItemsLibrary, IItemGroup } from 'src/lib/itemsLibrary';
-import { ItemNavSectionProps } from 'src/components/nav-section';
+import {
+  fetchClimateItems,
+  fetchItemsLibrary,
+  fetchLights,
+  fetchMiscItems,
+  fetchPots,
+  fetchTents,
+  fetchWaterItems,
+  IItemGroup,
+} from 'src/lib/itemsLibrary';
+import { ItemNavListProps, ItemNavSectionProps } from 'src/components/nav-section';
 import queryKeys from 'src/lib/queryKeys';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import WindowItem from 'src/lib/item/windowitem';
 import DoorItem from 'src/lib/item/doorItem';
 
@@ -25,7 +34,7 @@ const getIcon = (name: string) => (
   <SvgIconStyle src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
 
-const ICONS = {
+export const ICONS = {
   blog: getIcon('ic_blog'),
   cart: getIcon('ic_cart'),
   chat: getIcon('ic_chat'),
@@ -65,6 +74,105 @@ export const useQueryItemsNavConfig = () => {
   });
 };
 
+export const usePrefetchItemGroups = () => {
+  useQueryTentItems();
+  useQueryPotItems();
+  useQueryLightItems();
+  useQueryClimateItems();
+  useQueryWaterItems();
+  useQueryMiscItems();
+};
+
+export const useQueryTentItems = (): UseQueryResult<ItemNavListProps> => {
+  return useQuery([queryKeys.tentItems], async () => {
+    const tentItems = await fetchTents();
+
+    return {
+      name: 'tents',
+      path: '',
+      icon: ICONS.tent,
+      children: tentItems.map((item) => {
+        return { name: item.name, item: item, path: item.name };
+      }),
+    };
+  });
+};
+
+export const useQueryPotItems = (): UseQueryResult<ItemNavListProps> => {
+  return useQuery([queryKeys.potItems], async () => {
+    const potItems = await fetchPots();
+
+    return {
+      name: 'pots',
+      path: '',
+      icon: ICONS.pot,
+      children: potItems.map((item) => {
+        return { name: item.name, item: item, path: item.name };
+      }),
+    };
+  });
+};
+
+export const useQueryLightItems = (): UseQueryResult<ItemNavListProps> => {
+  return useQuery([queryKeys.lightItems], async () => {
+    const lightItems = await fetchLights();
+
+    return {
+      name: 'lights',
+      path: '',
+      icon: ICONS.light,
+      children: lightItems.map((item) => {
+        return { name: item.name, item: item, path: item.name };
+      }),
+    };
+  });
+};
+
+export const useQueryClimateItems = (): UseQueryResult<ItemNavListProps> => {
+  return useQuery([queryKeys.climateItems], async () => {
+    const climateItems = await fetchClimateItems();
+
+    return {
+      name: 'climate',
+      path: '',
+      icon: ICONS.climate,
+      children: climateItems.map((item) => {
+        return { name: item.name, item: item, path: item.name };
+      }),
+    };
+  });
+};
+
+export const useQueryWaterItems = (): UseQueryResult<ItemNavListProps> => {
+  return useQuery([queryKeys.waterItems], async () => {
+    const waterItems = await fetchWaterItems();
+
+    return {
+      name: 'water',
+      path: '',
+      icon: ICONS.water,
+      children: waterItems.map((item) => {
+        return { name: item.name, item: item, path: item.name };
+      }),
+    };
+  });
+};
+
+export const useQueryMiscItems = (): UseQueryResult<ItemNavListProps> => {
+  return useQuery([queryKeys.miscItems], async () => {
+    const miscItems = await fetchMiscItems();
+
+    return {
+      name: 'misc',
+      path: '',
+      icon: ICONS.misc,
+      children: miscItems.map((item) => {
+        return { name: item.name, item: item, path: item.name };
+      }),
+    };
+  });
+};
+
 const layoutItems = [
   {
     name: 'Window',
@@ -82,21 +190,6 @@ export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps
   const tentItems = itemGroup('tents', itemGroups).map((item) => {
     return { name: item.name, item: item, path: item.name };
   });
-  let tentItemGroup = {
-    name: 'tents',
-    path: '',
-    icon: ICONS.tent,
-    children: tentItems,
-  };
-
-  let potItemGroup = {
-    name: 'pots',
-    path: '',
-    icon: ICONS.pot,
-    children: itemGroup('pots', itemGroups).map((item) => {
-      return { name: item.name, item: item, path: item.name };
-    }),
-  };
 
   let lightItemGroup = {
     name: 'lights',
@@ -135,14 +228,7 @@ export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps
   return [
     {
       subheader: 'items',
-      items: [
-        tentItemGroup,
-        potItemGroup,
-        lightItemGroup,
-        climateItemGroup,
-        miscItemGroup,
-        layoutItemGroup,
-      ],
+      items: [lightItemGroup, climateItemGroup, miscItemGroup, layoutItemGroup],
     },
   ];
 };

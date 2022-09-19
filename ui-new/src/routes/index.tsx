@@ -14,6 +14,7 @@ import { PATH_AFTER_LOGIN } from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import NewDemoPlayground from 'src/pages/playground/NewDemoPlayground';
+import { usePrefetchItemGroups } from 'src/layouts/playground/navbar/NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,8 @@ const Loadable = (Component: ElementType) => (props: any) => {
 };
 
 export default function Router() {
+  usePrefetchItemGroups();
+
   return useRoutes([
     {
       path: 'auth',

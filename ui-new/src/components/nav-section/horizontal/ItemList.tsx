@@ -75,22 +75,16 @@ export default function ItemList({ data, depth, hasChildren }: ItemListRootProps
 
   return (
     <>
-      {isExternalLink(data.path) ? (
-        <Link href={data.path} target="_blank" rel="noopener" underline="none">
-          <NavItem item={data} depth={depth} open={open} active={active} />
-        </Link>
-      ) : (
-        <NavItem
-          item={data}
-          depth={depth}
-          open={open}
-          active={active}
-          ref={menuRef}
-          onClick={handleClickItem}
-          // onMouseEnter={handleOpen}
-          onMouseLeave={handleClose}
-        />
-      )}
+      <NavItem
+        item={data}
+        depth={depth}
+        open={open}
+        active={active}
+        ref={menuRef}
+        onClick={handleClickItem}
+        // onMouseEnter={handleOpen}
+        onMouseLeave={handleClose}
+      />
 
       {hasChildren && data.children !== undefined ? (
         <PaperStyle

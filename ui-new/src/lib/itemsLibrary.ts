@@ -59,7 +59,7 @@ const constructorArgs = (item: ItemRecord): ItemConstructorArgs => {
   return constructorArgs;
 };
 
-const fetchTents = async (): Promise<Item[]> => {
+export const fetchTents = async (): Promise<Item[]> => {
   const tentData = await airtableApi.selectAllTents();
 
   const tents: Tent[] = [];
@@ -105,7 +105,7 @@ const createClimateItem = (item: PlaceableItemRecord): PlaceableItem | null => {
   }
 };
 
-const fetchClimateItems = async (): Promise<Item[]> => {
+export const fetchClimateItems = async (): Promise<Item[]> => {
   const climateItemData = await airtableApi.selectAllClimateItems();
 
   const climateItems: PlaceableItem[] = [];
@@ -122,7 +122,7 @@ const fetchClimateItems = async (): Promise<Item[]> => {
   return climateItems;
 };
 
-const fetchMiscItems = async (): Promise<Item[]> => {
+export const fetchMiscItems = async (): Promise<Item[]> => {
   const miscItemData = await airtableApi.selectAllMiscItems();
 
   const miscItems: MiscItem[] = [];
@@ -149,7 +149,7 @@ const fetchMiscItems = async (): Promise<Item[]> => {
   return miscItems;
 };
 
-const fetchWaterItems = async (): Promise<Item[]> => {
+export const fetchWaterItems = async (): Promise<Item[]> => {
   const waterItemData = await airtableApi.selectAllWaterItems();
 
   const waterItems: WaterItem[] = [];
@@ -168,7 +168,7 @@ const fetchWaterItems = async (): Promise<Item[]> => {
   return waterItems;
 };
 
-const fetchPots = async (): Promise<Item[]> => {
+export const fetchPots = async (): Promise<Item[]> => {
   const potData = await airtableApi.selectAllPots();
 
   const pots: PotItem[] = [];
@@ -184,7 +184,7 @@ const fetchPots = async (): Promise<Item[]> => {
   return pots;
 };
 
-const fetchLights = async (): Promise<Item[]> => {
+export const fetchLights = async (): Promise<Item[]> => {
   const lightData = await airtableApi.selectAllLights();
 
   const lights: LightItem[] = [];
@@ -203,12 +203,12 @@ const fetchLights = async (): Promise<Item[]> => {
 const StaticItemsLibrary: IItemGroup[] = [];
 
 export const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
-  const potsPromise = await fetchPots();
-  const lightsPromise = await fetchLights();
-  const tentsPromise = await fetchTents();
-  const miscItemsPromise = await fetchMiscItems();
-  const waterItemsPromise = await fetchWaterItems();
-  const climateItemsPromise = await fetchClimateItems();
+  const potsPromise = fetchPots();
+  const lightsPromise = fetchLights();
+  const tentsPromise = fetchTents();
+  const miscItemsPromise = fetchMiscItems();
+  const waterItemsPromise = fetchWaterItems();
+  const climateItemsPromise = fetchClimateItems();
 
   const [pots, lights, tents, miscItems, waterItems, climateItems] = await Promise.all([
     potsPromise,
