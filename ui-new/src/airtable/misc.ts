@@ -6,13 +6,7 @@ export const selectAllMiscItems = async (): Promise<ItemRecord[]> => {
   try {
     const itemRecords = await airtableBase(airtableTables.misc.id)
       .select({
-        fields: [
-          'name',
-          'amazonProducts',
-          'recordId',
-          'linkedASINs',
-          'itemType',
-        ],
+        fields: ['name', 'amazonProducts', 'recordId', 'linkedASINs', 'itemType'],
       })
       .all();
 
@@ -31,12 +25,15 @@ export const selectAllMiscItems = async (): Promise<ItemRecord[]> => {
           'Attempted to fetch misc item records from Airtable, but one or more of the values was undefined.'
         );
         console.error(record);
+      } else if (
+        amazonProducts === undefined ||
+        amazonProducts.toString()?.split(',').length === 0
+      ) {
+        console.error('Fetched misc item with no amazon products. Skipping. ID: ' + recordId);
       } else {
         items.push({
           name: name.toString(),
-          amazonProducts: amazonProducts
-            ? amazonProducts.toString()?.split(',')
-            : [],
+          amazonProducts: amazonProducts ? amazonProducts.toString()?.split(',') : [],
           recordId: recordId.toString(),
           linkedASINs: linkedASINs ? linkedASINs?.toString()?.split(',') : [],
           itemType: itemType ? itemType.toString() : undefined,
