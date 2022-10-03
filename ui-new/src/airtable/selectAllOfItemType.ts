@@ -1,9 +1,7 @@
 import { airtableBase, defaultItemFields, itemFields } from './airtableBase';
 import { PlaceableItemRecord } from './Record';
 
-const selectAllOfItemType = async (
-  itemTypeId: string
-): Promise<PlaceableItemRecord[]> => {
+const selectAllOfItemType = async (itemTypeId: string): Promise<PlaceableItemRecord[]> => {
   const items: PlaceableItemRecord[] = [];
   try {
     const itemRecords = await airtableBase(itemTypeId)
@@ -39,6 +37,11 @@ const selectAllOfItemType = async (
             itemTypeId
         );
         console.error(record);
+      } else if (
+        amazonProducts === undefined ||
+        amazonProducts.toString()?.split(',').length === 0
+      ) {
+        console.error('Fetched Item with no amazonProducts. Skipping. ID: ' + itemTypeId);
       } else {
         items.push({
           name: name.toString(),
@@ -46,9 +49,7 @@ const selectAllOfItemType = async (
           length: parseInt(length.toString()),
           height: parseInt(height.toString()),
           description: description.toString(),
-          amazonProducts: amazonProducts
-            ? amazonProducts.toString()?.split(',')
-            : [],
+          amazonProducts: amazonProducts ? amazonProducts.toString()?.split(',') : [],
           recordId: recordId.toString(),
           linkedASINs: linkedASINs ? linkedASINs?.toString()?.split(',') : [],
           itemType: itemType ? itemType.toString() : undefined,
