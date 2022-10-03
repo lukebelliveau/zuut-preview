@@ -295,6 +295,8 @@ const ShoppingCartTable = () => {
 const getSelectedAmazonProductPrice = (selectedASIN: string, amazonProducts: AmazonProductMap) => {
   const selectedAmazonProduct = amazonProducts[selectedASIN];
 
+  if (!selectedAmazonProduct) return 'Price not available';
+
   if (selectedAmazonProduct.price) return `$${selectedAmazonProduct.price}`;
 
   return 'Price not available';

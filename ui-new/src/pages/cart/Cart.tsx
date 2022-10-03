@@ -18,7 +18,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 export default function About() {
   return (
-    <Page title="About us">
+    <Page title="ZUUT Cart">
       <RootStyle>
         <ShoppingCartTable />
       </RootStyle>
