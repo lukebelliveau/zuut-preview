@@ -27,6 +27,8 @@ import { WATER_ITEM_TYPE } from '../../lib/item/waterItem';
 import WaterProductTable from './productTables/WaterProductTable';
 import { CARBON_FILTER_ITEM_TYPE } from 'src/lib/item/carbonFilterItem';
 import CarbonFilterProductTable from './productTables/CarbonFilterProductTable';
+import { Box, Button, IconButton, Typography } from '@mui/material';
+import Iconify from '../Iconify';
 
 interface ProductTableProps {
   item: CartItem;
@@ -109,18 +111,25 @@ const ProductModal = ({
 
   return (
     <Modal isOpen={open} onRequestClose={closeModal} contentLabel="Example Modal">
-      <div className="reset-playground-modal">
-        <p>Item type: {item.itemType}</p>
-        <p>index: {index}</p>
+      <Box>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <IconButton sx={{ visibility: 'hidden', width: 0, height: 0 }}>
+            <Iconify icon={'eva:close-fill'} width={0} height={0} />
+          </IconButton>
+          <Typography variant="h3">Select Product</Typography>
+          <IconButton onClick={closeModal}>
+            <Iconify icon={'eva:close-fill'} width={20} height={20} />
+          </IconButton>
+        </div>
         <ProductTable
           item={item}
           amazonProducts={amazonProducts}
           changeSelectedProductASIN={changeSelectedProductASIN}
         />
         <div>
-          <button onClick={closeModal}>Close</button>
+          <Button onClick={closeModal}>Close</Button>
         </div>
-      </div>
+      </Box>
     </Modal>
   );
 };

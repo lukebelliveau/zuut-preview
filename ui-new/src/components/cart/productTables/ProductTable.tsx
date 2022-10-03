@@ -1,4 +1,12 @@
-import { TableContainer, TableHead, TableRow, TableCell, TableBody, Table } from '@mui/material';
+import {
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Table,
+  Button,
+} from '@mui/material';
 import { AmazonProductMap, AmazonProductRecord } from '../../../airtable/amazonProducts';
 import { CartItem } from '../ShoppingCartTable';
 
@@ -38,7 +46,7 @@ const ProductTable = ({
                 })}
                 <TableCell>
                   {product.ASIN === item.selectedASIN ? (
-                    <button
+                    <Button
                       style={{
                         width: 50,
                         height: 50,
@@ -49,9 +57,9 @@ const ProductTable = ({
                       disabled
                     >
                       Product Selected
-                    </button>
+                    </Button>
                   ) : (
-                    <button
+                    <Button
                       style={{
                         width: 50,
                         height: 50,
@@ -63,7 +71,7 @@ const ProductTable = ({
                       }}
                     >
                       Select Product
-                    </button>
+                    </Button>
                   )}
                 </TableCell>
               </TableRow>
