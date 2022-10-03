@@ -14,6 +14,8 @@ const queryKeys = {
   miscItems: 'miscItems',
   waterItems: 'waterItems',
   climateItems: 'climateItems',
+
+  totalCartPrice: 'totalCartPrice',
 };
 
 export default queryKeys;

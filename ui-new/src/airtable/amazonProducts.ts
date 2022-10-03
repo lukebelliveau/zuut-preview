@@ -44,7 +44,7 @@ export interface AmazonProductRecord {
 }
 
 export const useQueryAmazonProductsByASIN = (ASINs: string[], itemName: string) => {
-  return useQuery([queryKeys.amazonProductsByASIN, itemName], () => {
+  return useQuery([queryKeys.amazonProductsByASIN, [itemName]], () => {
     return selectAmazonProductRecordsByASIN(ASINs);
   });
 };

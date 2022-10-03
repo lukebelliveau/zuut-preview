@@ -1,8 +1,9 @@
 import {
-  Card,
-  CardHeader,
+  Button,
   Container,
-  Stack,
+  Link,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -12,15 +13,17 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useQueryCartItems } from '../../airtable/airtableApi';
-import { useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
+import { AmazonProductMap, useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
 import { potRecordComparator } from '../../airtable/pots';
 import { AirtableRecord, isPlaceableItemRecord } from '../../airtable/Record';
 import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import useQueryParams, { paramKeys } from '../../lib/url';
-import Scrollbar from '../Scrollbar';
-import { TableHeadCustom } from '../table';
+
 import ProductModal from './ProductModal';
-// import ProductModal from './ProductModal';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import queryKeys from 'src/lib/queryKeys';
+import { useQueryClient } from '@tanstack/react-query';
+import { grey } from '@mui/material/colors';
 
 interface ShoppingCartUrlItem {
   quantity: number;
@@ -32,10 +35,10 @@ const createAmazonAddToShoppingCartUrl = (items: CartItem[]) => {
   let shoppingCartItems: { [itemName: string]: ShoppingCartUrlItem } = {};
 
   items.forEach((item) => {
-    if (shoppingCartItems[item.name]) {
-      shoppingCartItems[item.name].quantity += 1;
+    if (shoppingCartItems[item.selectedASIN]) {
+      shoppingCartItems[item.selectedASIN].quantity += 1;
     } else {
-      shoppingCartItems[item.name] = {
+      shoppingCartItems[item.selectedASIN] = {
         quantity: 1,
         ASIN: item.selectedASIN,
       };
@@ -60,11 +63,11 @@ const constructAmazonLinkWithASIN = (asin: string) => {
 };
 
 const renderDimensionsIfPlaceableItem = (item: AirtableRecord) => {
-  if ('width' in item && 'height' in item && 'length' in item && 'description' in item) {
+  if ('width' in item && 'length' in item && 'description' in item) {
     return `${item.length} in * ${item.width} in`;
   }
 
-  return '';
+  return 'N/A';
 };
 
 export interface CartItem {
@@ -110,8 +113,83 @@ const cartItemsComparator = (a: CartItem, b: CartItem) => {
   return a.itemType.localeCompare(b.itemType);
 };
 
+const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
+  const selectedASINs = cartItems.map((item) => item.selectedASIN);
+
+  const asinCount: { [key: string]: number } = {};
+  selectedASINs.forEach((ASIN) => {
+    if (asinCount[ASIN]) {
+      asinCount[ASIN] += 1;
+    } else {
+      asinCount[ASIN] = 1;
+    }
+  });
+
+  const {
+    isLoading,
+    error,
+    data: amazonProducts,
+  } = useQueryAmazonProductsByASIN(selectedASINs, queryKeys.totalCartPrice);
+
+  let PriceElement = (
+    <TableRow>
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableHead>
+        <TableRow sx={{ backgroundColor: grey[100] }}>
+          <TableCell>Loading price...</TableCell>
+        </TableRow>
+      </TableHead>
+    </TableRow>
+  );
+
+  if (
+    isLoading ||
+    error ||
+    amazonProducts === undefined ||
+    Object.keys(amazonProducts).length === 0
+  ) {
+    if (amazonProducts !== undefined && Object.keys(amazonProducts).length === 0) {
+      return PriceElement;
+    }
+    if (isLoading) return PriceElement;
+    if (error) return <div>Error!</div>;
+    if (amazonProducts === undefined) return PriceElement;
+  }
+
+  let totalPrice = 0;
+
+  // multiple each amazonProduct.price by its asinCount
+  Object.keys(amazonProducts).forEach((amazonProductASIN) => {
+    const itemPrice = parseFloat(amazonProducts[amazonProductASIN].price);
+    const itemCount = asinCount[amazonProductASIN];
+
+    totalPrice += itemPrice * itemCount;
+  });
+
+  return (
+    <TableRow>
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableHead>
+        <TableRow sx={{ backgroundColor: grey[100] }}>
+          <TableCell sx={{ fontWeight: 'bold' }}>Total Price</TableCell>
+          <TableCell sx={{ fontWeight: 'bold' }}>${totalPrice}</TableCell>
+        </TableRow>
+      </TableHead>
+    </TableRow>
+  );
+};
+
 const ShoppingCartTable = () => {
   const query = useQueryParams();
+  const queryClient = useQueryClient();
   const [indexOfProductModal, setIndexOfProductModal] = useState<null | number>(null);
 
   const recordIdString = query.get(paramKeys.recordIds);
@@ -122,10 +200,17 @@ const ShoppingCartTable = () => {
   const { isLoading, error, data: cartRecords } = useQueryCartItems({ recordIds });
 
   const [cartItems, setCartItems] = useState<CartItem[]>(createCartItems(cartRecords));
+  const [shoppingCartUrl, setShoppingCartUrl] = useState<string>(
+    createAmazonAddToShoppingCartUrl(cartItems)
+  );
 
   useEffect(() => {
     setCartItems(createCartItems(cartRecords));
   }, [cartRecords]);
+
+  useEffect(() => {
+    setShoppingCartUrl(createAmazonAddToShoppingCartUrl(cartItems));
+  }, [cartItems]);
 
   if (isLoading || error || cartRecords === undefined) {
     if (isLoading) return <div>Loading cart...</div>;
@@ -133,9 +218,12 @@ const ShoppingCartTable = () => {
     if (cartRecords === undefined) return <div>Loading cart...</div>;
   }
 
-  const shoppingCartUrl = createAmazonAddToShoppingCartUrl(cartItems);
+  // const shoppingCartUrl = createAmazonAddToShoppingCartUrl(cartItems);
 
   const changeSelectedASIN = (ASIN: string, index: number) => {
+    // invalidate price query so price is re-computed
+    queryClient.invalidateQueries([queryKeys.totalCartPrice]);
+
     let newCartItems = [...cartItems];
     newCartItems[index].selectedASIN = ASIN;
     setCartItems(newCartItems);
@@ -157,26 +245,37 @@ const ShoppingCartTable = () => {
                 <TableCell>Selected Amazon Product</TableCell>
                 <TableCell>Dimensions (length x width)</TableCell>
                 <TableCell>Amazon Link</TableCell>
+                <TableCell>Price</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {sortedCartItems.map((item, index) => (
                 <ItemRow
                   item={item}
-                  key={item.recordId}
+                  key={`${item.recordId}=${index}`}
                   index={index}
                   changeSelectedASIN={changeSelectedASIN}
                   setIndexOfProductModal={setIndexOfProductModal}
                 />
               ))}
+              {/* <TotalPriceRow cartItems={cartItems} /> */}
             </TableBody>
           </Table>
         </TableContainer>
-        <a href={shoppingCartUrl} target="_blank" rel="noopener noreferrer">
-          <button tabIndex={0} aria-label="Open Shopping Cart" className="shopping-cart-button">
-            Open Shopping Cart
-          </button>
-        </a>
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '12px' }}
+        >
+          <Button
+            variant="contained"
+            component={Link}
+            href={shoppingCartUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Shopping Cart"
+          >
+            Open Amazon Shopping Cart
+          </Button>
+        </div>
       </Container>
       {indexOfProductModal !== null ? (
         <ProductModal
@@ -191,6 +290,14 @@ const ShoppingCartTable = () => {
       ) : null}
     </>
   );
+};
+
+const getSelectedAmazonProductPrice = (selectedASIN: string, amazonProducts: AmazonProductMap) => {
+  const selectedAmazonProduct = amazonProducts[selectedASIN];
+
+  if (selectedAmazonProduct.price) return `$${selectedAmazonProduct.price}`;
+
+  return 'Price not available';
 };
 
 const ItemRow = ({
@@ -225,41 +332,48 @@ const ItemRow = ({
   }
 
   return (
-    <TableRow key={item.recordId} style={{}}>
+    <TableRow key={`${item.recordId}=${index}`}>
       <TableCell>
-        <button
-          style={{ width: 50, height: 50, padding: 0, fontSize: 10 }}
+        <Button
+          // style={{ width: 50, height: 50, padding: 0, fontSize: 10 }}
           onClick={() => setIndexOfProductModal(index)}
         >
           Select Product
-        </button>
+        </Button>
       </TableCell>
       <TableCell component="th" scope="row">
         {item.name}
       </TableCell>
       <TableCell>
-        <select
+        <Select
+          sx={{ maxWidth: '200px' }}
           value={item.selectedASIN}
           onChange={(event) => changeSelectedASIN(event.target.value, index)}
         >
           {Object.values(amazonProducts).map((amazonProduct, index) => {
             return (
-              <option key={`${amazonProduct.ASIN}-${index}`} value={amazonProduct.ASIN}>
+              <MenuItem key={`${amazonProduct.ASIN}-${index}`} value={amazonProduct.ASIN}>
                 {amazonProduct.productName}
-              </option>
+              </MenuItem>
             );
           })}
-        </select>
+        </Select>
       </TableCell>
       <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell>
       <TableCell>
-        <a
-          href={constructAmazonLinkWithASIN(item.selectedASIN)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View on Amazon
-        </a>
+        <div style={{ display: 'flex', alignItems: 'end' }}>
+          <OpenInNewIcon />
+          <Link
+            href={constructAmazonLinkWithASIN(item.selectedASIN)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on Amazon
+          </Link>
+        </div>
+      </TableCell>
+      <TableCell align="right">
+        {getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts)}
       </TableCell>
     </TableRow>
   );
