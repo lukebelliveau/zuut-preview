@@ -2,7 +2,7 @@ import { AnimatePresence, m } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Stack, Divider, Typography, IconButton } from '@mui/material';
+import { Stack, Divider, Typography, IconButton, Backdrop } from '@mui/material';
 // hooks
 import useSettings from '../../../hooks/useSettings';
 // utils
@@ -120,11 +120,11 @@ export default function ControlPanelDrawer() {
 
   return (
     <>
-      {/* <Backdrop
+      <Backdrop
         open={open}
         onClick={handleClose}
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      /> */}
+      />
 
       {
         <AnimatedToggleButton
