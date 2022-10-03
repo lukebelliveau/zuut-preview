@@ -2,8 +2,7 @@ import {
   Button,
   Container,
   Link,
-  MenuItem,
-  Select,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -187,6 +186,17 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
   );
 };
 
+const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
+  '&:first-of-type': {
+    boxShadow: 'none',
+    borderRadius: '0px',
+  },
+  '&:last-of-type': {
+    boxShadow: 'none',
+    borderRadius: '0px',
+  },
+}));
+
 const ShoppingCartTable = () => {
   const query = useQueryParams();
   const queryClient = useQueryClient();
@@ -238,14 +248,16 @@ const ShoppingCartTable = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell />
-                <TableCell component="th" scope="column">
+                <StyledTableHeadCell />
+                <StyledTableHeadCell component="th" scope="column">
                   Generic Item Name
-                </TableCell>
-                <TableCell>Selected Amazon Product</TableCell>
+                </StyledTableHeadCell>
+                <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
                 {/* <TableCell>Dimensions (length x width)</TableCell> */}
-                <TableCell>Amazon Link</TableCell>
-                <TableCell>Price</TableCell>
+                <StyledTableHeadCell>Amazon Link</StyledTableHeadCell>
+                <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
+                  Price
+                </StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -302,6 +314,16 @@ const getSelectedAmazonProductPrice = (selectedASIN: string, amazonProducts: Ama
   return 'Price not available';
 };
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(even)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
 const ItemRow = ({
   item,
   changeSelectedASIN,
@@ -334,7 +356,7 @@ const ItemRow = ({
   }
 
   return (
-    <TableRow key={`${item.recordId}=${index}`}>
+    <StyledTableRow key={`${item.recordId}=${index}`}>
       <TableCell>
         <Button
           // style={{ width: 50, height: 50, padding: 0, fontSize: 10 }}
@@ -346,7 +368,8 @@ const ItemRow = ({
       <TableCell component="th" scope="row">
         {item.name}
       </TableCell>
-      <TableCell>
+      <TableCell>{amazonProducts[item.selectedASIN].productName}</TableCell>
+      {/* <TableCell>
         <Select
           sx={{ maxWidth: '200px' }}
           value={item.selectedASIN}
@@ -360,7 +383,7 @@ const ItemRow = ({
             );
           })}
         </Select>
-      </TableCell>
+      </TableCell> */}
       {/* <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell> */}
       <TableCell>
         <div style={{ display: 'flex', alignItems: 'end' }}>
@@ -377,7 +400,7 @@ const ItemRow = ({
       <TableCell align="right">
         {getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts)}
       </TableCell>
-    </TableRow>
+    </StyledTableRow>
   );
 };
 
