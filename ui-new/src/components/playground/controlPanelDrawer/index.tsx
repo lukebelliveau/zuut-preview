@@ -43,7 +43,7 @@ const RootStyle = styled(m.div)(({ theme }) => ({
   flexDirection: 'column',
   margin: theme.spacing(2),
   paddingBottom: theme.spacing(3),
-  zIndex: theme.zIndex.drawer + 3,
+  zIndex: theme.zIndex.drawer + 4,
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   boxShadow: `-24px 12px 32px -4px ${alpha(
     theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black,

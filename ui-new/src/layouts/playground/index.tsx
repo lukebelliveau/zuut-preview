@@ -106,8 +106,8 @@ export default function PlaygroundLayout() {
           onKeyDown={handleKeyDown}
         >
           <Outlet />
-          <InventoryDrawer />
           <ControlPanelDrawer />
+          <InventoryDrawer />
         </Box>
       </>
     );
