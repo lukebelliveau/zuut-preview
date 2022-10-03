@@ -141,75 +141,144 @@ export default function InventoryDrawer() {
   };
 
   return (
-    <>
-      {<AnimatedToggleButton open={open} onToggle={handleToggle} />}
+    <RootStyle {...varSidebar}>
+      <Stack>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ py: 2, pr: 1, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
+        >
+          <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
+            <SelectButtonIcon
+              sx={{
+                color: allItemsSelected ? 'default' : theme.palette.primary.main,
+              }}
+            />
+          </IconButton>
+          <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
+            Inventory
+          </Typography>
 
-      <AnimatePresence>
-        {open && (
-          <>
-            (
-            <RootStyle {...varSidebar}>
-              <Stack>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  sx={{ py: 2, pr: 1, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
-                >
-                  <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
-                    <SelectButtonIcon
-                      sx={{
-                        color: allItemsSelected ? 'default' : theme.palette.primary.main,
-                      }}
-                    />
-                  </IconButton>
-                  <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
-                    Inventory
-                  </Typography>
+          {/* <IconButton onClick={handleClose}>
+        <Iconify icon={'eva:close-fill'} width={20} height={20} />
+      </IconButton> */}
 
-                  <IconButton onClick={handleClose}>
-                    <Iconify icon={'eva:close-fill'} width={20} height={20} />
-                  </IconButton>
-                </Stack>
-                <Button
-                  sx={{ py: 2, pr: 1, pl: 2.5 }}
-                  component={RouterLink}
-                  to={shoppingCartUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  disabled={items.length < 1}
-                >
-                  Open Shopping Cart
-                </Button>
-              </Stack>
+          {/* hacky spacer to center Inventory title */}
+          <IconButton>
+            <DoneAllIcon sx={{ visibility: 'hidden' }} />
+          </IconButton>
+        </Stack>
+        <Button
+          sx={{ py: 2, pr: 1, pl: 2.5 }}
+          component={RouterLink}
+          to={shoppingCartUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          disabled={items.length < 1}
+        >
+          Open Shopping Cart
+        </Button>
+      </Stack>
 
-              <Divider sx={{ borderStyle: 'dashed' }} />
+      <Divider sx={{ borderStyle: 'dashed' }} />
 
-              <Scrollbar sx={{ flexGrow: 1 }}>
-                <List>
-                  {items
-                    .filter((item) => !isModifierItem(item) && !isWallItem(item))
-                    .map((item) => {
-                      return (
-                        <InventoryItem
-                          key={item.id}
-                          item={item}
-                          selectedIds={selectedIds}
-                          toggleItemSelected={toggleItemSelected}
-                          handleItemKeyDown={handleItemKeyDown}
-                          selectItemFromInventory={selectItemFromInventory}
-                        />
-                      );
-                    })}
-                </List>
-              </Scrollbar>
-            </RootStyle>
-            )
-          </>
-        )}
-      </AnimatePresence>
-    </>
+      <Scrollbar sx={{ flexGrow: 1 }}>
+        <List>
+          {items
+            .filter((item) => !isModifierItem(item) && !isWallItem(item))
+            .map((item) => {
+              return (
+                <InventoryItem
+                  key={item.id}
+                  item={item}
+                  selectedIds={selectedIds}
+                  toggleItemSelected={toggleItemSelected}
+                  handleItemKeyDown={handleItemKeyDown}
+                  selectItemFromInventory={selectItemFromInventory}
+                />
+              );
+            })}
+        </List>
+      </Scrollbar>
+    </RootStyle>
   );
+
+  // return (
+  //   <>
+  //     {/* {<AnimatedToggleButton open={open} onToggle={handleToggle} />} */}
+
+  //     <AnimatePresence>
+  //       {true && (
+  //         <>
+  //           (
+  //           <RootStyle {...varSidebar}>
+  //             <Stack>
+  //               <Stack
+  //                 direction="row"
+  //                 alignItems="center"
+  //                 justifyContent="space-between"
+  //                 sx={{ py: 2, pr: 1, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
+  //               >
+  //                 <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
+  //                   <SelectButtonIcon
+  //                     sx={{
+  //                       color: allItemsSelected ? 'default' : theme.palette.primary.main,
+  //                     }}
+  //                   />
+  //                 </IconButton>
+  //                 <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
+  //                   Inventory
+  //                 </Typography>
+
+  //                 {/* <IconButton onClick={handleClose}>
+  //                   <Iconify icon={'eva:close-fill'} width={20} height={20} />
+  //                 </IconButton> */}
+
+  //                 {/* hacky spacer to center Inventory title */}
+  //                 <IconButton>
+  //                   <DoneAllIcon sx={{ visibility: 'hidden' }} />
+  //                 </IconButton>
+  //               </Stack>
+  //               <Button
+  //                 sx={{ py: 2, pr: 1, pl: 2.5 }}
+  //                 component={RouterLink}
+  //                 to={shoppingCartUrl}
+  //                 target="_blank"
+  //                 rel="noopener noreferrer"
+  //                 disabled={items.length < 1}
+  //               >
+  //                 Open Shopping Cart
+  //               </Button>
+  //             </Stack>
+
+  //             <Divider sx={{ borderStyle: 'dashed' }} />
+
+  //             <Scrollbar sx={{ flexGrow: 1 }}>
+  //               <List>
+  //                 {items
+  //                   .filter((item) => !isModifierItem(item) && !isWallItem(item))
+  //                   .map((item) => {
+  //                     return (
+  //                       <InventoryItem
+  //                         key={item.id}
+  //                         item={item}
+  //                         selectedIds={selectedIds}
+  //                         toggleItemSelected={toggleItemSelected}
+  //                         handleItemKeyDown={handleItemKeyDown}
+  //                         selectItemFromInventory={selectItemFromInventory}
+  //                       />
+  //                     );
+  //                   })}
+  //               </List>
+  //             </Scrollbar>
+  //           </RootStyle>
+  //           )
+  //         </>
+  //       )}
+  //     </AnimatePresence>
+  //   </>
+  // );
 }
 
 const InventoryItem = ({
