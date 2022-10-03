@@ -56,13 +56,6 @@ const ToggleButton = ({
   onToggle: VoidFunction;
   item: IItem;
 }) => {
-  const theme = useTheme();
-  if (!isPlaceableItem(item)) {
-    return null;
-  }
-
-  const hoverColor = open ? theme.palette.secondary.main : theme.palette.primary.main;
-
   return (
     <RootStyle
       initial={{ opacity: 0, scale: 0.5 }}
@@ -72,7 +65,9 @@ const ToggleButton = ({
     >
       {notDefault && !open && <DotStyle />}
 
-      <Button onClick={onToggle}>Open {item.name} Properties</Button>
+      <Button onClick={onToggle} sx={{ width: '100%' }}>
+        Open {item.name} Properties
+      </Button>
     </RootStyle>
   );
 };

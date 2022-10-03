@@ -42,9 +42,6 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
 
 export default function ControlPanelTransform({ item }: { item: IItem }) {
   const dispatch = useDispatch();
-  if (!isPlaceableItem(item)) {
-    return null;
-  }
 
   function deleteItem() {
     dispatch(removeItem(item.id));
@@ -69,7 +66,7 @@ export default function ControlPanelTransform({ item }: { item: IItem }) {
       >
         <DeleteIcon />
       </IconButton>
-      {isWallItem(item) ? null : (
+      {isWallItem(item) || !isPlaceableItem(item) ? null : (
         <>
           <IconButton
             onClick={rotateItemCcw}
