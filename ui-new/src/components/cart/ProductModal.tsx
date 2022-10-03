@@ -25,6 +25,8 @@ import { MISC_ITEM_TYPE } from '../../lib/item/miscItem';
 import MiscProductTable from './productTables/MiscProductTable';
 import { WATER_ITEM_TYPE } from '../../lib/item/waterItem';
 import WaterProductTable from './productTables/WaterProductTable';
+import { CARBON_FILTER_ITEM_TYPE } from 'src/lib/item/carbonFilterItem';
+import CarbonFilterProductTable from './productTables/CarbonFilterProductTable';
 
 interface ProductTableProps {
   item: CartItem;
@@ -99,6 +101,9 @@ const ProductModal = ({
       break;
     case WATER_ITEM_TYPE:
       ProductTable = WaterProductTable;
+      break;
+    case CARBON_FILTER_ITEM_TYPE:
+      ProductTable = CarbonFilterProductTable;
       break;
   }
 
