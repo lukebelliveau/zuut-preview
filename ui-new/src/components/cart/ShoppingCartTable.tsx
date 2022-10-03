@@ -19,6 +19,7 @@ import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import useQueryParams, { paramKeys } from '../../lib/url';
 import Scrollbar from '../Scrollbar';
 import { TableHeadCustom } from '../table';
+import ProductModal from './ProductModal';
 // import ProductModal from './ProductModal';
 
 interface ShoppingCartUrlItem {
@@ -142,55 +143,42 @@ const ShoppingCartTable = () => {
 
   const sortedCartItems = cartItems.sort(cartItemsComparator);
 
-  // USE COLLAPSIBLE TABLE FOR THIS
-  return (
-    <Container>
-      <Stack spacing={3}>
-        <Card>
-          <CardHeader title="Shopping Cart">
-            <Scrollbar>
-              <TableContainer sx={{ minWidth: 800, mt: 3 }}>
-                <Table></Table>
-              </TableContainer>
-            </Scrollbar>
-          </CardHeader>
-        </Card>
-      </Stack>
-    </Container>
-  );
-
   return (
     <>
-      <TableContainer>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell>Generic Item Name</TableCell>
-              <TableCell>Selected Amazon Product</TableCell>
-              <TableCell>Dimensions (length x width)</TableCell>
-              <TableCell>Amazon Link</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {sortedCartItems.map((item, index) => (
-              <ItemRow
-                item={item}
-                key={item.recordId}
-                index={index}
-                changeSelectedASIN={changeSelectedASIN}
-                setIndexOfProductModal={setIndexOfProductModal}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <a href={shoppingCartUrl} target="_blank" rel="noopener noreferrer">
-        <button tabIndex={0} aria-label="Open Shopping Cart" className="shopping-cart-button">
-          Open Shopping Cart
-        </button>
-      </a>
-      {/* {indexOfProductModal !== null ? (
+      <Container>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell component="th" scope="column">
+                  Generic Item Name
+                </TableCell>
+                <TableCell>Selected Amazon Product</TableCell>
+                <TableCell>Dimensions (length x width)</TableCell>
+                <TableCell>Amazon Link</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sortedCartItems.map((item, index) => (
+                <ItemRow
+                  item={item}
+                  key={item.recordId}
+                  index={index}
+                  changeSelectedASIN={changeSelectedASIN}
+                  setIndexOfProductModal={setIndexOfProductModal}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <a href={shoppingCartUrl} target="_blank" rel="noopener noreferrer">
+          <button tabIndex={0} aria-label="Open Shopping Cart" className="shopping-cart-button">
+            Open Shopping Cart
+          </button>
+        </a>
+      </Container>
+      {indexOfProductModal !== null ? (
         <ProductModal
           open={indexOfProductModal !== null}
           closeModal={() => {
@@ -200,7 +188,7 @@ const ShoppingCartTable = () => {
           index={indexOfProductModal}
           changeSelectedASIN={changeSelectedASIN}
         />
-      ) : null} */}
+      ) : null}
     </>
   );
 };
@@ -221,9 +209,19 @@ const ItemRow = ({
   const { isLoading, error, data: amazonProducts } = useQueryAmazonProductsByASIN(ASINs, item.name);
 
   if (isLoading || error || amazonProducts === undefined) {
-    if (isLoading) return <div>Loading products...</div>;
+    if (isLoading)
+      return (
+        <TableRow>
+          <TableCell>Loading products...</TableCell>
+        </TableRow>
+      );
     if (error) return <div>Error!</div>;
-    if (amazonProducts === undefined) return <div>Loading products...</div>;
+    if (amazonProducts === undefined)
+      return (
+        <TableRow>
+          <TableCell>Loading products...</TableCell>
+        </TableRow>
+      );
   }
 
   return (

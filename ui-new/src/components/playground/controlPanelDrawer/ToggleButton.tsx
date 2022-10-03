@@ -14,7 +14,7 @@ import { IItem } from 'src/lib/item';
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
   left: 20,
-  bottom: 80,
+  bottom: 20,
   position: 'fixed',
   marginTop: theme.spacing(-3),
   padding: theme.spacing(0.5),
