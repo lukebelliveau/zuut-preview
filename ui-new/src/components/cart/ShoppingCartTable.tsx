@@ -136,7 +136,7 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
       <TableCell />
       <TableCell />
       <TableCell />
-      <TableCell />
+      {/* <TableCell /> */}
       <TableCell />
       <TableHead>
         <TableRow sx={{ backgroundColor: grey[100] }}>
@@ -175,7 +175,7 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
       <TableCell />
       <TableCell />
       <TableCell />
-      <TableCell />
+      {/* <TableCell /> */}
       <TableCell />
       <TableHead>
         <TableRow sx={{ backgroundColor: grey[100] }}>
@@ -243,7 +243,7 @@ const ShoppingCartTable = () => {
                   Generic Item Name
                 </TableCell>
                 <TableCell>Selected Amazon Product</TableCell>
-                <TableCell>Dimensions (length x width)</TableCell>
+                {/* <TableCell>Dimensions (length x width)</TableCell> */}
                 <TableCell>Amazon Link</TableCell>
                 <TableCell>Price</TableCell>
               </TableRow>
@@ -359,7 +359,7 @@ const ItemRow = ({
           })}
         </Select>
       </TableCell>
-      <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell>
+      {/* <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell> */}
       <TableCell>
         <div style={{ display: 'flex', alignItems: 'end' }}>
           <OpenInNewIcon />
