@@ -386,7 +386,7 @@ const ItemRow = ({
       </TableCell> */}
       {/* <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell> */}
       <TableCell>
-        <div style={{ display: 'flex', alignItems: 'end' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <OpenInNewIcon />
           <Link
             href={constructAmazonLinkWithASIN(item.selectedASIN)}
