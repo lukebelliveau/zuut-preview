@@ -89,7 +89,7 @@ export default function HomeHero() {
                 ZUUT&nbsp;
               </Typography>
               <Typography variant="h3" sx={{ color: 'common.white' }}>
-                Cannabis Grow Playground
+                Grow Playground
               </Typography>
             </m.div>
 
