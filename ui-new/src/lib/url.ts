@@ -15,11 +15,11 @@ export const paramKeys = {
   shared: 'shared',
 };
 
-export const shoppingCartUrlWithRecordIds = (items: IItem[]) => {
+export const shoppingCartUrlWithRecordIds = (items: IItem[], selectedIds: string[]) => {
   const recordIds: string[] = [];
 
   items.forEach((item) => {
-    if (item.recordId) recordIds.push(item.recordId);
+    if (item.recordId && selectedIds.includes(item.id)) recordIds.push(item.recordId);
   });
 
   const serializedRecordIds = JSON.stringify(recordIds);

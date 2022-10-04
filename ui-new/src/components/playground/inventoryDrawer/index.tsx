@@ -48,11 +48,13 @@ import Select from 'src/theme/overrides/Select';
 import { useTheme } from '@mui/system';
 import { isWallItem } from 'src/lib/item/wallItem';
 import { isModifierItem } from 'src/lib/item/modifierItem';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import { removeItems } from 'src/redux/features/items/itemsSlice';
 
 // ----------------------------------------------------------------------
 
 const INVENTORY_TOP = 35;
-const INVENTORY_HEADER_HEIGHT = 60;
+export const INVENTORY_HEADER_HEIGHT = 60;
 export const INVENTORY_HEADER_BOTTOM = INVENTORY_TOP + INVENTORY_HEADER_HEIGHT;
 
 const RootStyle = styled(m.div)(({ theme }) => ({
@@ -79,6 +81,13 @@ const RootStyle = styled(m.div)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+const HackyHeaderSpacer = () => {
+  return (
+    <IconButton sx={{ backgroundColor: 'transparent', visibility: 'hidden' }}>
+      <DoneAllIcon style={{ backgroundColor: 'transparent', visibility: 'hidden' }} />
+    </IconButton>
+  );
+};
 
 export default function InventoryDrawer() {
   const [open, setOpen] = useState(true);
@@ -127,7 +136,7 @@ export default function InventoryDrawer() {
     };
   }
 
-  const shoppingCartUrl = shoppingCartUrlWithRecordIds(items);
+  const shoppingCartUrl = shoppingCartUrlWithRecordIds(items, selectedIds);
 
   const varSidebar = varFade({
     distance: NAVBAR.BASE_WIDTH,
@@ -141,6 +150,13 @@ export default function InventoryDrawer() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const deleteSelectedIds = () => {
+    const selectedItemIds = store.getState().interactions.selected;
+
+    store.dispatch(removeItems(selectedItemIds));
+    store.dispatch(unselectAll());
   };
 
   return (
@@ -163,24 +179,39 @@ export default function InventoryDrawer() {
             Inventory
           </Typography>
 
-          {/* <IconButton onClick={handleClose}>
-        <Iconify icon={'eva:close-fill'} width={20} height={20} />
-      </IconButton> */}
-
-          {/* hacky spacer to center Inventory title */}
-          <IconButton>
-            <DoneAllIcon sx={{ visibility: 'hidden' }} />
-          </IconButton>
+          <HackyHeaderSpacer />
+        </Stack>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ py: 2, height: INVENTORY_HEADER_HEIGHT }}
+        >
+          <Button
+            sx={{ py: 2, pr: 2.5, pl: 2.5, width: '100%' }}
+            component={RouterLink}
+            to={shoppingCartUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            disabled={items.length < 1}
+          >
+            Open Cart {selectedIds.length > 0 && `(${selectedIds.length})`}
+          </Button>
         </Stack>
         <Button
-          sx={{ py: 2, pr: 1, pl: 2.5 }}
-          component={RouterLink}
-          to={shoppingCartUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          disabled={items.length < 1}
+          color="error"
+          sx={{
+            py: 2,
+            pr: 2.5,
+            pl: 2.5,
+            width: '100%',
+          }}
+          disabled={selectedIds.length === 0}
+          onClick={deleteSelectedIds}
         >
-          Open Shopping Cart
+          Delete{' '}
+          {selectedIds.length > 0 &&
+            `${selectedIds.length} item${selectedIds.length > 1 ? 's' : ''}`}
         </Button>
       </Stack>
 
