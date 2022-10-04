@@ -12,7 +12,11 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useQueryCartItems } from '../../airtable/airtableApi';
-import { AmazonProductMap, useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
+import {
+  AmazonProductMap,
+  useQueryAmazonProductsByASIN,
+  useQueryAmazonProductsByCartItem,
+} from '../../airtable/amazonProducts';
 import { potRecordComparator } from '../../airtable/pots';
 import { AirtableRecord, isPlaceableItemRecord } from '../../airtable/Record';
 import { POT_ITEM_TYPE } from '../../lib/item/potItem';
@@ -113,6 +117,7 @@ const cartItemsComparator = (a: CartItem, b: CartItem) => {
 };
 
 const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
+  const { isLoading, error, data: allAmazonProducts } = useQueryAmazonProductsByCartItem(cartItems);
   const selectedASINs = cartItems.map((item) => item.selectedASIN);
 
   const asinCount: { [key: string]: number } = {};
@@ -123,19 +128,11 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
       asinCount[ASIN] = 1;
     }
   });
-
-  const {
-    isLoading,
-    error,
-    data: amazonProducts,
-  } = useQueryAmazonProductsByASIN(selectedASINs, queryKeys.totalCartPrice);
-
   let PriceElement = (
     <TableRow>
       <TableCell />
       <TableCell />
       <TableCell />
-      {/* <TableCell /> */}
       <TableCell />
       <TableHead>
         <TableRow sx={{ backgroundColor: grey[100] }}>
@@ -148,25 +145,25 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
   if (
     isLoading ||
     error ||
-    amazonProducts === undefined ||
-    Object.keys(amazonProducts).length === 0
+    allAmazonProducts === undefined ||
+    Object.keys(allAmazonProducts).length === 0
   ) {
-    if (amazonProducts !== undefined && Object.keys(amazonProducts).length === 0) {
+    if (allAmazonProducts !== undefined && Object.keys(allAmazonProducts).length === 0) {
       return PriceElement;
     }
     if (isLoading) return PriceElement;
     if (error) return <div>Error!</div>;
-    if (amazonProducts === undefined) return PriceElement;
+    if (allAmazonProducts === undefined) return PriceElement;
   }
 
   let totalPrice = 0;
 
-  // multiple each amazonProduct.price by its asinCount
-  Object.keys(amazonProducts).forEach((amazonProductASIN) => {
-    const itemPrice = parseFloat(amazonProducts[amazonProductASIN].price);
-    const itemCount = asinCount[amazonProductASIN];
+  cartItems.forEach((item) => {
+    const { selectedASIN } = item;
+    const productPrice = parseFloat(allAmazonProducts[selectedASIN].price);
+    const productCount = asinCount[selectedASIN];
 
-    totalPrice += itemPrice * itemCount;
+    totalPrice += productPrice * productCount;
   });
 
   return (
@@ -174,12 +171,11 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
       <TableCell />
       <TableCell />
       <TableCell />
-      {/* <TableCell /> */}
       <TableCell />
       <TableHead>
         <TableRow sx={{ backgroundColor: grey[100] }}>
-          <TableCell sx={{ fontWeight: 'bold' }}>Total Price</TableCell>
-          <TableCell sx={{ fontWeight: 'bold' }}>${totalPrice}</TableCell>
+          <TableCell sx={{ fontWeight: 'bold' }}>Total Cost</TableCell>
+          <TableCell sx={{ fontWeight: 'bold' }}>${totalPrice.toFixed(2)}</TableCell>
         </TableRow>
       </TableHead>
     </TableRow>
@@ -253,7 +249,6 @@ const ShoppingCartTable = () => {
                   Generic Item Name
                 </StyledTableHeadCell>
                 <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
-                {/* <TableCell>Dimensions (length x width)</TableCell> */}
                 <StyledTableHeadCell>Amazon Link</StyledTableHeadCell>
                 <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
                   Price
@@ -270,7 +265,7 @@ const ShoppingCartTable = () => {
                   setIndexOfProductModal={setIndexOfProductModal}
                 />
               ))}
-              {/* <TotalPriceRow cartItems={cartItems} /> */}
+              <TotalPriceRow cartItems={cartItems} />
             </TableBody>
           </Table>
         </TableContainer>
@@ -369,22 +364,6 @@ const ItemRow = ({
         {item.name}
       </TableCell>
       <TableCell>{amazonProducts[item.selectedASIN].productName}</TableCell>
-      {/* <TableCell>
-        <Select
-          sx={{ maxWidth: '200px' }}
-          value={item.selectedASIN}
-          onChange={(event) => changeSelectedASIN(event.target.value, index)}
-        >
-          {Object.values(amazonProducts).map((amazonProduct, index) => {
-            return (
-              <MenuItem key={`${amazonProduct.ASIN}-${index}`} value={amazonProduct.ASIN}>
-                {amazonProduct.productName}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </TableCell> */}
-      {/* <TableCell>{renderDimensionsIfPlaceableItem(item)}</TableCell> */}
       <TableCell>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <OpenInNewIcon />

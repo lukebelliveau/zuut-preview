@@ -2,6 +2,7 @@ import { FieldSet, Records } from 'airtable';
 import { useQuery } from '@tanstack/react-query';
 import queryKeys from '../lib/queryKeys';
 import { airtableBase, airtableTables, amazonProductFields } from './airtableBase';
+import { CartItem } from 'src/components/cart/ShoppingCartTable';
 
 export interface AmazonProductMap {
   [ASIN: string]: AmazonProductRecord;
@@ -42,6 +43,14 @@ export interface AmazonProductRecord {
   rating: string;
   price: string;
 }
+
+export const useQueryAmazonProductsByCartItem = (cartItems: CartItem[]) => {
+  let allASINs = cartItems.map((item) => item.linkedASINs).flat();
+
+  return useQuery([allASINs], () => {
+    return selectAmazonProductRecordsByASIN(allASINs);
+  });
+};
 
 export const useQueryAmazonProductsByASIN = (ASINs: string[], itemName: string) => {
   return useQuery([queryKeys.amazonProductsByASIN, [itemName]], () => {
