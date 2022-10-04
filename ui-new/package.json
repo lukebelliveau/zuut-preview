@@ -83,6 +83,7 @@
     "redux-thunk-error-handler": "^1.1.4",
     "redux-undo": "^1.0.1",
     "rehype-raw": "^6.1.1",
+    "rison-node": "^2.1.1",
     "simplebar": "^5.3.8",
     "simplebar-react": "^2.4.1",
     "stylis": "^4.1.1",

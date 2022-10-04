@@ -7,11 +7,14 @@ import { addMany } from '../items/itemsSlice';
 import { create as createPlan } from '../plans/planSlice';
 import { createDemoPlan, resizePlayground, setPlan } from './playgroundSlice';
 import useQueryParams, { paramKeys } from 'src/lib/url';
+import { useLocation } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 export const useLoadDemoPlan = () => {
   const dispatch = useAppDispatch();
   const playground = useBuildPlayground();
   const query = useQueryParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const encodedState = query.get(paramKeys.shared);
   if (typeof encodedState === 'string') {
@@ -19,6 +22,9 @@ export const useLoadDemoPlan = () => {
 
     if (decodedState && decodedState.items && decodedState.plan) {
       loadSharedPlan(decodedState.items, decodedState.plan, dispatch);
+      searchParams.delete(paramKeys.shared);
+      setSearchParams(searchParams);
+
       return;
     }
   }
