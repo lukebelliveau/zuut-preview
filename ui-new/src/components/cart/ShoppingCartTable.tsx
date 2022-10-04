@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useQueryCartItems } from '../../airtable/airtableApi';
@@ -129,7 +130,7 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
     }
   });
   let PriceElement = (
-    <TableRow>
+    <StyledTableRow>
       <TableCell />
       <TableCell />
       <TableCell />
@@ -139,7 +140,7 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
           <TableCell>Loading price...</TableCell>
         </TableRow>
       </TableHead>
-    </TableRow>
+    </StyledTableRow>
   );
 
   if (
@@ -167,18 +168,21 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
   });
 
   return (
-    <TableRow>
+    <StyledTableRow>
       <TableCell />
       <TableCell />
       <TableCell />
-      <TableCell />
-      <TableHead>
-        <TableRow sx={{ backgroundColor: grey[100] }}>
-          <TableCell sx={{ fontWeight: 'bold' }}>Total Cost</TableCell>
-          <TableCell sx={{ fontWeight: 'bold' }}>${totalPrice.toFixed(2)}</TableCell>
-        </TableRow>
-      </TableHead>
-    </TableRow>
+      <TableCell
+        sx={{
+          fontWeight: 'bold',
+        }}
+      >
+        Total Cost
+      </TableCell>
+      <TableCell sx={{ fontWeight: 'bold' }} align="right">
+        ${totalPrice.toFixed(2)}
+      </TableCell>
+    </StyledTableRow>
   );
 };
 
@@ -272,16 +276,23 @@ const ShoppingCartTable = () => {
         <div
           style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '12px' }}
         >
-          <Button
-            variant="contained"
-            component={Link}
-            href={shoppingCartUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Shopping Cart"
-          >
-            Open Amazon Shopping Cart
-          </Button>
+          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '25%' }}>
+            <Button
+              variant="contained"
+              component={Link}
+              href={shoppingCartUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Shopping Cart"
+            >
+              Open Amazon Shopping Cart
+            </Button>
+            <Typography sx={{ textAlign: 'right', fontSize: 12, marginTop: 4 }}>
+              ZUUT may receive compensation for purchases made at participating retailers linked on
+              this site. This compensation does not affect what products or prices are displayed, or
+              the order of prices listed.
+            </Typography>
+          </div>
         </div>
       </Container>
       {indexOfProductModal !== null ? (

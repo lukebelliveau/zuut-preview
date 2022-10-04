@@ -107,7 +107,7 @@ export default function SettingsDrawer() {
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
       />
 
-      {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />}
+      {/* {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />} */}
 
       <AnimatePresence>
         {open && (
