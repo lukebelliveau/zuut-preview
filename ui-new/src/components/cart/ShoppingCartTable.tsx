@@ -28,6 +28,8 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import queryKeys from 'src/lib/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 import { grey } from '@mui/material/colors';
+import { store } from 'src/redux/store';
+import TopLevelErrorBoundary from '../TopLevelErrorBoundary';
 
 interface ShoppingCartUrlItem {
   quantity: number;
@@ -242,77 +244,79 @@ const ShoppingCartTable = () => {
   const sortedCartItems = cartItems.sort(cartItemsComparator);
 
   return (
-    <>
-      <Container>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <StyledTableHeadCell />
-                <StyledTableHeadCell component="th" scope="column">
-                  Item Type
-                </StyledTableHeadCell>
-                <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
-                <StyledTableHeadCell>Amazon Link</StyledTableHeadCell>
-                <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                  Price
-                </StyledTableHeadCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedCartItems.map((item, index) => (
-                <ItemRow
-                  item={item}
-                  key={`${item.recordId}=${index}`}
-                  index={index}
-                  changeSelectedASIN={changeSelectedASIN}
-                  setIndexOfProductModal={setIndexOfProductModal}
-                />
-              ))}
-              <TotalPriceRow cartItems={cartItems} />
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            padding: '12px',
-            paddingRight: 0,
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '25%' }}>
-            <Button
-              variant="contained"
-              component={Link}
-              href={shoppingCartUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Shopping Cart"
-            >
-              Open Amazon Shopping Cart
-            </Button>
-            <Typography sx={{ textAlign: 'right', fontSize: 12, marginTop: 4 }}>
-              ZUUT may receive compensation for purchases made at participating retailers linked on
-              this site. This compensation does not affect what products or prices are displayed, or
-              the order of prices listed.
-            </Typography>
+    <TopLevelErrorBoundary toTrack={{ state: store.getState() }} errorName={'Cart Error'}>
+      <>
+        <Container>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <StyledTableHeadCell />
+                  <StyledTableHeadCell component="th" scope="column">
+                    Item Type
+                  </StyledTableHeadCell>
+                  <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
+                  <StyledTableHeadCell>Amazon Link</StyledTableHeadCell>
+                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
+                    Price
+                  </StyledTableHeadCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sortedCartItems.map((item, index) => (
+                  <ItemRow
+                    item={item}
+                    key={`${item.recordId}=${index}`}
+                    index={index}
+                    changeSelectedASIN={changeSelectedASIN}
+                    setIndexOfProductModal={setIndexOfProductModal}
+                  />
+                ))}
+                <TotalPriceRow cartItems={cartItems} />
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              padding: '12px',
+              paddingRight: 0,
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '25%' }}>
+              <Button
+                variant="contained"
+                component={Link}
+                href={shoppingCartUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Shopping Cart"
+              >
+                Open Amazon Shopping Cart
+              </Button>
+              <Typography sx={{ textAlign: 'right', fontSize: 12, marginTop: 4 }}>
+                ZUUT may receive compensation for purchases made at participating retailers linked
+                on this site. This compensation does not affect what products or prices are
+                displayed, or the order of prices listed.
+              </Typography>
+            </div>
           </div>
-        </div>
-      </Container>
-      {indexOfProductModal !== null ? (
-        <ProductModal
-          open={indexOfProductModal !== null}
-          closeModal={() => {
-            setIndexOfProductModal(null);
-          }}
-          item={cartItems[indexOfProductModal]}
-          index={indexOfProductModal}
-          changeSelectedASIN={changeSelectedASIN}
-        />
-      ) : null}
-    </>
+        </Container>
+        {indexOfProductModal !== null ? (
+          <ProductModal
+            open={indexOfProductModal !== null}
+            closeModal={() => {
+              setIndexOfProductModal(null);
+            }}
+            item={cartItems[indexOfProductModal]}
+            index={indexOfProductModal}
+            changeSelectedASIN={changeSelectedASIN}
+          />
+        ) : null}
+      </>
+    </TopLevelErrorBoundary>
   );
 };
 

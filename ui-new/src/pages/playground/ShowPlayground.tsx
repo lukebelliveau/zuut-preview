@@ -50,6 +50,7 @@ import {
   handleUndoRedoOnKeyDown,
 } from 'src/utils/interactionHandlers';
 import { HEADER } from 'src/config';
+import TopLevelErrorBoundary from 'src/components/TopLevelErrorBoundary';
 
 // export const playground_path = () => '/playgrounds/current';
 // export const demo_playground_path = () => '/playgrounds/demo';
@@ -135,49 +136,51 @@ export default function ShowPlayground() {
   const { scale } = playground;
 
   return (
-    <Fragment>
-      <div
-        role="presentation"
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-        tabIndex={0}
-        style={{ height: '100%', width: '100%' }}
-        data-testid="playground-container"
-      >
-        <div id="sandbox" ref={drop} style={{ height: '100%', width: '100%' }}>
-          <div style={{ paddingTop: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT - 10 }}>
-            <Stage
-              key={v4()}
-              ref={stageRef}
-              width={playground.displayWidth}
-              height={playground.displayHeight}
-              // height={600}
-              /**
-               * TODO: the "recenter playground" function is super hacked together
-               * it is probably because of the console warning you see whenever you run the app/tests
-               *
-               * `ReactKonva: You have a Konva node with draggable = true and position defined but no onDragMove or onDragEnd events are handled.`
-               *
-               * We probably need to use the onDragMove/End events to pass a new (x,y) to the Stage component
-               * whenever the user drags, then recentering will be done by recentering the (x,y)
-               *
-               * or not, just riffing, I haven't tried this yet
-               */
-              x={playground.centerX}
-              y={playground.centerY}
-              scaleX={scale}
-              scaleY={scale}
-              onWheel={zoom}
-              draggable
-            >
-              <Provider store={store}>
-                <GridLines />
-                <PlaygroundRoom room={room} />
-                <PlaygroundItems />
-              </Provider>
-            </Stage>
+    <TopLevelErrorBoundary toTrack={{ state: store.getState() }} errorName={'ShowPlayground Error'}>
+      <Fragment>
+        <div
+          role="presentation"
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={0}
+          style={{ height: '100%', width: '100%' }}
+          data-testid="playground-container"
+        >
+          <div id="sandbox" ref={drop} style={{ height: '100%', width: '100%' }}>
+            <div style={{ paddingTop: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT - 10 }}>
+              <Stage
+                key={v4()}
+                ref={stageRef}
+                width={playground.displayWidth}
+                height={playground.displayHeight}
+                // height={600}
+                /**
+                 * TODO: the "recenter playground" function is super hacked together
+                 * it is probably because of the console warning you see whenever you run the app/tests
+                 *
+                 * `ReactKonva: You have a Konva node with draggable = true and position defined but no onDragMove or onDragEnd events are handled.`
+                 *
+                 * We probably need to use the onDragMove/End events to pass a new (x,y) to the Stage component
+                 * whenever the user drags, then recentering will be done by recentering the (x,y)
+                 *
+                 * or not, just riffing, I haven't tried this yet
+                 */
+                x={playground.centerX}
+                y={playground.centerY}
+                scaleX={scale}
+                scaleY={scale}
+                onWheel={zoom}
+                draggable
+              >
+                <Provider store={store}>
+                  <GridLines />
+                  <PlaygroundRoom room={room} />
+                  <PlaygroundItems />
+                </Provider>
+              </Stage>
+            </div>
           </div>
         </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </TopLevelErrorBoundary>
   );
 }

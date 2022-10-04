@@ -1,6 +1,5 @@
 import { Layer, Line } from 'react-konva';
 import useBuildPlan from '../../hooks/useBuildPlan';
-import Grid from '../../lib/grid';
 
 const GridLines = () => {
   const plan = useBuildPlan();

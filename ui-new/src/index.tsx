@@ -30,6 +30,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
 
+import mixpanel from 'mixpanel-browser';
+
 // @mui
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -53,6 +55,13 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
+
+mixpanel.init('c7637bf2a9b25ff7582c25079489ae5b', { debug: false });
+
+// if (process.env.NODE_ENV === 'development') {
+// console.log('IN DEVELOPMENT MODE: Opting out of Mixpanel tracking.');
+// mixpanel.opt_out_tracking();
+// }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
