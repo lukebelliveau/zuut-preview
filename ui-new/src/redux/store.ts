@@ -128,5 +128,12 @@ if (isDemoMode()) {
     const state = store.getState();
     const serializedState = JSON.stringify(state);
     localStorage.setItem(ZUUT_DEMO_STATE, serializedState);
+
+    // const shareableStore = {
+    //   plan: state.plans.entities[state.playground.planId],
+    //   items: state.items.present.entities,
+    // };
+
+    // console.log(rison.encode(shareableStore));
   });
 }

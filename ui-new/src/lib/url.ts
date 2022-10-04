@@ -12,6 +12,7 @@ function useQueryParams() {
 
 export const paramKeys = {
   recordIds: 'recordIds',
+  shared: 'shared',
 };
 
 export const shoppingCartUrlWithRecordIds = (items: IItem[]) => {

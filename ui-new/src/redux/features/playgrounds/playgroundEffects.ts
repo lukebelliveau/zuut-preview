@@ -1,16 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import rison from 'rison-node';
 import useAppDispatch from 'src/hooks/useAppDispatch';
-import { v4 } from 'uuid';
 import useBuildPlayground from '../../../hooks/useBuildPlayground';
-import { isDemoMode, ZUUT_DEMO_STATE } from '../../store';
+import { AppDispatch, isDemoMode, ZUUT_DEMO_STATE } from '../../store';
 import { addMany } from '../items/itemsSlice';
 import { create as createPlan } from '../plans/planSlice';
 import { createDemoPlan, resizePlayground, setPlan } from './playgroundSlice';
+import useQueryParams, { paramKeys } from 'src/lib/url';
 
 export const useLoadDemoPlan = () => {
   const dispatch = useAppDispatch();
   const playground = useBuildPlayground();
+  const query = useQueryParams();
+
+  const encodedState = query.get(paramKeys.shared);
+  const decodedState = rison.decode(encodedState);
+
+  if (decodedState && decodedState.items && decodedState.plan) {
+    loadSharedPlan(decodedState.items, decodedState.plan, dispatch);
+    return;
+  }
 
   if (isDemoMode() && !playground.plan) {
     const persistentState = localStorage.getItem(ZUUT_DEMO_STATE)
@@ -37,6 +46,15 @@ export const useLoadDemoPlan = () => {
       console.error('ERROR building demo playground: ' + e);
     }
   }
+};
+
+const loadSharedPlan = (items: any, plan: any, dispatch: AppDispatch) => {
+  // load plan
+  dispatch(createPlan(plan));
+  // set playground planId to that plan
+  dispatch(setPlan(plan.id));
+  // load items
+  dispatch(addMany(items));
 };
 
 export const useResizePlaygroundOnWindowResize = () => {
