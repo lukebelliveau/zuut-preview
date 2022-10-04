@@ -14,11 +14,13 @@ export const useLoadDemoPlan = () => {
   const query = useQueryParams();
 
   const encodedState = query.get(paramKeys.shared);
-  const decodedState = rison.decode(encodedState);
+  if (typeof encodedState === 'string') {
+    const decodedState = rison.decode(encodedState);
 
-  if (decodedState && decodedState.items && decodedState.plan) {
-    loadSharedPlan(decodedState.items, decodedState.plan, dispatch);
-    return;
+    if (decodedState && decodedState.items && decodedState.plan) {
+      loadSharedPlan(decodedState.items, decodedState.plan, dispatch);
+      return;
+    }
   }
 
   if (isDemoMode() && !playground.plan) {
@@ -49,6 +51,7 @@ export const useLoadDemoPlan = () => {
 };
 
 const loadSharedPlan = (items: any, plan: any, dispatch: AppDispatch) => {
+  localStorage.removeItem(ZUUT_DEMO_STATE);
   // load plan
   dispatch(createPlan(plan));
   // set playground planId to that plan
