@@ -32,7 +32,7 @@ const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
   // top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
   // top: '50%',
-  top: INVENTORY_HEADER_BOTTOM,
+  top: INVENTORY_HEADER_BOTTOM + 55,
   backgroundColor: theme.palette.background.neutral,
   right: 0,
   bottom: 0,
