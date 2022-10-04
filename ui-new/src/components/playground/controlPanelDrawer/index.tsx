@@ -120,11 +120,11 @@ export default function ControlPanelDrawer() {
 
   return (
     <>
-      <Backdrop
+      {/* <Backdrop
         open={open}
         onClick={handleClose}
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      />
+      /> */}
 
       {
         <AnimatedToggleButton

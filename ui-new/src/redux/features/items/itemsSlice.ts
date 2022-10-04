@@ -176,7 +176,10 @@ export const removeItems = createAsyncThunk(
       const planService = new PlanService(state);
       return planService.syncCurrent();
     } catch (e: any) {
-      if (e.message === 'No JWT set' && process.env.NODE_ENV === 'test') {
+      if (
+        e.message === 'No JWT set' &&
+        (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production')
+      ) {
         return;
       } else {
         console.error('Error in thunk items/removeItems:', e);
