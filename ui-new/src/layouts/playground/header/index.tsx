@@ -1,5 +1,5 @@
 // @mui
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, Container, CssBaseline } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
@@ -33,7 +33,8 @@ const RootStyle = styled(AppBar, {
     prop !== 'isCollapse' && prop !== 'isOffset' && prop !== 'verticalLayout',
 })<RootStyleProps>(({ isCollapse, isOffset, verticalLayout, theme }) => ({
   ...cssStyles(theme).bgBlur(),
-  boxShadow: 'none',
+  color: theme.palette.background.neutral,
+  // boxShadow: 'none',
   height: HEADER.MOBILE_HEIGHT,
   zIndex: theme.zIndex.appBar + 1,
   transition: theme.transitions.create(['width', 'height'], {
@@ -45,15 +46,19 @@ const RootStyle = styled(AppBar, {
     ...(isCollapse && {
       width: `calc(100% - ${NAVBAR.DASHBOARD_COLLAPSE_WIDTH}px)`,
     }),
-    ...(isOffset && {
-      height: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
-    }),
+    // ...(isOffset && {
+    //   height: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
+    // }),
     ...(verticalLayout && {
       width: '100%',
       height: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
       backgroundColor: theme.palette.background.default,
     }),
   },
+  boxShadow: `-24px 12px 32px -4px ${alpha(
+    theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black,
+    0.16
+  )}`,
 }));
 
 // ----------------------------------------------------------------------
@@ -66,7 +71,14 @@ type Props = {
 
 const ItemsHeader = () => {
   return (
-    <Container maxWidth={false}>
+    <Container
+      maxWidth={false}
+      sx={{
+        '&.MuiContainer-root': {
+          pr: 0,
+        },
+      }}
+    >
       <NavSectionHorizontal />
     </Container>
   );
@@ -88,6 +100,7 @@ export default function PlaygroundHeader({
           minHeight: '100% !important',
           // px: { lg: 5 },
           paddingLeft: 5,
+          backgroundColor: 'background.neutral',
           // paddingRight: 0,
         }}
         disableGutters

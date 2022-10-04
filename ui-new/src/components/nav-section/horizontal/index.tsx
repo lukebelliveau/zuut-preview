@@ -170,7 +170,13 @@ function NavSectionHorizontal() {
     <Stack>
       <Stack
         direction="row"
-        sx={{ bgcolor: 'background.neutral', borderRadius: 1, px: 0.5 }}
+        sx={{
+          bgcolor: 'background.neutral',
+          // borderRadius: 1,
+          borderRadius: '8px 0px 0px 8px',
+          px: 0.5,
+          paddingRight: 0,
+        }}
         id="horizontal-toolbar"
         justifyContent="space-around"
       >

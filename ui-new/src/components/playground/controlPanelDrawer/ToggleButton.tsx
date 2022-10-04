@@ -12,14 +12,14 @@ import { NAVBAR } from 'src/config';
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  right: 10,
-  bottom: 20,
+  right: 0,
+  bottom: 0,
   width: NAVBAR.BASE_WIDTH,
   position: 'fixed',
   marginTop: theme.spacing(-3),
   padding: theme.spacing(0.5),
   zIndex: theme.zIndex.drawer + 4,
-  borderRadius: '10%',
+  // borderRadius: '8px 8px 0px 0px',
   boxShadow: `-12px 12px 32px -4px ${alpha(
     theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.common.black,
     0.2
