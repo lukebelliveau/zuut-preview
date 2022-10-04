@@ -51,7 +51,7 @@ export const useLoadDemoPlan = () => {
         dispatch(createDemoPlan());
       }
     } catch (e) {
-      console.error('ERROR building demo playground: ' + e);
+      // console.error('ERROR building demo playground: ' + e);
     }
   }
 };

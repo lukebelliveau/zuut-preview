@@ -2,9 +2,7 @@ import { airtableTables } from './airtableBase';
 import { PlaceableItemRecord } from './Record';
 import selectAllOfItemType from './selectAllOfItemType';
 
-export const selectPotsByRecordId = async (
-  recordIds: string[]
-): Promise<PlaceableItemRecord[]> => {
+export const selectPotsByRecordId = async (recordIds: string[]): Promise<PlaceableItemRecord[]> => {
   const allPots = await selectAllPots();
 
   const selectedPots: PlaceableItemRecord[] = [];
@@ -19,10 +17,7 @@ export const selectPotsByRecordId = async (
   return selectedPots;
 };
 
-export const potRecordComparator = (
-  a: { name: string },
-  b: { name: string }
-) => {
+export const potRecordComparator = (a: { name: string }, b: { name: string }) => {
   try {
     if (a.name === undefined || b.name === undefined) {
       throw Error('Tried to sort pots by name, but name is undefined');
@@ -33,12 +28,12 @@ export const potRecordComparator = (
     if (parseInt(aValue) > parseInt(bValue)) return 1;
     else return -1;
   } catch (e) {
-    console.error(
-      'Error creating Pot Item from airtable data. Skipping pot: ',
-      a,
-      b
-    );
-    console.error(e);
+    // console.error(
+    //   'Error creating Pot Item from airtable data. Skipping pot: ',
+    //   a,
+    //   b
+    // );
+    // console.error(e);
     return 0;
   }
 };

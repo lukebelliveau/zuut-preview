@@ -120,7 +120,7 @@ function MenuMobileItem({ item, isOpen, onOpen }: MenuMobileItemProps) {
   }
 
   if (isError) {
-    console.error(error);
+    // console.error(error);
     return <span>Error loading items!</span>;
   }
 

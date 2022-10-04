@@ -42,6 +42,13 @@ const ProductTable = ({
             return (
               <TableRow key={product.ASIN}>
                 {columns.map((column) => {
+                  if (column.property === 'price') {
+                    return (
+                      <TableCell key={column.name}>
+                        ${parseFloat(product[column.property]).toFixed(2)}
+                      </TableCell>
+                    );
+                  }
                   return <TableCell key={column.name}>{product[column.property]}</TableCell>;
                 })}
                 <TableCell>

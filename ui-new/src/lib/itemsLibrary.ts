@@ -67,7 +67,7 @@ export const fetchTents = async (): Promise<Item[]> => {
     try {
       tents.push(new Tent(constructorArgs(tent)));
     } catch (e) {
-      console.error('Error creating Tent Item from airtable data. Skipping tent: ', tent);
+      // console.error('Error creating Tent Item from airtable data. Skipping tent: ', tent);
       console.error(e);
     }
   });
@@ -77,7 +77,7 @@ export const fetchTents = async (): Promise<Item[]> => {
 
 const createClimateItem = (item: PlaceableItemRecord): PlaceableItem | null => {
   if (item.itemType === undefined) {
-    console.error('Attempted to create climate item with undefined itemType');
+    // console.error('Attempted to create climate item with undefined itemType');
     return null;
   }
 
@@ -114,7 +114,7 @@ export const fetchClimateItems = async (): Promise<Item[]> => {
       const climateItem = createClimateItem(item);
       if (climateItem !== null) climateItems.push(climateItem);
     } catch (e) {
-      console.error('Error creating Climate Item from airtable data. Skipping item: ', item);
+      // console.error('Error creating Climate Item from airtable data. Skipping item: ', item);
       console.error(e);
     }
   });
@@ -141,7 +141,7 @@ export const fetchMiscItems = async (): Promise<Item[]> => {
         })
       );
     } catch (e) {
-      console.error('Error creating Misc Item from airtable data. Skipping misc: ', miscItem);
+      // console.error('Error creating Misc Item from airtable data. Skipping misc: ', miscItem);
       console.error(e);
     }
   });
@@ -157,10 +157,10 @@ export const fetchWaterItems = async (): Promise<Item[]> => {
     try {
       waterItems.push(new WaterItem(constructorArgs(waterItem)));
     } catch (e) {
-      console.error(
-        'Error creating Water Item from airtable data. Skipping water item: ',
-        waterItem
-      );
+      // console.error(
+      //   'Error creating Water Item from airtable data. Skipping water item: ',
+      //   waterItem
+      // );
       console.error(e);
     }
   });
@@ -176,7 +176,7 @@ export const fetchPots = async (): Promise<Item[]> => {
     try {
       pots.push(new PotItem(constructorArgs(pot)));
     } catch (e) {
-      console.error('Error creating Pot Item from airtable data. Skipping pot: ', pot);
+      // console.error('Error creating Pot Item from airtable data. Skipping pot: ', pot);
       console.error(e);
     }
   });
@@ -192,7 +192,7 @@ export const fetchLights = async (): Promise<Item[]> => {
     try {
       lights.push(new LightItem(constructorArgs(light)));
     } catch (e) {
-      console.error('Error creating Light Item from airtable data. Skipping light: ', light);
+      // console.error('Error creating Light Item from airtable data. Skipping light: ', light);
       console.error(e);
     }
   });

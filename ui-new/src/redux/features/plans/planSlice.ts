@@ -46,7 +46,7 @@ export const createPlan = createAsyncThunk(
       dispatch(setPlan(plan.id));
       dispatch(push(PATH_PLAYGROUND.general.current));
     } catch (e) {
-      console.error('Error in thunk plan/createPlan:', e);
+      // console.error('Error in thunk plan/createPlan:', e);
     }
   }
 );
@@ -62,7 +62,7 @@ export const deleteAllPlans = createAsyncThunk(
 
       dispatch(push(PATH_PLAYGROUND.general.current));
     } catch (e) {
-      console.error('ERROR IN THUNK plan/deleteAllPlans: ', e);
+      // console.error('ERROR IN THUNK plan/deleteAllPlans: ', e);
     }
   }
 );

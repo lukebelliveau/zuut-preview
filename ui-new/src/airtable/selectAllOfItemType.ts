@@ -32,16 +32,16 @@ const selectAllOfItemType = async (itemTypeId: string): Promise<PlaceableItemRec
         description === undefined ||
         recordId === undefined
       ) {
-        console.error(
-          'Attempted to fetch item records from Airtable, but one or more of the values was undefined. Item type ID: ' +
-            itemTypeId
-        );
-        console.error(record);
+        // console.error(
+        //   'Attempted to fetch item records from Airtable, but one or more of the values was undefined. Item type ID: ' +
+        //     itemTypeId
+        // );
+        // console.error(record);
       } else if (
         amazonProducts === undefined ||
         amazonProducts.toString()?.split(',').length === 0
       ) {
-        console.error('Fetched Item with no amazonProducts. Skipping. ID: ' + itemTypeId);
+        // console.error('Fetched Item with no amazonProducts. Skipping. ID: ' + itemTypeId);
       } else {
         items.push({
           name: name.toString(),
@@ -59,8 +59,8 @@ const selectAllOfItemType = async (itemTypeId: string): Promise<PlaceableItemRec
 
     return items;
   } catch (e) {
-    console.error(`Error fetching Item data, table ID ${itemTypeId}:`);
-    console.error(e);
+    // console.error(`Error fetching Item data, table ID ${itemTypeId}:`);
+    // console.error(e);
 
     return items;
   }

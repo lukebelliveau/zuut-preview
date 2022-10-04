@@ -66,7 +66,6 @@ export default function PlaygroundLayout() {
   const verticalLayout = themeLayout === 'vertical';
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    console.log('KEY DOWN INDEX');
     handleDeleteOnKeyDown(e, store);
     handleUndoRedoOnKeyDown(e, store);
     handleSelectAllOnKeyDown(e, store);

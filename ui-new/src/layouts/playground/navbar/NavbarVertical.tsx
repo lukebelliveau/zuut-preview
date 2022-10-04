@@ -60,7 +60,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props)
   }
 
   if (isError) {
-    console.error(error);
+    // console.error(error);
     return <span>Error loading items!</span>;
   }
 

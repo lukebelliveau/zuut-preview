@@ -112,7 +112,7 @@ export const removeItem = createAsyncThunk(
       if (e.message === 'No JWT set' && process.env.NODE_ENV === 'test') {
         return;
       } else {
-        console.error('Error in thunk items/removeItem:', e);
+        // console.error('Error in thunk items/removeItem:', e);
       }
     }
   }
@@ -158,7 +158,7 @@ export const removeItemWithoutHistory = createAsyncThunk(
       if (e.message === 'No JWT set' && process.env.NODE_ENV === 'test') {
         return;
       } else {
-        console.error('Error in thunk items/removeItemWithoutHistory:', e);
+        // console.error('Error in thunk items/removeItemWithoutHistory:', e);
       }
     }
   }
@@ -182,7 +182,7 @@ export const removeItems = createAsyncThunk(
       ) {
         return;
       } else {
-        console.error('Error in thunk items/removeItems:', e);
+        // console.error('Error in thunk items/removeItems:', e);
       }
     }
   }
@@ -271,7 +271,7 @@ export const incrementModifier = createAsyncThunk(
       const planService = new PlanService(state);
       return planService.syncCurrent();
     } catch (e) {
-      console.error('Error in thunk items/addModifer:', e);
+      // console.error('Error in thunk items/addModifer:', e);
     }
   }
 );

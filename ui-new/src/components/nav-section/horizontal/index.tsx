@@ -34,7 +34,7 @@ const TentItems = () => {
   }
 
   if (isError) {
-    console.error(error);
+    // console.error(error);
     return <span>Error loading items!</span>;
   }
 

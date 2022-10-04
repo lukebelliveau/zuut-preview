@@ -97,13 +97,13 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
     const price = record.get(amazonProductFields.price.name);
 
     if (ASIN === undefined) {
-      console.log('Skipping record because ASIN is undefined', record);
+      // console.log('Skipping record because ASIN is undefined', record);
       return;
     } else if (recordId === undefined || productName === undefined) {
-      console.error(
-        'Attempted to fetch amazonProducts records from Airtable, but one or more of the values was undefined:',
-        record
-      );
+      // console.error(
+      //   'Attempted to fetch amazonProducts records from Airtable, but one or more of the values was undefined:',
+      //   record
+      // );
       return;
     }
 
@@ -207,8 +207,8 @@ export const selectAmazonProductRecordsByASIN = async (
 
     return amazonProducts;
   } catch (e) {
-    console.error('Error fetching amazonProduct data:');
-    console.error(e);
+    // console.error('Error fetching amazonProduct data:');
+    // console.error(e);
 
     return {};
   }

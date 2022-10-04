@@ -304,7 +304,7 @@ const getSelectedAmazonProductPrice = (selectedASIN: string, amazonProducts: Ama
 
   if (!selectedAmazonProduct) return 'Price not available';
 
-  if (selectedAmazonProduct.price) return `$${selectedAmazonProduct.price}`;
+  if (selectedAmazonProduct.price) return `$${parseFloat(selectedAmazonProduct.price).toFixed(2)}`;
 
   return 'Price not available';
 };

@@ -86,8 +86,8 @@ export const loadSavedPlayground = createAsyncThunk(
       dispatch(setPlan(plan.id));
       dispatch(resizePlayground());
     } catch (e: any) {
-      console.error('ERROR IN THUNK playground/loadSavedPlayground:', e);
-      console.log('Resetting playground...');
+      // console.error('ERROR IN THUNK playground/loadSavedPlayground:', e);
+      // console.log('Resetting playground...');
       // mixpanelTrack(mixpanelEvents.ERROR, {
       //   error: e,
       //   errorMessage: e.message,
@@ -156,7 +156,7 @@ export const resizePlayground = createAsyncThunk(
         playgroundSlice.actions.resize(PlaygroundReduxAdapter.playgroundToState(playground))
       );
     } catch (e) {
-      console.error('ERROR in thunk playground/resizePlayground:', e);
+      // console.error('ERROR in thunk playground/resizePlayground:', e);
     }
   }
 );
