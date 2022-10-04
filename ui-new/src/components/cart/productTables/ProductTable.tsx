@@ -6,9 +6,10 @@ import {
   TableBody,
   Table,
   Button,
+  Link,
 } from '@mui/material';
 import { AmazonProductMap, AmazonProductRecord } from '../../../airtable/amazonProducts';
-import { CartItem } from '../ShoppingCartTable';
+import { CartItem, constructAmazonLinkWithASIN } from '../ShoppingCartTable';
 
 export interface ProductColumn {
   name: string;
@@ -45,7 +46,21 @@ const ProductTable = ({
                   if (column.property === 'price') {
                     return (
                       <TableCell key={column.name}>
-                        ${parseFloat(product[column.property]).toFixed(2)}
+                        ${parseFloat(product.price).toFixed(2)}
+                      </TableCell>
+                    );
+                  } else if (column.property === 'productName') {
+                    return (
+                      <TableCell>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Link
+                            href={constructAmazonLinkWithASIN(item.selectedASIN)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {product.productName}
+                          </Link>
+                        </div>
                       </TableCell>
                     );
                   }

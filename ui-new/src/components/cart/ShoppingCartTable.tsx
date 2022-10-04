@@ -62,7 +62,7 @@ const createAmazonAddToShoppingCartUrl = (items: CartItem[]) => {
   return `https://www.amazon.com/gp/aws/cart/add.html?${addToCartQuery}tag=${amazonZUUTTag}`;
 };
 
-const constructAmazonLinkWithASIN = (asin: string) => {
+export const constructAmazonLinkWithASIN = (asin: string) => {
   return `https://www.amazon.com/dp/${asin}?tag=${amazonZUUTTag}`;
 };
 
@@ -250,7 +250,7 @@ const ShoppingCartTable = () => {
               <TableRow>
                 <StyledTableHeadCell />
                 <StyledTableHeadCell component="th" scope="column">
-                  Generic Item Name
+                  Item Type
                 </StyledTableHeadCell>
                 <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
                 <StyledTableHeadCell>Amazon Link</StyledTableHeadCell>
