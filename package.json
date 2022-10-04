@@ -14,8 +14,7 @@
   "author": "Zuut",
   "dependencies": {
     "foreman": "^3.0.1",
-    "react-scripts": "5.0.1",
-    "rison-node": "^2.1.1"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.1",
