@@ -274,7 +274,13 @@ const ShoppingCartTable = () => {
           </Table>
         </TableContainer>
         <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '12px' }}
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            padding: '12px',
+            paddingRight: 0,
+          }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '25%' }}>
             <Button
