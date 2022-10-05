@@ -31,6 +31,7 @@ import { grey } from '@mui/material/colors';
 import { store } from 'src/redux/store';
 import TopLevelErrorBoundary from '../TopLevelErrorBoundary';
 import LoadingScreen from '../LoadingScreen';
+import mixpanelTrack from 'src/utils/mixpanelTrack';
 
 interface ShoppingCartUrlItem {
   quantity: number;
@@ -301,6 +302,15 @@ const ShoppingCartTable = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Open Shopping Cart"
+                onClick={() => {
+                  mixpanelTrack('Amazon Shopping Cart opened', {
+                    shoppingCartUrl,
+                    cartItems: cartItems.map((item) => ({
+                      name: item.name,
+                      ASIN: item.selectedASIN,
+                    })),
+                  });
+                }}
               >
                 Open Amazon Shopping Cart
               </Button>
@@ -400,6 +410,12 @@ const ItemRow = ({
             href={constructAmazonLinkWithASIN(item.selectedASIN)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              mixpanelTrack('Amazon Link opened', {
+                productName: amazonProducts[item.selectedASIN].productName,
+                ASIN: item.selectedASIN,
+              });
+            }}
           >
             View on Amazon
           </Link>

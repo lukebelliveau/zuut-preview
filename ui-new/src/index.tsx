@@ -56,12 +56,13 @@ import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
 
-mixpanel.init('c7637bf2a9b25ff7582c25079489ae5b', { debug: false });
-
-// if (process.env.NODE_ENV === 'development') {
-// console.log('IN DEVELOPMENT MODE: Opting out of Mixpanel tracking.');
-// mixpanel.opt_out_tracking();
-// }
+if (process.env.NODE_ENV === 'development') {
+  console.log('IN DEVELOPMENT MODE: Opting out of Mixpanel tracking.');
+  // mixpanel.opt_out_tracking();
+} else {
+  mixpanel.init('c7637bf2a9b25ff7582c25079489ae5b', { debug: true });
+}
+// mixpanel.opt_in_tracking();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

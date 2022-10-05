@@ -8,6 +8,7 @@ import {
   Button,
   Link,
 } from '@mui/material';
+import mixpanelTrack from 'src/utils/mixpanelTrack';
 import { AmazonProductMap, AmazonProductRecord } from '../../../airtable/amazonProducts';
 import { CartItem, constructAmazonLinkWithASIN } from '../ShoppingCartTable';
 
@@ -57,6 +58,12 @@ const ProductTable = ({
                             href={constructAmazonLinkWithASIN(item.selectedASIN)}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => {
+                              mixpanelTrack('Amazon Link opened', {
+                                productName: amazonProducts[item.selectedASIN].productName,
+                                ASIN: item.selectedASIN,
+                              });
+                            }}
                           >
                             {product.productName}
                           </Link>

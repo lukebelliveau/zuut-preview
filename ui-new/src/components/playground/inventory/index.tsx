@@ -51,6 +51,7 @@ import { isModifierItem } from 'src/lib/item/modifierItem';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { removeItems } from 'src/redux/features/items/itemsSlice';
 import useResponsive from 'src/hooks/useResponsive';
+import mixpanelTrack from 'src/utils/mixpanelTrack';
 
 // ----------------------------------------------------------------------
 
@@ -173,7 +174,8 @@ export default function InventoryDrawer() {
           <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
             <SelectButtonIcon
               sx={{
-                color: allItemsSelected ? 'default' : theme.palette.primary.main,
+                color:
+                  allItemsSelected || items.length < 1 ? 'default' : theme.palette.primary.main,
               }}
             />
           </IconButton>
@@ -196,6 +198,9 @@ export default function InventoryDrawer() {
             target="_blank"
             rel="noopener noreferrer"
             disabled={selectedIds.length < 1}
+            onClick={() => {
+              mixpanelTrack('ZUUT Cart opened', { items: items.map((item) => item.name) });
+            }}
           >
             Open Cart {selectedIds.length > 0 && `(${selectedIds.length})`}
           </Button>
