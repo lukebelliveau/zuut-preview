@@ -26,7 +26,7 @@ export default function App() {
             <ThemeProvider>
               <ThemeSettings>
                 <NotistackProvider>
-                  <ProgressBarStyle />
+                  {/* <ProgressBarStyle /> */}
                   <ScrollToTop />
                   <Router />
                 </NotistackProvider>
