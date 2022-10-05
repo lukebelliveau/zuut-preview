@@ -6,7 +6,8 @@ import cssStyles from '../../../utils/cssStyles';
 
 import { IconButtonAnimate } from '../../animate';
 import { AnimatePresence, m } from 'framer-motion';
-import InventoryIcon from '@mui/icons-material/Inventory';
+// import InventoryIcon from '@mui/icons-material/Inventory';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useSelectAllItems } from 'src/redux/features/items/itemsSelectors';
 
 // ----------------------------------------------------------------------
@@ -62,7 +63,11 @@ const ToggleButton = ({
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      <Tooltip open title={itemStates.length > 0 ? itemStates.length : ''} placement="left">
+      <Tooltip
+        open
+        title={open ? `Close Inventory` : `Open Inventory (${itemStates.length})`}
+        placement="left"
+      >
         <IconButtonAnimate
           color="inherit"
           // color={theme.palette.error}
@@ -95,7 +100,7 @@ const ToggleButton = ({
               justifyContent: 'center',
             }}
           >
-            <InventoryIcon />
+            <ShoppingCartCheckoutIcon />
           </div>
         </IconButtonAnimate>
       </Tooltip>

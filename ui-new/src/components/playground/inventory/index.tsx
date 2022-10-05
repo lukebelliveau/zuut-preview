@@ -48,7 +48,6 @@ import Select from 'src/theme/overrides/Select';
 import { useTheme } from '@mui/system';
 import { isWallItem } from 'src/lib/item/wallItem';
 import { isModifierItem } from 'src/lib/item/modifierItem';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { removeItems } from 'src/redux/features/items/itemsSlice';
 import useResponsive from 'src/hooks/useResponsive';
 import mixpanelTrack from 'src/utils/mixpanelTrack';
