@@ -8,7 +8,7 @@ import Page from '../components/Page';
 import InputStyle from '../components/InputStyle';
 import SocialsButton from '../components/SocialsButton';
 // assets
-import { ComingSoonIllustration } from '../assets';
+// import { ComingSoonIllustration } from '../assets';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ export default function ComingSoon() {
             We are currently working hard on this page!
           </Typography>
 
-          <ComingSoonIllustration sx={{ my: 10, height: 240 }} />
+          {/* <ComingSoonIllustration sx={{ my: 10, height: 240 }} /> */}
 
           <CountdownStyle>
             <div>

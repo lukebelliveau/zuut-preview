@@ -4,7 +4,7 @@ import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 // layouts
 import MainLayout from '../layouts/main';
-import PlaygroundLayout from '../layouts/playground';
+// import PlaygroundLayout from '../layouts/playground';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
 import GuestGuard from '../guards/GuestGuard';
@@ -86,11 +86,11 @@ export default function Router() {
       path: '*',
       element: <LogoOnlyLayout />,
       children: [
-        { path: 'coming-soon', element: <ComingSoon /> },
-        { path: '500', element: <Page500 /> },
+        //     { path: 'coming-soon', element: <ComingSoon /> },
+        //     { path: '500', element: <Page500 /> },
         { path: '404', element: <Page404 /> },
-        { path: '403', element: <Page403 /> },
-        { path: '*', element: <Navigate to="/404" replace /> },
+        //     { path: '403', element: <Page403 /> },
+        //     { path: '*', element: <Navigate to="/404" replace /> },
       ],
     },
     {
@@ -111,10 +111,11 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // PLAYGROUND
 const GeneralPlaygroundApp = Loadable(lazy(() => import('../pages/playground/PlaygroundApp')));
+const PlaygroundLayout = Loadable(lazy(() => import('../layouts/playground')));
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
-const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
-const Page500 = Loadable(lazy(() => import('../pages/Page500')));
-const Page403 = Loadable(lazy(() => import('../pages/Page403')));
+// const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
+// const Page500 = Loadable(lazy(() => import('../pages/Page500')));
+// const Page403 = Loadable(lazy(() => import('../pages/Page403')));
 const Page404 = Loadable(lazy(() => import('../pages/Page404')));

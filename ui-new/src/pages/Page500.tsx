@@ -7,7 +7,7 @@ import { Button, Typography, Container } from '@mui/material';
 import Page from '../components/Page';
 import { MotionContainer, varBounce } from '../components/animate';
 // assets
-import { SeverErrorIllustration } from '../assets';
+// import { SeverErrorIllustration } from '../assets';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ export default function Page500() {
           </m.div>
 
           <m.div variants={varBounce().in}>
-            <SeverErrorIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
+            {/* <SeverErrorIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} /> */}
           </m.div>
 
           <Button to="/" size="large" variant="contained" component={RouterLink}>

@@ -126,9 +126,6 @@ const ProductModal = ({
           amazonProducts={amazonProducts}
           changeSelectedProductASIN={changeSelectedProductASIN}
         />
-        <div>
-          <Button onClick={closeModal}>Close</Button>
-        </div>
       </Box>
     </Modal>
   );

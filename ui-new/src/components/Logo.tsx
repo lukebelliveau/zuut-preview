@@ -25,6 +25,7 @@ export default function Logo({ disabledLink = false, sx }: Props) {
       component="img"
       src="/assets/zuut-logo.svg"
       sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
+      alt="ZUUT logo"
     />
   );
 
@@ -32,5 +33,9 @@ export default function Logo({ disabledLink = false, sx }: Props) {
     return <>{logo}</>;
   }
 
-  return <RouterLink to="/">{logo}</RouterLink>;
+  return (
+    <RouterLink to="/" aria-label="Return to ZUUT Home">
+      {logo}
+    </RouterLink>
+  );
 }
