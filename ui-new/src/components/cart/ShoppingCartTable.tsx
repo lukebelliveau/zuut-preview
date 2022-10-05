@@ -411,8 +411,14 @@ const ItemRow = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
+              const productName =
+                amazonProducts &&
+                amazonProducts[item.selectedASIN] &&
+                amazonProducts[item.selectedASIN].productName
+                  ? amazonProducts[item.selectedASIN].productName
+                  : 'N/A';
               mixpanelTrack('Amazon Link opened', {
-                productName: amazonProducts[item.selectedASIN].productName,
+                productName,
                 ASIN: item.selectedASIN,
               });
             }}
