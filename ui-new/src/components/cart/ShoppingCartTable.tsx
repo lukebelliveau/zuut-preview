@@ -30,6 +30,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { grey } from '@mui/material/colors';
 import { store } from 'src/redux/store';
 import TopLevelErrorBoundary from '../TopLevelErrorBoundary';
+import LoadingScreen from '../LoadingScreen';
 
 interface ShoppingCartUrlItem {
   quantity: number;
@@ -225,9 +226,16 @@ const ShoppingCartTable = () => {
   }, [cartItems]);
 
   if (isLoading || error || cartRecords === undefined) {
-    if (isLoading) return <div>Loading cart...</div>;
+    if (isLoading) return <LoadingScreen />;
+    // if (isLoading) return <div>Loading cart...</div>;
     if (error) return <div>Error!</div>;
-    if (cartRecords === undefined) return <div>Loading cart...</div>;
+    if (cartRecords === undefined)
+      return (
+        <Typography>
+          Sorry, there are no products for these items. Please leave us some feedback with the
+          button on the right, and we'll be sure to get this fixed up. Thank you!
+        </Typography>
+      );
   }
 
   // const shoppingCartUrl = createAmazonAddToShoppingCartUrl(cartItems);

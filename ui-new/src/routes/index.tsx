@@ -14,7 +14,6 @@ import { PATH_AFTER_LOGIN } from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import NewDemoPlayground from 'src/pages/playground/NewDemoPlayground';
-import Cart from 'src/pages/cart/Cart';
 import { usePrefetchItemGroups } from 'src/layouts/playground/navbar/NavConfig';
 
 // ----------------------------------------------------------------------
@@ -113,6 +112,8 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 // PLAYGROUND
 const PlaygroundLayout = Loadable(lazy(() => import('../layouts/playground')));
 const GeneralPlaygroundApp = Loadable(lazy(() => import('../pages/playground/PlaygroundApp')));
+
+const Cart = Loadable(lazy(() => import('../pages/cart/Cart')));
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));

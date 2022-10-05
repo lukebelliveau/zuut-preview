@@ -42,7 +42,7 @@ export function ProgressBarStyle() {
 
 export default function ProgressBar() {
   NProgress.configure({
-    showSpinner: false
+    showSpinner: false,
   });
 
   useMemo(() => {
