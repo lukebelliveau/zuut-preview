@@ -20,7 +20,7 @@ import {
   handleSelectAllOnKeyDown,
   handleUndoRedoOnKeyDown,
 } from 'src/utils/interactionHandlers';
-import { AppStore } from 'src/redux/store';
+import { AppStore, store } from 'src/redux/store';
 import { useStore } from 'react-redux';
 
 // ----------------------------------------------------------------------
@@ -77,6 +77,14 @@ export default function PlaygroundLayout() {
       <>
         <PlaygroundHeader onOpenSidebar={() => setOpen(true)} verticalLayout={verticalLayout} />
 
+        {/* Skip all navbars, the <NavSectionHorizontal /> is in the header component */}
+        {/* <NavbarHorizontal /> */}
+        {/* {isDesktop ? (
+          <NavbarHorizontal />
+        ) : (
+          <NavbarVertical isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+        )} */}
+
         <Box
           component="main"
           // sx={{
@@ -96,7 +104,6 @@ export default function PlaygroundLayout() {
           }}
           onKeyDown={handleKeyDown}
         >
-          {/* konva playground */}
           <Outlet />
           <ControlPanelDrawer />
           <InventoryDrawer />

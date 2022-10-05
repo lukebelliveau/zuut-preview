@@ -5,7 +5,9 @@ import { Container, AppBar } from '@mui/material';
 // config
 import { HEADER } from '../../../config';
 // components
-import { Toolbar } from '../../../components/toolbar';
+import { NavSectionHorizontal } from '../../../components/toolbar';
+import { useQueryItemsNavConfig } from './NavConfig';
+//
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +31,7 @@ function NavbarHorizontal() {
   return (
     <RootStyle>
       <Container maxWidth={false}>
-        <Toolbar />
+        <NavSectionHorizontal />
       </Container>
     </RootStyle>
   );

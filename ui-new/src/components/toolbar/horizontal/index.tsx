@@ -165,7 +165,7 @@ const MiscItems = () => {
   );
 };
 
-function Toolbar() {
+function NavSectionHorizontal() {
   return (
     <Stack>
       <Stack
@@ -201,4 +201,4 @@ function Toolbar() {
   );
 }
 
-export default memo(Toolbar);
+export default memo(NavSectionHorizontal);

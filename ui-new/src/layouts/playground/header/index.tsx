@@ -1,6 +1,6 @@
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { AppBar, Toolbar as MUIToolbar, Container } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Container, CssBaseline } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
@@ -10,6 +10,15 @@ import cssStyles from '../../../utils/cssStyles';
 import { HEADER, NAVBAR } from '../../../config';
 // components
 import Logo from '../../../components/Logo';
+import Iconify from '../../../components/Iconify';
+import { IconButtonAnimate } from '../../../components/animate';
+//
+import LanguagePopover from './LanguagePopover';
+import ContactsPopover from './ContactsPopover';
+import NotificationsPopover from './NotificationsPopover';
+import NavbarHorizontal from '../toolbar';
+import { NavSectionHorizontal } from 'src/components/toolbar';
+import { useQueryItemsNavConfig } from '../toolbar/NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -70,7 +79,7 @@ const ItemsHeader = () => {
         },
       }}
     >
-      <MUIToolbar />
+      <NavSectionHorizontal />
     </Container>
   );
 };
@@ -86,7 +95,7 @@ export default function PlaygroundHeader({
 
   return (
     <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
-      <MUIToolbar
+      <Toolbar
         sx={{
           minHeight: '100% !important',
           // px: { lg: 5 },
@@ -115,7 +124,7 @@ export default function PlaygroundHeader({
           <NotificationsPopover />
           <ContactsPopover />
         </Stack> */}
-      </MUIToolbar>
+      </Toolbar>
     </RootStyle>
   );
 }

@@ -5,7 +5,7 @@ export * from './type';
 // ----------------------------------------------------------------------
 
 export { default as NavSectionVertical } from './vertical';
-export { default as Toolbar } from './horizontal';
+export { default as NavSectionHorizontal } from './horizontal';
 
 export function isExternalLink(path: string) {
   return path.includes('http');
