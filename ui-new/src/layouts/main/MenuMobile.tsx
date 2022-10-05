@@ -20,10 +20,10 @@ import Logo from '../../components/Logo';
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
 import { IconButtonAnimate } from '../../components/animate';
-import { NavSectionVertical } from '../../components/nav-section';
+import { NavSectionVertical } from '../../components/toolbar';
 //
 import { MenuProps, MenuItemProps } from './type';
-import { useQueryItemsNavConfig } from '../playground/navbar/NavConfig';
+import { useQueryItemsNavConfig } from '../playground/toolbar/NavConfig';
 
 // ----------------------------------------------------------------------
 

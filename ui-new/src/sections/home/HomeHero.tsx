@@ -9,7 +9,7 @@ import Iconify from '../../components/Iconify';
 
 import { MotionContainer, varFade } from '../../components/animate';
 import { PATH_PLAYGROUND } from 'src/routes/paths';
-import { useQueryItemsNavConfig } from 'src/layouts/playground/navbar/NavConfig';
+import { useQueryItemsNavConfig } from 'src/layouts/playground/toolbar/NavConfig';
 
 // ----------------------------------------------------------------------
 

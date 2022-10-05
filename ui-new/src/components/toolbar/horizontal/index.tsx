@@ -2,7 +2,7 @@ import { memo } from 'react';
 // @mui
 import { Divider, Stack } from '@mui/material';
 import ItemList from './ItemList';
-import DimensionsPopover from 'src/components/nav-section/horizontal/DimensionsPopover';
+import DimensionsPopover from 'src/components/toolbar/horizontal/DimensionsPopover';
 import EditPopover from './EditPopover';
 import {
   ICONS,
@@ -12,7 +12,7 @@ import {
   useQueryPotItems,
   useQueryTentItems,
   useQueryWaterItems,
-} from 'src/layouts/playground/navbar/NavConfig';
+} from 'src/layouts/playground/toolbar/NavConfig';
 import DropdownPlaceholder from './DropdownPlaceholder';
 
 // ----------------------------------------------------------------------

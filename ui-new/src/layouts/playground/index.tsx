@@ -11,7 +11,7 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import { HEADER, NAVBAR } from '../../config';
 //
 import PlaygroundHeader from './header';
-import NavbarVertical from './navbar/NavbarVertical';
+import NavbarVertical from './toolbar/NavbarVertical';
 import ControlPanelDrawer from '../../components/playground/controlPanel';
 import InventoryDrawer from 'src/components/playground/inventory';
 import {

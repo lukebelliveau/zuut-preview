@@ -6,7 +6,7 @@ import MenuPopover from '../../MenuPopover';
 import EditIcon from '@mui/icons-material/Edit';
 import { ICON, NAVBAR } from 'src/config';
 import Modal from 'react-modal';
-import EditButtons from 'src/components/nav-section/horizontal/EditButtons';
+import EditButtons from 'src/components/toolbar/horizontal/EditButtons';
 import Iconify from 'src/components/Iconify';
 import ResetPlaygroundModal from 'src/components/playground/Toolbar/ResetPlaygroundModal';
 

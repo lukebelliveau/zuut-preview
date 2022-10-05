@@ -22,7 +22,7 @@ import {
   fetchWaterItems,
   IItemGroup,
 } from 'src/lib/itemsLibrary';
-import { ItemNavListProps, ItemNavSectionProps } from 'src/components/nav-section';
+import { ItemNavListProps, ItemNavSectionProps } from 'src/components/toolbar';
 import queryKeys from 'src/lib/queryKeys';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import WindowItem from 'src/lib/item/windowitem';

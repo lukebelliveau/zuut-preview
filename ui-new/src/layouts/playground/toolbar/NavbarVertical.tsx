@@ -13,7 +13,7 @@ import { NAVBAR } from '../../../config';
 // components
 import Logo from '../../../components/Logo';
 import Scrollbar from '../../../components/Scrollbar';
-import { NavSectionVertical } from '../../../components/nav-section';
+import { NavSectionVertical } from '../../../components/toolbar';
 //
 import { useQueryItemsNavConfig } from './NavConfig';
 

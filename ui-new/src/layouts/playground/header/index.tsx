@@ -16,9 +16,9 @@ import { IconButtonAnimate } from '../../../components/animate';
 import LanguagePopover from './LanguagePopover';
 import ContactsPopover from './ContactsPopover';
 import NotificationsPopover from './NotificationsPopover';
-import NavbarHorizontal from '../navbar/NavbarHorizontal';
-import { NavSectionHorizontal } from 'src/components/nav-section';
-import { useQueryItemsNavConfig } from '../navbar/NavConfig';
+import NavbarHorizontal from '../toolbar';
+import { NavSectionHorizontal } from 'src/components/toolbar';
+import { useQueryItemsNavConfig } from '../toolbar/NavConfig';
 
 // ----------------------------------------------------------------------
 
