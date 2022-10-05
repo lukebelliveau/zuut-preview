@@ -168,7 +168,7 @@ export default function InventoryDrawer() {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          sx={{ py: 2, pr: 1, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
+          sx={{ py: 2, pr: 2.5, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
         >
           <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
             <SelectButtonIcon
@@ -195,7 +195,7 @@ export default function InventoryDrawer() {
             to={shoppingCartUrl}
             target="_blank"
             rel="noopener noreferrer"
-            disabled={items.length < 1}
+            disabled={selectedIds.length < 1}
           >
             Open Cart {selectedIds.length > 0 && `(${selectedIds.length})`}
           </Button>
