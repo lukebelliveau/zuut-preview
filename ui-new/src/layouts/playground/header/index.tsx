@@ -106,24 +106,7 @@ export default function PlaygroundHeader({
         disableGutters
       >
         <Logo sx={{ mr: 2.5 }} />
-        {/* {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />}
-
-        {!isDesktop && (
-          <IconButtonAnimate onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
-            <Iconify icon="eva:menu-2-fill" />
-          </IconButtonAnimate>
-        )} */}
-
-        {/* <NavbarHorizontal /> */}
         <ItemsHeader />
-
-        {/* <Box sx={{ flexGrow: 1 }} /> */}
-
-        {/* <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <LanguagePopover />
-          <NotificationsPopover />
-          <ContactsPopover />
-        </Stack> */}
       </Toolbar>
     </RootStyle>
   );

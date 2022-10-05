@@ -72,6 +72,9 @@ export default function MainHeader() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            '&.MuiContainer-root': {
+              margin: 0,
+            },
           }}
         >
           <Logo />
