@@ -27,9 +27,11 @@ const Loadable = (Component: ElementType) => (props: any) => {
   const { isAuthenticated } = useAuth();
 
   const isDashboard = pathname.includes('/dashboard') && isAuthenticated;
+  const isHome = pathname === '/';
+  console.log(isHome);
 
   return (
-    <Suspense fallback={<LoadingScreen isDashboard={isDashboard} />}>
+    <Suspense fallback={isHome ? null : <LoadingScreen isDashboard={isDashboard} />}>
       <Component {...props} />
     </Suspense>
   );
@@ -110,11 +112,12 @@ const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // PLAYGROUND
-const GeneralPlaygroundApp = Loadable(lazy(() => import('../pages/playground/PlaygroundApp')));
 const PlaygroundLayout = Loadable(lazy(() => import('../layouts/playground')));
+const GeneralPlaygroundApp = Loadable(lazy(() => import('../pages/playground/PlaygroundApp')));
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
+// const HomePage = lazy(() => import('../pages/Home'));
 // const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
 // const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 // const Page403 = Loadable(lazy(() => import('../pages/Page403')));
