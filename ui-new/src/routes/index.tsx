@@ -28,7 +28,6 @@ const Loadable = (Component: ElementType) => (props: any) => {
 
   const isDashboard = pathname.includes('/dashboard') && isAuthenticated;
   const isHome = pathname === '/';
-  console.log(isHome);
 
   return (
     <Suspense fallback={isHome ? null : <LoadingScreen isDashboard={isDashboard} />}>

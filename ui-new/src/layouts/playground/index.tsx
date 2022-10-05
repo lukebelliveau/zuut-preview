@@ -12,8 +12,8 @@ import { HEADER, NAVBAR } from '../../config';
 //
 import PlaygroundHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
-import ControlPanelDrawer from '../../components/playground/controlPanelDrawer';
-import InventoryDrawer from 'src/components/playground/inventoryDrawer';
+import ControlPanelDrawer from '../../components/playground/controlPanel';
+import InventoryDrawer from 'src/components/playground/inventory';
 import {
   handleDeleteOnKeyDown,
   handleEscOnKeyDown,

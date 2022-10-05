@@ -24,7 +24,7 @@ import { useSelectItemById } from 'src/redux/features/items/itemsSelectors';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
 import QuickAdds from './QuickAdds';
 import PlaceableItem, { isPlaceableItem } from 'src/lib/item/placeableItem';
-import { INVENTORY_HEADER_BOTTOM } from '../inventoryDrawer';
+import { INVENTORY_HEADER_BOTTOM } from '../inventory';
 
 // ----------------------------------------------------------------------
 
