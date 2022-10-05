@@ -55,9 +55,10 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
-
+export let mixpanelTracking = true;
 if (process.env.NODE_ENV === 'development') {
   console.log('IN DEVELOPMENT MODE: Opting out of Mixpanel tracking.');
+  mixpanelTracking = false;
   // mixpanel.opt_out_tracking();
 } else {
   mixpanel.init('c7637bf2a9b25ff7582c25079489ae5b', { debug: true });
