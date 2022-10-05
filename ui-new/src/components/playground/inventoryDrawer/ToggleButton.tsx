@@ -7,13 +7,14 @@ import cssStyles from '../../../utils/cssStyles';
 import { IconButtonAnimate } from '../../animate';
 import { AnimatePresence, m } from 'framer-motion';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import { useSelectAllItems } from 'src/redux/features/items/itemsSelectors';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(m.span)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
-  left: 20,
-  bottom: 80,
+  left: 10,
+  bottom: 10,
   position: 'fixed',
   marginTop: theme.spacing(-3),
   padding: theme.spacing(0.5),
@@ -51,6 +52,7 @@ const ToggleButton = ({
   onToggle: VoidFunction;
 }) => {
   const theme = useTheme();
+  const itemStates = useSelectAllItems();
 
   const hoverColor = open ? theme.palette.secondary.main : theme.palette.primary.main;
   return (
@@ -60,7 +62,7 @@ const ToggleButton = ({
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      <Tooltip title={open ? 'Close Inventory' : 'Open Inventory'} placement="left">
+      <Tooltip open title={itemStates.length > 0 ? itemStates.length : ''} placement="left">
         <IconButtonAnimate
           color="inherit"
           // color={theme.palette.error}

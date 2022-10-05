@@ -50,6 +50,7 @@ import { isWallItem } from 'src/lib/item/wallItem';
 import { isModifierItem } from 'src/lib/item/modifierItem';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { removeItems } from 'src/redux/features/items/itemsSlice';
+import useResponsive from 'src/hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 
@@ -90,13 +91,14 @@ const HackyHeaderSpacer = () => {
 };
 
 export default function InventoryDrawer() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
   const itemStates = useSelectAllItems();
   const selectedIds = useAppSelector(selectSelectedItemId);
   const store = useStore() as AppStore;
   const theme = useTheme();
+  const isMobile = useResponsive('down', 'sm');
 
   const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
   const itemIds = useSelectAllItemIds();
@@ -159,7 +161,7 @@ export default function InventoryDrawer() {
     store.dispatch(unselectAll());
   };
 
-  return (
+  const inventoryBody = (
     <RootStyle {...varSidebar}>
       <Stack>
         <Stack
@@ -238,81 +240,20 @@ export default function InventoryDrawer() {
     </RootStyle>
   );
 
-  // return (
-  //   <>
-  //     {/* {<AnimatedToggleButton open={open} onToggle={handleToggle} />} */}
+  if (!isMobile) {
+    return inventoryBody;
+  }
 
-  //     <AnimatePresence>
-  //       {true && (
-  //         <>
-  //           (
-  //           <RootStyle {...varSidebar}>
-  //             <Stack>
-  //               <Stack
-  //                 direction="row"
-  //                 alignItems="center"
-  //                 justifyContent="space-between"
-  //                 sx={{ py: 2, pr: 1, pl: 2.5, height: INVENTORY_HEADER_HEIGHT }}
-  //               >
-  //                 <IconButton onClick={selectButtonOnClick} disabled={items.length < 1}>
-  //                   <SelectButtonIcon
-  //                     sx={{
-  //                       color: allItemsSelected ? 'default' : theme.palette.primary.main,
-  //                     }}
-  //                   />
-  //                 </IconButton>
-  //                 <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
-  //                   Inventory
-  //                 </Typography>
+  /**
+   * hide drawer and show toggle button on mobile
+   */
+  return (
+    <>
+      {<AnimatedToggleButton open={open} onToggle={handleToggle} />}
 
-  //                 {/* <IconButton onClick={handleClose}>
-  //                   <Iconify icon={'eva:close-fill'} width={20} height={20} />
-  //                 </IconButton> */}
-
-  //                 {/* hacky spacer to center Inventory title */}
-  //                 <IconButton>
-  //                   <DoneAllIcon sx={{ visibility: 'hidden' }} />
-  //                 </IconButton>
-  //               </Stack>
-  //               <Button
-  //                 sx={{ py: 2, pr: 1, pl: 2.5 }}
-  //                 component={RouterLink}
-  //                 to={shoppingCartUrl}
-  //                 target="_blank"
-  //                 rel="noopener noreferrer"
-  //                 disabled={items.length < 1}
-  //               >
-  //                 Open Shopping Cart
-  //               </Button>
-  //             </Stack>
-
-  //             <Divider sx={{ borderStyle: 'dashed' }} />
-
-  //             <Scrollbar sx={{ flexGrow: 1 }}>
-  //               <List>
-  //                 {items
-  //                   .filter((item) => !isModifierItem(item) && !isWallItem(item))
-  //                   .map((item) => {
-  //                     return (
-  //                       <InventoryItem
-  //                         key={item.id}
-  //                         item={item}
-  //                         selectedIds={selectedIds}
-  //                         toggleItemSelected={toggleItemSelected}
-  //                         handleItemKeyDown={handleItemKeyDown}
-  //                         selectItemFromInventory={selectItemFromInventory}
-  //                       />
-  //                     );
-  //                   })}
-  //               </List>
-  //             </Scrollbar>
-  //           </RootStyle>
-  //           )
-  //         </>
-  //       )}
-  //     </AnimatePresence>
-  //   </>
-  // );
+      <AnimatePresence>{open && <>({inventoryBody})</>}</AnimatePresence>
+    </>
+  );
 }
 
 const InventoryItem = ({
