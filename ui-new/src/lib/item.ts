@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { Modifiers } from './item/placeableItem';
 
 export interface AmazonProduct {
   recordId: string;
@@ -11,6 +12,7 @@ export interface IItem {
   copy(): Item;
   recordId?: string;
   amazonProducts?: AmazonProduct[] | undefined;
+  modifiers?: Modifiers;
 }
 
 export interface ItemArgs {

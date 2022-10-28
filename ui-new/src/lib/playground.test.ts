@@ -26,7 +26,7 @@ describe('Playground', () => {
   });
 
   describe('#zoomIn', () => {
-    it('increases zoom by 5%', () => {
+    it('increases zoom by 15%', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, 1, plan);
       playground.zoomIn({
@@ -35,14 +35,14 @@ describe('Playground', () => {
         stageX: 20,
         stageY: 20,
       });
-      expect(playground.scale).toBe(1.05);
-      expect(playground.centerX).toBe(20.5);
-      expect(playground.centerY).toBe(20.5);
+      expect(playground.scale).toBe(1.15);
+      expect(playground.centerX).toBe(21.5);
+      expect(playground.centerY).toBe(21.5);
     });
   });
 
   describe('#zoomOut', () => {
-    it('decreases zoom by 5%', () => {
+    it('decreases zoom by 15%', () => {
       const plan = new Plan('square', 1_000, 10_000, 12);
       const playground = new Playground(1_000, 1_000, 1, plan);
       playground.zoomOut({
@@ -51,9 +51,9 @@ describe('Playground', () => {
         stageX: 20,
         stageY: 20,
       });
-      expect(playground.scale).toBe(0.95);
-      expect(playground.centerX).toBe(19.5);
-      expect(playground.centerY).toBe(19.5);
+      expect(playground.scale).toBe(0.85);
+      expect(playground.centerX).toBe(18.5);
+      expect(playground.centerY).toBe(18.5);
     });
   });
 });

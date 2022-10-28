@@ -1,15 +1,12 @@
-import { isTupleTypeNode } from 'typescript';
 import { v4 } from 'uuid';
 import { feetToMm } from '../conversions';
 import { IItem } from '../item';
 import { Layer } from '../layer';
 import Plan from '../plan';
 import Playground from '../playground';
+import { initBambooStick, initSoil } from './initModifiers';
 import ModifierItem from './modifierItem';
-import PlaceableItem, {
-  CollisionState,
-  PlacementShadow,
-} from './placeableItem';
+import PlaceableItem, { CollisionState, PlacementShadow } from './placeableItem';
 import PotItem from './potItem';
 
 describe('PlaceableItem', () => {
@@ -41,13 +38,13 @@ describe('PlaceableItem', () => {
         height: feetToMm(100),
         description: '',
         rotation: 0,
-        modifiers: { soil: [] },
+        modifiers: { soil: initSoil() },
       });
 
       placeableItem.addModifier(soilItem);
 
-      expect(placeableItem.modifiers.soil.length).toBe(1);
-      expect(placeableItem.modifiers.soil[0]).toBe(soilItem.id);
+      expect(placeableItem.modifiers.soil.ids.length).toBe(1);
+      expect(placeableItem.modifiers.soil.ids[0]).toBe(soilItem.id);
     });
 
     it('adds an additional soil modifier', () => {
@@ -63,15 +60,15 @@ describe('PlaceableItem', () => {
         height: feetToMm(100),
         description: '',
         rotation: 0,
-        modifiers: { soil: [] },
+        modifiers: { soil: initSoil() },
       });
 
       placeableItem.addModifier(soilItem1);
       placeableItem.addModifier(soilItem2);
 
-      expect(placeableItem.modifiers.soil.length).toBe(2);
-      expect(placeableItem.modifiers.soil[0]).toBe(soilItem1.id);
-      expect(placeableItem.modifiers.soil[1]).toBe(soilItem2.id);
+      expect(placeableItem.modifiers.soil.ids.length).toBe(2);
+      expect(placeableItem.modifiers.soil.ids[0]).toBe(soilItem1.id);
+      expect(placeableItem.modifiers.soil.ids[1]).toBe(soilItem2.id);
     });
 
     it('adds multiple types of modifiers', () => {
@@ -87,16 +84,16 @@ describe('PlaceableItem', () => {
         height: feetToMm(100),
         description: '',
         rotation: 0,
-        modifiers: { soil: [], bamboo: [] },
+        modifiers: { soil: initSoil(), bamboo: initBambooStick() },
       });
 
       placeableItem.addModifier(soilItem);
       placeableItem.addModifier(bambooItem);
 
-      expect(placeableItem.modifiers.soil.length).toBe(1);
-      expect(placeableItem.modifiers.bamboo.length).toBe(1);
-      expect(placeableItem.modifiers.soil[0]).toBe(soilItem.id);
-      expect(placeableItem.modifiers.bamboo[0]).toBe(bambooItem.id);
+      expect(placeableItem.modifiers.soil.ids.length).toBe(1);
+      expect(placeableItem.modifiers.bamboo.ids.length).toBe(1);
+      expect(placeableItem.modifiers.soil.ids[0]).toBe(soilItem.id);
+      expect(placeableItem.modifiers.bamboo.ids[0]).toBe(bambooItem.id);
     });
   });
 
@@ -199,9 +196,7 @@ describe('PlaceableItem', () => {
       testItem.drag({ x: 4000, y: 2600 }, itemList, playground);
 
       expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
-      expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.CONFLICTED);
     });
   });
 
@@ -389,14 +384,10 @@ describe('PlaceableItem', () => {
       items.push(testItem);
 
       expect(testItem.collisionState).toBe(CollisionState.NEUTRAL);
-      expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.NEUTRAL);
       testItem.updateCollisions(items, playground);
       expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
-      expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.CONFLICTED);
     });
 
     it('has collisionState=CONFLICTED if it is not a WallItem and straddles a wall of the plan', () => {
@@ -463,14 +454,10 @@ describe('PlaceableItem', () => {
       items.push(testItem);
 
       expect(testItem.collisionState).toBe(CollisionState.CONFLICTED);
-      expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.CONFLICTED);
       testItem.updateCollisions(items, playground);
       expect(testItem.collisionState).toBe(CollisionState.NEUTRAL);
-      expect(testItem.placementShadow?.collisionState).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(testItem.placementShadow?.collisionState).toBe(CollisionState.NEUTRAL);
     });
   });
 
@@ -492,9 +479,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(1001),
         width: feetToMm(1001),
       });
-      expect(item.collisionStateBetween(item, other)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(item.collisionStateBetween(item, other)).toBe(CollisionState.NEUTRAL);
     });
     it('returns neutral if only the borders overlap', () => {
       const item = new PlaceableItem({
@@ -513,9 +498,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(100),
         width: feetToMm(100),
       });
-      expect(item.collisionStateBetween(item, otherRight)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(item.collisionStateBetween(item, otherRight)).toBe(CollisionState.NEUTRAL);
       const otherBelow = new PlaceableItem({
         name: '',
         id: '3',
@@ -524,9 +507,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(100),
         width: feetToMm(100),
       });
-      expect(item.collisionStateBetween(item, otherBelow)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(item.collisionStateBetween(item, otherBelow)).toBe(CollisionState.NEUTRAL);
       const otherLeft = new PlaceableItem({
         name: '',
         id: '4',
@@ -535,9 +516,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(100),
         width: feetToMm(100),
       });
-      expect(item.collisionStateBetween(item, otherLeft)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(item.collisionStateBetween(item, otherLeft)).toBe(CollisionState.NEUTRAL);
       const otherTop = new PlaceableItem({
         name: '',
         id: '5',
@@ -547,9 +526,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(0),
         collisionState: CollisionState.NEUTRAL,
       });
-      expect(item.collisionStateBetween(item, otherTop)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(item.collisionStateBetween(item, otherTop)).toBe(CollisionState.NEUTRAL);
     });
     it('returns true if other item is in the northeast corner', () => {
       const item = new PlaceableItem({
@@ -568,9 +545,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(10),
         width: feetToMm(10),
       });
-      expect(item.collisionStateBetween(item, other)).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
     it('returns true if other item is in the southeast corner', () => {
       const item = new PlaceableItem({
@@ -589,9 +564,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(10),
         width: feetToMm(10),
       });
-      expect(item.collisionStateBetween(item, other)).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
     it('returns true if other item is in the southwest corner', () => {
       const item = new PlaceableItem({
@@ -610,9 +583,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(10),
         width: feetToMm(10),
       });
-      expect(item.collisionStateBetween(item, other)).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
     it('returns true if other item is in the northwest corner', () => {
       const item = new PlaceableItem({
@@ -631,9 +602,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(10),
         width: feetToMm(10),
       });
-      expect(item.collisionStateBetween(item, other)).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
   });
 
@@ -650,10 +619,7 @@ describe('PlaceableItem', () => {
         length: 20,
       });
 
-      const placementShadow = item.createDefaultPlacementShadow(
-        { x: 300, y: 600 },
-        playground
-      );
+      const placementShadow = item.createDefaultPlacementShadow({ x: 300, y: 600 }, playground);
 
       /**
        * 309.8 === 304.8 (300mm from placementShadow, normalized to 3inches) + 5 (placementShadow.width)

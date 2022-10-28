@@ -3,7 +3,6 @@ import { IItem, Item } from '../item';
 import {
   CollisionState,
   IPlaceableItem,
-  Modifiers,
   PlaceableItemArgs,
   PlacementShadow,
 } from './placeableItem';
@@ -14,6 +13,7 @@ import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
 import Playground from '../playground';
 import { areExactlySharingBorder } from '../geometry/geometry';
 import { isTent } from './tentItem';
+import { initRopeRatchets } from './initModifiers';
 
 export const DUCT_ITEM_TYPE = 'DuctItem';
 
@@ -21,7 +21,7 @@ export function isDuctItem(item: Item): item is DuctItem {
   return item instanceof DuctItem;
 }
 
-const defaultDuctModifiers = { 'Rope Ratchets': [] };
+const defaultDuctModifiers = { 'Rope Ratchets': initRopeRatchets() };
 
 export default class DuctItem extends CeilingPlaceableItem {
   type = DUCT_ITEM_TYPE;

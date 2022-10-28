@@ -1,14 +1,9 @@
 import CeilingGrowspaceItem from './ceilingGrowspaceItem';
-import {
-  CollisionState,
-  IPlaceableItem,
-  Modifiers,
-  PlaceableItemArgs,
-  PlacementShadow,
-} from './placeableItem';
+import { CollisionState, IPlaceableItem, PlaceableItemArgs } from './placeableItem';
 import LightImage from '../../assets/items/led_light.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
+import { initRopeRatchets } from './initModifiers';
 
 export const LIGHT_ITEM_TYPE = 'LightItem';
 
@@ -16,7 +11,7 @@ export function isLightItem(item: Item): item is LightItem {
   return (item as LightItem).type === LIGHT_ITEM_TYPE;
 }
 
-const defaultLightModifiers = { 'Rope Ratchets': [] };
+const defaultLightModifiers = { 'Rope Ratchets': initRopeRatchets() };
 
 export default class LightItem extends CeilingGrowspaceItem implements IPlaceableItem {
   type = LIGHT_ITEM_TYPE;

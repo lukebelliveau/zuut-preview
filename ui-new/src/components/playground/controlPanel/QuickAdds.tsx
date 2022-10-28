@@ -44,11 +44,11 @@ export default function QuickAdds({ item }: { item: PlaceableItem }) {
   }
 
   function decrementModifier(modifierName: string) {
-    dispatch(decrementModifierThunk({ itemId: item.id, modifierName }));
+    dispatch(decrementModifierThunk({ itemId: item.id, modifier: item.modifiers[modifierName] }));
   }
 
   function incrementModifier(modifierName: string) {
-    dispatch(incrementModifierThunk({ itemId: item.id, modifierName }));
+    dispatch(incrementModifierThunk({ itemId: item.id, modifier: item.modifiers[modifierName] }));
   }
 
   if (Object.keys(item.modifiers).length === 0) return null;
@@ -73,7 +73,7 @@ export default function QuickAdds({ item }: { item: PlaceableItem }) {
                   <RemoveIcon sx={{ height: '10px' }} />
                 </IconButton>
                 <StyledTypography>
-                  {item.modifiers ? item.modifiers[modifierName].length : 0}
+                  {item.modifiers ? item.modifiers[modifierName].ids.length : 0}
                 </StyledTypography>
                 <IconButton
                   onClick={() => incrementModifier(modifierName)}

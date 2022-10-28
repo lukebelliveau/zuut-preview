@@ -8,6 +8,13 @@ import PlaceableItem, {
 import { v4 } from 'uuid';
 import { Item } from '../item';
 import WaterContainerImage from '../../assets/items/water_container.png';
+import {
+  initAirPump,
+  initAirStone,
+  initHose,
+  initSprayHandle,
+  initWaterPump,
+} from './initModifiers';
 
 export const WATER_ITEM_TYPE = 'WaterItem';
 
@@ -16,11 +23,11 @@ export function isWaterItem(item: Item): item is WaterItem {
 }
 
 const defaultWaterModifiers = {
-  'Water Pump': [],
-  Hose: [],
-  'Spray Handle': [],
-  'Air pump': [],
-  'Air stone': [],
+  'Water Pump': initWaterPump(),
+  Hose: initHose(),
+  'Spray Handle': initSprayHandle(),
+  'Air pump': initAirPump(),
+  'Air stone': initAirStone(),
 };
 
 export default class WaterItem extends PlaceableItem implements IPlaceableItem {

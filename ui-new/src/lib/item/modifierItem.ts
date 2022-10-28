@@ -12,11 +12,13 @@ export default class ModifierItem {
   type: string = MODIFIER_ITEM_TYPE;
   name: string;
   amazonProducts: AmazonProduct[] | undefined;
+  recordId?: string;
 
-  constructor({ name, id = v4(), amazonProducts = undefined }: ItemArgs) {
+  constructor({ name, id = v4(), amazonProducts = undefined, recordId }: ItemArgs) {
     this.id = id;
     this.name = name;
     this.amazonProducts = amazonProducts;
+    this.recordId = recordId;
   }
 
   copy(): ModifierItem {
@@ -24,6 +26,7 @@ export default class ModifierItem {
       name: this.name,
       id: v4(),
       amazonProducts: this.amazonProducts,
+      recordId: this.recordId,
     });
   }
 }

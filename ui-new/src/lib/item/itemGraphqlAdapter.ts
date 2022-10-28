@@ -7,9 +7,7 @@ import MiscItem, { MISC_ITEM_TYPE } from './miscItem';
 import RoomItem, { ROOM_ITEM_TYPE } from './roomItem';
 import WallItem, { WALL_ITEM_TYPE } from './wallItem';
 import PotItem, { POT_ITEM_TYPE } from './potItem';
-import CeilingGrowspaceItem, {
-  CEILING_GROWSPACE_ITEM_TYPE,
-} from './ceilingGrowspaceItem';
+import CeilingGrowspaceItem, { CEILING_GROWSPACE_ITEM_TYPE } from './ceilingGrowspaceItem';
 import LightItem, { LIGHT_ITEM_TYPE } from './lightItem';
 import { isPlaceableItem, Modifiers } from './placeableItem';
 import DuctItem, { DUCT_ITEM_TYPE } from './ductItem';
@@ -20,9 +18,7 @@ import CarbonFilterItem, { CARBON_FILTER_ITEM_TYPE } from './carbonFilterItem';
 import DoorItem, { DOOR_ITEM_TYPE } from './doorItem';
 import WaterItem, { WATER_ITEM_TYPE } from './waterItem';
 import ExhaustFanItem, { EXHAUST_FAN_ITEM_TYPE } from './exhaustFanItem';
-import OscillatingFanItem, {
-  OSCILLATING_FAN_ITEM_TYPE,
-} from './oscillatingFanItem';
+import OscillatingFanItem, { OSCILLATING_FAN_ITEM_TYPE } from './oscillatingFanItem';
 import FloorACItem, { FLOOR_AC_ITEM_TYPE } from './floorACItem';
 import HumidifierItem, { HUMIDIFIER_ITEM_TYPE } from './humidifierItem';
 import DehumidifierItem, { DEHUMIDIFIER_ITEM_TYPE } from './dehumidifierItem';

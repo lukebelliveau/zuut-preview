@@ -11,6 +11,30 @@ import PotImage from '../../assets/items/pot.png';
 
 import GrowspaceItem from './growspaceItem';
 import { Item } from '../item';
+import {
+  BAMBOO_STICK,
+  BINDER_CLIPS,
+  COCO_COIR,
+  initBambooStick,
+  initBinderClips,
+  initCocoCoir,
+  initIrrigationSystem,
+  initPlantTies,
+  initPlantYoyos,
+  initPotHolders,
+  initSaucers,
+  initSoil,
+  initTrays,
+  initWateringGlobes,
+  IRRIGATION_SYSTEM,
+  PLANT_TIES,
+  PLANT_YOYOS,
+  POT_HOLDERS,
+  SAUCERS,
+  SOIL,
+  TRAYS,
+  WATERING_GLOBES,
+} from './initModifiers';
 
 export const POT_ITEM_TYPE = 'PotItem';
 
@@ -19,19 +43,20 @@ export function isPotItem(item: Item): item is PotItem {
 }
 
 const defaultPotModifiers = {
-  'Irrigation System': [],
-  'Watering globes': [],
-  'Bamboo Stick': [],
-  Saucers: [],
-  Trays: [],
-  'Pot holders': [],
-  Soil: [],
-  'Binder clips': [],
-  'Plant ties': [],
-  Seeds: [],
-  'Plant Yoyos': [],
-  'Coco Coir': [],
+  [IRRIGATION_SYSTEM]: initIrrigationSystem(),
+  [WATERING_GLOBES]: initWateringGlobes(),
+  [BAMBOO_STICK]: initBambooStick(),
+  [SAUCERS]: initSaucers(),
+  [TRAYS]: initTrays(),
+  [POT_HOLDERS]: initPotHolders(),
+  [SOIL]: initSoil(),
+  [BINDER_CLIPS]: initBinderClips(),
+  [PLANT_TIES]: initPlantTies(),
+  // Seeds: [],
+  [PLANT_YOYOS]: initPlantYoyos(),
+  [COCO_COIR]: initCocoCoir(),
 };
+
 export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   type: string = POT_ITEM_TYPE;
 

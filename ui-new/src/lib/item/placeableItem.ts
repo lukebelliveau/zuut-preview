@@ -34,7 +34,13 @@ export enum CollisionState {
   CONNECTED,
 }
 
-export type Modifiers = { [key: string]: string[] };
+export interface Modifier {
+  ids: string[];
+  recordId?: string;
+  name: string;
+}
+
+export type Modifiers = { [key: string]: Modifier };
 
 export interface IPlaceableItem extends IItem, GeometryObject {
   place(position: Point): void;
@@ -410,24 +416,27 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
   }
 
   addModifier(modifier: ModifierItem): void {
-    const newIdsForModifier = [...this.modifiers[modifier.name], modifier.id];
+    const newModifier = {
+      ...this.modifiers[modifier.name],
+      ids: [...this.modifiers[modifier.name].ids, modifier.id],
+    };
 
     const newModifiers = {
       ...this.modifiers,
-      [modifier.name]: newIdsForModifier,
+      [modifier.name]: newModifier,
     };
 
     this.modifiers = newModifiers;
   }
 
   removeModifier(modifierToDelete: ModifierItem): void {
-    const newIdsForModifier = this.modifiers[modifierToDelete.name].filter(
+    const newIdsForModifier = this.modifiers[modifierToDelete.name].ids.filter(
       (modifierId) => modifierId !== modifierToDelete.id
     );
 
     const newModifiers = {
       ...this.modifiers,
-      [modifierToDelete.name]: newIdsForModifier,
+      [modifierToDelete.name]: { ...modifierToDelete, ids: newIdsForModifier },
     };
 
     this.modifiers = newModifiers;

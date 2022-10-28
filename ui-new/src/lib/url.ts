@@ -19,7 +19,19 @@ export const shoppingCartUrlWithRecordIds = (items: IItem[], selectedIds: string
   const recordIds: string[] = [];
 
   items.forEach((item) => {
-    if (item.recordId && selectedIds.includes(item.id)) recordIds.push(item.recordId);
+    if (item.recordId && selectedIds.includes(item.id)) {
+      recordIds.push(item.recordId);
+      if (item.modifiers) {
+        Object.values(item.modifiers).forEach((modifier) => {
+          // add one recordId per modifier for each time it's been added to the item
+          if (modifier.recordId && modifier.ids.length > 0) {
+            for (let i = 0; i < modifier.ids.length; i++) {
+              recordIds.push(modifier.recordId);
+            }
+          }
+        });
+      }
+    }
   });
 
   const serializedRecordIds = JSON.stringify(recordIds);

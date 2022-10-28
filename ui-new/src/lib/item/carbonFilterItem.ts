@@ -3,6 +3,7 @@ import { CollisionState, IPlaceableItem, PlaceableItemArgs } from './placeableIt
 import CarbonFilterImage from '../../assets/items/carbon_filter.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
+import { initRopeRatchets } from './initModifiers';
 
 export const CARBON_FILTER_ITEM_TYPE = 'CarbonFilterItem';
 
@@ -10,7 +11,9 @@ export function isCarbonFilterItem(item: Item): item is CarbonFilterItem {
   return (item as CarbonFilterItem).type === CARBON_FILTER_ITEM_TYPE;
 }
 
-const defaultFilterModifiers = { 'Rope Ratchets': [] };
+const defaultFilterModifiers = {
+  'Rope Ratchets': initRopeRatchets(),
+};
 
 export default class CarbonFilterItem extends CeilingGrowspaceItem implements IPlaceableItem {
   type = CARBON_FILTER_ITEM_TYPE;

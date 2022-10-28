@@ -1,7 +1,7 @@
 import { Container, Button } from '@mui/material';
 import { ZUUT_DEMO_STATE } from 'src/redux/store';
 import { ErrorBoundary } from 'react-error-boundary';
-import mixpanel from 'mixpanel-browser';
+import mixpanelTrack from 'src/utils/mixpanelTrack';
 
 const TopLevelErrorFallback = ({
   error,
@@ -14,7 +14,7 @@ const TopLevelErrorFallback = ({
   toTrack?: { [key: string]: any };
   errorName?: string;
 }) => {
-  mixpanel.track(errorName ? errorName : 'Top Level Error', {
+  mixpanelTrack(errorName ? errorName : 'Top Level Error', {
     errorMessage: error.message,
     ...toTrack,
   });

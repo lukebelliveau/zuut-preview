@@ -1,11 +1,12 @@
 import { v4 } from 'uuid';
-import { CollisionState, Modifiers, PlaceableItemArgs, PlacementShadow } from './placeableItem';
+import { CollisionState, PlaceableItemArgs } from './placeableItem';
 import CurvedDuctImage from '../../assets/items/curved_duct.png';
 import DuctItem from './ductItem';
+import { initRopeRatchets } from './initModifiers';
 
 export const CURVED_DUCT_ITEM_TYPE = 'CurvedDuctItem';
 
-const defaultDuctModifiers = { 'Rope Ratchets': [] };
+const defaultDuctModifiers = { 'Rope Ratchets': initRopeRatchets() };
 
 export default class CurvedDuctItem extends DuctItem {
   type = CURVED_DUCT_ITEM_TYPE;

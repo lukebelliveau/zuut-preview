@@ -1,14 +1,9 @@
 import CeilingGrowspaceItem from './ceilingGrowspaceItem';
-import {
-  CollisionState,
-  IPlaceableItem,
-  Modifiers,
-  PlaceableItemArgs,
-  PlacementShadow,
-} from './placeableItem';
+import { CollisionState, IPlaceableItem, PlaceableItemArgs } from './placeableItem';
 import ExhaustFanImage from '../../assets/items/exhaust_fan.png';
 import { v4 } from 'uuid';
 import { Item } from '../item';
+import { initRopeRatchets } from './initModifiers';
 
 export const EXHAUST_FAN_ITEM_TYPE = 'ExhaustFanItem';
 
@@ -16,7 +11,7 @@ export function isExhaustFanItem(item: Item): item is ExhaustFanItem {
   return (item as ExhaustFanItem).type === EXHAUST_FAN_ITEM_TYPE;
 }
 
-const defaultFanModifiers = { 'Rope Ratchets': [] };
+const defaultFanModifiers = { 'Rope Ratchets': initRopeRatchets() };
 
 export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPlaceableItem {
   type = EXHAUST_FAN_ITEM_TYPE;

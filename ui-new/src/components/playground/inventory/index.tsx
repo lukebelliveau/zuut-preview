@@ -294,19 +294,17 @@ const InventoryItem = ({
         </Typography>
       </ListItem>
       {isPlaceableItem(item)
-        ? Object.entries(item.modifiers).map(([modifierName, modifierIds]) => {
-            if (modifierIds.length > 0) {
+        ? Object.entries(item.modifiers).map(([modifierName, modifiers]) => {
+            if (modifiers.ids.length > 0) {
               return (
                 <ListItem
                   key={modifierName}
                   sx={{
-                    // display: 'flex',
-                    // justifyContent: 'flex-end',
                     marginLeft: '42px',
                   }}
                 >
                   <Typography role="menuitem">
-                    {`${modifierName} (x${modifierIds.length})`}
+                    {`${modifierName} (x${modifiers.ids.length})`}
                   </Typography>
                 </ListItem>
               );
