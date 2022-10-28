@@ -181,6 +181,10 @@ export const amazonProductFields: { [key: string]: AmazonProductField } = {
     name: 'timer',
     fieldId: 'fldAFFTnsQjKNuEAI',
   },
+  unitCount: {
+    name: 'unitCount',
+    fieldId: 'fldPDjzfEnMCOZxuH',
+  },
   rating: {
     name: 'rating',
     fieldId: 'fldqvnx9YdZsSZZZR',

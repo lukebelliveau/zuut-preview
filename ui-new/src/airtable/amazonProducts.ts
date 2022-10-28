@@ -40,6 +40,9 @@ export interface AmazonProductRecord {
   capacity: string;
   humiditySensor: string;
   timer: string;
+
+  unitCount: string;
+
   rating: string;
   price: string;
 }
@@ -93,6 +96,7 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
     const capacity = record.get(amazonProductFields.capacity.name);
     const humiditySensor = record.get(amazonProductFields.humiditySensor.name);
     const timer = record.get(amazonProductFields.timer.name);
+    const unitCount = record.get(amazonProductFields.unitCount.name);
     const rating = record.get(amazonProductFields.rating.name);
     const price = record.get(amazonProductFields.price.name);
 
@@ -139,6 +143,7 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
       capacity: capacity ? capacity.toString() : NOT_AVAILABLE,
       humiditySensor: humiditySensor ? humiditySensor.toString() : NOT_AVAILABLE,
       timer: timer ? timer.toString() : NOT_AVAILABLE,
+      unitCount: unitCount ? unitCount.toString() : '1',
       rating: rating ? rating.toString() : NOT_AVAILABLE,
       price: price ? price.toString() : NOT_AVAILABLE,
     };
@@ -196,6 +201,7 @@ export const selectAmazonProductRecordsByASIN = async (
           amazonProductFields.capacity.fieldId,
           amazonProductFields.humiditySensor.fieldId,
           amazonProductFields.timer.fieldId,
+          amazonProductFields.unitCount.fieldId,
           amazonProductFields.rating.fieldId,
           amazonProductFields.price.fieldId,
         ],
