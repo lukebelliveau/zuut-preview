@@ -286,6 +286,7 @@ const InventoryItem = ({
           sx={{
             fontWeight: selected ? 'bold' : 'default',
             cursor: 'pointer',
+            fontSize: '14px',
           }}
           onKeyDown={(e) => handleItemKeyDown(e, item)}
           onClick={() => selectItemFromInventory(item)}
@@ -303,7 +304,7 @@ const InventoryItem = ({
                     marginLeft: '42px',
                   }}
                 >
-                  <Typography role="menuitem">
+                  <Typography role="menuitem" sx={{ fontSize: '12px' }}>
                     {`${modifierName} (x${modifiers.ids.length})`}
                   </Typography>
                 </ListItem>
