@@ -1,4 +1,4 @@
-import { AmazonProductMap } from '../../../airtable/amazonProducts';
+import { AmazonProductDetailMap } from '../../../airtable/amazonProducts';
 import SortableProductTable from '../SortableProductTable';
 import { CartItem } from '../ShoppingCartTable';
 
@@ -8,7 +8,7 @@ const DehumidifierProductTable = ({
   changeSelectedProductASIN,
 }: {
   item: CartItem;
-  amazonProducts: AmazonProductMap;
+  amazonProducts: AmazonProductDetailMap;
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
@@ -23,6 +23,14 @@ const DehumidifierProductTable = ({
         { label: 'Control', id: 'control', disablePadding: false, numeric: false },
         { label: 'Timer', id: 'timer', disablePadding: false, numeric: false },
         { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Unit Count', id: 'unitCount', disablePadding: false, numeric: false },
+        { label: 'Price per Unit', id: 'pricePerUnit', disablePadding: false, numeric: true },
+        {
+          label: 'Total to purchase',
+          id: 'totalToPurchase',
+          disablePadding: false,
+          numeric: true,
+        },
         { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />

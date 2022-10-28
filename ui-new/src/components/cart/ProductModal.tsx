@@ -31,7 +31,7 @@ import { WATER_ITEM_TYPE } from '../../lib/item/waterItem';
 import WaterProductTable from './productTables/WaterProductTable';
 import { CARBON_FILTER_ITEM_TYPE } from 'src/lib/item/carbonFilterItem';
 import CarbonFilterProductTable from './productTables/CarbonFilterProductTable';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import Iconify from '../Iconify';
 
 interface ProductTableProps {
@@ -143,7 +143,9 @@ const ProductModal = ({
           <IconButton sx={{ visibility: 'hidden', width: 0, height: 0 }}>
             <Iconify icon={'eva:close-fill'} width={0} height={0} />
           </IconButton>
-          <Typography variant="h3">Select Product</Typography>
+          <Typography variant="h3">
+            Select {item.name} (Quantity: {item.quantity})
+          </Typography>
           <IconButton onClick={closeModal}>
             <Iconify icon={'eva:close-fill'} width={20} height={20} />
           </IconButton>

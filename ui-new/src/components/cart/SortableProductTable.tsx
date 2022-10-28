@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
-import { AmazonProductMap, AmazonProductRecord } from 'src/airtable/amazonProducts';
+import { AmazonProductDetail, AmazonProductDetailMap } from 'src/airtable/amazonProducts';
 import { getComparator } from 'src/hooks/useTable';
 import mixpanelTrack from 'src/utils/mixpanelTrack';
 import { CartItem, constructAmazonLinkWithASIN } from './ShoppingCartTable';
@@ -25,13 +25,13 @@ type Order = 'asc' | 'desc';
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof AmazonProductRecord;
+  id: keyof AmazonProductDetail;
   label: string;
   numeric: boolean;
 }
 
 interface SortableProductTableProps {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof AmazonProductRecord) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof AmazonProductDetail) => void;
   order: Order;
   orderBy: string;
   headCells: HeadCell[];
@@ -44,7 +44,7 @@ function SortableProductTableHead({
   headCells,
 }: SortableProductTableProps) {
   const createSortHandler =
-    (property: keyof AmazonProductRecord) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof AmazonProductDetail) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -99,19 +99,19 @@ const SortableProductTable = ({
   headCells,
 }: {
   item: CartItem;
-  amazonProducts: AmazonProductMap;
+  amazonProducts: AmazonProductDetailMap;
   changeSelectedProductASIN: (ASIN: string) => void;
   headCells: HeadCell[];
 }) => {
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof AmazonProductRecord>(headCells[0].id);
+  const [orderBy, setOrderBy] = useState<keyof AmazonProductDetail>(headCells[0].id);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof AmazonProductRecord
+    property: keyof AmazonProductDetail
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -163,6 +163,18 @@ const SortableProductTable = ({
                               align="right"
                             >
                               ${parseFloat(product.price).toFixed(2)}
+                            </TableCell>
+                          );
+                        } else if (headCell.id === 'pricePerUnit') {
+                          return (
+                            <TableCell key={headCell.label} align="right">
+                              ${product.pricePerUnit.toFixed(2)}
+                            </TableCell>
+                          );
+                        } else if (headCell.id === 'totalCost') {
+                          return (
+                            <TableCell key={headCell.label} align="right">
+                              ${product.totalCost.toFixed(2)}
                             </TableCell>
                           );
                         } else if (headCell.id === 'productName') {

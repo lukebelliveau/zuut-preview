@@ -1,4 +1,4 @@
-import { AmazonProductMap } from '../../../airtable/amazonProducts';
+import { AmazonProductDetailMap } from '../../../airtable/amazonProducts';
 import SortableProductTable from '../SortableProductTable';
 import { CartItem } from '../ShoppingCartTable';
 
@@ -8,7 +8,7 @@ const HeaterProductTable = ({
   changeSelectedProductASIN,
 }: {
   item: CartItem;
-  amazonProducts: AmazonProductMap;
+  amazonProducts: AmazonProductDetailMap;
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
@@ -21,6 +21,14 @@ const HeaterProductTable = ({
         { label: 'Thermostat', id: 'thermostat', disablePadding: false, numeric: false },
         { label: 'Coverage', id: 'coverage', disablePadding: false, numeric: false },
         { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Unit Count', id: 'unitCount', disablePadding: false, numeric: false },
+        { label: 'Price per Unit', id: 'pricePerUnit', disablePadding: false, numeric: true },
+        {
+          label: 'Total to purchase',
+          id: 'totalToPurchase',
+          disablePadding: false,
+          numeric: true,
+        },
         { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />

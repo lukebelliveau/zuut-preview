@@ -1,4 +1,4 @@
-import { AmazonProductMap } from '../../../airtable/amazonProducts';
+import { AmazonProductDetailMap } from '../../../airtable/amazonProducts';
 import SortableProductTable from '../SortableProductTable';
 import { CartItem } from '../ShoppingCartTable';
 
@@ -8,7 +8,7 @@ const PotProductTable = ({
   changeSelectedProductASIN,
 }: {
   item: CartItem;
-  amazonProducts: AmazonProductMap;
+  amazonProducts: AmazonProductDetailMap;
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
@@ -41,30 +41,6 @@ const PotProductTable = ({
           disablePadding: false,
           numeric: false,
         },
-        // {
-        //   id: 'unitCount',
-        //   label: 'Unit Count',
-        //   disablePadding: false,
-        //   numeric: false,
-        // },
-        // {
-        //   id: 'totalToPurchase',
-        //   label: 'Total to purchase',
-        //   disablePadding: false,
-        //   numeric: false,
-        // },
-        // {
-        //   id: 'pricePerUnit',
-        //   label: 'Price per Unit',
-        //   disablePadding: false,
-        //   numeric: false,
-        // },
-        // {
-        //   id: 'unitCount',
-        //   label: 'Unit Count',
-        //   disablePadding: false,
-        //   numeric: false,
-        // },
         {
           id: 'rating',
           label: 'Rating',
@@ -72,8 +48,32 @@ const PotProductTable = ({
           numeric: false,
         },
         {
+          id: 'unitCount',
+          label: 'Unit Count',
+          disablePadding: false,
+          numeric: true,
+        },
+        {
+          id: 'totalToPurchase',
+          label: 'Total to purchase',
+          disablePadding: false,
+          numeric: true,
+        },
+        {
+          id: 'pricePerUnit',
+          label: 'Price per Unit',
+          disablePadding: false,
+          numeric: true,
+        },
+        {
           id: 'price',
           label: 'Price',
+          disablePadding: false,
+          numeric: true,
+        },
+        {
+          id: 'totalCost',
+          label: 'Total Cost',
           disablePadding: false,
           numeric: true,
         },
