@@ -41,6 +41,30 @@ const PotProductTable = ({
           disablePadding: false,
           numeric: false,
         },
+        // {
+        //   id: 'unitCount',
+        //   label: 'Unit Count',
+        //   disablePadding: false,
+        //   numeric: false,
+        // },
+        // {
+        //   id: 'totalToPurchase',
+        //   label: 'Total to purchase',
+        //   disablePadding: false,
+        //   numeric: false,
+        // },
+        // {
+        //   id: 'pricePerUnit',
+        //   label: 'Price per Unit',
+        //   disablePadding: false,
+        //   numeric: false,
+        // },
+        // {
+        //   id: 'unitCount',
+        //   label: 'Unit Count',
+        //   disablePadding: false,
+        //   numeric: false,
+        // },
         {
           id: 'rating',
           label: 'Rating',

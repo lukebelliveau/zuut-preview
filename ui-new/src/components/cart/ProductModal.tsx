@@ -1,6 +1,10 @@
 import { CartItem } from './ShoppingCartTable';
 import Modal from 'react-modal';
-import { AmazonProductMap, useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
+import {
+  AmazonProductDetailMap,
+  AmazonProductMap,
+  useQueryAmazonProductsByASIN,
+} from '../../airtable/amazonProducts';
 import PotProductTable from './productTables/PotProductTable';
 import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import { TENT_ITEM_TYPE } from '../../lib/item/tentItem';
@@ -32,9 +36,30 @@ import Iconify from '../Iconify';
 
 interface ProductTableProps {
   item: CartItem;
-  amazonProducts: AmazonProductMap;
+  amazonProducts: AmazonProductDetailMap;
   changeSelectedProductASIN: (ASIN: string) => void;
 }
+
+const createAmazonProductDetailMap = (
+  item: CartItem,
+  amazonProducts: AmazonProductMap
+): AmazonProductDetailMap => {
+  const amazonProductDetails: AmazonProductDetailMap = {};
+  Object.keys(amazonProducts).forEach((amazonProductASIN) => {
+    const currentProduct = amazonProducts[amazonProductASIN];
+    const totalToPurchase = Math.ceil(item.quantity / parseInt(currentProduct.unitCount));
+    const pricePerUnit = parseFloat(currentProduct.price) / parseInt(currentProduct.unitCount);
+    const totalCost = totalToPurchase * parseFloat(currentProduct.price);
+    amazonProductDetails[amazonProductASIN] = {
+      ...amazonProducts[amazonProductASIN],
+      totalToPurchase,
+      pricePerUnit,
+      totalCost,
+    };
+  });
+
+  return amazonProductDetails;
+};
 
 const ProductModal = ({
   open,
@@ -57,6 +82,8 @@ const ProductModal = ({
     if (error) return <div>Error!</div>;
     if (amazonProducts === undefined) return <div>Loading products...</div>;
   }
+
+  const amazonProductDetails = createAmazonProductDetailMap(item, amazonProducts);
 
   const changeSelectedProductASIN = (ASIN: string) => {
     changeSelectedASIN(ASIN, index);
@@ -123,7 +150,7 @@ const ProductModal = ({
         </div>
         <ProductTable
           item={item}
-          amazonProducts={amazonProducts}
+          amazonProducts={amazonProductDetails}
           changeSelectedProductASIN={changeSelectedProductASIN}
         />
       </Box>

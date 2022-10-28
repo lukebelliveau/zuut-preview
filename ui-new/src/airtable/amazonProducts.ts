@@ -4,6 +4,16 @@ import queryKeys from '../lib/queryKeys';
 import { airtableBase, airtableTables, amazonProductFields } from './airtableBase';
 import { CartItem } from 'src/components/cart/ShoppingCartTable';
 
+export interface AmazonProductDetailMap {
+  [ASIN: string]: AmazonProductDetail;
+}
+
+export interface AmazonProductDetail extends AmazonProductRecord {
+  totalToPurchase: number;
+  pricePerUnit: number;
+  totalCost: number;
+}
+
 export interface AmazonProductMap {
   [ASIN: string]: AmazonProductRecord;
 }
