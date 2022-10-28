@@ -20,7 +20,7 @@ const PotProductTable = ({
         {
           id: 'productName',
           label: 'Product Name',
-          disablePadding: true,
+          disablePadding: false,
           numeric: false,
         },
         {
@@ -45,7 +45,7 @@ const PotProductTable = ({
           id: 'rating',
           label: 'Rating',
           disablePadding: false,
-          numeric: true,
+          numeric: false,
         },
         {
           id: 'price',

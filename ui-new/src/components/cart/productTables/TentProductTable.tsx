@@ -17,12 +17,12 @@ const TentProductTable = ({
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
       headCells={[
-        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
-        { label: 'Square Footage', id: 'squareFootage', disablePadding: true, numeric: false },
-        { label: 'Cubic Footage', id: 'material', disablePadding: true, numeric: false },
-        { label: 'Height', id: 'height', disablePadding: true, numeric: false },
-        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
-        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
+        { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
+        { label: 'Square Footage', id: 'squareFootage', disablePadding: false, numeric: false },
+        { label: 'Cubic Footage', id: 'material', disablePadding: false, numeric: false },
+        { label: 'Height', id: 'height', disablePadding: false, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />
   );

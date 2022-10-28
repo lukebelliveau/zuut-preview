@@ -17,12 +17,12 @@ const ExhaustFanProductTable = ({
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
       headCells={[
-        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
-        { label: 'Air Flow Rating', id: 'airFlowRating', disablePadding: true, numeric: false },
-        { label: 'Width', id: 'width', disablePadding: true, numeric: false },
-        { label: 'Speed Adjustable', id: 'speedAdjustable', disablePadding: true, numeric: false },
-        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
-        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
+        { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
+        { label: 'Air Flow Rating', id: 'airFlowRating', disablePadding: false, numeric: false },
+        { label: 'Width', id: 'width', disablePadding: false, numeric: false },
+        { label: 'Speed Adjustable', id: 'speedAdjustable', disablePadding: false, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />
   );

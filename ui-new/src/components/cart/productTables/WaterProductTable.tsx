@@ -18,7 +18,7 @@ const WaterProductTable = ({
       changeSelectedProductASIN={changeSelectedProductASIN}
       headCells={[
         { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
-        { label: 'Rating', id: 'rating', disablePadding: false, numeric: true },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
         { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />

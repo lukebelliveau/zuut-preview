@@ -11,6 +11,8 @@ import {
   TableSortLabel,
   Button,
   Link,
+  Rating,
+  Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
@@ -186,6 +188,29 @@ const SortableProductTable = ({
                                 >
                                   {product.productName}
                                 </Link>
+                              </div>
+                            </TableCell>
+                          );
+                        } else if (headCell.id === 'rating') {
+                          return (
+                            <TableCell key={headCell.id}>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <Rating
+                                  name="read-only"
+                                  value={parseFloat(product.rating)}
+                                  readOnly
+                                  size="small"
+                                  precision={0.1}
+                                />
+                                <Typography sx={{ paddingLeft: '2px', fontSize: '10px' }}>
+                                  ({product.rating})
+                                </Typography>
                               </div>
                             </TableCell>
                           );

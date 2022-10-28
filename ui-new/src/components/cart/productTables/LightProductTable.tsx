@@ -17,13 +17,13 @@ const LightProductTable = ({
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
       headCells={[
-        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
-        { label: 'Spectrum', id: 'spectrum', disablePadding: true, numeric: false },
-        { label: 'Dimming', id: 'dimming', disablePadding: true, numeric: false },
-        { label: 'Wattage', id: 'wattage', disablePadding: true, numeric: false },
-        { label: 'Daisy Chain', id: 'daisyChain', disablePadding: true, numeric: false },
-        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
-        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
+        { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
+        { label: 'Spectrum', id: 'spectrum', disablePadding: false, numeric: false },
+        { label: 'Dimming', id: 'dimming', disablePadding: false, numeric: false },
+        { label: 'Wattage', id: 'wattage', disablePadding: false, numeric: false },
+        { label: 'Daisy Chain', id: 'daisyChain', disablePadding: false, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />
   );

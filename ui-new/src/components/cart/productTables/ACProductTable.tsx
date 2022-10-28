@@ -17,16 +17,16 @@ const ACProductTable = ({
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
       headCells={[
-        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
-        { label: 'Thermostat', id: 'thermostat', disablePadding: true, numeric: false },
-        { label: 'Capacity', id: 'capacity', disablePadding: true, numeric: false },
-        { label: 'Control', id: 'control', disablePadding: true, numeric: false },
-        { label: 'Dehumidifier', id: 'dehumidifier', disablePadding: true, numeric: false },
-        { label: 'Noise Level', id: 'noiseLevel', disablePadding: true, numeric: false },
-        { label: 'Exhaust', id: 'exhaust', disablePadding: true, numeric: false },
-        { label: 'Coverage', id: 'coverage', disablePadding: true, numeric: false },
-        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
-        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
+        { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
+        { label: 'Thermostat', id: 'thermostat', disablePadding: false, numeric: false },
+        { label: 'Capacity', id: 'capacity', disablePadding: false, numeric: false },
+        { label: 'Control', id: 'control', disablePadding: false, numeric: false },
+        { label: 'Dehumidifier', id: 'dehumidifier', disablePadding: false, numeric: false },
+        { label: 'Noise Level', id: 'noiseLevel', disablePadding: false, numeric: false },
+        { label: 'Exhaust', id: 'exhaust', disablePadding: false, numeric: false },
+        { label: 'Coverage', id: 'coverage', disablePadding: false, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />
   );

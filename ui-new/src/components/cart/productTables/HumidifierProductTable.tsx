@@ -17,13 +17,13 @@ const HumidifierProductTable = ({
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
       headCells={[
-        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
-        { label: 'Capacity', id: 'capacity', disablePadding: true, numeric: false },
-        { label: 'Humidity Sensor', id: 'humiditySensor', disablePadding: true, numeric: false },
-        { label: 'Control', id: 'control', disablePadding: true, numeric: false },
-        { label: 'Timer', id: 'timer', disablePadding: true, numeric: false },
-        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
-        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
+        { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
+        { label: 'Capacity', id: 'capacity', disablePadding: false, numeric: false },
+        { label: 'Humidity Sensor', id: 'humiditySensor', disablePadding: false, numeric: false },
+        { label: 'Control', id: 'control', disablePadding: false, numeric: false },
+        { label: 'Timer', id: 'timer', disablePadding: false, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
+        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />
   );
