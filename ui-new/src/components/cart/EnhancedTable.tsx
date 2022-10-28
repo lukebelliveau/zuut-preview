@@ -89,18 +89,15 @@ const EnhancedTable = ({
   item,
   amazonProducts,
   changeSelectedProductASIN,
-  columns,
   headCells,
 }: {
   item: CartItem;
   amazonProducts: AmazonProductMap;
   changeSelectedProductASIN: (ASIN: string) => void;
-  columns: ProductColumn[];
   headCells: HeadCell[];
 }) => {
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof AmazonProductRecord>(columns[0].property);
-  const [selected, setSelected] = useState<readonly string[]>([]);
+  const [orderBy, setOrderBy] = useState<keyof AmazonProductRecord>(headCells[0].id);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(20);
@@ -122,12 +119,6 @@ const EnhancedTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -156,14 +147,14 @@ const EnhancedTable = ({
                 .map((product, index) => {
                   return (
                     <TableRow key={product.ASIN}>
-                      {columns.map((column) => {
-                        if (column.property === 'price') {
+                      {headCells.map((headCell) => {
+                        if (headCell.id === 'price') {
                           return (
-                            <TableCell key={column.name}>
+                            <TableCell key={headCell.label} align="right">
                               ${parseFloat(product.price).toFixed(2)}
                             </TableCell>
                           );
-                        } else if (column.property === 'productName') {
+                        } else if (headCell.id === 'productName') {
                           return (
                             <TableCell>
                               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -190,7 +181,7 @@ const EnhancedTable = ({
                             </TableCell>
                           );
                         }
-                        return <TableCell key={column.name}>{product[column.property]}</TableCell>;
+                        return <TableCell key={headCell.id}>{product[headCell.id]}</TableCell>;
                       })}
                       <TableCell>
                         {product.ASIN === item.selectedASIN ? (
@@ -248,7 +239,7 @@ const EnhancedTable = ({
         />
       </Paper>
       {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        control={<Switch checked={dense} onChange={e => setDense(e.target.checked)} />}
         label="Dense padding"
       /> */}
     </Box>

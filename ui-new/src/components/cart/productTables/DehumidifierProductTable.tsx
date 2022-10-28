@@ -1,6 +1,6 @@
 import { AmazonProductMap } from '../../../airtable/amazonProducts';
+import EnhancedTable from '../EnhancedTable';
 import { CartItem } from '../ShoppingCartTable';
-import ProductTable from './ProductTable';
 
 const DehumidifierProductTable = ({
   item,
@@ -12,18 +12,18 @@ const DehumidifierProductTable = ({
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
-    <ProductTable
+    <EnhancedTable
       item={item}
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
-      columns={[
-        { name: 'Product Name', property: 'productName' },
-        { name: 'Capacity', property: 'capacity' },
-        { name: 'Humidity Sensor', property: 'humiditySensor' },
-        { name: 'Control', property: 'control' },
-        { name: 'Timer', property: 'timer' },
-        { name: 'Rating', property: 'rating' },
-        { name: 'Price', property: 'price' },
+      headCells={[
+        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
+        { label: 'Capacity', id: 'capacity', disablePadding: true, numeric: false },
+        { label: 'Humidity Sensor', id: 'humiditySensor', disablePadding: true, numeric: false },
+        { label: 'Control', id: 'control', disablePadding: true, numeric: false },
+        { label: 'Timer', id: 'timer', disablePadding: true, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
+        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
       ]}
     />
   );

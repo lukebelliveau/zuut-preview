@@ -1,6 +1,6 @@
 import { AmazonProductMap } from '../../../airtable/amazonProducts';
+import EnhancedTable from '../EnhancedTable';
 import { CartItem } from '../ShoppingCartTable';
-import ProductTable from './ProductTable';
 
 const CarbonFilterProductTable = ({
   item,
@@ -12,16 +12,16 @@ const CarbonFilterProductTable = ({
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
-    <ProductTable
+    <EnhancedTable
       item={item}
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
-      columns={[
-        { name: 'Product Name', property: 'productName' },
-        { name: 'Air Flow Rating', property: 'airFlowRating' },
-        { name: 'Width', property: 'width' },
-        { name: 'Rating', property: 'rating' },
-        { name: 'Price', property: 'price' },
+      headCells={[
+        { label: 'Product Name', id: 'productName', disablePadding: true, numeric: false },
+        { label: 'Air Flow Rating', id: 'airFlowRating', disablePadding: true, numeric: false },
+        { label: 'Width', id: 'width', disablePadding: true, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: true, numeric: true },
+        { label: 'Price', id: 'price', disablePadding: true, numeric: true },
       ]}
     />
   );

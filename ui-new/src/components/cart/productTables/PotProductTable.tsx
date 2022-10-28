@@ -16,14 +16,6 @@ const PotProductTable = ({
       item={item}
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
-      columns={[
-        { name: 'Product Name', property: 'productName' },
-        { name: 'Shape', property: 'shape' },
-        { name: 'Material', property: 'material' },
-        { name: 'Handles', property: 'handles' },
-        { name: 'Rating', property: 'rating' },
-        { name: 'Price', property: 'price' },
-      ]}
       headCells={[
         {
           id: 'productName',
@@ -53,13 +45,13 @@ const PotProductTable = ({
           id: 'rating',
           label: 'Rating',
           disablePadding: false,
-          numeric: false,
+          numeric: true,
         },
         {
           id: 'price',
           label: 'Price',
           disablePadding: false,
-          numeric: false,
+          numeric: true,
         },
       ]}
     />

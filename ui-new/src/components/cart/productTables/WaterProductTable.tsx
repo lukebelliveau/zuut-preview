@@ -1,6 +1,6 @@
 import { AmazonProductMap } from '../../../airtable/amazonProducts';
+import EnhancedTable from '../EnhancedTable';
 import { CartItem } from '../ShoppingCartTable';
-import ProductTable from './ProductTable';
 
 const WaterProductTable = ({
   item,
@@ -12,14 +12,14 @@ const WaterProductTable = ({
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
-    <ProductTable
+    <EnhancedTable
       item={item}
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
-      columns={[
-        { name: 'Product Name', property: 'productName' },
-        { name: 'Rating', property: 'rating' },
-        { name: 'Price', property: 'price' },
+      headCells={[
+        { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
+        { label: 'Rating', id: 'rating', disablePadding: false, numeric: true },
+        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
       ]}
     />
   );
