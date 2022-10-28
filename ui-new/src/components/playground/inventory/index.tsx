@@ -223,7 +223,16 @@ export default function InventoryDrawer() {
 
       <Divider sx={{ borderStyle: 'dashed' }} />
 
-      <Scrollbar sx={{ flexGrow: 1 }}>
+      <Scrollbar
+        sx={{
+          flexGrow: 1,
+          height: '100%',
+          // without this override, `simplebar-react` was creating some ghost horizontal scrolls
+          '& .simplebar-content': {
+            overflowX: 'hidden',
+          },
+        }}
+      >
         <List>
           {items
             .filter((item) => !isModifierItem(item) && !isWallItem(item))
@@ -281,6 +290,12 @@ const InventoryItem = ({
           aria-label={item.name}
           checked={selected}
           onChange={() => toggleItemSelected(item)}
+          size="small"
+          sx={{
+            '&.MuiButtonBase-root': {
+              height: '12px',
+            },
+          }}
         />
         <Typography
           sx={{
