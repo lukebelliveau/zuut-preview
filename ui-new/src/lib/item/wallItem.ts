@@ -10,14 +10,9 @@ import {
   itemHasVerticalOrientation,
 } from '../geometry/geometry';
 import { IItem, Item } from '../item';
-import { Layer } from '../layer';
 import Playground from '../playground';
 import { Point } from '../point';
-import PlaceableItem, {
-  CollisionState,
-  IPlaceableItem,
-  PlacementShadow,
-} from './placeableItem';
+import PlaceableItem, { CollisionState, IPlaceableItem, PlacementShadow } from './placeableItem';
 
 export const WALL_ITEM_TYPE = 'WallItem';
 
@@ -42,9 +37,24 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
     });
   }
 
+  copyWithModifiers(): WallItem {
+    return new WallItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
+
   drag(position: Point, items: IItem[], playground: Playground) {
     if (!playground.plan) throw new Error('Playground missing plan!');
-    const room = playground.plan.room;
+    const { room } = playground.plan;
     if (!room) throw new Error('Playground missing room!');
 
     this.x = position.x;
@@ -58,11 +68,12 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
   }
 
   createPlacementShadowOnClosestWall(playground: Playground): PlacementShadow {
-    if (!playground || !playground.plan || !playground.plan.room)
-      throw new Error('Missing room!');
+    if (!playground || !playground.plan || !playground.plan.room) throw new Error('Missing room!');
 
-    const { stickingTo, position: wallPosition } =
-      findClosestWallPointToInteriorItem(this, playground.plan.room);
+    const { stickingTo, position: wallPosition } = findClosestWallPointToInteriorItem(
+      this,
+      playground.plan.room
+    );
 
     if (stickingTo === 'left' || stickingTo === 'right') {
       if (itemHasVerticalOrientation(this)) {

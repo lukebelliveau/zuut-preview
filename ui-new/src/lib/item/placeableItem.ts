@@ -360,6 +360,29 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     });
   }
 
+  xPlus50() {
+    return this.x + 50;
+  }
+
+  yPlus50() {
+    return this.y + 50;
+  }
+
+  copyWithModifiers(): IPlaceableItem {
+    return new PlaceableItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
+
   get offset(): Point {
     return {
       x: this.width / 2,

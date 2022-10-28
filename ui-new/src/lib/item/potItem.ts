@@ -121,4 +121,19 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
 
     return copiedPotItem;
   }
+
+  copyWithModifiers(): PotItem {
+    return new PotItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }

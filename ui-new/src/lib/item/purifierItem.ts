@@ -66,4 +66,19 @@ export default class PurifierItem extends GrowspaceItem implements IPlaceableIte
       recordId: this.recordId,
     });
   }
+
+  copyWithModifiers(): PurifierItem {
+    return new PurifierItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }

@@ -250,6 +250,23 @@ export const rotateCcw = createAsyncThunk(
   }
 );
 
+export const copyItem = createAsyncThunk(
+  'items/copy',
+  async (itemId: string, { dispatch, getState }) => {
+    const itemState = itemsSelectors.selectById(getState() as RootState, itemId);
+    if (!itemState) throw new Error('Item not found');
+
+    const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
+    const copiedItem = item.copyWithModifiers();
+    console.log(copiedItem);
+    dispatch(addItem(ItemReduxAdapter.itemToState(copiedItem)));
+
+    const state = getState() as RootState;
+    const planService = new PlanService(state);
+    return planService.syncCurrent();
+  }
+);
+
 export const incrementModifier = createAsyncThunk(
   'items/incrementModifier',
   async ({ itemId, modifier }: { itemId: string; modifier: Modifier }, { dispatch, getState }) => {

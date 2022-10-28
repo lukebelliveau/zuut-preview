@@ -80,4 +80,19 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
       recordId: this.recordId,
     });
   }
+
+  copyWithModifiers(): WaterItem {
+    return new WaterItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }

@@ -59,4 +59,19 @@ export default class CurvedDuctItem extends DuctItem {
       description: this.description,
     });
   }
+
+  copyWithModifiers(): CurvedDuctItem {
+    return new CurvedDuctItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }

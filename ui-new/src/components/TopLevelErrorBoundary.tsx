@@ -51,7 +51,7 @@ const TopLevelErrorFallback = ({
         >
           <Button
             onClick={() => {
-              window.location.href = 'https://www.zuut.co';
+              window.location.href = window.location.origin;
             }}
             sx={{ paddingLeft: 0 }}
           >
@@ -60,7 +60,7 @@ const TopLevelErrorFallback = ({
           <Button
             onClick={() => {
               localStorage.removeItem(ZUUT_DEMO_STATE);
-              window.location.href = 'https://www.zuut.co';
+              window.location.href = window.location.origin;
             }}
             sx={{ paddingLeft: 0 }}
           >

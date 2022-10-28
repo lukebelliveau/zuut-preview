@@ -4,10 +4,7 @@ import { isStraddlingBoundary } from '../geometry/geometry';
 import { Item } from '../item';
 import { isCeilingPlaceableItem } from './ceilingPlaceableItem';
 import { isTent } from './tentItem';
-import PlaceableItem, {
-  CollisionState,
-  PlacementShadow,
-} from './placeableItem';
+import PlaceableItem, { CollisionState, PlacementShadow } from './placeableItem';
 
 export const GROWSPACE_ITEM_TYPE = 'GrowspaceItem';
 
@@ -29,6 +26,21 @@ export default class GrowspaceItem extends PlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
+    });
+  }
+
+  copyWithModifiers(): GrowspaceItem {
+    return new GrowspaceItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
     });
   }
 

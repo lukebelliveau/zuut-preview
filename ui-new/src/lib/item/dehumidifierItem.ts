@@ -64,4 +64,19 @@ export default class DehumidifierItem extends GrowspaceItem implements IPlaceabl
       recordId: this.recordId,
     });
   }
+
+  copyWithModifiers(): DehumidifierItem {
+    return new DehumidifierItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }

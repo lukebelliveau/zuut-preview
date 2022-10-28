@@ -25,4 +25,19 @@ export default class RoomItem extends PlaceableItem {
       amazonProducts: this.amazonProducts,
     });
   }
+
+  copyWithModifiers(): RoomItem {
+    return new RoomItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }

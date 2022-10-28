@@ -65,4 +65,19 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
       recordId: this.recordId,
     });
   }
+
+  copyWithModifiers(): HeatItem {
+    return new HeatItem({
+      name: this.name,
+      id: v4(),
+      x: this.xPlus50(),
+      y: this.yPlus50(),
+      width: this.width,
+      length: this.length,
+      height: this.height,
+      description: this.description,
+      amazonProducts: this.amazonProducts,
+      modifiers: this.modifiers,
+    });
+  }
 }
