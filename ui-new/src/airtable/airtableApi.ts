@@ -4,11 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import queryKeys from '../lib/queryKeys';
 import { selectAllTents } from './tents';
 import { selectAllMiscItems } from './misc';
-import { AirtableRecord } from './Record';
+import { AirtableItemRecord } from './Record';
 import { selectAllWaterItems } from './water';
 import selectAllClimateItems from './climate';
 
-const selectAllItems = async (): Promise<AirtableRecord[]> => {
+const selectAllItems = async (): Promise<AirtableItemRecord[]> => {
   const allPotsPromise = selectAllPots();
   const allLightsPromise = selectAllLights();
   const allTentsPromise = selectAllTents();
@@ -38,7 +38,7 @@ const selectAllItems = async (): Promise<AirtableRecord[]> => {
 
 export const selectItemsByRecordId = async (recordIds: string[]) => {
   const allItems = await selectAllItems();
-  const selectedItems: AirtableRecord[] = [];
+  const selectedItems: AirtableItemRecord[] = [];
 
   recordIds.forEach((recordId) => {
     const item = allItems.find((item) => item.recordId === recordId);

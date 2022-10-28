@@ -52,6 +52,7 @@ export default class Tent extends PlaceableItem {
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 

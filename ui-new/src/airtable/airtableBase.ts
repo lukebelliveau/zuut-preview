@@ -49,6 +49,7 @@ export const itemFields = {
   linkedASINs: 'linkedASINs',
 
   itemType: 'itemType',
+  unitCount: 'unitCount',
 };
 
 export const defaultItemFields = [

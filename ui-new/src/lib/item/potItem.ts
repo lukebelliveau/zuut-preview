@@ -134,6 +134,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

@@ -22,6 +22,8 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
       <TableCell />
       <TableCell />
       <TableCell />
+      <TableCell />
+      <TableCell />
       <TableHead>
         <TableRow sx={{ backgroundColor: grey[100] }}>
           <TableCell>Loading price...</TableCell>
@@ -56,6 +58,8 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
 
   return (
     <StyledTableRow>
+      <TableCell />
+      <TableCell />
       <TableCell />
       <TableCell />
       <TableCell />

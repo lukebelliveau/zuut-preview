@@ -380,6 +380,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 

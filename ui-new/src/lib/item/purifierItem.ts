@@ -79,6 +79,7 @@ export default class PurifierItem extends GrowspaceItem implements IPlaceableIte
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

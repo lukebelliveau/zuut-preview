@@ -38,6 +38,7 @@ export default class RoomItem extends PlaceableItem {
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

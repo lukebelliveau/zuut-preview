@@ -82,6 +82,7 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

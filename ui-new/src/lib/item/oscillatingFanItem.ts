@@ -81,6 +81,7 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

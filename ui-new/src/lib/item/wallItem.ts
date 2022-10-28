@@ -49,6 +49,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 

@@ -20,4 +20,4 @@ export const isPlaceableItemRecord = (
   return (record as PlaceableItemRecord).width !== undefined;
 };
 
-export type AirtableRecord = PlaceableItemRecord | ItemRecord;
+export type AirtableItemRecord = PlaceableItemRecord | ItemRecord;

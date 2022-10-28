@@ -43,6 +43,7 @@ export default class DoorItem extends WallItem {
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

@@ -76,6 +76,7 @@ export default class HumidifierItem extends GrowspaceItem implements IPlaceableI
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

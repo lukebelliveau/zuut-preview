@@ -76,6 +76,7 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }

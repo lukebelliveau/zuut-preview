@@ -9,17 +9,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useQueryCartItems } from '../../airtable/airtableApi';
-import {
-  AmazonProductMap,
-  useQueryAmazonProductsByASIN,
-  useQueryAmazonProductsByCartItem,
-} from '../../airtable/amazonProducts';
+import { AmazonProductMap, useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
 import { potRecordComparator } from '../../airtable/pots';
-import { AirtableRecord, isPlaceableItemRecord } from '../../airtable/Record';
+import { AirtableItemRecord, isPlaceableItemRecord } from '../../airtable/Record';
 import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import useQueryParams, { paramKeys } from '../../lib/url';
 
@@ -27,7 +24,6 @@ import ProductModal from './ProductModal';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import queryKeys from 'src/lib/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
-import { grey } from '@mui/material/colors';
 import { store } from 'src/redux/store';
 import TopLevelErrorBoundary from '../TopLevelErrorBoundary';
 import LoadingScreen from '../LoadingScreen';
@@ -72,7 +68,7 @@ export const constructAmazonLinkWithASIN = (asin: string) => {
   return `https://www.amazon.com/dp/${asin}?tag=${amazonZUUTTag}`;
 };
 
-const renderDimensionsIfPlaceableItem = (item: AirtableRecord) => {
+const renderDimensionsIfPlaceableItem = (item: AirtableItemRecord) => {
   if ('width' in item && 'length' in item && 'description' in item) {
     return `${item.length} in * ${item.width} in`;
   }
@@ -93,7 +89,7 @@ export interface CartItem {
   quantity: number;
 }
 
-const createCartItems = (cartItems: AirtableRecord[] | undefined): CartItem[] => {
+const createCartItems = (cartItems: AirtableItemRecord[] | undefined): CartItem[] => {
   if (cartItems === undefined) return [];
 
   let cartItemMap: { [itemName: string]: CartItem } = {};
@@ -204,12 +200,18 @@ const ShoppingCartTable = () => {
                     Item Type
                   </StyledTableHeadCell>
                   <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
-                  <StyledTableHeadCell>Quantity</StyledTableHeadCell>
+                  <StyledTableHeadCell>Quantity of Items needed</StyledTableHeadCell>
                   <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Price Per Item
+                    Product Price
                   </StyledTableHeadCell>
                   <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Price * Quantity
+                    Units per Product
+                  </StyledTableHeadCell>
+                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
+                    Product Quantity
+                  </StyledTableHeadCell>
+                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
+                    Price * Product Quantity
                   </StyledTableHeadCell>
                 </TableRow>
               </TableHead>
@@ -280,17 +282,37 @@ const ShoppingCartTable = () => {
   );
 };
 
+const getSelectedAmazonProductUnitCount = (
+  selectedASIN: string,
+  amazonProducts: AmazonProductMap
+) => {
+  const selectedAmazonProduct = amazonProducts[selectedASIN];
+
+  return selectedAmazonProduct.unitCount;
+};
+
+const getProductsToBuy = (
+  selectedASIN: string,
+  amazonProducts: AmazonProductMap,
+  itemQuantity: number
+) => {
+  const productUnitCount = getSelectedAmazonProductUnitCount(selectedASIN, amazonProducts);
+
+  return Math.ceil(itemQuantity / parseInt(productUnitCount));
+};
+
 const getSelectedAmazonProductPrice = (
   selectedASIN: string,
   amazonProducts: AmazonProductMap,
-  quantity = 1
+  itemQuantity = 1
 ) => {
   const selectedAmazonProduct = amazonProducts[selectedASIN];
+  const productQuantity = getProductsToBuy(selectedASIN, amazonProducts, itemQuantity);
 
   if (!selectedAmazonProduct) return 'Price not available';
 
   if (selectedAmazonProduct.price)
-    return `$${(parseFloat(selectedAmazonProduct.price) * quantity).toFixed(2)}`;
+    return `$${(parseFloat(selectedAmazonProduct.price) * productQuantity).toFixed(2)}`;
 
   return 'Price not available';
 };
@@ -325,6 +347,22 @@ const ItemRow = ({
         </TableRow>
       );
   }
+
+  const amazonProductPrice = getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts);
+  const amazonProductUnitCount = getSelectedAmazonProductUnitCount(
+    item.selectedASIN,
+    amazonProducts
+  );
+  const productQuantityToBuy = getProductsToBuy(item.selectedASIN, amazonProducts, item.quantity);
+  const totalAmazonProductPrice = getSelectedAmazonProductPrice(
+    item.selectedASIN,
+    amazonProducts,
+    item.quantity
+  );
+
+  const quantityTooltipMessage = `You need ${item.quantity} of these items. 
+  This product is sold in packs of ${amazonProductUnitCount}, 
+  so you will need to purchase ${productQuantityToBuy} of this product to reach your quantity of ${item.quantity}.`;
 
   return (
     <StyledTableRow key={`${item.recordId}=${index}`}>
@@ -372,13 +410,15 @@ const ItemRow = ({
           <OpenInNewIcon />
         </div>
       </TableCell>
-      <TableCell>{item.quantity}</TableCell>
+      <TableCell align="right">{item.quantity}</TableCell>
+      <TableCell align="right">{amazonProductPrice}</TableCell>
+      <TableCell align="right">{amazonProductUnitCount}</TableCell>
       <TableCell align="right">
-        {getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts)}
+        <Tooltip title={quantityTooltipMessage} placement="bottom" arrow>
+          <span style={{ cursor: 'pointer' }}>{productQuantityToBuy}</span>
+        </Tooltip>
       </TableCell>
-      <TableCell align="right">
-        {getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts, item.quantity)}
-      </TableCell>
+      <TableCell align="right">{totalAmazonProductPrice}</TableCell>
     </StyledTableRow>
   );
 };

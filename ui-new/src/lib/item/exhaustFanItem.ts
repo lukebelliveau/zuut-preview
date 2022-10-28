@@ -80,6 +80,7 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
       description: this.description,
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
+      recordId: this.recordId,
     });
   }
 }
