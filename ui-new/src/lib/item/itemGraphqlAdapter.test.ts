@@ -1,12 +1,6 @@
-import {
-  CARBON_FILTER_ITEM_TYPE,
-  isCarbonFilterItem,
-} from './carbonFilterItem';
-import {
-  CEILING_GROWSPACE_ITEM_TYPE,
-  isCeilingGrowspaceItem,
-} from './ceilingGrowspaceItem';
-import { TENT_ITEM_TYPE, isTent } from './tentItem';
+import { CARBON_FILTER_ITEM_TYPE, isCarbonFilterItem } from './carbonFilterItem';
+import { CEILING_GROWSPACE_ITEM_TYPE, isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
+import { TENT_ITEM_TYPE, isTentItem } from './tentItem';
 import { GROWSPACE_ITEM_TYPE, isGrowspaceItem } from './growspaceItem';
 import ItemGraphqlAdapter from './itemGraphqlAdapter';
 import { isLightItem, LIGHT_ITEM_TYPE } from './lightItem';
@@ -19,7 +13,7 @@ describe('ItemGraphqlAdapter', () => {
   describe('#graphqlToItem', () => {
     it('hydrates a Growspace', () => {
       expect(
-        isTent(
+        isTentItem(
           ItemGraphqlAdapter.graphqlToItem({
             id: '123',
             name: 'foo',

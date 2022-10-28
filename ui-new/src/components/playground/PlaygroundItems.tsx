@@ -29,6 +29,7 @@ import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../redux/features/items/itemsHooks';
 import { mmToFeet } from '../../lib/conversions';
 import { useDispatch } from 'src/redux/store';
+import { isTentItem } from 'src/lib/item/tentItem';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -200,8 +201,9 @@ const Item = ({
         width={item.width}
         height={item.length}
         // stroke={getCollisionColor(item.collisionState)}
-        stroke={showStrokeIfCollidingOrSelected(item, selectedItemIds)}
+        stroke={showStrokeIfCollidingOrSelectedOrTentItem(item, selectedItemIds)}
         strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
+        // strokeWidth={20}
         strokeScaleEnabled={false}
         offset={item.offset}
         draggable={showLayer[item.layer]}
@@ -282,8 +284,13 @@ const getCollisionColor = (collisionState: CollisionState) => {
   }
 };
 
-const showStrokeIfCollidingOrSelected = (item: IPlaceableItem, selectedItemIds: string[]) => {
-  return item.collisionState !== CollisionState.NEUTRAL || selectedItemIds?.includes(item.id)
+const showStrokeIfCollidingOrSelectedOrTentItem = (
+  item: IPlaceableItem,
+  selectedItemIds: string[]
+) => {
+  return item.collisionState !== CollisionState.NEUTRAL ||
+    selectedItemIds?.includes(item.id) ||
+    isTentItem(item)
     ? getCollisionColor(item.collisionState)
     : undefined;
 };

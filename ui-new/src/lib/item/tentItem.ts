@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
 import { isStraddlingBoundary } from '../geometry/geometry';
-import PlaceableItem, { CollisionState, PlaceableItemArgs, PlacementShadow } from './placeableItem';
+import PlaceableItem, { CollisionState, PlacementShadow } from './placeableItem';
 import { Item } from '../item';
 import { isGrowspaceItem } from './growspaceItem';
 import { isCeilingGrowspaceItem } from './ceilingGrowspaceItem';
@@ -12,7 +12,7 @@ import { LayerState } from '../../redux/features/interactions/interactionsState'
 
 export const TENT_ITEM_TYPE = 'TentItem';
 
-export function isTent(item: Item): item is Tent {
+export function isTentItem(item: Item): item is Tent {
   return (item as Tent).type === TENT_ITEM_TYPE;
 }
 

@@ -2,7 +2,7 @@ import PlaceableItem, { CollisionState, PlacementShadow } from './placeableItem'
 import { v4 } from 'uuid';
 import { Item } from '../item';
 import { isStraddlingBoundary } from '../geometry/geometry';
-import { isTent } from './tentItem';
+import { isTentItem } from './tentItem';
 import { isGrowspaceItem as isPlaceableItem } from './growspaceItem';
 import CeilingPlaceableItem from './ceilingPlaceableItem';
 
@@ -47,7 +47,7 @@ export default class CeilingGrowspaceItem extends CeilingPlaceableItem {
     item: PlaceableItem | PlacementShadow,
     otherItem: PlaceableItem
   ): CollisionState {
-    if (isTent(otherItem)) {
+    if (isTentItem(otherItem)) {
       return isStraddlingBoundary(item, otherItem)
         ? CollisionState.CONFLICTED
         : CollisionState.NEUTRAL;

@@ -1,13 +1,13 @@
 import { LayerState } from '../redux/features/interactions/interactionsState';
 import { IItem } from './item';
-import { isTent } from './item/tentItem';
+import { isTentItem } from './item/tentItem';
 import { IPlaceableItem, isPlaceableItem } from './item/placeableItem';
 import { Layer } from './layer';
 
 const sortGrowspaceToBottom = (a: IItem, b: IItem) => {
-  if (isTent(a) && !isTent(b)) {
+  if (isTentItem(a) && !isTentItem(b)) {
     return -1;
-  } else if (isTent(b) && !isTent(a)) {
+  } else if (isTentItem(b) && !isTentItem(a)) {
     return 1;
   }
   return 0;
@@ -45,7 +45,7 @@ export const sortFromGroundToCeiling = (items: (IItem | IPlaceableItem)[]) => {
     } else if (!isPlaceableItem(a) && !isPlaceableItem(b)) {
       return 0;
     } else if (isPlaceableItem(a) && isPlaceableItem(b)) {
-      if (isTent(a) || isTent(b)) return sortGrowspaceToBottom(a, b);
+      if (isTentItem(a) || isTentItem(b)) return sortGrowspaceToBottom(a, b);
 
       // sort Floor items under Ceiling items
       if (a.layer === Layer.FLOOR && b.layer !== Layer.FLOOR) {
