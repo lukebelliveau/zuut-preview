@@ -203,7 +203,6 @@ const Item = ({
         // stroke={getCollisionColor(item.collisionState)}
         stroke={showStrokeIfCollidingOrSelectedOrTentItem(item, selectedItemIds)}
         strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
-        // strokeWidth={20}
         strokeScaleEnabled={false}
         offset={item.offset}
         draggable={showLayer[item.layer]}

@@ -44,7 +44,7 @@ const createAmazonAddToShoppingCartUrl = (items: CartItem[]) => {
 
   items.forEach((item) => {
     if (shoppingCartItems[item.selectedASIN]) {
-      shoppingCartItems[item.selectedASIN].quantity += 1;
+      shoppingCartItems[item.selectedASIN].quantity += item.quantity;
     } else {
       shoppingCartItems[item.selectedASIN] = {
         quantity: 1,
@@ -88,30 +88,36 @@ export interface CartItem {
   width?: number;
   length?: number;
   description?: string;
+  quantity: number;
 }
 
-const createCartItems = (cartItems: AirtableRecord[] | undefined) => {
+const createCartItems = (cartItems: AirtableRecord[] | undefined): CartItem[] => {
   if (cartItems === undefined) return [];
 
-  let cartItemsArray: CartItem[] = [];
+  let cartItemMap: { [itemName: string]: CartItem } = {};
+
   cartItems.forEach((item) => {
-    const cartItem: CartItem = {
-      name: item.name,
-      amazonProducts: item.amazonProducts,
-      linkedASINs: item.linkedASINs,
-      recordId: item.recordId,
-      selectedASIN: item.linkedASINs[0],
-      itemType: item.itemType ? item.itemType : '',
-    };
-    if (isPlaceableItemRecord(item)) {
-      cartItem.width = item.width;
-      cartItem.length = item.length;
-      cartItem.description = item.description;
+    if (cartItemMap[item.name]) {
+      cartItemMap[item.name].quantity += 1;
+    } else {
+      cartItemMap[item.name] = {
+        name: item.name,
+        amazonProducts: item.amazonProducts,
+        linkedASINs: item.linkedASINs,
+        recordId: item.recordId,
+        selectedASIN: item.linkedASINs[0],
+        itemType: item.itemType ? item.itemType : '',
+        quantity: 1,
+      };
+      if (isPlaceableItemRecord(item)) {
+        cartItemMap[item.name].width = item.width;
+        cartItemMap[item.name].length = item.length;
+        cartItemMap[item.name].description = item.description;
+      }
     }
-    cartItemsArray.push(cartItem);
   });
 
-  return cartItemsArray;
+  return Object.values(cartItemMap);
 };
 
 const cartItemsComparator = (a: CartItem, b: CartItem) => {
@@ -168,7 +174,7 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
     const productPrice = parseFloat(allAmazonProducts[selectedASIN].price);
     const productCount = asinCount[selectedASIN];
 
-    totalPrice += productPrice * productCount;
+    totalPrice += productPrice * productCount * item.quantity;
   });
 
   return (
@@ -176,10 +182,12 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
       <TableCell />
       <TableCell />
       <TableCell />
+      <TableCell />
       <TableCell
         sx={{
           fontWeight: 'bold',
         }}
+        align="right"
       >
         Total Cost
       </TableCell>
@@ -245,7 +253,7 @@ const ShoppingCartTable = () => {
     // invalidate price query so price is re-computed
     queryClient.invalidateQueries([queryKeys.totalCartPrice]);
 
-    let newCartItems = [...cartItems];
+    let newCartItems: CartItem[] = [...cartItems];
     newCartItems[index].selectedASIN = ASIN;
     setCartItems(newCartItems);
   };
@@ -265,9 +273,12 @@ const ShoppingCartTable = () => {
                     Item Type
                   </StyledTableHeadCell>
                   <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
-                  <StyledTableHeadCell>Amazon Link</StyledTableHeadCell>
+                  <StyledTableHeadCell>Quantity</StyledTableHeadCell>
                   <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Price
+                    Price Per Item
+                  </StyledTableHeadCell>
+                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
+                    Price * Quantity
                   </StyledTableHeadCell>
                 </TableRow>
               </TableHead>
@@ -338,12 +349,17 @@ const ShoppingCartTable = () => {
   );
 };
 
-const getSelectedAmazonProductPrice = (selectedASIN: string, amazonProducts: AmazonProductMap) => {
+const getSelectedAmazonProductPrice = (
+  selectedASIN: string,
+  amazonProducts: AmazonProductMap,
+  quantity = 1
+) => {
   const selectedAmazonProduct = amazonProducts[selectedASIN];
 
   if (!selectedAmazonProduct) return 'Price not available';
 
-  if (selectedAmazonProduct.price) return `$${parseFloat(selectedAmazonProduct.price).toFixed(2)}`;
+  if (selectedAmazonProduct.price)
+    return `$${(parseFloat(selectedAmazonProduct.price) * quantity).toFixed(2)}`;
 
   return 'Price not available';
 };
@@ -400,12 +416,10 @@ const ItemRow = ({
         </Button>
       </TableCell>
       <TableCell component="th" scope="row">
-        {item.name}
+        <div>{item.name}</div>
       </TableCell>
-      <TableCell>{amazonProducts[item.selectedASIN].productName}</TableCell>
       <TableCell>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <OpenInNewIcon />
           <Link
             href={constructAmazonLinkWithASIN(item.selectedASIN)}
             target="_blank"
@@ -423,12 +437,26 @@ const ItemRow = ({
               });
             }}
           >
-            View on Amazon
+            <div
+              style={{
+                maxWidth: '200px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {amazonProducts[item.selectedASIN].productName}
+            </div>
           </Link>
+          <OpenInNewIcon />
         </div>
       </TableCell>
+      <TableCell>{item.quantity}</TableCell>
       <TableCell align="right">
         {getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts)}
+      </TableCell>
+      <TableCell align="right">
+        {getSelectedAmazonProductPrice(item.selectedASIN, amazonProducts, item.quantity)}
       </TableCell>
     </StyledTableRow>
   );
