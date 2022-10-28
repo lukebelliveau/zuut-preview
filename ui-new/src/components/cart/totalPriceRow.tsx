@@ -1,7 +1,7 @@
 import { TableCell, TableHead, TableRow } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { useQueryAmazonProductsByCartItem } from 'src/airtable/amazonProducts';
-import { CartItem } from './ShoppingCartTable';
+import { CartItem, getTotalAmazonProductCost } from './ShoppingCartTable';
 import StyledTableRow from './StyledCartTableRow';
 
 const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
@@ -50,10 +50,13 @@ const TotalPriceRow = ({ cartItems }: { cartItems: CartItem[] }) => {
 
   cartItems.forEach((item) => {
     const { selectedASIN } = item;
-    const productPrice = parseFloat(allAmazonProducts[selectedASIN].price);
-    const productCount = asinCount[selectedASIN];
+    const totalCostForProduct = getTotalAmazonProductCost(
+      selectedASIN,
+      allAmazonProducts,
+      item.quantity
+    );
 
-    totalPrice += productPrice * productCount * item.quantity;
+    totalPrice += totalCostForProduct;
   });
 
   return (

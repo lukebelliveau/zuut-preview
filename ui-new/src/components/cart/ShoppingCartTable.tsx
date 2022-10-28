@@ -200,19 +200,11 @@ const ShoppingCartTable = () => {
                     Item Type
                   </StyledTableHeadCell>
                   <StyledTableHeadCell>Selected Amazon Product</StyledTableHeadCell>
-                  <StyledTableHeadCell>Quantity of Items needed</StyledTableHeadCell>
-                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Product Price
-                  </StyledTableHeadCell>
-                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Units per Product
-                  </StyledTableHeadCell>
-                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Product Quantity
-                  </StyledTableHeadCell>
-                  <StyledTableHeadCell align="right" sx={{ boxShadow: 0 }}>
-                    Price * Product Quantity
-                  </StyledTableHeadCell>
+                  <StyledTableHeadCell align="right">Quantity of Items needed</StyledTableHeadCell>
+                  <StyledTableHeadCell align="right">Product Price</StyledTableHeadCell>
+                  <StyledTableHeadCell align="right">Units per Product</StyledTableHeadCell>
+                  <StyledTableHeadCell align="right">Product Quantity</StyledTableHeadCell>
+                  <StyledTableHeadCell align="right">Price * Product Quantity</StyledTableHeadCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -291,7 +283,7 @@ const getSelectedAmazonProductUnitCount = (
   return selectedAmazonProduct.unitCount;
 };
 
-const getProductsToBuy = (
+export const getProductsToBuy = (
   selectedASIN: string,
   amazonProducts: AmazonProductMap,
   itemQuantity: number
@@ -301,7 +293,7 @@ const getProductsToBuy = (
   return Math.ceil(itemQuantity / parseInt(productUnitCount));
 };
 
-const getSelectedAmazonProductPrice = (
+export const getTotalAmazonProductCost = (
   selectedASIN: string,
   amazonProducts: AmazonProductMap,
   itemQuantity = 1
@@ -309,12 +301,20 @@ const getSelectedAmazonProductPrice = (
   const selectedAmazonProduct = amazonProducts[selectedASIN];
   const productQuantity = getProductsToBuy(selectedASIN, amazonProducts, itemQuantity);
 
-  if (!selectedAmazonProduct) return 'Price not available';
+  if (!selectedAmazonProduct || !selectedAmazonProduct.price) return 0;
 
-  if (selectedAmazonProduct.price)
-    return `$${(parseFloat(selectedAmazonProduct.price) * productQuantity).toFixed(2)}`;
+  return parseFloat(selectedAmazonProduct.price) * productQuantity;
+};
 
-  return 'Price not available';
+export const getSelectedAmazonProductPrice = (
+  selectedASIN: string,
+  amazonProducts: AmazonProductMap,
+  itemQuantity = 1
+) => {
+  const totalCost = getTotalAmazonProductCost(selectedASIN, amazonProducts, itemQuantity);
+
+  if (totalCost === 0) return 'Price not available.';
+  return `$${totalCost.toFixed(2)}`;
 };
 
 const ItemRow = ({
