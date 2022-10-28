@@ -17,7 +17,6 @@ import { useState } from 'react';
 import { AmazonProductMap, AmazonProductRecord } from 'src/airtable/amazonProducts';
 import { getComparator } from 'src/hooks/useTable';
 import mixpanelTrack from 'src/utils/mixpanelTrack';
-import { ProductColumn } from './productTables/ProductTable';
 import { CartItem, constructAmazonLinkWithASIN } from './ShoppingCartTable';
 
 type Order = 'asc' | 'desc';
@@ -29,14 +28,19 @@ interface HeadCell {
   numeric: boolean;
 }
 
-interface EnhancedTableProps {
+interface SortableProductTableProps {
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof AmazonProductRecord) => void;
   order: Order;
   orderBy: string;
   headCells: HeadCell[];
 }
 
-function EnhancedTableHead({ order, orderBy, onRequestSort, headCells }: EnhancedTableProps) {
+function SortableProductTableHead({
+  order,
+  orderBy,
+  onRequestSort,
+  headCells,
+}: SortableProductTableProps) {
   const createSortHandler =
     (property: keyof AmazonProductRecord) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
@@ -66,6 +70,7 @@ function EnhancedTableHead({ order, orderBy, onRequestSort, headCells }: Enhance
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell />
       </TableRow>
     </TableHead>
   );
@@ -85,7 +90,7 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
   return stabilizedThis.map((el) => el[0]);
 }
 
-const EnhancedTable = ({
+const SortableProductTable = ({
   item,
   amazonProducts,
   changeSelectedProductASIN,
@@ -133,7 +138,7 @@ const EnhancedTable = ({
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
-            <EnhancedTableHead
+            <SortableProductTableHead
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
@@ -150,7 +155,11 @@ const EnhancedTable = ({
                       {headCells.map((headCell) => {
                         if (headCell.id === 'price') {
                           return (
-                            <TableCell key={headCell.label} align="right">
+                            <TableCell
+                              key={headCell.label}
+                              // align={headCell.numeric ? 'right' : 'left'}
+                              align="right"
+                            >
                               ${parseFloat(product.price).toFixed(2)}
                             </TableCell>
                           );
@@ -181,7 +190,11 @@ const EnhancedTable = ({
                             </TableCell>
                           );
                         }
-                        return <TableCell key={headCell.id}>{product[headCell.id]}</TableCell>;
+                        return (
+                          <TableCell key={headCell.id} align={headCell.numeric ? 'right' : 'left'}>
+                            {product[headCell.id]}
+                          </TableCell>
+                        );
                       })}
                       <TableCell>
                         {product.ASIN === item.selectedASIN ? (
@@ -246,4 +259,4 @@ const EnhancedTable = ({
   );
 };
 
-export default EnhancedTable;
+export default SortableProductTable;

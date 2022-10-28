@@ -1,5 +1,5 @@
 import { AmazonProductMap } from '../../../airtable/amazonProducts';
-import EnhancedTable from '../EnhancedTable';
+import SortableProductTable from '../SortableProductTable';
 import { CartItem } from '../ShoppingCartTable';
 
 const CarbonFilterProductTable = ({
@@ -12,7 +12,7 @@ const CarbonFilterProductTable = ({
   changeSelectedProductASIN: (ASIN: string) => void;
 }) => {
   return (
-    <EnhancedTable
+    <SortableProductTable
       item={item}
       amazonProducts={amazonProducts}
       changeSelectedProductASIN={changeSelectedProductASIN}
