@@ -114,7 +114,25 @@ export default function useTable(props?: Props) {
 
 // ----------------------------------------------------------------------
 
+export const priceComparator = (a: any, b: any) => {
+  if (!a.price || !b.price) {
+    throw new Error('Tried to use price comparator without any prices!');
+  }
+
+  const priceA = parseFloat(a.price);
+  const priceB = parseFloat(b.price);
+
+  if (priceB < priceA) {
+    return -1;
+  }
+  if (priceB > priceA) {
+    return 1;
+  }
+  return 0;
+};
+
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (orderBy === 'price') return priceComparator(a, b);
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
