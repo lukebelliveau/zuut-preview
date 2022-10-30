@@ -30,6 +30,7 @@ import { useDispatchDropItem } from '../../redux/features/items/itemsHooks';
 import { mmToFeet } from '../../lib/conversions';
 import { useDispatch } from 'src/redux/store';
 import { isTentItem } from 'src/lib/item/tentItem';
+import { Room } from '@liveblocks/client';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,11 @@ const useTrackCollisions = () => {
   }, [items, playground, dispatch]);
 };
 
-export default function PlaygroundItems() {
+export default function PlaygroundItems({
+  liveblocksRoom,
+}: {
+  liveblocksRoom: Room<any, any, any, any> | null;
+}) {
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const items = useBuildItemList();
@@ -94,6 +99,7 @@ export default function PlaygroundItems() {
                 item={item}
                 updatePlacement={updatePlacement}
                 dropAndUpdateItemCollisions={dropAndUpdateItemCollisions}
+                liveblocksRoom={liveblocksRoom}
               />
               <Shadow item={item} />
             </Fragment>
@@ -134,10 +140,12 @@ const Item = ({
   item,
   updatePlacement,
   dropAndUpdateItemCollisions,
+  liveblocksRoom,
 }: {
   item: IPlaceableItem;
   updatePlacement: (item: IPlaceableItem, newPosition: Point) => void;
   dropAndUpdateItemCollisions: (item: IPlaceableItem) => void;
+  liveblocksRoom: Room<any, any, any, any> | null;
 }) => {
   if (!item.image) throw new Error('Image not found in ImageItem component');
   const showLayer = useSelectShowLayer();
@@ -159,6 +167,10 @@ const Item = ({
     }
   };
 
+  const handleDragStart = () => {
+    liveblocksRoom?.history?.pause();
+  };
+
   const handleDragMove = (e: KonvaEventObject<MouseEvent>) => {
     updatePlacement(item, { x: e.target.x(), y: e.target.y() });
 
@@ -169,6 +181,8 @@ const Item = ({
     dropAndUpdateItemCollisions(item);
 
     setContainerCursor('grab', e);
+
+    liveblocksRoom?.history?.resume();
   };
 
   const itemRef = useRef<any>(null);
@@ -212,6 +226,7 @@ const Item = ({
          */
         image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
         rotation={item.rotation}
+        onDragStart={handleDragStart}
         onDragMove={handleDragMove}
         onDragEnd={handleDragEnd}
         onMouseEnter={(e) => setContainerCursor('grab', e)}

@@ -1602,6 +1602,26 @@
   "resolved" "https://registry.npmjs.org/@juggle/resize-observer/-/resize-observer-3.3.1.tgz"
   "version" "3.3.1"
 
+"@liveblocks/client@^0.18.5", "@liveblocks/client@0.18.5":
+  "integrity" "sha512-P2yk5m1b4QtBAqlljZcqeXdBHiJ2y5CUjWAYo9SfmRIAYD9ztB9rX6M6+/5sAHka6Apb11RTlyLzrIaANBooDQ=="
+  "resolved" "https://registry.npmjs.org/@liveblocks/client/-/client-0.18.5.tgz"
+  "version" "0.18.5"
+  dependencies:
+    "@liveblocks/core" "0.18.5"
+
+"@liveblocks/core@0.18.5":
+  "integrity" "sha512-nTOQOPlzUidrC3qQAJTDP0aMxS/ThyagcqMADvZIAubzv3qY7d3+OhKO+FphGsUuNgIflgq12cpLyb3bJW2vTA=="
+  "resolved" "https://registry.npmjs.org/@liveblocks/core/-/core-0.18.5.tgz"
+  "version" "0.18.5"
+
+"@liveblocks/redux@^0.18.5":
+  "integrity" "sha512-VcueiN2tTnoZW7myejIH+vbB89D5AZ1MsgVN+j6GtGiFYnsF0iwVSKgWZO88vQs8Juah+WsRey9xpU2ATYuygA=="
+  "resolved" "https://registry.npmjs.org/@liveblocks/redux/-/redux-0.18.5.tgz"
+  "version" "0.18.5"
+  dependencies:
+    "@liveblocks/client" "0.18.5"
+    "@liveblocks/core" "0.18.5"
+
 "@mui/base@5.0.0-alpha.87":
   "integrity" "sha512-PuxRYrvG63Yj/UTwf4hSwZ5ClMv88iXHK+5hUV1CrG3kNPo6FFQiIFNRaNpRt/3nsXj6+xygJByNFA8m4Leetg=="
   "resolved" "https://registry.npmjs.org/@mui/base/-/base-5.0.0-alpha.87.tgz"
@@ -1802,10 +1822,10 @@
   "resolved" "https://registry.npmjs.org/@react-dnd/shallowequal/-/shallowequal-4.0.2.tgz"
   "version" "4.0.2"
 
-"@reduxjs/toolkit@^1.8.5":
-  "integrity" "sha512-f4D5EXO7A7Xq35T0zRbWq5kJQyXzzscnHKmjnu2+37B3rwHU6mX9PYlbfXdnxcY6P/7zfmjhgan0Z+yuOfeBmA=="
-  "resolved" "https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.8.5.tgz"
-  "version" "1.8.5"
+"@reduxjs/toolkit@^1.8.6":
+  "integrity" "sha512-4Ia/Loc6WLmdSOzi7k5ff7dLK8CgG2b8aqpLsCAJhazAzGdp//YBUSaj0ceW6a3kDBDNRrq5CRwyCS0wBiL1ig=="
+  "resolved" "https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.8.6.tgz"
+  "version" "1.8.6"
   dependencies:
     "immer" "^9.0.7"
     "redux" "^4.1.2"
@@ -8716,10 +8736,10 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.23.0"
 
-"react-redux@^7.2.1 || ^8.0.2", "react-redux@^8.0.2":
-  "integrity" "sha512-nBwiscMw3NoP59NFCXFf02f8xdo+vSHT/uZ1ldDwF7XaTpzm+Phk97VT4urYBl5TYAPNVaFm12UHAEyzkpNzRA=="
-  "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-8.0.2.tgz"
-  "version" "8.0.2"
+"react-redux@^7.2.1 || ^8.0.2", "react-redux@^8.0.4":
+  "integrity" "sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ=="
+  "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-8.0.4.tgz"
+  "version" "8.0.4"
   dependencies:
     "@babel/runtime" "^7.12.1"
     "@types/hoist-non-react-statics" "^3.3.1"

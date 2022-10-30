@@ -2,7 +2,7 @@ name: dev
 on:
   push:
     branches:
-      - main
+      - main, liveblocks
 
 env:
   REGISTRY: 'registry.digitalocean.com/zuut-co'

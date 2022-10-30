@@ -1,3 +1,4 @@
+import { Room } from '@liveblocks/client';
 import { selectMany, unselectAll } from '../redux/features/interactions/interactionsSlice';
 import { redoItemAction, removeItems, undoItemAction } from '../redux/features/items/itemsSlice';
 import { AppStore } from '../redux/store';
@@ -27,14 +28,17 @@ const redoPressed = (e: React.KeyboardEvent<HTMLSpanElement>) => {
 
 export const handleUndoRedoOnKeyDown = (
   e: React.KeyboardEvent<HTMLSpanElement>,
+  room: Room<any, any, any, any> | null,
   store: AppStore
 ) => {
+  if (room === null) {
+    console.error('ERROR undo/redo: could not find room');
+  }
   if (redoPressed(e)) {
-    store.dispatch(redoItemAction());
+    room?.history?.redo();
     e.preventDefault();
   } else if (undoPressed(e)) {
-    store.dispatch(undoItemAction());
-    e.preventDefault();
+    room?.history?.undo();
   }
 };
 
@@ -43,7 +47,7 @@ export const handleSelectAllOnKeyDown = (
   store: AppStore
 ) => {
   if (e.key === 'a' && e.metaKey) {
-    const allItemIds = store.getState().items.present.ids;
+    const allItemIds = store.getState().items.ids;
     store.dispatch(selectMany(allItemIds.map((id) => id.toString())));
     e.preventDefault();
   }

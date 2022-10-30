@@ -2,11 +2,11 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import { RootState } from '../../store';
 import itemsAdapter from './itemsEntityAdapter';
 
-export const itemsSelectors = itemsAdapter.getSelectors<RootState>((state) => state.items.present);
+export const itemsSelectors = itemsAdapter.getSelectors<RootState>((state) => state.items);
 
-export const useSelectUndoStack = () => useAppSelector((state) => state.items.past);
+export const useSelectUndoStack = () => useAppSelector((state) => state.items);
 
-export const useSelectRedoStack = () => useAppSelector((state) => state.items.future);
+export const useSelectRedoStack = () => useAppSelector((state) => state.items);
 
 export const useSelectAllItems = () => useAppSelector(itemsSelectors.selectAll);
 

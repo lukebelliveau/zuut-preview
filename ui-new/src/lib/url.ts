@@ -13,13 +13,12 @@ function useQueryParams() {
 export const paramKeys = {
   recordIds: 'recordIds',
   shared: 'shared',
+  collab: 'collab',
+  builderId: 'builderId',
 };
 
 export const shoppingCartUrlWithRecordIds = (items: IItem[], selectedIds: string[]) => {
   const recordIds: string[] = [];
-
-  console.log('items', items);
-  console.log(selectedIds);
 
   items.forEach((item) => {
     if (item.recordId && selectedIds.includes(item.id)) {
@@ -36,8 +35,6 @@ export const shoppingCartUrlWithRecordIds = (items: IItem[], selectedIds: string
       }
     }
   });
-
-  console.log(recordIds);
 
   const serializedRecordIds = JSON.stringify(recordIds);
 

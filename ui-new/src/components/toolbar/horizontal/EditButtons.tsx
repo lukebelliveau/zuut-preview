@@ -29,9 +29,11 @@ import {
   ListItemText,
   Stack,
   styled,
+  Typography,
 } from '@mui/material';
 import { ICON, NAVBAR } from 'src/config';
 import { OtherHousesSharp } from '@mui/icons-material';
+import useGetLiveblocksRoom from 'src/hooks/useGetLiveblocksRoom';
 
 export interface ToolbarButtonStyleProps extends ListItemButtonProps {
   active?: boolean;
@@ -114,13 +116,16 @@ const ToolbarButton = ({ onClick, onKeyDown, label, Icon, ...other }: ToolbarBut
 function Toolbar({ openResetModal }: { openResetModal: () => void }) {
   const dispatch = useAppDispatch();
   const showLayer = useSelectShowLayer();
+  const room = useGetLiveblocksRoom();
 
-  const undo = () => {
-    dispatch(undoItemAction());
+  if (room === null) return <Typography>Could not load room.</Typography>;
+
+  const handleUndo = () => {
+    room?.history?.undo();
   };
 
-  const redo = () => {
-    dispatch(redoItemAction());
+  const handleRedo = () => {
+    room?.history?.redo();
   };
 
   function toggleSelectedLayer(layer: Layer) {
@@ -137,8 +142,7 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
     dispatch(hackyRecenterPlayground());
   };
 
-  const undoStack = useSelectUndoStack();
-  const redoStack = useSelectRedoStack();
+  const { canRedo, canUndo } = room?.history;
 
   return (
     <Stack>
@@ -146,10 +150,10 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
         <Stack sx={{ ...stackRow, py: 1 }} flexShrink={0}>
           <ToolbarButton
             tabIndex={0}
-            onClick={undo}
-            onKeyDown={(e) => doIfEnter(e, undo)}
+            onClick={handleUndo}
+            onKeyDown={(e) => doIfEnter(e, handleUndo)}
             label="undo"
-            disabled={undoStack.length === 0}
+            disabled={!canUndo()}
             Icon={<UndoIcon />}
           />
           <ToolbarButton
@@ -165,10 +169,10 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
         <Stack sx={{ ...stackRow, py: 1 }} flexShrink={0}>
           <ToolbarButton
             tabIndex={0}
-            onClick={redo}
-            onKeyDown={(e) => doIfEnter(e, redo)}
+            onClick={handleRedo}
+            onKeyDown={(e) => doIfEnter(e, handleRedo)}
             label="redo"
-            disabled={redoStack.length === 0}
+            disabled={!canRedo()}
             Icon={<RedoIcon />}
           />
           <ToolbarButton

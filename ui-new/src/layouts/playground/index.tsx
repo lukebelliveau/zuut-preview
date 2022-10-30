@@ -22,6 +22,7 @@ import {
 } from 'src/utils/interactionHandlers';
 import { AppStore, store } from 'src/redux/store';
 import { useStore } from 'react-redux';
+import useGetLiveblocksRoom from 'src/hooks/useGetLiveblocksRoom';
 
 // ----------------------------------------------------------------------
 
@@ -57,6 +58,7 @@ const MainStyle = styled('main', {
 export default function PlaygroundLayout() {
   const { collapseClick, isCollapse } = useCollapseDrawer();
   const { themeLayout } = useSettings();
+  const liveblocksRoom = useGetLiveblocksRoom();
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -67,7 +69,7 @@ export default function PlaygroundLayout() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     handleDeleteOnKeyDown(e, store);
-    handleUndoRedoOnKeyDown(e, store);
+    handleUndoRedoOnKeyDown(e, liveblocksRoom, store);
     handleSelectAllOnKeyDown(e, store);
     handleEscOnKeyDown(e, store);
   };
