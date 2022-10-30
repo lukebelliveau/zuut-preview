@@ -1,11 +1,10 @@
 import { createReduxHistoryContext } from 'redux-first-history';
-import { configureStore, createSlice, EntityState } from '@reduxjs/toolkit';
+import { configureStore, EntityState } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import { createBrowserHistory } from 'history';
 import createThunkErrorHandlerMiddleware from 'redux-thunk-error-handler';
 import undoable, { includeAction } from 'redux-undo';
-import { createClient } from '@liveblocks/client';
-import { enhancer } from '@liveblocks/redux';
+import rison from 'rison-node';
 
 import itemsReducer, {
   addOne,
@@ -25,10 +24,6 @@ import {
   useDispatch as useReduxDispatch,
 } from 'react-redux';
 
-export const liveblocksClient = createClient({
-  publicApiKey: 'pk_dev_bguZcseOKlVRCbXmiYOihPNQjYGN4u5uC_AjP0_IcyM6NMQ6J0SjvXtLEhK0K9wx',
-});
-
 export const isDemoMode = () => {
   if (process.env.NODE_ENV === 'production') return true;
 
@@ -47,31 +42,22 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
   //other options if needed
 });
 
-const liveblocks = createSlice({
-  name: 'liveblocks',
-  initialState: {},
-  reducers: {},
-});
-
 const reducers = {
-  // items: undoable<EntityState<ItemState>>(itemsReducer, {
-  //   filter: includeAction([
-  //     updateOne.type,
-  //     addOne.type,
-  //     removeOne.type,
-  //     removeMany.type,
-  //     'items/removeItems/pending',
-  //     'items/removeItems/fulfilled',
-  //   ]),
-  // }),
-  items: itemsReducer,
+  items: undoable<EntityState<ItemState>>(itemsReducer, {
+    filter: includeAction([
+      updateOne.type,
+      addOne.type,
+      removeOne.type,
+      removeMany.type,
+      'items/removeItems/pending',
+      'items/removeItems/fulfilled',
+    ]),
+  }),
   plans: plansReducer,
   playground: playgroundReducer,
   interactions: interactionsReducer,
   user: userReducer,
   router: routerReducer,
-  // put a `liveblocks` something here, so redux doesn't freak out once the liveblocks enhancer creates this piece of state.
-  liveblocks: liveblocks.reducer,
 };
 
 /**
@@ -83,10 +69,8 @@ const getAppDefaultMiddleware = (
 ) => getDefaultMiddleware();
 
 export function createAppStore() {
-  console.log('CONFIGURE APP STORE');
   return configureStore({
     reducer: reducers,
-    enhancers: [enhancer({ client: liveblocksClient, storageMapping: { items: true } })],
     middleware: (getDefaultMiddleware) => {
       if (reduxLoggerEnabled) {
         return getDefaultMiddleware()
@@ -105,14 +89,12 @@ export function createAppStore() {
 }
 
 export function getDemoModeStore() {
-  console.log('WOOOO');
   const persistentState = localStorage.getItem(ZUUT_DEMO_STATE)
     ? JSON.parse(localStorage.getItem(ZUUT_DEMO_STATE) || '')
     : {};
 
   return configureStore({
     reducer: reducers,
-    enhancers: [enhancer({ client: liveblocksClient, storageMapping: { items: true } })],
     middleware: (getDefaultMiddleware) => {
       if (reduxLoggerEnabled) {
         return getDefaultMiddleware()

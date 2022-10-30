@@ -45,7 +45,7 @@ export const useLoadDemoPlan = () => {
         // set playground planId to that plan
         dispatch(setPlan(plan.id));
         // load items
-        dispatch(addMany(items.entities));
+        dispatch(addMany(items.present.entities));
         return;
       } else {
         dispatch(createDemoPlan());

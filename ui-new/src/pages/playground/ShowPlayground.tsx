@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';
@@ -51,10 +51,6 @@ import {
 } from 'src/utils/interactionHandlers';
 import { HEADER } from 'src/config';
 import TopLevelErrorBoundary from 'src/components/TopLevelErrorBoundary';
-import { actions } from '@liveblocks/redux';
-import useQueryParams, { paramKeys } from 'src/lib/url';
-import { useSearchParams } from 'react-router-dom';
-import useGetLiveblocksRoom from 'src/hooks/useGetLiveblocksRoom';
 
 // export const playground_path = () => '/playgrounds/current';
 // export const demo_playground_path = () => '/playgrounds/demo';
@@ -63,8 +59,6 @@ export const DRAGGABLE_SIDEBAR_ITEM = 'DRAGGABLE_SIDEBAR_ITEM';
 
 export default function ShowPlayground() {
   const stageRef = useRef<any>(null);
-  const query = useQueryParams();
-  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const playground = useBuildPlayground();
   const jwt = useJwt();
@@ -72,30 +66,6 @@ export default function ShowPlayground() {
   const dispatchAddItem = useDispatchAddItem();
   const { user } = useAuth();
   useQueryItemsLibrary();
-  const [builderId, setBuilderId] = useState<string | null>(query.get(paramKeys.builderId));
-  const liveblocksRoom = useGetLiveblocksRoom();
-
-  useEffect(() => {
-    if (builderId === null) {
-      const newBuilderId = v4();
-      setBuilderId(newBuilderId);
-      setSearchParams({ [paramKeys.builderId]: newBuilderId });
-    }
-  }, [setBuilderId, builderId, setSearchParams]);
-
-  useEffect(() => {
-    console.log(builderId);
-
-    dispatch(
-      actions.enterRoom(builderId as string, {
-        items: { entities: {}, ids: [] },
-      })
-    );
-
-    return () => {
-      dispatch(actions.leaveRoom(builderId as string));
-    };
-  }, [dispatch, builderId]);
 
   /**
    * Ugh. I'm not able to get the react-dnd useDrop() hook to update
@@ -204,7 +174,7 @@ export default function ShowPlayground() {
                 <Provider store={store}>
                   <GridLines />
                   <PlaygroundRoom room={room} />
-                  <PlaygroundItems liveblocksRoom={liveblocksRoom} />
+                  <PlaygroundItems />
                 </Provider>
               </Stage>
             </div>
