@@ -5,6 +5,7 @@ import { Box, SxProps } from '@mui/material';
 //
 import Logo from './Logo';
 import ProgressBar from './ProgressBar';
+import MainHeader from 'src/layouts/main/MainHeader';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ export default function LoadingScreen({ isDashboard, ...other }: Props) {
 
       {!isDashboard && (
         <RootStyle {...other}>
+          <MainHeader />
           <m.div
             animate={{
               scale: [1, 0.9, 0.9, 1, 1],
