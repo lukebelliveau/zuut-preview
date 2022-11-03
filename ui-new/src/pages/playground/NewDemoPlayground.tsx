@@ -8,6 +8,9 @@ import { createDemoPlan } from '../../redux/features/playgrounds/playgroundSlice
 import { useEffect } from 'react';
 import { PATH_PLAYGROUND } from 'src/routes/paths';
 
+/**
+ * Exists just to remove old demo plan, create a new one, then redirect.
+ */
 export const new_demo_path = () => '/newdemo';
 const NewDemoPlayground = () => {
   const dispatch = useDispatch();

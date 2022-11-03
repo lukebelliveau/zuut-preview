@@ -1,18 +1,13 @@
 import Konva from 'konva';
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import { useDrop } from 'react-dnd';
-import { Helmet } from 'react-helmet-async';
 import { Stage } from 'react-konva';
 import { Provider, useStore } from 'react-redux';
 import { v4 } from 'uuid';
 
-import {
-  useLoadDemoPlan,
-  useResizePlaygroundOnWindowResize,
-} from '../../redux/features/playgrounds/playgroundEffects';
+import { useResizePlaygroundOnWindowResize } from '../../redux/features/playgrounds/playgroundEffects';
 import {
   createDemoPlan,
-  loadSavedPlayground,
   zoom as zoomPlayground,
 } from '../../redux/features/playgrounds/playgroundSlice';
 import PlaygroundReduxAdapter from '../../lib/playground/playgroundReduxAdapter';
@@ -20,9 +15,7 @@ import PlaygroundRoom from '../../components/playground/PlaygroundRoom';
 import PlaygroundItems from '../../components/playground/PlaygroundItems';
 import GridLines from '../../components/playground/GridLines';
 // import { DRAGGABLE_SIDEBAR_ITEM } from '../../components/sidebar/SidebarTabs';
-import useBuildPlayground from '../../hooks/useBuildPlayground';
 import LoadingScreen from '../../components/LoadingScreen';
-import { useJwt } from '../../redux/features/users/userSelector';
 // import {
 //   handleDeleteOnKeyDown,
 //   handleEscOnKeyDown,
@@ -38,27 +31,28 @@ import { Layer } from '../../lib/layer';
 import { Point } from '../../lib/point';
 import { setVisibleLayer } from '../../redux/features/interactions/interactionsSlice';
 
-// import { useAuth0 } from '@auth0/auth0-react';
-import useAuth from '../../hooks/useAuth';
 import { AppStore, isDemoMode, useDispatch } from '../../redux/store';
 // import MobileWarningModal from '../../components/MobileWarningModal';
 import { useQueryItemsLibrary } from '../../lib/itemsLibrary';
 import { HEADER } from 'src/config';
 import TopLevelErrorBoundary from 'src/components/TopLevelErrorBoundary';
+import Playground from 'src/lib/playground';
+import Plan from 'src/lib/plan';
 
 // export const playground_path = () => '/playgrounds/current';
 // export const demo_playground_path = () => '/playgrounds/demo';
 
 export const DRAGGABLE_SIDEBAR_ITEM = 'DRAGGABLE_SIDEBAR_ITEM';
 
-export default function ShowPlayground() {
+export interface PlaygroundWithPlan extends Playground {
+  plan: Plan;
+}
+
+export default function ShowPlayground({ playground }: { playground: PlaygroundWithPlan }) {
   const stageRef = useRef<any>(null);
   const dispatch = useDispatch();
-  const playground = useBuildPlayground();
-  const jwt = useJwt();
   const store = useStore() as AppStore;
   const dispatchAddItem = useDispatchAddItem();
-  const { user } = useAuth();
   useQueryItemsLibrary();
 
   /**
@@ -73,7 +67,6 @@ export default function ShowPlayground() {
   const hackyPlaygroundCenterRef = useRef<Point>();
   hackyPlaygroundCenterRef.current = playground.place();
 
-  useLoadDemoPlan();
   useResizePlaygroundOnWindowResize();
 
   const [_, drop] = useDrop(() => ({
@@ -92,17 +85,7 @@ export default function ShowPlayground() {
     },
   }));
 
-  if (isDemoMode() && !playground.plan) {
-    dispatch(createDemoPlan());
-
-    return <LoadingScreen />;
-  } else if (isDemoMode() && playground.plan) {
-  } else if (!playground.plan || !jwt) {
-    if (jwt) dispatch(loadSavedPlayground(jwt));
-    return <LoadingScreen />;
-  }
-
-  const room = playground.plan.room;
+  const { room } = playground.plan;
   if (!room) throw new Error('No room found');
 
   function zoom(event: Konva.KonvaEventObject<WheelEvent>) {
