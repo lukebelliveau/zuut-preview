@@ -43,12 +43,6 @@ import useAuth from '../../hooks/useAuth';
 import { AppStore, isDemoMode, useDispatch } from '../../redux/store';
 // import MobileWarningModal from '../../components/MobileWarningModal';
 import { useQueryItemsLibrary } from '../../lib/itemsLibrary';
-import {
-  handleDeleteOnKeyDown,
-  handleEscOnKeyDown,
-  handleSelectAllOnKeyDown,
-  handleUndoRedoOnKeyDown,
-} from 'src/utils/interactionHandlers';
 import { HEADER } from 'src/config';
 import TopLevelErrorBoundary from 'src/components/TopLevelErrorBoundary';
 

@@ -18,6 +18,7 @@ const TopLevelErrorFallback = ({
     errorMessage: error.message,
     ...toTrack,
   });
+
   return (
     <div
       role="alert"
