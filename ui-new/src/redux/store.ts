@@ -28,6 +28,7 @@ export const isDemoMode = () => {
   return window.location.href.includes('demo');
 };
 export const ZUUT_DEMO_STATE = 'zuut-state';
+export const ZUUT_DEMO_STATE_LAST_SAVED = 'zuut-last-saved';
 
 const reduxLoggerEnabled = false;
 
@@ -58,13 +59,39 @@ const reducers = {
   router: routerReducer,
 };
 
+const olderThanDaysAgo = (timestamp: number, days: number) => {
+  const day = 1000 * 60 * 60 * 24;
+  const daysAgo = Date.now() - day * days;
+
+  return timestamp < daysAgo;
+};
+
+const getPersistentState = () => {
+  if (isDemoMode()) {
+    const lastSaved = localStorage.getItem(ZUUT_DEMO_STATE_LAST_SAVED);
+    if (!lastSaved) {
+      console.log('deleting old demo state, no timestamp');
+      localStorage.removeItem(ZUUT_DEMO_STATE);
+      return undefined;
+    } else if (olderThanDaysAgo(parseInt(lastSaved), 3)) {
+      console.log(`deleting old demo state, too old`);
+      localStorage.removeItem(ZUUT_DEMO_STATE);
+      return undefined;
+    }
+    const state = localStorage.getItem(ZUUT_DEMO_STATE);
+    if (state) {
+      return JSON.parse(state);
+    }
+  }
+  return undefined;
+};
+
 export function createAppStore() {
-  const persistentState = localStorage.getItem(ZUUT_DEMO_STATE)
-    ? JSON.parse(localStorage.getItem(ZUUT_DEMO_STATE) || '')
-    : {};
+  const persistentState = getPersistentState();
 
   return configureStore({
-    preloadedState: isDemoMode() ? persistentState : undefined,
+    // undefined if not demo mode (see getPersistentState())
+    preloadedState: persistentState,
     reducer: reducers,
     middleware: (getDefaultMiddleware) => {
       if (reduxLoggerEnabled) {
@@ -103,5 +130,6 @@ if (isDemoMode()) {
     const state = store.getState();
     const serializedState = JSON.stringify(state);
     localStorage.setItem(ZUUT_DEMO_STATE, serializedState);
+    localStorage.setItem(ZUUT_DEMO_STATE_LAST_SAVED, Date.now().toString());
   });
 }
