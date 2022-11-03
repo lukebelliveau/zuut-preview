@@ -77,7 +77,7 @@ export default function Router() {
     },
     {
       path: '/cart',
-      element: <LogoOnlyLayout />,
+      element: <Cart />,
       children: [{ element: <Cart />, index: true }],
     },
 

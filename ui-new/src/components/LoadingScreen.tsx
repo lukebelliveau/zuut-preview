@@ -6,6 +6,7 @@ import { Box, SxProps } from '@mui/material';
 import Logo from './Logo';
 import ProgressBar from './ProgressBar';
 import MainHeader from 'src/layouts/main/MainHeader';
+import { grey } from '@mui/material/colors';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +37,8 @@ export default function LoadingScreen({ isDashboard, ...other }: Props) {
 
       {!isDashboard && (
         <RootStyle {...other}>
-          <MainHeader />
+          <MainHeader rootStyles={{ backgroundColor: grey[100] }} />
+
           <m.div
             animate={{
               scale: [1, 0.9, 0.9, 1, 1],
@@ -49,7 +51,7 @@ export default function LoadingScreen({ isDashboard, ...other }: Props) {
               repeat: Infinity,
             }}
           >
-            <Logo disabledLink sx={{ width: 64, height: 64 }} />
+            <Logo disabledLink sx={{ width: 64, height: 64 }} header={false} />
           </m.div>
 
           <Box

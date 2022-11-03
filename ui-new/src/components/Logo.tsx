@@ -7,9 +7,10 @@ import { Box, BoxProps } from '@mui/material';
 
 interface Props extends BoxProps {
   disabledLink?: boolean;
+  header?: boolean;
 }
 
-export default function Logo({ disabledLink = false, sx }: Props) {
+export default function Logo({ disabledLink = false, header = true, sx }: Props) {
   const theme = useTheme();
 
   const PRIMARY_LIGHT = theme.palette.primary.light;
@@ -24,7 +25,13 @@ export default function Logo({ disabledLink = false, sx }: Props) {
     <Box
       component="img"
       src="/assets/zuut-logo.svg"
-      sx={{ width: 40, height: 40, cursor: 'pointer', marginRight: '45px', ...sx }}
+      sx={{
+        width: 40,
+        height: 40,
+        cursor: 'pointer',
+        marginRight: header ? '45px' : 'auto',
+        ...sx,
+      }}
       alt="ZUUT logo"
     />
   );
