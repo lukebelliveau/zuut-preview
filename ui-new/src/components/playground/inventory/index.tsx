@@ -18,7 +18,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // utils
 import cssStyles from '../../../utils/cssStyles';
 // config
-import { NAVBAR, HEADER } from '../../../config';
+import { NAVBAR, HEADER, INVENTORY } from '../../../config';
 import Iconify from '../../Iconify';
 import Scrollbar from '../../Scrollbar';
 import { varFade } from '../../animate';
@@ -67,7 +67,7 @@ const RootStyle = styled(m.div)(({ theme }) => ({
   display: 'flex',
   position: 'fixed',
   overflow: 'hidden',
-  width: NAVBAR.BASE_WIDTH,
+  width: INVENTORY.BASE_WIDTH,
   flexDirection: 'column',
   margin: theme.spacing(2),
   marginRight: 0,

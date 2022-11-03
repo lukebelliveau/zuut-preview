@@ -1,34 +1,14 @@
-import { useLocation } from 'react-router-dom';
 // @mui
-import { styled, useTheme } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { AppBar, Toolbar } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
-import useResponsive from '../../hooks/useResponsive';
-// utils
-import cssStyles from '../../utils/cssStyles';
+
 // config
 import { HEADER } from '../../config';
 // components
 import Logo from '../../components/Logo';
-import Label from '../../components/Label';
-//
-import MenuDesktop from './MenuDesktop';
-import MenuMobile from './MenuMobile';
-import navConfig from './MenuConfig';
-
-// ----------------------------------------------------------------------
-
-const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
-  height: HEADER.MOBILE_HEIGHT,
-  transition: theme.transitions.create(['height', 'background-color'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter,
-  }),
-  [theme.breakpoints.up('md')]: {
-    height: HEADER.MAIN_DESKTOP_HEIGHT,
-  },
-}));
+import baseHeaderStyle from '../baseHeaderStyle';
 
 const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   left: 0,
@@ -43,60 +23,23 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   boxShadow: theme.customShadows.z8,
 }));
 
+const RootStyle = styled(AppBar)(({ theme }) => ({
+  ...baseHeaderStyle(theme),
+  backgroundColor: 'transparent',
+}));
+
 // ----------------------------------------------------------------------
 
 export default function MainHeader() {
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
-  const theme = useTheme();
-
-  const { pathname } = useLocation();
-
-  const isDesktop = useResponsive('up', 'md');
-
-  const isHome = pathname === '/';
-
   return (
-    <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
-      <ToolbarStyle
-        disableGutters
-        sx={{
-          ...(isOffset && {
-            ...cssStyles(theme).bgBlur(),
-            height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
-          }),
-        }}
-      >
-        <Container
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            '&.MuiContainer-root': {
-              margin: 0,
-            },
-          }}
-        >
-          <Logo />
-
-          <Box sx={{ flexGrow: 1 }} />
-
-          {/* {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />} */}
-
-          {/* <Button
-            variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-          >
-            Purchase Now
-          </Button> */}
-
-          {/* {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />} */}
-        </Container>
-      </ToolbarStyle>
+    <RootStyle>
+      <Toolbar>
+        <Logo />
+      </Toolbar>
 
       {isOffset && <ToolbarShadowStyle />}
-    </AppBar>
+    </RootStyle>
   );
 }

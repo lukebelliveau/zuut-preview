@@ -24,7 +24,7 @@ export default function Logo({ disabledLink = false, sx }: Props) {
     <Box
       component="img"
       src="/assets/zuut-logo.svg"
-      sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
+      sx={{ width: 40, height: 40, cursor: 'pointer', marginRight: '45px', ...sx }}
       alt="ZUUT logo"
     />
   );

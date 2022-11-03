@@ -22,6 +22,7 @@ import { selectPlaygroundState } from './playgroundSelector';
 import { PlaygroundState } from './playgroundState';
 import waitForElement from './waitForElement';
 import { PATH_PLAYGROUND } from 'src/routes/paths';
+import { INVENTORY } from 'src/config';
 
 const initialState: PlaygroundState = {
   planId: '0',
@@ -145,7 +146,7 @@ export const resizePlayground = createAsyncThunk(
       }
 
       playground.setDisplayDimensions(
-        UNSAFE_sandboxOffsetWidth,
+        UNSAFE_sandboxOffsetWidth - INVENTORY.BASE_WIDTH,
         UNSAFE_sandboxOffsetHeight - UNSAFE_toolbarOffsetHeight - 10
       );
 
