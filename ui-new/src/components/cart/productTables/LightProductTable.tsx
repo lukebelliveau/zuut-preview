@@ -20,7 +20,7 @@ const LightProductTable = ({
         { label: 'Product Name', id: 'productName', disablePadding: false, numeric: false },
         { label: 'Spectrum', id: 'spectrum', disablePadding: false, numeric: false },
         { label: 'Dimming', id: 'dimming', disablePadding: false, numeric: false },
-        { label: 'Wattage', id: 'wattage', disablePadding: false, numeric: false },
+        { label: 'Wattage', id: 'wattage', disablePadding: false, numeric: true },
         { label: 'Daisy Chain', id: 'daisyChain', disablePadding: false, numeric: false },
         { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
         { label: 'Unit Count', id: 'unitCount', disablePadding: false, numeric: false },
