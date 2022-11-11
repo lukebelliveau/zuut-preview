@@ -12,6 +12,7 @@ export interface AmazonProductDetail extends AmazonProductRecord {
   totalToPurchase: number;
   pricePerUnit: number;
   totalCost: number;
+  itemQuantity: number;
 }
 
 export interface AmazonProductMap {

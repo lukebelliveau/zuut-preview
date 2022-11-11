@@ -50,11 +50,14 @@ const createAmazonProductDetailMap = (
     const totalToPurchase = Math.ceil(item.quantity / parseInt(currentProduct.unitCount));
     const pricePerUnit = parseFloat(currentProduct.price) / parseInt(currentProduct.unitCount);
     const totalCost = totalToPurchase * parseFloat(currentProduct.price);
+
+    const itemQuantity = item.quantity;
     amazonProductDetails[amazonProductASIN] = {
       ...amazonProducts[amazonProductASIN],
       totalToPurchase,
       pricePerUnit,
       totalCost,
+      itemQuantity,
     };
   });
 

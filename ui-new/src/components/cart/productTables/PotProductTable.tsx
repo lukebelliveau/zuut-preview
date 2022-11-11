@@ -1,6 +1,7 @@
 import { AmazonProductDetailMap } from '../../../airtable/amazonProducts';
 import SortableProductTable from '../SortableProductTable';
 import { CartItem } from '../ShoppingCartTable';
+import commonColumns from './commonColumns';
 
 const PotProductTable = ({
   item,
@@ -48,26 +49,8 @@ const PotProductTable = ({
           numeric: false,
         },
         {
-          id: 'unitCount',
-          label: 'Unit Count',
-          disablePadding: false,
-          numeric: true,
-        },
-        {
           id: 'totalToPurchase',
           label: 'Total to purchase',
-          disablePadding: false,
-          numeric: true,
-        },
-        {
-          id: 'pricePerUnit',
-          label: 'Price per Unit',
-          disablePadding: false,
-          numeric: true,
-        },
-        {
-          id: 'price',
-          label: 'Price',
           disablePadding: false,
           numeric: true,
         },
@@ -77,6 +60,7 @@ const PotProductTable = ({
           disablePadding: false,
           numeric: true,
         },
+        ...commonColumns,
       ]}
     />
   );

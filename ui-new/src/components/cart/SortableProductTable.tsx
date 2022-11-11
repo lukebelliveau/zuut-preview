@@ -168,7 +168,7 @@ const SortableProductTable = ({
                         } else if (headCell.id === 'pricePerUnit') {
                           return (
                             <TableCell key={headCell.label} align="right">
-                              ${product.pricePerUnit.toFixed(2)}
+                              ${product.pricePerUnit.toFixed(2)} / unit
                             </TableCell>
                           );
                         } else if (headCell.id === 'totalCost') {

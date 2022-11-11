@@ -1,6 +1,7 @@
 import { AmazonProductDetailMap } from '../../../airtable/amazonProducts';
 import SortableProductTable from '../SortableProductTable';
 import { CartItem } from '../ShoppingCartTable';
+import commonColumns from './commonColumns';
 
 const ExhaustFanProductTable = ({
   item,
@@ -22,15 +23,7 @@ const ExhaustFanProductTable = ({
         { label: 'Width', id: 'width', disablePadding: false, numeric: false },
         { label: 'Speed Adjustable', id: 'speedAdjustable', disablePadding: false, numeric: false },
         { label: 'Rating', id: 'rating', disablePadding: false, numeric: false },
-        { label: 'Unit Count', id: 'unitCount', disablePadding: false, numeric: false },
-        { label: 'Price per Unit', id: 'pricePerUnit', disablePadding: false, numeric: true },
-        {
-          label: 'Total to purchase',
-          id: 'totalToPurchase',
-          disablePadding: false,
-          numeric: true,
-        },
-        { label: 'Price', id: 'price', disablePadding: false, numeric: true },
+        ...commonColumns,
       ]}
     />
   );
