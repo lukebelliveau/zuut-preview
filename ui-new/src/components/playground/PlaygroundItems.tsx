@@ -2,12 +2,7 @@ import { Layer, Rect, Image, Text } from 'react-konva';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
 import { removeItem, updateOneWithoutHistory } from '../../redux/features/items/itemsSlice';
-import {
-  CollisionState,
-  IPlaceableItem,
-  isPlaceableItem,
-  PlacementShadow,
-} from '../../lib/item/placeableItem';
+import { CollisionState, IPlaceableItem, isPlaceableItem } from '../../lib/item/placeableItem';
 import useBuildItemList from '../../hooks/useBuildItemList';
 import useBuildPlayground from '../../hooks/useBuildPlayground';
 import { Fragment, MutableRefObject, useEffect, useRef } from 'react';
@@ -29,7 +24,7 @@ import { KonvaEventObject } from 'konva/lib/Node';
 import { useDispatchDropItem } from '../../redux/features/items/itemsHooks';
 import { mmToFeet } from '../../lib/conversions';
 import { useDispatch } from 'src/redux/store';
-import { isTentItem } from 'src/lib/item/tentItem';
+import Tent, { isTentItem } from 'src/lib/item/tentItem';
 
 const useTrackCollisions = () => {
   const dispatch = useDispatch();
@@ -99,6 +94,7 @@ export default function PlaygroundItems() {
             </Fragment>
           );
         })}
+      <TentOutlines items={items.filter(isTentItem)} />
     </Layer>
   );
 }
@@ -128,6 +124,47 @@ const useHandleItemClicks = (item: IPlaceableItem, itemRef: MutableRefObject<any
       };
     }
   }, [dispatch, item.id, itemRef]);
+};
+
+/**
+ * We want Tent outlines to always show,
+ * even if they are at the bottom of the item stack (non-selected/draggable because other items are on top).
+ *
+ * This overlays tent images with `listening={false}` on top of the item stack, one for each tent.
+ */
+const TentOutlines = ({ items }: { items: Tent[] }) => {
+  return (
+    <>
+      {items.filter(isTentItem).map((item) => {
+        const imageObj = new window.Image();
+        imageObj.src = item.image as string;
+
+        return (
+          <Image
+            key={item.id}
+            x={item.x}
+            y={item.y}
+            width={item.width}
+            height={item.length}
+            strokeWidth={0}
+            strokeScaleEnabled={false}
+            offset={item.offset}
+            draggable={false}
+            opacity={1}
+            // makes keyboard events pass through
+            listening={false}
+            /**
+             * don't use imageObj in tests, because there is no window.Image() in tests
+             *
+             * image is what we actually want to show here (no strokeWidth)
+             */
+            image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
+            rotation={item.rotation}
+          />
+        );
+      })}
+    </>
+  );
 };
 
 const Item = ({
