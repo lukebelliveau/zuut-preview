@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { HeadCell } from 'src/components/cart/SortableProductTable';
 
 // ----------------------------------------------------------------------
 
@@ -131,8 +132,26 @@ export const priceComparator = (a: any, b: any) => {
   return 0;
 };
 
-export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+export const numericComparator = <T>(a: T, b: T, orderBy: keyof T) => {
+  const priceA = parseFloat(a[orderBy] as any);
+  const priceB = parseFloat(b[orderBy] as any);
+
+  if (priceB < priceA) {
+    return -1;
+  }
+  if (priceB > priceA) {
+    return 1;
+  }
+  return 0;
+};
+
+export const descendingComparator = <T>(a: T, b: T, orderBy: keyof T, isNumeric = false) => {
   if (orderBy === 'price') return priceComparator(a, b);
+  else if (isNumeric) {
+    if (!isNaN(parseFloat(a[orderBy] as any)) && !isNaN(parseFloat(b[orderBy] as any))) {
+      return numericComparator(a, b, orderBy);
+    }
+  }
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -140,12 +159,21 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     return 1;
   }
   return 0;
-}
+};
 
 export function getComparator<Key extends keyof any>(
   order: 'asc' | 'desc',
-  orderBy: Key
+  orderBy: Key,
+  headCells?: HeadCell[]
 ): (a: { [key in Key]: number | string }, b: { [key in Key]: number | string }) => number {
+  if (headCells) {
+    const associatedHeadCell = headCells.find((headCell) => headCell.id === orderBy);
+    if (associatedHeadCell) {
+      return order === 'desc'
+        ? (a, b) => descendingComparator(a, b, orderBy, associatedHeadCell.numeric)
+        : (a, b) => -descendingComparator(a, b, orderBy, associatedHeadCell.numeric);
+    }
+  }
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);

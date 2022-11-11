@@ -23,7 +23,7 @@ import { CartItem, constructAmazonLinkWithASIN } from './ShoppingCartTable';
 
 type Order = 'asc' | 'desc';
 
-interface HeadCell {
+export interface HeadCell {
   disablePadding: boolean;
   id: keyof AmazonProductDetail;
   label: string;
@@ -107,7 +107,7 @@ const SortableProductTable = ({
   const [orderBy, setOrderBy] = useState<keyof AmazonProductDetail>(headCells[0].id);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(true);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(Object.keys(amazonProducts).length < 20 ? 10 : 25);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -149,7 +149,7 @@ const SortableProductTable = ({
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.sort(getComparator(order, orderBy)).slice() */}
-              {stableSort(Object.values(amazonProducts), getComparator(order, orderBy))
+              {stableSort(Object.values(amazonProducts), getComparator(order, orderBy, headCells))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((product, index) => {
                   return (
@@ -179,7 +179,7 @@ const SortableProductTable = ({
                           );
                         } else if (headCell.id === 'productName') {
                           return (
-                            <TableCell>
+                            <TableCell key={headCell.label}>
                               <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <Link
                                   href={constructAmazonLinkWithASIN(item.selectedASIN)}

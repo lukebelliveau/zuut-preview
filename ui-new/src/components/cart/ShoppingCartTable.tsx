@@ -28,7 +28,7 @@ import { store } from 'src/redux/store';
 import TopLevelErrorBoundary from '../TopLevelErrorBoundary';
 import LoadingScreen from '../LoadingScreen';
 import mixpanelTrack from 'src/utils/mixpanelTrack';
-import TotalPriceRow from './totalPriceRow';
+import TotalPriceRow from './TotalPriceRow';
 import StyledTableRow from './StyledCartTableRow';
 
 interface ShoppingCartUrlItem {
