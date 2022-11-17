@@ -21,7 +21,8 @@ describe('WallItem', () => {
         width: feetToMm(10),
         length: feetToMm(1),
         height: feetToMm(100),
-        amazonProducts: undefined,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
 
       it('rotates and aligns placementShadow when the closest wall is the left wall', () => {
@@ -98,7 +99,8 @@ describe('WallItem', () => {
         width: feetToMm(1),
         length: feetToMm(10),
         height: feetToMm(100),
-        amazonProducts: undefined,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
 
       it('aligns placementShadow without rotation when the closest wall is the left wall', () => {
@@ -159,7 +161,8 @@ describe('WallItem', () => {
           width: feetToMm(1),
           length: feetToMm(10),
           height: feetToMm(100),
-          amazonProducts: undefined,
+          amazonProducts: [],
+          selectedAmazonASIN: '',
         });
         items.push(verticalWallItem);
 
@@ -190,7 +193,8 @@ describe('WallItem', () => {
         y: feetToMm(90),
         width: feetToMm(10),
         length: feetToMm(50),
-        amazonProducts: undefined,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);
@@ -211,7 +215,8 @@ describe('WallItem', () => {
         y: feetToMm(-10),
         width: feetToMm(10),
         length: feetToMm(50),
-        amazonProducts: undefined,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       it('creates a placementShadow rotated & straddling the Room`s top wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);
@@ -232,7 +237,8 @@ describe('WallItem', () => {
         y: feetToMm(10),
         width: feetToMm(50),
         length: feetToMm(10),
-        amazonProducts: undefined,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       it('creates a placementShadow rotated & straddling the Room`s left wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);
@@ -252,7 +258,8 @@ describe('WallItem', () => {
         y: feetToMm(10),
         width: feetToMm(50),
         length: feetToMm(10),
-        amazonProducts: undefined,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       it('creates a placementShadow rotated & straddling the Room`s right wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);

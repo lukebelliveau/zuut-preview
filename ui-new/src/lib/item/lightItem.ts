@@ -20,7 +20,8 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
     name,
     id = v4(),
     recordId,
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     x = 0,
     y = 0,
     width = 610,
@@ -32,12 +33,9 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, width, length, height, recordId });
+    super({ name, id, amazonProducts, width, length, height, recordId, selectedAmazonASIN });
     this.x = x;
     this.y = y;
-    // this.width = width;
-    // this.length = length;
-    // this.height = height;
     this.description = description;
     this.collisionState = collisionState;
     this.placementShadow = placementShadow;
@@ -53,7 +51,6 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
     return new LightItem({
       name: this.name,
       id: v4(),
-      amazonProducts: this.amazonProducts,
       x: this.x,
       y: this.y,
       width: this.width,
@@ -61,6 +58,8 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
       height: this.height,
       description: this.description,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -74,9 +73,10 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

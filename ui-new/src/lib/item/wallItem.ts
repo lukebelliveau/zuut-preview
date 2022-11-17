@@ -34,6 +34,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -48,6 +49,7 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
       modifiers: this.modifiers,
       recordId: this.recordId,
     });

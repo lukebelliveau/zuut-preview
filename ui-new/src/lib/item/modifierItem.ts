@@ -11,13 +11,15 @@ export default class ModifierItem {
   id: string;
   type: string = MODIFIER_ITEM_TYPE;
   name: string;
-  amazonProducts: AmazonProduct[] | undefined;
+  amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
   recordId?: string;
 
-  constructor({ name, id = v4(), amazonProducts = undefined, recordId }: ItemArgs) {
+  constructor({ name, id = v4(), amazonProducts, recordId, selectedAmazonASIN }: ItemArgs) {
     this.id = id;
     this.name = name;
     this.amazonProducts = amazonProducts;
+    this.selectedAmazonASIN = selectedAmazonASIN;
     this.recordId = recordId;
   }
 
@@ -25,8 +27,9 @@ export default class ModifierItem {
     return new ModifierItem({
       name: this.name,
       id: v4(),
-      amazonProducts: this.amazonProducts,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

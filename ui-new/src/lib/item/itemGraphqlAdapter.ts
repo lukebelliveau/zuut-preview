@@ -1,4 +1,4 @@
-import { IItem, Item } from '../item';
+import { AmazonProduct, IItem, Item } from '../item';
 import { Item as GraphqlItem } from '../../graphql';
 import { unwrapOrError, unwrapOrUndefined } from '../graphqlData';
 import Tent, { TENT_ITEM_TYPE } from './tentItem';
@@ -63,6 +63,8 @@ export default class ItemGraphqlAdapter {
       description: string | undefined;
       rotation: number | undefined;
       modifiers: Modifiers | undefined;
+      amazonProducts: AmazonProduct[];
+      selectedAmazonASIN: string;
     } = {
       name: gqlItem.name,
       id: gqlItem.id,
@@ -74,6 +76,11 @@ export default class ItemGraphqlAdapter {
       description: unwrapOrUndefined(gqlItem.description),
       rotation: unwrapOrUndefined(gqlItem.rotation),
       modifiers: unwrapOrUndefined(gqlItem.modifiers),
+
+      // faking these two because we're not using graphQL anymore
+      // i will throw this away soon (- Luke, Nov 17 2022) (lol)
+      amazonProducts: [],
+      selectedAmazonASIN: 'BAD AMAZON ASIN',
     };
 
     switch (unwrapOrError(gqlItem.type)) {

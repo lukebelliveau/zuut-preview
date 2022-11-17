@@ -29,7 +29,8 @@ export default class DuctItem extends CeilingPlaceableItem {
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     recordId,
     x = 0,
     y = 0,
@@ -57,6 +58,7 @@ export default class DuctItem extends CeilingPlaceableItem {
       collisionState,
       placementShadow,
       recordId,
+      selectedAmazonASIN,
     });
   }
 
@@ -75,6 +77,8 @@ export default class DuctItem extends CeilingPlaceableItem {
       height: this.height,
       description: this.description,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -88,9 +92,10 @@ export default class DuctItem extends CeilingPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 

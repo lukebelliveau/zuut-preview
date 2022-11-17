@@ -173,18 +173,18 @@ export const useQueryMiscItems = (): UseQueryResult<ItemNavListProps> => {
   });
 };
 
-const layoutItems = [
-  {
-    name: 'Window',
-    item: new WindowItem({ name: 'Window' }),
-    path: 'Window',
-  },
-  {
-    name: 'Door',
-    item: new DoorItem({ name: 'Door' }),
-    path: 'Door',
-  },
-];
+// const layoutItems = [
+//   {
+//     name: 'Window',
+//     item: new WindowItem({ name: 'Window' }),
+//     path: 'Window',
+//   },
+//   {
+//     name: 'Door',
+//     item: new DoorItem({ name: 'Door' }),
+//     path: 'Door',
+//   },
+// ];
 
 export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps['navConfig'] => {
   const tentItems = itemGroup('tents', itemGroups).map((item) => {
@@ -218,17 +218,18 @@ export const getItemsNavConfig = (itemGroups: IItemGroup[]): ItemNavSectionProps
     }),
   };
 
-  let layoutItemGroup = {
-    name: 'layout',
-    path: '',
-    icon: ICONS.layout,
-    children: layoutItems,
-  };
+  // let layoutItemGroup = {
+  //   name: 'layout',
+  //   path: '',
+  //   icon: ICONS.layout,
+  //   children: layoutItems,
+  // };
 
   return [
     {
       subheader: 'items',
-      items: [lightItemGroup, climateItemGroup, miscItemGroup, layoutItemGroup],
+      // items: [lightItemGroup, climateItemGroup, miscItemGroup, layoutItemGroup],
+      items: [lightItemGroup, climateItemGroup, miscItemGroup],
     },
   ];
 };

@@ -28,6 +28,8 @@ export default class DoorItem extends WallItem {
       length: feetToMm(2),
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -41,9 +43,10 @@ export default class DoorItem extends WallItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

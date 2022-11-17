@@ -15,6 +15,7 @@ export type ItemState = {
   placementShadow?: PlacementShadow;
   rotation?: number;
   modifiers?: Modifiers;
-  amazonProducts: AmazonProduct[] | undefined;
+  amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
   recordId?: string;
 };

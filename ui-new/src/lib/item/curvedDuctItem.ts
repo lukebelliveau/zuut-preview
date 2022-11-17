@@ -14,7 +14,8 @@ export default class CurvedDuctItem extends DuctItem {
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     x = 0,
     y = 0,
     width = 610,
@@ -30,6 +31,7 @@ export default class CurvedDuctItem extends DuctItem {
       name,
       id,
       amazonProducts,
+      selectedAmazonASIN,
       x,
       y,
       width,
@@ -57,6 +59,8 @@ export default class CurvedDuctItem extends DuctItem {
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -70,9 +74,10 @@ export default class CurvedDuctItem extends DuctItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

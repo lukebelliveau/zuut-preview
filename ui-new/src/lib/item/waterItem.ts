@@ -35,7 +35,8 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     recordId,
     x = 0,
     y = 0,
@@ -48,7 +49,7 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts });
+    super({ name, id, amazonProducts, selectedAmazonASIN });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -76,8 +77,9 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -91,9 +93,10 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

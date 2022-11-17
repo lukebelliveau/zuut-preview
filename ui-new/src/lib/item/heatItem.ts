@@ -22,7 +22,8 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     x = 0,
     y = 0,
     width = 610,
@@ -35,7 +36,7 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
     placementShadow = undefined,
     recordId,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -63,6 +64,8 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
       height: this.height,
       description: this.description,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -76,9 +79,10 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

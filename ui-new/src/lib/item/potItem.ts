@@ -64,7 +64,8 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     name,
     id = v4(),
     recordId,
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     x = 0,
     y = 0,
     width = 610,
@@ -76,7 +77,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, width, length, height, recordId });
+    super({ name, id, amazonProducts, width, length, height, recordId, selectedAmazonASIN });
     this.x = x;
     this.y = y;
     this.description = description;
@@ -89,15 +90,6 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   get image() {
     return PotImage;
   }
-
-  // get modifierImages() {
-  //   const modifierImages = [];
-  //   if (this.modifiers.Soil.length > 0) {
-  //     modifierImages.push(SoilModImage);
-  //   }
-
-  //   return modifierImages;
-  // }
 
   removeAllModifiers(): void {
     this.modifiers = defaultPotModifiers;
@@ -117,6 +109,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
       rotation: this.rotation,
       modifiers: this.modifiers,
       amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
 
     return copiedPotItem;
@@ -132,9 +125,10 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

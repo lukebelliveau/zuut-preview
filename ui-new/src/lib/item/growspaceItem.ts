@@ -26,6 +26,8 @@ export default class GrowspaceItem extends PlaceableItem {
       length: this.length,
       height: this.height,
       description: this.description,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -40,6 +42,7 @@ export default class GrowspaceItem extends PlaceableItem {
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
       modifiers: this.modifiers,
       recordId: this.recordId,
     });

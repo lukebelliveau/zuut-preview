@@ -5,7 +5,11 @@ import { CollisionState } from './placeableItem';
 describe('CeilingPlaceableItem', () => {
   describe('#opacity', () => {
     it('returns a lighter value when being dragged', () => {
-      const item = new CeilingPlaceableItem({ name: 'foo' });
+      const item = new CeilingPlaceableItem({
+        name: 'foo',
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+      });
       item.placementShadow = {
         x: 1,
         y: 2,
@@ -28,7 +32,11 @@ describe('CeilingPlaceableItem', () => {
       ).toBe(0.2);
     });
     it('returns a stronger value when at rest', () => {
-      const item = new CeilingPlaceableItem({ name: 'foo' });
+      const item = new CeilingPlaceableItem({
+        name: 'foo',
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+      });
       expect(
         item.opacity({
           [Layer.CEILING]: true,
@@ -38,7 +46,11 @@ describe('CeilingPlaceableItem', () => {
       ).toBe(1);
     });
     it('returns a lighter value when the item is not on the selected plane of existence', () => {
-      const item = new CeilingPlaceableItem({ name: 'foo' });
+      const item = new CeilingPlaceableItem({
+        name: 'foo',
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+      });
       expect(
         item.opacity({
           [Layer.CEILING]: false,

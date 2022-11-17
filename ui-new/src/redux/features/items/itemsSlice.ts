@@ -275,7 +275,12 @@ export const incrementModifier = createAsyncThunk(
       if (!itemState) throw new Error('Item not found');
       const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
 
-      const newModifier = new ModifierItem({ name: modifier.name, recordId: modifier.recordId });
+      const newModifier = new ModifierItem({
+        name: modifier.name,
+        recordId: modifier.recordId,
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+      });
       dispatch(addItem(ItemReduxAdapter.itemToState(newModifier)));
 
       item.addModifier(newModifier);

@@ -34,6 +34,7 @@ export const selectAllMiscItems = async (): Promise<ItemRecord[]> => {
         items.push({
           name: name.toString(),
           amazonProducts: amazonProducts ? amazonProducts.toString()?.split(',') : [],
+          selectedAmazonASIN: linkedASINs ? linkedASINs.toString()?.split(',')[0] : '',
           recordId: recordId.toString(),
           linkedASINs: linkedASINs ? linkedASINs?.toString()?.split(',') : [],
           itemType: itemType ? itemType.toString() : undefined,

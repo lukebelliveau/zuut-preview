@@ -39,6 +39,7 @@ export default class ItemReduxAdapter {
       name: item.name,
       collisionState: CollisionState.NEUTRAL,
       amazonProducts: item.amazonProducts,
+      selectedAmazonASIN: item.selectedAmazonASIN,
       recordId: item.recordId,
     };
 
@@ -69,6 +70,7 @@ export default class ItemReduxAdapter {
           name: itemState.name,
           id: itemState.id,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           x: itemState.x,
           y: itemState.y,
           width: itemState.width,
@@ -94,6 +96,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -103,9 +106,16 @@ export default class ItemReduxAdapter {
           name: itemState.name,
           id: itemState.id,
           recordId: itemState.recordId,
+          amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
         });
       case MODIFIER_ITEM_TYPE:
-        return new ModifierItem({ name: itemState.name, id: itemState.id });
+        return new ModifierItem({
+          name: itemState.name,
+          id: itemState.id,
+          amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
+        });
       case ROOM_ITEM_TYPE:
         return new RoomItem({
           name: itemState.name,
@@ -119,6 +129,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -136,6 +147,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -152,6 +164,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -168,6 +181,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -186,6 +200,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           recordId: itemState.recordId,
         });
       case CEILING_GROWSPACE_ITEM_TYPE:
@@ -201,6 +216,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
         });
@@ -219,6 +235,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           recordId: itemState.recordId,
         });
       case EXHAUST_FAN_ITEM_TYPE:
@@ -236,6 +253,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           recordId: itemState.recordId,
         });
       case OSCILLATING_FAN_ITEM_TYPE:
@@ -251,6 +269,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -268,6 +287,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -285,6 +305,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -302,6 +323,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -319,6 +341,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -336,6 +359,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -353,6 +377,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -370,6 +395,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -387,6 +413,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
@@ -404,6 +431,7 @@ export default class ItemReduxAdapter {
           rotation: itemState.rotation,
           modifiers: itemState.modifiers,
           amazonProducts: itemState.amazonProducts,
+          selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,

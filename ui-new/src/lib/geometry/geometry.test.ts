@@ -24,6 +24,8 @@ describe('itemHasVerticalOrientation', () => {
       y: feetToMm(10),
       width: feetToMm(10),
       length: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(itemHasVerticalOrientation(item)).toBe(true);
   });
@@ -36,6 +38,8 @@ describe('itemHasVerticalOrientation', () => {
       y: feetToMm(10),
       width: feetToMm(20),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(itemHasVerticalOrientation(item)).toBe(false);
   });
@@ -51,6 +55,8 @@ describe('itemHasHorizontalOrientation', () => {
       y: feetToMm(10),
       width: feetToMm(10),
       length: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(itemHasVerticalOrientation(item)).toBe(true);
   });
@@ -63,6 +69,8 @@ describe('itemHasHorizontalOrientation', () => {
       y: feetToMm(10),
       width: feetToMm(20),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(itemHasVerticalOrientation(item)).toBe(false);
   });
@@ -430,6 +438,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -438,6 +448,8 @@ describe('areColliding', () => {
       y: feetToMm(1001),
       width: feetToMm(1001),
       length: feetToMm(1001),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, other)).toBe(false);
   });
@@ -449,6 +461,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const otherRight = new PlaceableItem({
       name: '',
@@ -457,6 +471,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, otherRight)).toBe(false);
     const otherBelow = new PlaceableItem({
@@ -466,6 +482,8 @@ describe('areColliding', () => {
       y: feetToMm(200),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, otherBelow)).toBe(false);
     const otherLeft = new PlaceableItem({
@@ -475,6 +493,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, otherLeft)).toBe(false);
     const otherTop = new PlaceableItem({
@@ -484,6 +504,8 @@ describe('areColliding', () => {
       y: feetToMm(0),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, otherTop)).toBe(false);
   });
@@ -495,6 +517,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -503,6 +527,8 @@ describe('areColliding', () => {
       y: feetToMm(91),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, other)).toBe(true);
   });
@@ -514,6 +540,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -522,6 +550,8 @@ describe('areColliding', () => {
       y: feetToMm(109),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, other)).toBe(true);
   });
@@ -533,6 +563,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -541,6 +573,8 @@ describe('areColliding', () => {
       y: feetToMm(109),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, other)).toBe(true);
   });
@@ -552,6 +586,8 @@ describe('areColliding', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -560,6 +596,8 @@ describe('areColliding', () => {
       y: feetToMm(91),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(areColliding(item, other)).toBe(true);
   });

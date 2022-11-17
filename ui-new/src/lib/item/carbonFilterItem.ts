@@ -21,7 +21,7 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
     x = 0,
     y = 0,
     width = 610,
@@ -29,6 +29,7 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
     height = 915,
     description = '',
     rotation = 0,
+    selectedAmazonASIN,
     modifiers = defaultFilterModifiers,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
@@ -49,6 +50,7 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
       collisionState,
       placementShadow,
       recordId,
+      selectedAmazonASIN,
     });
   }
 
@@ -67,6 +69,8 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
       height: this.height,
       description: this.description,
       recordId: this.recordId,
+      selectedAmazonASIN: this.selectedAmazonASIN,
+      amazonProducts: this.amazonProducts,
     });
   }
 
@@ -80,9 +84,10 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

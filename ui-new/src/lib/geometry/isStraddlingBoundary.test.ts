@@ -24,6 +24,8 @@ describe('isStraddlingBoundary', () => {
       y: 50,
       width: 10,
       length: 10,
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -32,6 +34,8 @@ describe('isStraddlingBoundary', () => {
       y: 50,
       width: 100,
       length: 100,
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(false);
   });
@@ -43,6 +47,8 @@ describe('isStraddlingBoundary', () => {
       y: 150,
       width: 10,
       length: 10,
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -51,6 +57,8 @@ describe('isStraddlingBoundary', () => {
       y: 0,
       width: 100,
       length: 100,
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(false);
   });
@@ -62,6 +70,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(0),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -70,6 +80,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -81,6 +93,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -89,6 +103,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -100,6 +116,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(-5),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -108,6 +126,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(0),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -119,6 +139,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(95),
       width: feetToMm(20),
       length: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -127,6 +149,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -138,6 +162,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(0),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -146,6 +172,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -157,6 +185,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(0),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -165,6 +195,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -176,6 +208,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -184,6 +218,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -195,6 +231,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -203,6 +241,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -214,6 +254,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(5),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -222,6 +264,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -233,6 +277,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(95),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -241,6 +287,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -252,6 +300,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(5),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -260,6 +310,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -271,6 +323,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(95),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -279,6 +333,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -290,6 +346,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(0),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -298,6 +356,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -309,6 +369,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(0),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -317,6 +379,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -328,6 +392,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(100),
       width: feetToMm(10),
       length: feetToMm(10),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -336,6 +402,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -347,6 +415,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(95),
       width: feetToMm(20),
       length: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     const other = new PlaceableItem({
       name: '',
@@ -355,6 +425,8 @@ describe('isStraddlingBoundary', () => {
       y: feetToMm(50),
       width: feetToMm(100),
       length: feetToMm(100),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(isStraddlingBoundary(item, other)).toBe(true);
   });
@@ -371,6 +443,8 @@ describe('itemStraddlesBottomXAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesBottomXAxis(item, room)).toBe(true);
@@ -386,6 +460,8 @@ describe('itemStraddlesBottomXAxis', () => {
       width: 20,
       length: 20,
       height: 20,
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
     expect(itemStraddlesBottomXAxis(window, room)).toBe(false);
   });
@@ -402,6 +478,8 @@ describe('itemStraddlesTopXAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesTopXAxis(item, room)).toBe(true);
@@ -416,6 +494,8 @@ describe('itemStraddlesTopXAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesTopXAxis(item, room)).toBe(false);
@@ -433,6 +513,8 @@ describe('itemStraddlesLeftYAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesLeftYAxis(item, room)).toBe(true);
@@ -447,6 +529,8 @@ describe('itemStraddlesLeftYAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesLeftYAxis(item, room)).toBe(false);
@@ -464,6 +548,8 @@ describe('itemStraddlesRightYAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesRightYAxis(item, room)).toBe(true);
@@ -478,6 +564,8 @@ describe('itemStraddlesRightYAxis', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemStraddlesRightYAxis(item, room)).toBe(false);
@@ -495,6 +583,8 @@ describe('itemIsBetweenLeftAndRightWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenLeftAndRightWall(window, room)).toBe(true);
@@ -510,6 +600,8 @@ describe('itemIsBetweenLeftAndRightWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenLeftAndRightWall(window, room)).toBe(false);
@@ -525,6 +617,8 @@ describe('itemIsBetweenLeftAndRightWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenLeftAndRightWall(window, room)).toBe(false);
@@ -540,6 +634,8 @@ describe('itemIsBetweenLeftAndRightWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenLeftAndRightWall(window, room)).toBe(false);
@@ -557,6 +653,8 @@ describe('itemIsBetweenTopAndBottomWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenTopAndBottomWall(window, room)).toBe(true);
@@ -572,6 +670,8 @@ describe('itemIsBetweenTopAndBottomWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenTopAndBottomWall(window, room)).toBe(false);
@@ -587,6 +687,8 @@ describe('itemIsBetweenTopAndBottomWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenTopAndBottomWall(window, room)).toBe(false);
@@ -602,6 +704,8 @@ describe('itemIsBetweenTopAndBottomWall', () => {
       width: feetToMm(20),
       length: feetToMm(20),
       height: feetToMm(20),
+      amazonProducts: [],
+      selectedAmazonASIN: '',
     });
 
     expect(itemIsBetweenTopAndBottomWall(window, room)).toBe(false);

@@ -14,6 +14,8 @@ describe('Growspace', () => {
         y: feetToMm(100),
         width: feetToMm(100),
         length: feetToMm(100),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       const other = new Tent({
         name: '',
@@ -22,10 +24,10 @@ describe('Growspace', () => {
         y: feetToMm(100),
         width: feetToMm(100),
         length: feetToMm(100),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
-      expect(growspace.collisionStateBetween(growspace, other)).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(growspace.collisionStateBetween(growspace, other)).toBe(CollisionState.CONFLICTED);
     });
     it('does not conflict with growspace items when item is placed inside growspace', () => {
       const growspace = new Tent({
@@ -35,6 +37,8 @@ describe('Growspace', () => {
         y: feetToMm(1001),
         width: feetToMm(1001),
         length: feetToMm(1001),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       const item = new GrowspaceItem({
         name: '',
@@ -43,10 +47,10 @@ describe('Growspace', () => {
         y: feetToMm(100),
         width: feetToMm(100),
         length: feetToMm(100),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
-      expect(growspace.collisionStateBetween(growspace, item)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(growspace.collisionStateBetween(growspace, item)).toBe(CollisionState.NEUTRAL);
     });
     it('does not conflict with ducts', () => {
       const growspace = new Tent({
@@ -56,6 +60,8 @@ describe('Growspace', () => {
         y: feetToMm(1001),
         width: feetToMm(1001),
         length: feetToMm(1001),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       const duct = new DuctItem({
         name: '',
@@ -64,11 +70,11 @@ describe('Growspace', () => {
         y: feetToMm(950),
         width: feetToMm(2000),
         length: feetToMm(2000),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
 
-      expect(growspace.collisionStateBetween(growspace, duct)).toBe(
-        CollisionState.NEUTRAL
-      );
+      expect(growspace.collisionStateBetween(growspace, duct)).toBe(CollisionState.NEUTRAL);
     });
     it('conflicts when GrowspaceItem is on growspace boundary', () => {
       const growspace = new Tent({
@@ -78,6 +84,8 @@ describe('Growspace', () => {
         y: feetToMm(950),
         width: feetToMm(100),
         length: feetToMm(100),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
       const item = new GrowspaceItem({
         name: '',
@@ -86,10 +94,10 @@ describe('Growspace', () => {
         y: feetToMm(1001),
         width: feetToMm(1001),
         length: feetToMm(1001),
+        amazonProducts: [],
+        selectedAmazonASIN: '',
       });
-      expect(growspace.collisionStateBetween(growspace, item)).toBe(
-        CollisionState.CONFLICTED
-      );
+      expect(growspace.collisionStateBetween(growspace, item)).toBe(CollisionState.CONFLICTED);
     });
   });
 });

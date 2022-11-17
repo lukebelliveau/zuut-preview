@@ -19,7 +19,8 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     recordId,
     x = 0,
     y = 0,
@@ -36,6 +37,7 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
       name: name,
       id: id,
       amazonProducts,
+      selectedAmazonASIN,
       x: x,
       y: y,
       width: width,
@@ -65,6 +67,8 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
       height: this.height,
       description: this.description,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -78,9 +82,10 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

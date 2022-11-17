@@ -11,15 +11,17 @@ export interface IItem {
   name: string;
   copy(): Item;
   recordId?: string;
-  amazonProducts?: AmazonProduct[] | undefined;
+  amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
   modifiers?: Modifiers;
 }
 
 export interface ItemArgs {
   name: string;
+  amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
   recordId?: string;
   id?: string;
-  amazonProducts?: AmazonProduct[] | undefined;
 }
 
 export class Item implements IItem {
@@ -27,13 +29,21 @@ export class Item implements IItem {
   recordId?: string;
   type: string = 'Item';
   name: string;
-  amazonProducts?: AmazonProduct[] | undefined;
+  amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
 
-  constructor({ name, recordId = undefined, id = v4(), amazonProducts = undefined }: ItemArgs) {
+  constructor({
+    name,
+    recordId = undefined,
+    id = v4(),
+    amazonProducts,
+    selectedAmazonASIN,
+  }: ItemArgs) {
     this.id = id;
     this.recordId = recordId;
     this.name = name;
     this.amazonProducts = amazonProducts;
+    this.selectedAmazonASIN = selectedAmazonASIN;
   }
 
   copy(): Item {
@@ -41,6 +51,7 @@ export class Item implements IItem {
       name: this.name,
       id: this.id,
       amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

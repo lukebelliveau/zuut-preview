@@ -1,6 +1,7 @@
 export interface ItemRecord {
   name: string;
   amazonProducts: string[];
+  selectedAmazonASIN: string;
   linkedASINs: string[];
   recordId: string;
   itemType?: string;

@@ -63,7 +63,8 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   modifierImages: string[];
   removeAllModifiers(): void;
   description: string;
-  amazonProducts?: AmazonProduct[] | undefined;
+  amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
 }
 
 export function isPlaceableItem(item: Item): item is PlaceableItem {
@@ -99,7 +100,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
     recordId,
     x = 0,
     y = 0,
@@ -109,10 +110,11 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     description = '',
     rotation = 0,
     modifiers = {},
+    selectedAmazonASIN,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -346,6 +348,14 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     this.rotation = (this.rotation + 270) % 360;
   }
 
+  xPlus50() {
+    return this.x + 50;
+  }
+
+  yPlus50() {
+    return this.y + 50;
+  }
+
   copy(): IPlaceableItem {
     return new PlaceableItem({
       name: this.name,
@@ -357,15 +367,8 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       height: this.height,
       description: this.description,
       amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
-  }
-
-  xPlus50() {
-    return this.x + 50;
-  }
-
-  yPlus50() {
-    return this.y + 50;
   }
 
   copyWithModifiers(): IPlaceableItem {
@@ -381,6 +384,7 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 

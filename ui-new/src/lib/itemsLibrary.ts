@@ -37,6 +37,7 @@ interface ItemConstructorArgs {
   height?: number | undefined;
   description?: string;
   amazonProducts: AmazonProduct[];
+  selectedAmazonASIN: string;
 }
 
 const constructorArgs = (item: ItemRecord): ItemConstructorArgs => {
@@ -46,6 +47,7 @@ const constructorArgs = (item: ItemRecord): ItemConstructorArgs => {
   const constructorArgs: ItemConstructorArgs = {
     name: item.name,
     amazonProducts: amazonProducts,
+    selectedAmazonASIN: item.linkedASINs[0],
     recordId: item.recordId,
   };
 
@@ -138,6 +140,7 @@ export const fetchMiscItems = async (): Promise<Item[]> => {
               recordId: miscItem.amazonProducts[0],
             },
           ],
+          selectedAmazonASIN: miscItem.linkedASINs[0],
         })
       );
     } catch (e) {

@@ -21,7 +21,8 @@ export default class HumidifierItem extends GrowspaceItem implements IPlaceableI
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     recordId,
     x = 0,
     y = 0,
@@ -34,7 +35,7 @@ export default class HumidifierItem extends GrowspaceItem implements IPlaceableI
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -61,6 +62,8 @@ export default class HumidifierItem extends GrowspaceItem implements IPlaceableI
       height: this.height,
       description: this.description,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -74,9 +77,10 @@ export default class HumidifierItem extends GrowspaceItem implements IPlaceableI
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }

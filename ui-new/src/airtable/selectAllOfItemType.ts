@@ -53,6 +53,7 @@ const selectAllOfItemType = async (itemTypeId: string): Promise<PlaceableItemRec
           recordId: recordId.toString(),
           linkedASINs: linkedASINs ? linkedASINs?.toString()?.split(',') : [],
           itemType: itemType ? itemType.toString() : undefined,
+          selectedAmazonASIN: linkedASINs ? linkedASINs.toString()?.split(',')[0] : '',
         });
       }
     });

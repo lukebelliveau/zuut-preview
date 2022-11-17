@@ -19,7 +19,8 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
   constructor({
     name,
     id = v4(),
-    amazonProducts = undefined,
+    amazonProducts,
+    selectedAmazonASIN,
     recordId,
     x = 0,
     y = 0,
@@ -47,6 +48,7 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
       modifiers,
       collisionState,
       placementShadow,
+      selectedAmazonASIN,
     });
   }
 
@@ -64,8 +66,9 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 
@@ -79,9 +82,10 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
       length: this.length,
       height: this.height,
       description: this.description,
-      amazonProducts: this.amazonProducts,
       modifiers: this.modifiers,
       recordId: this.recordId,
+      amazonProducts: this.amazonProducts,
+      selectedAmazonASIN: this.selectedAmazonASIN,
     });
   }
 }
