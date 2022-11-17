@@ -18,7 +18,7 @@ import {
   setPlan,
 } from 'src/redux/features/playgrounds/playgroundSlice';
 import useQueryParams, { paramKeys } from 'src/lib/url';
-import { useGetGrow } from 'src/firebase/db/getGrow';
+import { useGetGrow } from 'src/firebase/database/getGrow';
 import Plan from 'src/lib/plan';
 import { Navigate } from 'react-router';
 import { feetToMm } from 'src/lib/conversions';
@@ -55,7 +55,11 @@ const PlaygroundLoader = () => {
 
   if (error) throw Error('Error loading playground');
   if (playground && playground.plan) {
-    return <ShowPlayground playground={playground as PlaygroundWithPlan} />;
+    if (growId !== null && growId !== undefined) {
+      return <ShowPlayground playground={playground as PlaygroundWithPlan} />;
+    } else {
+      return <Navigate to={`/playground?growId=${playground.plan.id}`} />;
+    }
   } else {
     if (growId) {
       if (growId && !playground.plan && grow) {

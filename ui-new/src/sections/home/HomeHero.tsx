@@ -113,10 +113,10 @@ export default function HomeHero() {
                 size="large"
                 variant="contained"
                 component={RouterLink}
-                to={PATH_PLAYGROUND.general.demo}
+                to={`${PATH_PLAYGROUND.root}`}
                 startIcon={<Iconify icon={'eva:flash-fill'} width={20} height={20} />}
               >
-                Open Demo Playground
+                Open a new Builder
               </Button>
             </m.div>
           </ContentStyle>
