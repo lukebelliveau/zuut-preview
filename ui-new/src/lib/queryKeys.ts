@@ -16,6 +16,8 @@ const queryKeys = {
   climateItems: 'climateItems',
 
   totalCartPrice: 'totalCartPrice',
+
+  firebaseGrow: 'firebaseGrow',
 };
 
 export default queryKeys;

@@ -21,6 +21,10 @@ import {
   useSelector as useReduxSelector,
   useDispatch as useReduxDispatch,
 } from 'react-redux';
+import { ref, set } from 'firebase/database';
+import { firebaseDb, firebaseInit } from './firebaseInit';
+
+firebaseInit();
 
 export const isDemoMode = () => {
   if (process.env.NODE_ENV === 'production') return true;
@@ -133,3 +137,9 @@ if (isDemoMode()) {
     localStorage.setItem(ZUUT_DEMO_STATE_LAST_SAVED, Date.now().toString());
   });
 }
+
+store.subscribe(() => {
+  const state = store.getState();
+  const serializedState = JSON.stringify(state);
+  set(ref(firebaseDb, 'grows/' + state.playground.planId), serializedState);
+});

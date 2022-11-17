@@ -3,7 +3,7 @@ import { push } from 'redux-first-history';
 // import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 // import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 
-import { AppDispatch, isDemoMode, RootState } from '../../../redux/store';
+import { dispatch, isDemoMode, RootState } from '../../store';
 import { assertDefined } from '../../../lib/assert';
 import { feetToMm } from '../../../lib/conversions';
 import ItemReduxAdapter from '../../../lib/item/itemReduxAdapter';
@@ -14,7 +14,7 @@ import PlanReduxAdapter from '../../../lib/plan/planReduxAdapter';
 import PlaygroundReduxAdapter from '../../../lib/playground/playgroundReduxAdapter';
 // import { new_playground_path, reset_playground_path } from '../../routes/playgrounds/NewPlayground';
 // import { playground_path } from '../../routes/playgrounds/ShowPlayground';
-import { loadItems } from '../items/itemsSlice';
+import { addMany, loadItems } from '../items/itemsSlice';
 import { selectDefaultPlan } from '../plans/planSelectors';
 import { create } from '../plans/planSlice';
 import { selectPlaygroundState } from './playgroundSelector';
@@ -23,6 +23,7 @@ import { PlaygroundState } from './playgroundState';
 import waitForElement from './waitForElement';
 import { PATH_PLAYGROUND } from 'src/routes/paths';
 import { INVENTORY } from 'src/config';
+import { Navigate } from 'react-router-dom';
 
 const initialState: PlaygroundState = {
   planId: '0',
@@ -99,6 +100,17 @@ export const loadSavedPlayground = createAsyncThunk(
     }
   }
 );
+
+export const loadFirebasePlayground = async (grow: any) => {
+  const plan = grow.plans.entities[grow.playground.planId];
+  if (grow && grow.items && plan) {
+    dispatch(create(plan));
+    dispatch(setPlan(plan.id));
+    dispatch(addMany(grow.items.present.entities));
+  } else {
+    throw new Error('Attempted to load firebase playground with bad grow.');
+  }
+};
 
 export const resizePlayground = createAsyncThunk(
   'playground/resizePlayground',

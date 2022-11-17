@@ -70,7 +70,7 @@ export default function Router() {
       path: 'playground',
       element: <PlaygroundLayout />,
       children: [
-        { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
+        { element: <PlaygroundLoader />, index: true },
         { path: 'demo', element: <DemoPlaygroundLoader /> },
         { path: 'newdemo', element: <NewDemoPlayground /> },
       ],
@@ -111,7 +111,7 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // PLAYGROUND
 const PlaygroundLayout = Loadable(lazy(() => import('../layouts/playground')));
-const GeneralPlaygroundApp = Loadable(lazy(() => import('../pages/playground/PlaygroundApp')));
+const PlaygroundLoader = Loadable(lazy(() => import('../pages/playground/PlaygroundLoader')));
 const DemoPlaygroundLoader = Loadable(lazy(() => import('../pages/playground/DemoPlayground')));
 
 const Cart = Loadable(lazy(() => import('../pages/cart/Cart')));

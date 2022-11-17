@@ -1,26 +1,7 @@
-// i18n
 import './locales/i18n';
 
-// highlight
-// import './utils/highlight';
-
-// scroll bar
 import 'simplebar/src/simplebar.css';
 
-// lightbox
-// import 'react-image-lightbox/style.css';
-
-// map
-// import 'mapbox-gl/dist/mapbox-gl.css';
-
-// editor
-// import 'react-quill/dist/quill.snow.css';
-
-// slick-carousel
-// import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
-
-// lazy image
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import 'react-lazy-load-image-component/src/effects/black-and-white.css';
@@ -63,7 +44,6 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   mixpanel.init('c7637bf2a9b25ff7582c25079489ae5b', { debug: true });
 }
-// mixpanel.opt_in_tracking();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
