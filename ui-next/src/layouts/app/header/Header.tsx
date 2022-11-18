@@ -59,8 +59,6 @@ export default function Header({ onOpenNav }: Props) {
       >
         <LanguagePopover />
 
-        <NotificationsPopover />
-
         <ContactsPopover />
 
         <AccountPopover />

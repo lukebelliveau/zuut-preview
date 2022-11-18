@@ -5,7 +5,7 @@ import Plan from '../plan';
 import Playground from '../playground';
 import PlaceableItem, { CollisionState } from './placeableItem';
 import WallItem from './wallItem';
-import { closeTo } from '../../../tests/closeTo';
+import { closeTo } from '../../testUtils/closeTo';
 
 describe('WallItem', () => {
   describe('drag', () => {
@@ -30,7 +30,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(horizontalWallItem);
 
-        horizontalWallItem.drag({ x: feetToMm(10), y: feetToMm(50) }, items, playground);
+        horizontalWallItem.drag(
+          { x: feetToMm(10), y: feetToMm(50) },
+          items,
+          playground
+        );
 
         expect(horizontalWallItem.placementShadow).toMatchObject({
           x: closeTo(feetToMm(-0.5)),
@@ -46,7 +50,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(horizontalWallItem);
 
-        horizontalWallItem.drag({ x: feetToMm(90), y: feetToMm(50) }, items, playground);
+        horizontalWallItem.drag(
+          { x: feetToMm(90), y: feetToMm(50) },
+          items,
+          playground
+        );
 
         expect(horizontalWallItem.placementShadow).toMatchObject({
           x: closeTo(feetToMm(99.5)),
@@ -62,7 +70,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(horizontalWallItem);
 
-        horizontalWallItem.drag({ x: feetToMm(50), y: feetToMm(90) }, items, playground);
+        horizontalWallItem.drag(
+          { x: feetToMm(50), y: feetToMm(90) },
+          items,
+          playground
+        );
 
         expect(horizontalWallItem.placementShadow).toMatchObject({
           x: feetToMm(50),
@@ -78,7 +90,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(horizontalWallItem);
 
-        horizontalWallItem.drag({ x: feetToMm(50), y: feetToMm(10) }, items, playground);
+        horizontalWallItem.drag(
+          { x: feetToMm(50), y: feetToMm(10) },
+          items,
+          playground
+        );
 
         expect(horizontalWallItem.placementShadow).toMatchObject({
           x: feetToMm(50),
@@ -109,7 +125,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(verticalWallItem);
 
-        verticalWallItem.drag({ x: feetToMm(10), y: feetToMm(50) }, items, playground);
+        verticalWallItem.drag(
+          { x: feetToMm(10), y: feetToMm(50) },
+          items,
+          playground
+        );
 
         expect(verticalWallItem.placementShadow).toMatchObject({
           x: closeTo(feetToMm(-0.5)),
@@ -125,7 +145,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(verticalWallItem);
 
-        verticalWallItem.drag({ x: feetToMm(90), y: feetToMm(50) }, items, playground);
+        verticalWallItem.drag(
+          { x: feetToMm(90), y: feetToMm(50) },
+          items,
+          playground
+        );
 
         expect(verticalWallItem.placementShadow).toMatchObject({
           x: closeTo(feetToMm(99.5)),
@@ -141,7 +165,11 @@ describe('WallItem', () => {
         const items: IItem[] = [];
         items.push(verticalWallItem);
 
-        verticalWallItem.drag({ x: feetToMm(50), y: feetToMm(90) }, items, playground);
+        verticalWallItem.drag(
+          { x: feetToMm(50), y: feetToMm(90) },
+          items,
+          playground
+        );
 
         expect(verticalWallItem.placementShadow).toMatchObject({
           x: feetToMm(50),
@@ -169,7 +197,11 @@ describe('WallItem', () => {
         });
         items.push(verticalWallItem);
 
-        verticalWallItem.drag({ x: feetToMm(50), y: feetToMm(10) }, items, playground);
+        verticalWallItem.drag(
+          { x: feetToMm(50), y: feetToMm(10) },
+          items,
+          playground
+        );
 
         expect(verticalWallItem.placementShadow).toMatchObject({
           x: feetToMm(50),
@@ -201,7 +233,8 @@ describe('WallItem', () => {
         linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
-        const placementShadow = item.createPlacementShadowOnClosestWall(playground);
+        const placementShadow =
+          item.createPlacementShadowOnClosestWall(playground);
 
         expect(placementShadow.width).toBe(item.length);
         expect(placementShadow.length).toBe(item.width);
@@ -224,7 +257,8 @@ describe('WallItem', () => {
         linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s top wall', () => {
-        const placementShadow = item.createPlacementShadowOnClosestWall(playground);
+        const placementShadow =
+          item.createPlacementShadowOnClosestWall(playground);
 
         expect(placementShadow.width).toBe(item.length);
         expect(placementShadow.length).toBe(item.width);
@@ -247,7 +281,8 @@ describe('WallItem', () => {
         linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s left wall', () => {
-        const placementShadow = item.createPlacementShadowOnClosestWall(playground);
+        const placementShadow =
+          item.createPlacementShadowOnClosestWall(playground);
 
         expect(placementShadow.width).toBe(item.length);
         expect(placementShadow.length).toBe(item.width);
@@ -269,7 +304,8 @@ describe('WallItem', () => {
         linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s right wall', () => {
-        const placementShadow = item.createPlacementShadowOnClosestWall(playground);
+        const placementShadow =
+          item.createPlacementShadowOnClosestWall(playground);
 
         expect(placementShadow.width).toBe(item.length);
         expect(placementShadow.length).toBe(item.width);

@@ -8,7 +8,6 @@ import {
 import { styled } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import useAuth from 'src/hooks/useAuth';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { IconButtonAnimate } from '../../animate';
 import MenuPopover from '../../menu-popover';

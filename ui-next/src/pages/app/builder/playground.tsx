@@ -125,7 +125,7 @@ const PlaygroundLoader = () => {
   } else {
     if (growId) {
       if (growId && !playground.plan && grow) {
-        loadFirebaseCart(grow, dispatch);
+        loadFirebaseCart(grow);
         return <LoadingScreen />;
       } else if (growId && !playground.plan && isLoading) {
         return <LoadingScreen />;

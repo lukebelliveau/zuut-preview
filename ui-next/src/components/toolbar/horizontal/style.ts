@@ -5,13 +5,13 @@ import {
   ListSubheader,
   ListItemButton,
   Popover,
+  ListItemButtonProps,
 } from '@mui/material';
 // config
 import { ICON, NAV, NAVBAR } from '../../../config';
 //
 import { NavItemProps } from '../type';
 import cssStyles from 'src/utils/cssStyles';
-import { ListItemStyleProps } from '../vertical/style';
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ type StyledItemProps = Omit<NavItemProps, 'item'> & {
 
 export const ListItemButtonStyle = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'open',
-})<ListItemStyleProps>(({ active, depth, open, theme }) => {
+})<StyledItemProps>(({ active, depth, open, theme }) => {
   const isLight = theme.palette.mode === 'light';
 
   const activeStyle = {

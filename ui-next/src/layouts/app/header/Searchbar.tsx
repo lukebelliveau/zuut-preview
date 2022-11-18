@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
+import cssStyles from '../../../utils/cssStyles';
 import flattenArray from '../../../utils/flattenArray';
 // components
 import Iconify from '../../../components/iconify';
@@ -32,7 +32,7 @@ const APPBAR_MOBILE = 64;
 const APPBAR_DESKTOP = 92;
 
 const StyledSearchbar = styled('div')(({ theme }) => ({
-  ...bgBlur({ color: theme.palette.background.default }),
+  ...cssStyles(theme).bgBlur({ color: theme.palette.background.default }),
   top: 0,
   left: 0,
   zIndex: 99,
@@ -49,44 +49,49 @@ const StyledSearchbar = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledPopper = styled((props: PopperProps) => <Popper {...props} />)(({ theme }) => ({
-  left: `8px !important`,
-  top: `${APPBAR_MOBILE + 8}px !important`,
-  width: 'calc(100% - 16px) !important',
-  transform: 'none !important',
-  [theme.breakpoints.up('md')]: {
-    top: `${APPBAR_DESKTOP + 8}px !important`,
-  },
-  '& .MuiAutocomplete-paper': {
-    padding: theme.spacing(1, 0),
-  },
-  '& .MuiListSubheader-root': {
-    '&.MuiAutocomplete-groupLabel': {
-      ...bgBlur({ color: theme.palette.background.neutral }),
-      ...theme.typography.overline,
-      top: 0,
-      margin: 0,
-      lineHeight: '48px',
-      borderRadius: theme.shape.borderRadius,
+const StyledPopper = styled((props: PopperProps) => <Popper {...props} />)(
+  ({ theme }) => ({
+    left: `8px !important`,
+    top: `${APPBAR_MOBILE + 8}px !important`,
+    width: 'calc(100% - 16px) !important',
+    transform: 'none !important',
+    [theme.breakpoints.up('md')]: {
+      top: `${APPBAR_DESKTOP + 8}px !important`,
     },
-  },
-  '& .MuiAutocomplete-listbox': {
-    '& .MuiAutocomplete-option': {
-      padding: theme.spacing(0.5, 2),
-      margin: 0,
-      display: 'block',
-      border: `dashed 1px transparent`,
-      borderBottomColor: theme.palette.divider,
-      '&:last-of-type': {
-        borderBottomColor: 'transparent',
-      },
-      '&:hover': {
-        borderColor: theme.palette.primary.main,
-        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+    '& .MuiAutocomplete-paper': {
+      padding: theme.spacing(1, 0),
+    },
+    '& .MuiListSubheader-root': {
+      '&.MuiAutocomplete-groupLabel': {
+        ...cssStyles(theme).bgBlur({ color: theme.palette.background.neutral }),
+        ...theme.typography.overline,
+        top: 0,
+        margin: 0,
+        lineHeight: '48px',
+        borderRadius: theme.shape.borderRadius,
       },
     },
-  },
-}));
+    '& .MuiAutocomplete-listbox': {
+      '& .MuiAutocomplete-option': {
+        padding: theme.spacing(0.5, 2),
+        margin: 0,
+        display: 'block',
+        border: `dashed 1px transparent`,
+        borderBottomColor: theme.palette.divider,
+        '&:last-of-type': {
+          borderBottomColor: 'transparent',
+        },
+        '&:hover': {
+          borderColor: theme.palette.primary.main,
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            theme.palette.action.hoverOpacity
+          ),
+        },
+      },
+    },
+  })
+);
 
 // ----------------------------------------------------------------------
 
@@ -109,7 +114,8 @@ function Searchbar() {
     const group = splitPath(reduceItems, option.path);
 
     return {
-      group: group && group.length > 1 ? group[0] : (option as Option).subheader,
+      group:
+        group && group.length > 1 ? group[0] : (option as Option).subheader,
       title: option.title,
       path: option.path,
     };
@@ -164,11 +170,15 @@ function Searchbar() {
               popupIcon={null}
               PopperComponent={StyledPopper}
               onInputChange={(event, value) => setSearchQuery(value)}
-              noOptionsText={<SearchNotFound query={searchQuery} sx={{ py: 10 }} />}
+              noOptionsText={
+                <SearchNotFound query={searchQuery} sx={{ py: 10 }} />
+              }
               options={allItems.sort((a, b) => -b.group.localeCompare(a.group))}
               groupBy={(option) => option.group}
               getOptionLabel={(option) => option.path}
-              isOptionEqualToValue={(option, value) => option.path === value.path}
+              isOptionEqualToValue={(option, value) =>
+                option.path === value.path
+              }
               filterOptions={createFilterOptions({
                 matchFrom: 'start',
                 stringify: (option) => option.title || option.path,
@@ -183,7 +193,10 @@ function Searchbar() {
                   onKeyUp={handleKeyUp}
                   startAdornment={
                     <InputAdornment position="start">
-                      <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                      <Iconify
+                        icon="eva:search-fill"
+                        sx={{ color: 'text.disabled' }}
+                      />
                     </InputAdornment>
                   }
                   sx={{ height: 1, typography: 'h6' }}
@@ -197,7 +210,11 @@ function Searchbar() {
                 const partsPath = parse(path, match(path, inputValue));
 
                 return (
-                  <Box component="li" {...props} onClick={() => handleClick(path)}>
+                  <Box
+                    component="li"
+                    {...props}
+                    onClick={() => handleClick(path)}
+                  >
                     <div>
                       {partsTitle.map((part, index) => (
                         <Box
@@ -206,7 +223,9 @@ function Searchbar() {
                           sx={{
                             typography: 'subtitle2',
                             textTransform: 'capitalize',
-                            color: part.highlight ? 'primary.main' : 'text,primary',
+                            color: part.highlight
+                              ? 'primary.main'
+                              : 'text,primary',
                           }}
                         >
                           {part.text}
@@ -221,7 +240,9 @@ function Searchbar() {
                           component="span"
                           sx={{
                             typography: 'caption',
-                            color: part.highlight ? 'primary.main' : 'text.secondary',
+                            color: part.highlight
+                              ? 'primary.main'
+                              : 'text.secondary',
                           }}
                         >
                           {part.text}

@@ -1,12 +1,20 @@
 import { Layer, Rect, Image, Text } from 'react-konva';
 
 import ItemReduxAdapter from '../../lib/item/itemReduxAdapter';
-import { removeItem, updateOneWithoutHistory } from '../../redux/features/items/itemsSlice';
-import { CollisionState, IPlaceableItem, isPlaceableItem } from '../../lib/item/placeableItem';
+import {
+  removeItem,
+  updateOneWithoutHistory,
+} from '../../redux/features/items/itemsSlice';
+import {
+  CollisionState,
+  IPlaceableItem,
+  isPlaceableItem,
+} from '../../lib/item/placeableItem';
 import useBuildItemList from '../../hooks/useBuildItemList';
 import useBuildPlayground from '../../hooks/useBuildPlayground';
 import { Fragment, MutableRefObject, useEffect, useRef } from 'react';
 import { Point } from '../../lib/point';
+import PotImage from '../../assets/items/pot.png';
 
 import {
   selectSelectedItemId,
@@ -103,7 +111,10 @@ export default function PlaygroundItems() {
  * This 'hack' with refs & effects seems to be the best way
  * to detect keyboard events along with a click.
  */
-const useHandleItemClicks = (item: IPlaceableItem, itemRef: MutableRefObject<any>) => {
+const useHandleItemClicks = (
+  item: IPlaceableItem,
+  itemRef: MutableRefObject<any>
+) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -137,7 +148,7 @@ const TentOutlines = ({ items }: { items: Tent[] }) => {
     <>
       {items.filter(isTentItem).map((item) => {
         const imageObj = new window.Image();
-        imageObj.src = item.image as string;
+        imageObj.src = item.image.src;
 
         return (
           <Image
@@ -181,12 +192,16 @@ const Item = ({
 
   // create manually instead of using Konva's `use-image` package.
   // useImage() asynchronously loads the image every time the component mounts, causing flickering on zoom (because children of the Stage re-mount).
+  console.log('IMAGE', PotImage);
   const imageObj = new window.Image();
-  imageObj.src = item.image as string;
+  imageObj.src = item.image.src as string;
 
   const selectedItemIds = useAppSelector(selectSelectedItemId);
 
-  const setContainerCursor = (cursor: string, e: KonvaEventObject<MouseEvent>) => {
+  const setContainerCursor = (
+    cursor: string,
+    e: KonvaEventObject<MouseEvent>
+  ) => {
     if (!showLayer[item.layer]) return;
     if (e.target.getStage()?.container()) {
       const container = e.target?.getStage()?.container();
@@ -238,7 +253,10 @@ const Item = ({
         width={item.width}
         height={item.length}
         // stroke={getCollisionColor(item.collisionState)}
-        stroke={showStrokeIfCollidingOrSelectedOrTentItem(item, selectedItemIds)}
+        stroke={showStrokeIfCollidingOrSelectedOrTentItem(
+          item,
+          selectedItemIds
+        )}
         strokeWidth={selectedItemIds?.includes(item.id) ? 2 : 1}
         strokeScaleEnabled={false}
         offset={item.offset}
@@ -248,6 +266,7 @@ const Item = ({
          * don't use imageObj in tests, because there is no window.Image() in tests
          */
         image={process.env.NODE_ENV === 'test' ? undefined : imageObj}
+        // image={PotImage}
         rotation={item.rotation}
         onDragMove={handleDragMove}
         onDragEnd={handleDragEnd}
@@ -360,7 +379,9 @@ const Coordinates = ({ item }: { item: IPlaceableItem }) => {
       y={item.y - 150}
       strokeWidth={1}
       fontSize={150}
-      text={`(${Math.round(mmToFeet(item.x))}, ${Math.round(mmToFeet(item.y))})`}
+      text={`(${Math.round(mmToFeet(item.x))}, ${Math.round(
+        mmToFeet(item.y)
+      )})`}
       wrap="char"
       align="center"
       offset={item.offset}

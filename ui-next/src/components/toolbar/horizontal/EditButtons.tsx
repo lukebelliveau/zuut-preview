@@ -1,4 +1,7 @@
-import { undoItemAction, redoItemAction } from '../../../redux/features/items/itemsSlice';
+import {
+  undoItemAction,
+  redoItemAction,
+} from '../../../redux/features/items/itemsSlice';
 // import './Toolbar.css';
 import {
   useSelectRedoStack,
@@ -57,7 +60,10 @@ const ToolbarButtonStyles = styled(ListItemButton)<ToolbarButtonStyleProps>(
       // Active item
       ...(active && {
         color: theme.palette.primary.main,
-        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
       }),
     };
   }
@@ -80,7 +86,13 @@ export interface ToolbarButtonProps extends ToolbarButtonStyleProps {
   Icon: JSX.Element;
 }
 
-const ToolbarButton = ({ onClick, onKeyDown, label, Icon, ...other }: ToolbarButtonProps) => {
+const ToolbarButton = ({
+  onClick,
+  onKeyDown,
+  label,
+  Icon,
+  ...other
+}: ToolbarButtonProps) => {
   return (
     <ToolbarButtonStyles
       onClick={onClick}
@@ -93,8 +105,8 @@ const ToolbarButton = ({ onClick, onKeyDown, label, Icon, ...other }: ToolbarBut
         sx={{
           mr: 1,
           flexShrink: 0,
-          width: ICON.NAVBAR_ITEM_HORIZONTAL,
-          height: ICON.NAVBAR_ITEM_HORIZONTAL,
+          width: ICON.NAV_ITEM_HORIZONTAL,
+          height: ICON.NAV_ITEM_HORIZONTAL,
         }}
       >
         {Icon}
@@ -127,7 +139,10 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
     dispatch(toggleLayer(layer));
   }
 
-  const doIfEnter = (e: React.KeyboardEvent<HTMLElement>, callbackIfEnter: () => void) => {
+  const doIfEnter = (
+    e: React.KeyboardEvent<HTMLElement>,
+    callbackIfEnter: () => void
+  ) => {
     if (e.key === 'Return' || e.key === 'Enter') {
       callbackIfEnter();
     }
@@ -157,7 +172,9 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
             active={showLayer[Layer.FLOOR] ? true : false}
             tabIndex={0}
             onClick={() => toggleSelectedLayer(Layer.FLOOR)}
-            onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.FLOOR))}
+            onKeyDown={(e) =>
+              doIfEnter(e, () => toggleSelectedLayer(Layer.FLOOR))
+            }
             label="Floor plane"
             Icon={<ArrowDownwardIcon />}
           />
@@ -175,7 +192,9 @@ function Toolbar({ openResetModal }: { openResetModal: () => void }) {
             active={showLayer[Layer.CEILING] ? true : false}
             tabIndex={0}
             onClick={() => toggleSelectedLayer(Layer.CEILING)}
-            onKeyDown={(e) => doIfEnter(e, () => toggleSelectedLayer(Layer.CEILING))}
+            onKeyDown={(e) =>
+              doIfEnter(e, () => toggleSelectedLayer(Layer.CEILING))
+            }
             label="Ceiling plane"
             Icon={<ArrowUpwardIcon />}
           />

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { push } from 'redux-first-history';
 import { v4 } from 'uuid';
-import { isDemoMode, RootState } from '../../store';
+import { RootState } from '../../store';
 
 import Plan from '../../../lib/plan';
 import PlanReduxAdapter from '../../../lib/plan/planReduxAdapter';

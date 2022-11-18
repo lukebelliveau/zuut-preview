@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 // @mui
 import { List, Collapse, Link } from '@mui/material';
 //
 import { ItemNavListProps } from '../type';
 import NavItem from './NavItem';
-import { getActive, isExternalLink } from '..';
+import useActiveLink from 'src/hooks/useActiveLink';
+import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -22,26 +22,29 @@ export default function NavList({
   hasChildren,
   isCollapse = false,
 }: NavListRootProps) {
-  const navigate = useNavigate();
-
-  const { pathname } = useLocation();
-
-  const active = getActive(data.path, pathname);
+  const { active, isExternalLink } = useActiveLink(data.path);
+  const router = useRouter();
 
   const [open, setOpen] = useState(active);
 
   const handleClickItem = () => {
     if (!hasChildren) {
-      navigate(data.path);
+      router.push(data.path);
     }
     setOpen(!open);
   };
 
   return (
     <>
-      {isExternalLink(data.path) ? (
+      {isExternalLink ? (
         <Link href={data.path} target="_blank" rel="noopener" underline="none">
-          <NavItem item={data} depth={depth} open={open} active={active} isCollapse={isCollapse} />
+          <NavItem
+            item={data}
+            depth={depth}
+            open={open}
+            active={active}
+            isCollapse={isCollapse}
+          />
         </Link>
       ) : (
         <NavItem

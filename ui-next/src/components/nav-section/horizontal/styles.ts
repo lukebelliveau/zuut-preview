@@ -2,7 +2,7 @@
 import { styled, alpha } from '@mui/material/styles';
 import { Popover, ListItemButton, ListItemIcon } from '@mui/material';
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
+import cssStyles from '../../../utils/cssStyles';
 // config
 import { NAV, ICON } from '../../../config';
 //
@@ -21,7 +21,10 @@ export const StyledItem = styled(ListItemButton, {
 
   const activeStyle = {
     color: theme.palette.primary.main,
-    backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+    backgroundColor: alpha(
+      theme.palette.primary.main,
+      theme.palette.action.selectedOpacity
+    ),
     ...(!isLight && {
       color: theme.palette.primary.light,
     }),
@@ -99,6 +102,6 @@ export const StyledPopover = styled(Popover)(({ theme }) => ({
     marginTop: theme.spacing(0.5),
     boxShadow: theme.customShadows.dropdown,
     borderRadius: Number(theme.shape.borderRadius) * 1.5,
-    ...bgBlur({ color: theme.palette.background.default }),
+    ...cssStyles(theme).bgBlur({ color: theme.palette.background.default }),
   },
 }));

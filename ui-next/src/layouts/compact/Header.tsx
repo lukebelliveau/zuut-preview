@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Box, BoxProps, Link } from '@mui/material';
 // config
 import { HEADER } from '../../config';
 // utils
-import { bgBlur } from '../../utils/cssStyles';
+import cssStyles from '../../utils/cssStyles';
 // components
 import Logo from '../../components/logo';
 
@@ -31,7 +31,9 @@ export default function Header({ isOffset }: Props) {
             duration: theme.transitions.duration.shorter,
           }),
           ...(isOffset && {
-            ...bgBlur({ color: theme.palette.background.default }),
+            ...cssStyles(theme).bgBlur({
+              color: theme.palette.background.default,
+            }),
             height: {
               md: HEADER.H_MAIN_DESKTOP - 16,
             },

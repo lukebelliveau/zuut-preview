@@ -4,8 +4,8 @@ import { MenuItem, Stack } from '@mui/material';
 // hooks
 import useLocales from '../../../hooks/useLocales';
 // components
-import Image from '../../../components/Image';
-import MenuPopover from '../../../components/MenuPopover';
+import Image from '../../../components/image';
+import MenuPopover from '../../../components/menu-popover';
 import { IconButtonAnimate } from '../../../components/animate';
 
 // ----------------------------------------------------------------------
@@ -42,14 +42,18 @@ export default function LanguagePopover() {
       </IconButtonAnimate>
 
       <MenuPopover
-        open={Boolean(open)}
+        open={open}
         anchorEl={open}
         onClose={handleClose}
         sx={{
           mt: 1.5,
           ml: 0.75,
           width: 180,
-          '& .MuiMenuItem-root': { px: 1, typography: 'body2', borderRadius: 0.75 },
+          '& .MuiMenuItem-root': {
+            px: 1,
+            typography: 'body2',
+            borderRadius: 0.75,
+          },
         }}
       >
         <Stack spacing={0.75}>

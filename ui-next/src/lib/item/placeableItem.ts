@@ -19,6 +19,7 @@ import { Layer } from '../layer';
 import { LayerState } from '../../redux/features/interactions/interactionsState';
 import { normalizeMmTo3Inches } from '../conversions';
 import { GeometryObject } from '../geometry/GeometryObject';
+import { StaticImageData } from 'next/image';
 
 export interface PlacementShadow extends GeometryObject {
   x: number;
@@ -52,7 +53,7 @@ export interface IPlaceableItem extends IItem, GeometryObject {
   width: number;
   length: number;
   height: number | undefined;
-  image: string;
+  image: StaticImageData;
   placementShadow: PlacementShadow | undefined;
   collisionState: CollisionState;
   layer: Layer;
@@ -84,7 +85,10 @@ export interface PlaceableItemArgs extends ItemArgs {
   placementShadow?: PlacementShadow | undefined;
 }
 
-export default class PlaceableItem extends Item implements IPlaceableItem, GeometryObject {
+export default class PlaceableItem
+  extends Item
+  implements IPlaceableItem, GeometryObject
+{
   x: number;
   y: number;
   width: number;
@@ -115,7 +119,14 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId, selectedAmazonASIN, linkedASINs });
+    super({
+      name,
+      id,
+      amazonProducts,
+      recordId,
+      selectedAmazonASIN,
+      linkedASINs,
+    });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -135,11 +146,15 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
   }
 
   drag(position: Point, items: IItem[], playground: Playground) {
-    if (!playground || !playground.plan || !playground.plan.grid) throw new Error('Missing grid!');
+    if (!playground || !playground.plan || !playground.plan.grid)
+      throw new Error('Missing grid!');
     this.x = position.x;
     this.y = position.y;
 
-    this.placementShadow = this.createDefaultPlacementShadow(position, playground);
+    this.placementShadow = this.createDefaultPlacementShadow(
+      position,
+      playground
+    );
 
     this.updateCollisions(items, playground);
   }
@@ -159,8 +174,12 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     }
   }
 
-  createDefaultPlacementShadow(position: Point, playground: Playground): PlacementShadow {
-    if (!playground.plan || !playground.plan.grid) throw new Error('Missing grid!');
+  createDefaultPlacementShadow(
+    position: Point,
+    playground: Playground
+  ): PlacementShadow {
+    if (!playground.plan || !playground.plan.grid)
+      throw new Error('Missing grid!');
 
     // const snappedPosition = playground.plan.grid.snapPosition(position);
     const snappedPosition = playground.plan.grid.snapOffsetPosition(
@@ -193,7 +212,10 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
 
   protected itemHasConflicts(collidingWithItem: IPlaceableItem[]): boolean {
     return collidingWithItem.some((collidingItem) => {
-      if (this.collisionStateBetween(this, collidingItem) === CollisionState.CONFLICTED) {
+      if (
+        this.collisionStateBetween(this, collidingItem) ===
+        CollisionState.CONFLICTED
+      ) {
         return true;
       }
       return false;
@@ -220,7 +242,10 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
   }
 
   updateCollisions(items: IItem[], playground: Playground) {
-    const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(items, playground);
+    const { collidingWithItem, collidingWithShadow } = this.detectOverlaps(
+      items,
+      playground
+    );
 
     if (this.isCollidingWithPlanWall(playground)) {
       this.collisionState = CollisionState.CONFLICTED;
@@ -230,7 +255,10 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       this.collisionState = CollisionState.CONFLICTED;
     } else {
       const itemHasConnections = collidingWithItem.some((collidingItem) => {
-        if (this.collisionStateBetween(this, collidingItem) === CollisionState.CONNECTED) {
+        if (
+          this.collisionStateBetween(this, collidingItem) ===
+          CollisionState.CONNECTED
+        ) {
           return true;
         }
         return false;
@@ -258,16 +286,20 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
           collisionState: CollisionState.CONFLICTED,
         };
       } else {
-        const shadowHasConnections = collidingWithShadow.some((collidingShadow) => {
-          if (
-            this.placementShadow &&
-            this.collisionStateBetween(this.placementShadow, collidingShadow) ===
-              CollisionState.CONNECTED
-          ) {
-            return true;
+        const shadowHasConnections = collidingWithShadow.some(
+          (collidingShadow) => {
+            if (
+              this.placementShadow &&
+              this.collisionStateBetween(
+                this.placementShadow,
+                collidingShadow
+              ) === CollisionState.CONNECTED
+            ) {
+              return true;
+            }
+            return false;
           }
-          return false;
-        });
+        );
 
         if (shadowHasConnections)
           this.placementShadow = {
@@ -299,7 +331,10 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       if (areColliding(this, itemToCompare)) {
         collidingWithItem.push(itemToCompare);
       }
-      if (this.placementShadow && areColliding(this.placementShadow, itemToCompare)) {
+      if (
+        this.placementShadow &&
+        areColliding(this.placementShadow, itemToCompare)
+      ) {
         collidingWithShadow.push(itemToCompare);
       }
     });
@@ -322,7 +357,10 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       if (areExactlySharingBorder(this, itemToCompare)) {
         sharingBorderWithItem.push(itemToCompare);
       }
-      if (this.placementShadow && areExactlySharingBorder(this.placementShadow, itemToCompare)) {
+      if (
+        this.placementShadow &&
+        areExactlySharingBorder(this.placementShadow, itemToCompare)
+      ) {
         sharingBorderWithShadow.push(itemToCompare);
       }
     });
@@ -338,7 +376,9 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     otherItem: IPlaceableItem
   ): CollisionState {
     // default to "bad" collision state if any items are colliding
-    return areColliding(item, otherItem) ? CollisionState.CONFLICTED : CollisionState.NEUTRAL;
+    return areColliding(item, otherItem)
+      ? CollisionState.CONFLICTED
+      : CollisionState.NEUTRAL;
   }
 
   rotate() {

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useSelectDefaultPlan } from '../../redux/features/plans/planSelectors';
 import PlanReduxAdapter from '../../lib/plan/planReduxAdapter';
 import { update as updatePlan } from '../../redux/features/plans/planSlice';
-import { isDemoMode, useDispatch } from '../../redux/store';
+import { useDispatch } from '../../redux/store';
 import { feetToMm, mmToFeet } from '../../lib/conversions';
 import { hackyRecenterPlayground } from '../../redux/features/playgrounds/playgroundSlice';
 import { Button, styled, TextField } from '@mui/material';
@@ -21,11 +21,13 @@ const Dimensions = () => {
   const plan = PlanReduxAdapter.stateToPlan(planState);
   const [show, setShow] = useState(true);
   const [name, setName] = useState(plan.name || '');
-  const [length, setLength] = useState(mmToFeet(plan.room.length).toString() || '');
-  const [width, setWidth] = useState(mmToFeet(plan.room.width).toString() || '');
+  const [length, setLength] = useState(
+    mmToFeet(plan.room.length).toString() || ''
+  );
+  const [width, setWidth] = useState(
+    mmToFeet(plan.room.width).toString() || ''
+  );
   const dispatch = useDispatch();
-
-  if (!isDemoMode()) return null;
 
   const toggleShow = () => {
     setShow(!show);
@@ -74,17 +76,15 @@ const Dimensions = () => {
             flexDirection: 'column',
           }}
         >
-          {isDemoMode() ? null : (
-            <>
-              <DimensionTextField
-                id="name-input"
-                name="name"
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </>
-          )}
+          {/* <>
+            <DimensionTextField
+              id="name-input"
+              name="name"
+              label="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </> */}
 
           <DimensionTextField
             id="length-input"
@@ -105,7 +105,10 @@ const Dimensions = () => {
           <input type="submit" hidden />
           <Button
             disabled={
-              !(parseInt(width) !== plan.room.width || parseInt(length) !== plan.room.length)
+              !(
+                parseInt(width) !== plan.room.width ||
+                parseInt(length) !== plan.room.length
+              )
             }
             aria-label="update dimensions"
             onClick={updateProperties}

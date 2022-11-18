@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import { mixpanelEvents } from '../../analytics/mixpanelEvents';
 // import { mixpanelTrack } from '../../analytics/mixpanelTrack';
 
-import { dispatch, isDemoMode, RootState } from '../../store';
+import { dispatch, RootState } from '../../store';
 import { assertDefined } from '../../../lib/assert';
 import { feetToMm } from '../../../lib/conversions';
 import ItemReduxAdapter from '../../../lib/item/itemReduxAdapter';

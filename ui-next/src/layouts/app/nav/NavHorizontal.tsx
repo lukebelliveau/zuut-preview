@@ -5,7 +5,7 @@ import { AppBar, Box, BoxProps, Toolbar } from '@mui/material';
 // config
 import { HEADER } from '../../../config';
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
+import cssStyles from '../../../utils/cssStyles';
 // components
 import { NavSectionHorizontal } from '../../../components/nav-section';
 //
@@ -27,7 +27,7 @@ function NavHorizontal() {
     >
       <Toolbar
         sx={{
-          ...bgBlur({
+          ...cssStyles(theme).bgBlur({
             color: theme.palette.background.default,
           }),
         }}

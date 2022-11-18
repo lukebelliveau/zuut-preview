@@ -1,6 +1,5 @@
 import { configureStore, EntityState } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import { createBrowserHistory } from 'history';
 import createThunkErrorHandlerMiddleware from 'redux-thunk-error-handler';
 import undoable, { includeAction } from 'redux-undo';
 

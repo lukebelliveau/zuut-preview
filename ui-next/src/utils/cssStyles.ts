@@ -12,6 +12,7 @@ type BackgroundGradientProps = {
   direction?: string;
   startColor?: string;
   endColor?: string;
+  color: any;
 };
 
 interface BackgroundImageProps extends BackgroundGradientProps {
@@ -69,3 +70,23 @@ export default function cssStyles(theme?: Theme) {
     },
   };
 }
+
+export const hideScrollbarY = {
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+} as const;
+
+// ----------------------------------------------------------------------
+
+export const hideScrollbarX = {
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+  overflowX: 'scroll',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+} as const;

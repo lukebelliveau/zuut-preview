@@ -1,7 +1,11 @@
 import { FieldSet, Records } from 'airtable';
 import { useQuery } from '@tanstack/react-query';
 import queryKeys from '../lib/queryKeys';
-import { airtableBase, airtableTables, amazonProductFields } from './airtableBase';
+import {
+  airtableBase,
+  airtableTables,
+  amazonProductFields,
+} from './airtableBase';
 import { CartItem } from 'src/components/cart/ShoppingCartTable';
 
 export interface AmazonProductDetailMap {
@@ -66,7 +70,10 @@ export const useQueryAmazonProductsByCartItem = (cartItems: CartItem[]) => {
   });
 };
 
-export const useQueryAmazonProductsByASIN = (ASINs: string[], itemName: string) => {
+export const useQueryAmazonProductsByASIN = (
+  ASINs: string[],
+  itemName: string
+) => {
   return useQuery([queryKeys.amazonProductsByASIN, [itemName]], () => {
     return selectAmazonProductRecordsByASIN(ASINs);
   });
@@ -96,7 +103,9 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
 
     const airFlowRating = record.get(amazonProductFields.airFlowRating.name);
     const width = record.get(amazonProductFields.width.name);
-    const speedAdjustable = record.get(amazonProductFields.speedAdjustable.name);
+    const speedAdjustable = record.get(
+      amazonProductFields.speedAdjustable.name
+    );
     const btu = record.get(amazonProductFields.btu.name);
     const thermostat = record.get(amazonProductFields.thermostat.name);
     const control = record.get(amazonProductFields.control.name);
@@ -143,7 +152,9 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
 
       airFlowRating: airFlowRating ? airFlowRating.toString() : NOT_AVAILABLE,
       width: width ? width.toString() : NOT_AVAILABLE,
-      speedAdjustable: speedAdjustable ? speedAdjustable.toString() : NOT_AVAILABLE,
+      speedAdjustable: speedAdjustable
+        ? speedAdjustable.toString()
+        : NOT_AVAILABLE,
       btu: btu ? btu.toString() : NOT_AVAILABLE,
       thermostat: thermostat ? thermostat.toString() : NOT_AVAILABLE,
       control: control ? control.toString() : NOT_AVAILABLE,
@@ -152,7 +163,9 @@ const createAmazonProductMap = (amazonProductRecords: Records<FieldSet>) => {
       exhaust: exhaust ? exhaust.toString() : NOT_AVAILABLE,
       coverage: coverage ? coverage.toString() : NOT_AVAILABLE,
       capacity: capacity ? capacity.toString() : NOT_AVAILABLE,
-      humiditySensor: humiditySensor ? humiditySensor.toString() : NOT_AVAILABLE,
+      humiditySensor: humiditySensor
+        ? humiditySensor.toString()
+        : NOT_AVAILABLE,
       timer: timer ? timer.toString() : NOT_AVAILABLE,
       unitCount: unitCount ? unitCount.toString() : '1',
       rating: rating ? rating.toString() : NOT_AVAILABLE,
@@ -178,7 +191,9 @@ export const selectAmazonProductRecordsByASIN = async (
   filterByFormula += ')';
 
   try {
-    const amazonProductRecords = await airtableBase(airtableTables.amazonProducts.id)
+    const amazonProductRecords = await airtableBase(
+      airtableTables.amazonProducts.id
+    )
       .select({
         fields: [
           amazonProductFields.ASIN.fieldId,

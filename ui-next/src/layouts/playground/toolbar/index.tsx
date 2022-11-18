@@ -21,7 +21,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.appBar,
   padding: theme.spacing(1, 0),
   boxShadow: theme.customShadows.z8,
-  top: HEADER.DASHBOARD_DESKTOP_OFFSET_HEIGHT,
+  top: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
   backgroundColor: theme.palette.background.default,
 }));
 

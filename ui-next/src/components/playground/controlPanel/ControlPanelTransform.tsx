@@ -7,7 +7,12 @@ import { useDispatch } from 'src/redux/store';
 import { onReturnKey } from 'src/lib/interactions/keyboard';
 import { isWallItem } from 'src/lib/item/wallItem';
 import { unselect } from 'src/redux/features/interactions/interactionsSlice';
-import { copyItem, removeItem, rotate, rotateCcw } from 'src/redux/features/items/itemsSlice';
+import {
+  copyItem,
+  removeItem,
+  rotate,
+  rotateCcw,
+} from 'src/redux/features/items/itemsSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CopyIcon from '@mui/icons-material/ContentCopy';
 import Rotate90DegreesCcwIcon from '@mui/icons-material/Rotate90DegreesCcw';
@@ -21,7 +26,7 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   color: theme.palette.text.disabled,
-  border: `solid 1px ${theme.palette.grey[500_12]}`,
+  border: `solid 1px ${theme.palette.grey[500]}`,
   borderRadius: Number(theme.shape.borderRadius) * 1.25,
 }));
 
@@ -77,7 +82,12 @@ export default function ControlPanelTransform({ item }: { item: IItem }) {
           </IconButton>
         </>
       )}
-      <IconButton onClick={copy} onKeyDown={onReturnKey(copy)} aria-label="copy item" tabIndex={-1}>
+      <IconButton
+        onClick={copy}
+        onKeyDown={onReturnKey(copy)}
+        aria-label="copy item"
+        tabIndex={-1}
+      >
         <CopyIcon />
       </IconButton>
     </Stack>

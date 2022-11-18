@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import React from 'react';
-import { AppDispatch } from 'src/redux/store';
+import { dispatch } from 'src/redux/store';
 import { selectMany } from '../interactions/interactionsSlice';
 import { addMany } from '../items/itemsSlice';
 import { create } from '../plans/planSlice';
@@ -31,7 +30,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const loadFirebaseCart = async (grow: any, dispatch: AppDispatch) => {
+export const loadFirebaseCart = async (grow: any) => {
   const plan = grow.plans.entities[grow.playground.planId];
   const { cart } = grow;
   const { interactions } = grow;

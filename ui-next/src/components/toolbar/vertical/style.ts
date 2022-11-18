@@ -11,11 +11,12 @@ import {
 
 // config
 import { ICON, NAVBAR } from '../../../config';
+import cssStyles from 'src/utils/cssStyles';
 
 // ----------------------------------------------------------------------
 
 export interface ListItemStyleProps extends ListItemButtonProps {
-  open: boolean;
+  // open: boolean;
   active: boolean;
   depth: number;
 }
@@ -77,8 +78,8 @@ export const ListItemTextStyle = styled(ListItemText, {
 // ----------------------------------------------------------------------
 
 export const ListItemIconStyle = styled(ListItemIcon)({
-  width: ICON.NAVBAR_ITEM,
-  height: ICON.NAVBAR_ITEM,
+  width: ICON.NAV_ITEM,
+  height: ICON.NAV_ITEM,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

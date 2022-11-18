@@ -4,7 +4,10 @@ import { isStraddlingBoundary } from '../geometry/geometry';
 import { Item } from '../item';
 import { isCeilingPlaceableItem } from './ceilingPlaceableItem';
 import { isTentItem } from './tentItem';
-import PlaceableItem, { CollisionState, PlacementShadow } from './placeableItem';
+import PlaceableItem, {
+  CollisionState,
+  PlacementShadow,
+} from './placeableItem';
 
 export const GROWSPACE_ITEM_TYPE = 'GrowspaceItem';
 

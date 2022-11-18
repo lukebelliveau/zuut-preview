@@ -18,8 +18,8 @@ const DropdownPlaceholder = ({
           sx={{
             mr: 1,
             flexShrink: 0,
-            width: ICON.NAVBAR_ITEM_HORIZONTAL,
-            height: ICON.NAVBAR_ITEM_HORIZONTAL,
+            width: ICON.NAV_ITEM_HORIZONTAL,
+            height: ICON.NAV_ITEM_HORIZONTAL,
           }}
         >
           {icon}
@@ -39,8 +39,8 @@ const DropdownPlaceholder = ({
         sx={{
           ml: 0.5,
           flexShrink: 0,
-          width: ICON.NAVBAR_ITEM_HORIZONTAL,
-          height: ICON.NAVBAR_ITEM_HORIZONTAL,
+          width: ICON.NAV_ITEM_HORIZONTAL,
+          height: ICON.NAV_ITEM_HORIZONTAL,
         }}
       />
     </ListItemButtonStyle>

@@ -63,11 +63,13 @@
     "simplebar-react": "^2.4.3",
     "stylis": "^4.1.2",
     "stylis-plugin-rtl": "^2.1.1",
+    "tsc-watch": "^5.0.3",
     "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/autosuggest-highlight": "^3.2.0",
+    "@types/jest": "^29.2.3",
     "@types/lodash": "^4.14.186",
     "@types/mixpanel-browser": "^2.38.0",
     "@types/node": "^18.8.5",

@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import getItemsOfType from '../../../../tests/getItemsOfType';
+import getItemsOfType from '../../../testUtils/getItemsOfType';
 import { createAppStore } from '../../store';
 import ItemReduxAdapter from '../../../lib/item/itemReduxAdapter';
 import MiscItem, { MISC_ITEM_TYPE } from '../../../lib/item/miscItem';
@@ -102,7 +102,9 @@ describe('items/dropItem', () => {
     store.dispatch(dropItem(updatedItem));
 
     expect(store.getState().items.present.ids.length).toBe(1);
-    expect(store.getState().items.present.entities[id]).toStrictEqual(updatedItem);
+    expect(store.getState().items.present.entities[id]).toStrictEqual(
+      updatedItem
+    );
   });
 });
 
@@ -303,12 +305,16 @@ describe('items/decrementModifier', () => {
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
     expect(potItem?.modifiers?.Soil.ids.length).toBe(2);
 
-    store.dispatch(decrementModifier({ itemId: item.id, modifier: addRemoveModifier }));
+    store.dispatch(
+      decrementModifier({ itemId: item.id, modifier: addRemoveModifier })
+    );
     expect(store.getState().items.present.ids.length).toBe(2);
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
     expect(potItem?.modifiers?.Soil.ids.length).toBe(1);
 
-    store.dispatch(decrementModifier({ itemId: item.id, modifier: addRemoveModifier }));
+    store.dispatch(
+      decrementModifier({ itemId: item.id, modifier: addRemoveModifier })
+    );
     expect(store.getState().items.present.ids.length).toBe(1);
     potItem = getItemsOfType(POT_ITEM_TYPE, store)[0];
     expect(potItem?.modifiers?.Soil.ids.length).toBe(0);

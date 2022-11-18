@@ -28,7 +28,7 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   color: theme.palette.text.disabled,
-  border: `solid 1px ${theme.palette.grey[500_12]}`,
+  border: `solid 1px ${theme.palette.grey[500]}`,
   borderRadius: Number(theme.shape.borderRadius) * 1.25,
 }));
 
@@ -44,11 +44,21 @@ export default function QuickAdds({ item }: { item: PlaceableItem }) {
   }
 
   function decrementModifier(modifierName: string) {
-    dispatch(decrementModifierThunk({ itemId: item.id, modifier: item.modifiers[modifierName] }));
+    dispatch(
+      decrementModifierThunk({
+        itemId: item.id,
+        modifier: item.modifiers[modifierName],
+      })
+    );
   }
 
   function incrementModifier(modifierName: string) {
-    dispatch(incrementModifierThunk({ itemId: item.id, modifier: item.modifiers[modifierName] }));
+    dispatch(
+      incrementModifierThunk({
+        itemId: item.id,
+        modifier: item.modifiers[modifierName],
+      })
+    );
   }
 
   if (Object.keys(item.modifiers).length === 0) return null;
@@ -64,7 +74,9 @@ export default function QuickAdds({ item }: { item: PlaceableItem }) {
               alignItems="center"
               sx={{ justifyContent: 'space-between', width: '100%' }}
             >
-              <StyledTypography textAlign="left">{modifierName}</StyledTypography>
+              <StyledTypography textAlign="left">
+                {modifierName}
+              </StyledTypography>
               <Stack direction="row" alignItems="center">
                 <IconButton
                   onClick={() => decrementModifier(modifierName)}
