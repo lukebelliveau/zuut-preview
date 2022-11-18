@@ -57,6 +57,17 @@ const PlaygroundLoader = () => {
 
   useEffect(() => {
     return () => {
+      /**
+       * Immediately update cart state whenever it's updated in Firebase DB.
+       *
+       * When a user is editing cart products on the same growId in a different window,
+       * those changes can be overwritten by the current state of the playground.
+       *
+       * This is a really lame hack to get around that.
+       *
+       * We should really be writing to the DB in our dispatch (like thunks),
+       * rather than blindly subscribing to redux state changes.
+       */
       const dbRef = ref(firebaseDb, 'grows/' + growId);
       onValue(dbRef, (snapshot: any) => {
         const data = snapshot.val();
