@@ -21,6 +21,7 @@ export const PATH_APP = {
   builder: path(ROOTS_APP, '/builder'),
   playground: path(ROOTS_APP, '/builder/playground'),
   cart: path(ROOTS_APP, '/builder/cart'),
+  404: path(ROOTS_APP, '/404'),
   // },
   // user: {
   //   root: path(ROOTS_APP, '/user'),

@@ -10,6 +10,8 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 // ----------------------------------------------------------------------
 import { Provider as ReduxProvider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 // next
 import { NextPage } from 'next';
@@ -62,20 +64,22 @@ export default function MyApp(props: MyAppProps) {
       <AuthProvider>
         <ReduxProvider store={store}>
           <QueryClientProvider client={queryClient}>
-            <SettingsProvider>
-              <MotionLazyContainer>
-                <ThemeProvider>
-                  <ThemeSettings>
-                    <ThemeLocalization>
-                      <SnackbarProvider>
-                        <ProgressBar />
-                        {getLayout(<Component {...pageProps} />)}
-                      </SnackbarProvider>
-                    </ThemeLocalization>
-                  </ThemeSettings>
-                </ThemeProvider>
-              </MotionLazyContainer>
-            </SettingsProvider>
+            <DndProvider backend={HTML5Backend}>
+              <SettingsProvider>
+                <MotionLazyContainer>
+                  <ThemeProvider>
+                    <ThemeSettings>
+                      <ThemeLocalization>
+                        <SnackbarProvider>
+                          <ProgressBar />
+                          {getLayout(<Component {...pageProps} />)}
+                        </SnackbarProvider>
+                      </ThemeLocalization>
+                    </ThemeSettings>
+                  </ThemeProvider>
+                </MotionLazyContainer>
+              </SettingsProvider>
+            </DndProvider>
           </QueryClientProvider>
         </ReduxProvider>
       </AuthProvider>

@@ -2,7 +2,7 @@
 import { useTheme } from '@mui/material/styles';
 import { Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
+import cssStyles from '../../../utils/cssStyles';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
@@ -74,7 +74,7 @@ export default function Header({ onOpenNav }: Props) {
         boxShadow: 'none',
         height: HEADER.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,
-        ...bgBlur({
+        ...cssStyles(theme).bgBlur({
           color: theme.palette.background.default,
         }),
         transition: theme.transitions.create(['height'], {

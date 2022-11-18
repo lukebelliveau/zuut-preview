@@ -31,11 +31,24 @@ import {
   setPlan,
 } from 'src/redux/features/playgrounds/playgroundSlice';
 import { useRouter } from 'next/router';
+import { PlaygroundWithPlan } from 'src/components/playground/ShowPlayground';
+import dynamic from 'next/dynamic';
+import PlaygroundLayout from 'src/layouts/playground';
+
+const ShowPlaygroundNoSSR = dynamic(
+  () => import('src/components/playground/ShowPlayground'),
+  {
+    ssr: false,
+  }
+);
 
 // ----------------------------------------------------------------------
 
 Build.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <DashboardLayout>
+    <PlaygroundLayout>{page}</PlaygroundLayout>
+  </DashboardLayout>
+  // <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
@@ -101,7 +114,9 @@ const PlaygroundLoader = () => {
   if (error) throw Error(`Error loading playground, ${error}`);
   if (playground && playground.plan) {
     if (growId !== null && growId !== undefined) {
-      return <div>Loaded successfully!</div>;
+      return (
+        <ShowPlaygroundNoSSR playground={playground as PlaygroundWithPlan} />
+      );
       // return <ShowPlayground playground={playground as PlaygroundWithPlan} />;
     } else {
       router.push(`${PATH_APP.playground}?growId=${playground.plan.id}`);

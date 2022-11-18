@@ -15,9 +15,6 @@ export default function useActiveLink(
 
   const checkPath = currentPath.startsWith('#');
 
-  console.log('pathname', pathname);
-  console.log('currentPath', currentPath);
-
   const normalActive =
     (!checkPath && pathname === currentPath) ||
     (!checkPath && asPath === currentPath);
