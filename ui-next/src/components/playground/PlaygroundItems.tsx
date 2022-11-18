@@ -192,7 +192,6 @@ const Item = ({
 
   // create manually instead of using Konva's `use-image` package.
   // useImage() asynchronously loads the image every time the component mounts, causing flickering on zoom (because children of the Stage re-mount).
-  console.log('IMAGE', PotImage);
   const imageObj = new window.Image();
   imageObj.src = item.image.src as string;
 
@@ -218,6 +217,7 @@ const Item = ({
   };
 
   const handleDragEnd = (e: KonvaEventObject<MouseEvent>) => {
+    console.log('DRAG END');
     dropAndUpdateItemCollisions(item);
 
     setContainerCursor('grab', e);

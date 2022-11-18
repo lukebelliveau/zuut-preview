@@ -29,8 +29,6 @@ const hideScrollbar = {
 const TentItems = () => {
   const { isLoading, isError, data: potItems, error } = useQueryTentItems();
 
-  console.log('potItems', potItems);
-
   if (isLoading) {
     return <DropdownPlaceholder label="Tents" icon={ICONS.tent} />;
   }

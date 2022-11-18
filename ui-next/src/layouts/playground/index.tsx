@@ -75,54 +75,25 @@ export default function PlaygroundLayout({
     handleEscOnKeyDown(e, store);
   };
 
-  if (true) {
-    console.log('VERT');
-    return (
-      <>
-        <PlaygroundHeader
-          onOpenSidebar={() => setOpen(true)}
-          verticalLayout={verticalLayout}
-        />
-
-        <Box
-          component="main"
-          sx={{
-            height: '100%',
-            width: '100%',
-          }}
-          onKeyDown={handleKeyDown}
-        >
-          {children}
-          <ControlPanelDrawer />
-          <InventoryDrawer />
-        </Box>
-      </>
-    );
-  }
-
-  console.log('HORZ');
   return (
-    <Box
-      // sx={{
-      //   display: { lg: 'flex' },
-      //   minHeight: { lg: 1 },
-      // }}
-      sx={{
-        height: '100%',
-        width: '100%',
-      }}
-    >
+    <>
       <PlaygroundHeader
-        isCollapse={isCollapse}
         onOpenSidebar={() => setOpen(true)}
+        verticalLayout={verticalLayout}
       />
 
-      <NavbarVertical
-        isOpenSidebar={open}
-        onCloseSidebar={() => setOpen(false)}
-      />
-
-      <MainStyle collapseClick={collapseClick}>{children}</MainStyle>
-    </Box>
+      <Box
+        component="main"
+        sx={{
+          height: '100%',
+          width: '100%',
+        }}
+        onKeyDown={handleKeyDown}
+      >
+        {children}
+        <ControlPanelDrawer />
+        <InventoryDrawer />
+      </Box>
+    </>
   );
 }
