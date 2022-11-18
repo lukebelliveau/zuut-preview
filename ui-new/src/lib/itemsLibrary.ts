@@ -205,7 +205,10 @@ export const fetchLights = async (): Promise<Item[]> => {
 
 const StaticItemsLibrary: IItemGroup[] = [];
 
-export const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
+export const fetchItemsLibrary = async (): Promise<{
+  itemsLibrary: IItemGroup[];
+  itemASINs: { [itemType: string]: string };
+}> => {
   const potsPromise = fetchPots();
   const lightsPromise = fetchLights();
   const tentsPromise = fetchTents();
@@ -250,11 +253,25 @@ export const fetchItemsLibrary = async (): Promise<IItemGroup[]> => {
     },
   ];
 
-  return itemsLibrary;
+  let itemASINs: { [itemType: string]: string } = {};
+  const allItems = [...pots, ...lights, ...tents, ...miscItems, ...waterItems, ...climateItems];
+  allItems.forEach((item) => {
+    itemASINs[item.name] = item.selectedAmazonASIN;
+  });
+
+  return { itemsLibrary, itemASINs };
 };
 
 export const useQueryItemsLibrary = () => {
   return useQuery([queryKeys.itemsLibrary], fetchItemsLibrary);
+};
+
+export const useQueryItemASINs = () => {
+  return useQuery([queryKeys.itemASINs], async () => {
+    const { itemASINs } = await fetchItemsLibrary();
+
+    return itemASINs;
+  });
 };
 
 export default StaticItemsLibrary;

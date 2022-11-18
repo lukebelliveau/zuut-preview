@@ -68,9 +68,9 @@ function itemGroup(name: string, itemGroups: any): Item[] {
 
 export const useQueryItemsNavConfig = () => {
   return useQuery([queryKeys.itemsNavConfig], async () => {
-    const itemGroups = await fetchItemsLibrary();
+    const { itemsLibrary } = await fetchItemsLibrary();
 
-    return getItemsNavConfig(itemGroups);
+    return getItemsNavConfig(itemsLibrary);
   });
 };
 

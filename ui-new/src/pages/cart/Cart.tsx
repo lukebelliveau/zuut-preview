@@ -5,6 +5,7 @@ import Page from '../../components/Page';
 import ShoppingCartTable from 'src/components/cart/ShoppingCartTable';
 import MainHeader from 'src/layouts/main/MainHeader';
 import { grey } from '@mui/material/colors';
+import useLoadDefaultItemASINs from 'src/hooks/useLoadDefaultItemASINs';
 // sections
 
 // ----------------------------------------------------------------------
@@ -19,6 +20,8 @@ const RootStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Cart() {
+  useLoadDefaultItemASINs();
+
   return (
     <Page title="ZUUT Cart">
       <RootStyle>

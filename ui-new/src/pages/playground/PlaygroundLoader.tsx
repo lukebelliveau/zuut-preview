@@ -24,6 +24,7 @@ import { Navigate } from 'react-router';
 import { feetToMm } from 'src/lib/conversions';
 import PlanReduxAdapter from 'src/lib/plan/planReduxAdapter';
 import { create } from 'src/redux/features/plans/planSlice';
+import useLoadDefaultItemASINs from 'src/hooks/useLoadDefaultItemASINs';
 
 /**
  * Not in use now (in demo-only mode)
@@ -33,6 +34,8 @@ import { create } from 'src/redux/features/plans/planSlice';
 export default function PlaygroundApp() {
   const { themeStretch } = useSettings();
   const isMobile = useResponsive('down', 'sm');
+
+  useLoadDefaultItemASINs();
 
   const [mobileWarningOpen, setMobileWarningOpen] = useState<boolean>(Boolean(isMobile));
 

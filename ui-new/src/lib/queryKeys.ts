@@ -1,6 +1,7 @@
 const queryKeys = {
   cartItems: 'cartItems',
   itemsLibrary: 'itemsLibrary',
+  itemASINs: 'itemASINs',
   amazonProducts: 'amazonProducts',
 
   allAmazonProducts: 'allAmazonProducts',

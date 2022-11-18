@@ -11,6 +11,7 @@ import itemsReducer, {
   removeOne,
   updateOne,
 } from './features/items/itemsSlice';
+import cartReducer from './features/cart/cartSlice';
 import playgroundReducer from './features/playgrounds/playgroundSlice';
 import plansReducer from './features/plans/planSlice';
 import interactionsReducer from './features/interactions/interactionsSlice';
@@ -61,6 +62,7 @@ const reducers = {
   interactions: interactionsReducer,
   user: userReducer,
   router: routerReducer,
+  cart: cartReducer,
 };
 
 const olderThanDaysAgo = (timestamp: number, days: number) => {
