@@ -19,7 +19,7 @@ export const PATH_APP = {
   guides: path(ROOTS_APP, '/guides'),
   // builder: {
   builder: path(ROOTS_APP, '/builder'),
-  build: path(ROOTS_APP, '/builder/build'),
+  playground: path(ROOTS_APP, '/builder/playground'),
   cart: path(ROOTS_APP, '/builder/cart'),
   // },
   // user: {

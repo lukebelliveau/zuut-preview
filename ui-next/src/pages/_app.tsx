@@ -8,7 +8,8 @@ import 'simplebar/src/simplebar.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // ----------------------------------------------------------------------
-
+import { Provider as ReduxProvider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 // next
 import { NextPage } from 'next';
@@ -30,6 +31,7 @@ import { ThemeSettings, SettingsProvider } from '../components/settings';
 // https://docs.minimals.cc/authentication/ts-version
 
 import { AuthProvider } from '../auth/JwtContext';
+import { store } from 'src/redux/store';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +46,8 @@ interface MyAppProps extends AppProps {
   Component: NextPageWithLayout;
 }
 
+const queryClient = new QueryClient();
+
 export default function MyApp(props: MyAppProps) {
   const { Component, pageProps, emotionCache = clientSideEmotionCache } = props;
 
@@ -56,20 +60,24 @@ export default function MyApp(props: MyAppProps) {
       </Head>
 
       <AuthProvider>
-        <SettingsProvider>
-          <MotionLazyContainer>
-            <ThemeProvider>
-              <ThemeSettings>
-                <ThemeLocalization>
-                  <SnackbarProvider>
-                    <ProgressBar />
-                    {getLayout(<Component {...pageProps} />)}
-                  </SnackbarProvider>
-                </ThemeLocalization>
-              </ThemeSettings>
-            </ThemeProvider>
-          </MotionLazyContainer>
-        </SettingsProvider>
+        <ReduxProvider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <SettingsProvider>
+              <MotionLazyContainer>
+                <ThemeProvider>
+                  <ThemeSettings>
+                    <ThemeLocalization>
+                      <SnackbarProvider>
+                        <ProgressBar />
+                        {getLayout(<Component {...pageProps} />)}
+                      </SnackbarProvider>
+                    </ThemeLocalization>
+                  </ThemeSettings>
+                </ThemeProvider>
+              </MotionLazyContainer>
+            </SettingsProvider>
+          </QueryClientProvider>
+        </ReduxProvider>
       </AuthProvider>
     </CacheProvider>
   );

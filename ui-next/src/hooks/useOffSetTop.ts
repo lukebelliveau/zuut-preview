@@ -10,7 +10,10 @@ interface UseScrollOptions extends Omit<ScrollOptions, 'container' | 'target'> {
   target?: React.RefObject<HTMLElement>;
 }
 
-export default function useOffSetTop(top = 100, options?: UseScrollOptions): ReturnType {
+export default function useOffSetTop(
+  top = 100,
+  options?: UseScrollOptions
+): ReturnType {
   const { scrollY } = useScroll(options);
 
   const [value, setValue] = useState(false);

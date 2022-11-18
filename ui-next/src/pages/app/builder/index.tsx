@@ -8,8 +8,8 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    if (router.pathname == PATH_APP.builder) {
-      router.push(PATH_APP.build);
+    if (router.pathname === PATH_APP.builder) {
+      router.push(PATH_APP.playground);
     }
   });
 

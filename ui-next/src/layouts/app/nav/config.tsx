@@ -27,7 +27,7 @@ const navConfig = [
     items: [
       {
         title: 'Grow Builder',
-        path: PATH_APP.builder,
+        path: PATH_APP.playground,
         icon: ICONS.dashboard,
       },
       {
