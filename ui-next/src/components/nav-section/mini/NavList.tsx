@@ -21,6 +21,8 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
 
   const { pathname } = useRouter();
 
+  console.log('data.path', pathname);
+
   const { active, isExternalLink } = useActiveLink(data.path);
 
   const [open, setOpen] = useState(false);

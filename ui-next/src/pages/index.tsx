@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -8,7 +9,7 @@ export default function Index() {
 
   useEffect(() => {
     if (router.pathname == '/') {
-      router.push('/dashboard/one');
+      router.push(PATH_APP.home);
     }
   });
 
