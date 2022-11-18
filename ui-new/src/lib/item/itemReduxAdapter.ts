@@ -41,6 +41,7 @@ export default class ItemReduxAdapter {
       amazonProducts: item.amazonProducts,
       selectedAmazonASIN: item.selectedAmazonASIN,
       recordId: item.recordId,
+      linkedASINs: item.linkedASINs,
     };
 
     if (isPlaceableItem(item)) {
@@ -82,6 +83,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case GROWSPACE_ITEM_TYPE:
         return new GrowspaceItem({
@@ -100,12 +102,14 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case MISC_ITEM_TYPE:
         return new MiscItem({
           name: itemState.name,
           id: itemState.id,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
           amazonProducts: itemState.amazonProducts,
           selectedAmazonASIN: itemState.selectedAmazonASIN,
         });
@@ -115,6 +119,7 @@ export default class ItemReduxAdapter {
           id: itemState.id,
           amazonProducts: itemState.amazonProducts,
           selectedAmazonASIN: itemState.selectedAmazonASIN,
+          linkedASINs: itemState.linkedASINs,
         });
       case ROOM_ITEM_TYPE:
         return new RoomItem({
@@ -132,6 +137,7 @@ export default class ItemReduxAdapter {
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          linkedASINs: itemState.linkedASINs,
         });
 
       case WALL_ITEM_TYPE:
@@ -150,6 +156,7 @@ export default class ItemReduxAdapter {
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          linkedASINs: itemState.linkedASINs,
         });
       case WINDOW_ITEM_TYPE:
         return new WindowItem({
@@ -167,6 +174,7 @@ export default class ItemReduxAdapter {
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          linkedASINs: itemState.linkedASINs,
         });
       case DOOR_ITEM_TYPE:
         return new DoorItem({
@@ -184,6 +192,7 @@ export default class ItemReduxAdapter {
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          linkedASINs: itemState.linkedASINs,
         });
       case POT_ITEM_TYPE:
         return new PotItem({
@@ -202,6 +211,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case CEILING_GROWSPACE_ITEM_TYPE:
         return new CeilingGrowspaceItem({
@@ -219,6 +229,7 @@ export default class ItemReduxAdapter {
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
+          linkedASINs: itemState.linkedASINs,
         });
       case LIGHT_ITEM_TYPE:
         return new LightItem({
@@ -237,6 +248,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case EXHAUST_FAN_ITEM_TYPE:
         return new ExhaustFanItem({
@@ -255,6 +267,7 @@ export default class ItemReduxAdapter {
           amazonProducts: itemState.amazonProducts,
           selectedAmazonASIN: itemState.selectedAmazonASIN,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case OSCILLATING_FAN_ITEM_TYPE:
         return new OscillatingFanItem({
@@ -273,6 +286,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case FLOOR_AC_ITEM_TYPE:
         return new FloorACItem({
@@ -291,6 +305,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case CARBON_FILTER_ITEM_TYPE:
         return new CarbonFilterItem({
@@ -309,6 +324,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case WATER_ITEM_TYPE:
         return new WaterItem({
@@ -327,6 +343,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case HUMIDIFIER_ITEM_TYPE:
         return new HumidifierItem({
@@ -345,6 +362,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case DEHUMIDIFIER_ITEM_TYPE:
         return new DehumidifierItem({
@@ -363,6 +381,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case HEAT_ITEM_TYPE:
         return new HeatItem({
@@ -381,6 +400,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case PURIFIER_ITEM_TYPE:
         return new PurifierItem({
@@ -399,6 +419,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case DUCT_ITEM_TYPE:
         return new DuctItem({
@@ -417,6 +438,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       case CURVED_DUCT_ITEM_TYPE:
         return new CurvedDuctItem({
@@ -435,6 +457,7 @@ export default class ItemReduxAdapter {
           collisionState: itemState.collisionState,
           placementShadow: itemState.placementShadow,
           recordId: itemState.recordId,
+          linkedASINs: itemState.linkedASINs,
         });
       default:
         throw new Error(`Unknown item type: ${itemState.type}`);

@@ -26,6 +26,7 @@ describe('PlanReduxAdapter', () => {
             name: 'Mackerel',
             amazonProducts: [],
             selectedAmazonASIN: '',
+            linkedASINs: [],
           },
           {
             id: '789',
@@ -33,6 +34,7 @@ describe('PlanReduxAdapter', () => {
             name: 'Canyon',
             amazonProducts: [],
             selectedAmazonASIN: '',
+            linkedASINs: [],
           },
         ]
       );

@@ -23,6 +23,7 @@ describe('WallItem', () => {
         height: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       it('rotates and aligns placementShadow when the closest wall is the left wall', () => {
@@ -101,6 +102,7 @@ describe('WallItem', () => {
         height: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       it('aligns placementShadow without rotation when the closest wall is the left wall', () => {
@@ -163,6 +165,7 @@ describe('WallItem', () => {
           height: feetToMm(100),
           amazonProducts: [],
           selectedAmazonASIN: '',
+          linkedASINs: [],
         });
         items.push(verticalWallItem);
 
@@ -195,6 +198,7 @@ describe('WallItem', () => {
         length: feetToMm(50),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s bottom wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);
@@ -217,6 +221,7 @@ describe('WallItem', () => {
         length: feetToMm(50),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s top wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);
@@ -239,6 +244,7 @@ describe('WallItem', () => {
         length: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s left wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);
@@ -260,6 +266,7 @@ describe('WallItem', () => {
         length: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       it('creates a placementShadow rotated & straddling the Room`s right wall', () => {
         const placementShadow = item.createPlacementShadowOnClosestWall(playground);

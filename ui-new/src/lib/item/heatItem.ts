@@ -32,11 +32,12 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
     description = '',
     rotation = 0,
     modifiers = {},
+    linkedASINs,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
     recordId,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN, linkedASINs });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -54,35 +55,10 @@ export default class HeatItem extends GrowspaceItem implements IPlaceableItem {
   }
 
   copy(): HeatItem {
-    return new HeatItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new HeatItem(this.copyArgs());
   }
 
   copyWithModifiers(): HeatItem {
-    return new HeatItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new HeatItem(this.copyArgsWithModifiers());
   }
 }

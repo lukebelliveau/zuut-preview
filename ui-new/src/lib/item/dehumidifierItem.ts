@@ -23,6 +23,7 @@ export default class DehumidifierItem extends GrowspaceItem implements IPlaceabl
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     recordId,
     x = 0,
     y = 0,
@@ -35,7 +36,7 @@ export default class DehumidifierItem extends GrowspaceItem implements IPlaceabl
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN, linkedASINs });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -53,35 +54,10 @@ export default class DehumidifierItem extends GrowspaceItem implements IPlaceabl
   }
 
   copy(): DehumidifierItem {
-    return new DehumidifierItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new DehumidifierItem(this.copyArgs());
   }
 
   copyWithModifiers(): DehumidifierItem {
-    return new DehumidifierItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new DehumidifierItem(this.copyArgsWithModifiers());
   }
 }

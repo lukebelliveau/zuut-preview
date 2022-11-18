@@ -16,35 +16,11 @@ export default class CeilingGrowspaceItem extends CeilingPlaceableItem {
   type = CEILING_GROWSPACE_ITEM_TYPE;
 
   copy(): CeilingGrowspaceItem {
-    return new CeilingGrowspaceItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new CeilingGrowspaceItem(this.copyArgs());
   }
 
   copyWithModifiers(): CeilingGrowspaceItem {
-    return new CeilingGrowspaceItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new CeilingGrowspaceItem(this.copyArgsWithModifiers());
   }
 
   collisionStateBetween(

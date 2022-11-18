@@ -37,6 +37,7 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     recordId,
     x = 0,
     y = 0,
@@ -49,7 +50,7 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, selectedAmazonASIN });
+    super({ name, id, amazonProducts, selectedAmazonASIN, linkedASINs, recordId });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -68,35 +69,10 @@ export default class WaterItem extends PlaceableItem implements IPlaceableItem {
   }
 
   copy(): WaterItem {
-    return new WaterItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new WaterItem(this.copyArgs());
   }
 
   copyWithModifiers(): WaterItem {
-    return new WaterItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new WaterItem(this.copyArgsWithModifiers());
   }
 }

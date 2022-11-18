@@ -65,6 +65,7 @@ export default class ItemGraphqlAdapter {
       modifiers: Modifiers | undefined;
       amazonProducts: AmazonProduct[];
       selectedAmazonASIN: string;
+      linkedASINs: string[];
     } = {
       name: gqlItem.name,
       id: gqlItem.id,
@@ -81,6 +82,7 @@ export default class ItemGraphqlAdapter {
       // i will throw this away soon (- Luke, Nov 17 2022) (lol)
       amazonProducts: [],
       selectedAmazonASIN: 'BAD AMAZON ASIN',
+      linkedASINs: [],
     };
 
     switch (unwrapOrError(gqlItem.type)) {

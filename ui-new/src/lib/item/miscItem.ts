@@ -15,13 +15,22 @@ export default class MiscItem implements IItem {
   amazonProducts: AmazonProduct[];
   selectedAmazonASIN: string;
   recordId?: string;
+  linkedASINs: string[];
 
-  constructor({ name, id = v4(), amazonProducts, recordId, selectedAmazonASIN }: ItemArgs) {
+  constructor({
+    name,
+    id = v4(),
+    amazonProducts,
+    recordId,
+    selectedAmazonASIN,
+    linkedASINs,
+  }: ItemArgs) {
     this.id = id;
     this.name = name;
     this.amazonProducts = amazonProducts;
     this.recordId = recordId;
     this.selectedAmazonASIN = selectedAmazonASIN;
+    this.linkedASINs = linkedASINs;
   }
 
   copy(): MiscItem {
@@ -31,6 +40,7 @@ export default class MiscItem implements IItem {
       recordId: this.recordId,
       amazonProducts: this.amazonProducts,
       selectedAmazonASIN: this.selectedAmazonASIN,
+      linkedASINs: this.linkedASINs,
     });
   }
 }

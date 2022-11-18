@@ -50,6 +50,7 @@ describe('items/addItem', () => {
       name: 'Pot',
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     };
 
     store.dispatch(addItem(item));
@@ -78,6 +79,7 @@ describe('items/dropItem', () => {
       modifiers: {},
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     };
     const updatedItem: ItemState = {
       id,
@@ -93,6 +95,7 @@ describe('items/dropItem', () => {
       modifiers: { Soil: initSoil() },
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     };
 
     store.dispatch(addItem(item));
@@ -114,6 +117,7 @@ describe('items/removeItem', () => {
       name: 'Pot',
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     };
 
     store.dispatch(addItem(item));
@@ -128,15 +132,35 @@ describe('items/removeItem', () => {
 
     // add modifier items to state
     // normally done by `items/incrementModifer`, but we're not testing that here
-    const mod1 = new ModifierItem({ name: 'Soil', amazonProducts: [], selectedAmazonASIN: '' });
-    const mod2 = new ModifierItem({ name: 'Soil', amazonProducts: [], selectedAmazonASIN: '' });
-    const mod3 = new ModifierItem({ name: 'Soil', amazonProducts: [], selectedAmazonASIN: '' });
+    const mod1 = new ModifierItem({
+      name: 'Soil',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
+    const mod2 = new ModifierItem({
+      name: 'Soil',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
+    const mod3 = new ModifierItem({
+      name: 'Soil',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
     store.dispatch(addItem(ItemReduxAdapter.itemToState(mod1)));
     store.dispatch(addItem(ItemReduxAdapter.itemToState(mod2)));
     store.dispatch(addItem(ItemReduxAdapter.itemToState(mod3)));
 
     // add parent item with modifiers to state
-    const item = new PotItem({ name: 'Pot', amazonProducts: [], selectedAmazonASIN: '' });
+    const item = new PotItem({
+      name: 'Pot',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
     item.addModifier(mod1);
     item.addModifier(mod2);
     item.addModifier(mod3);
@@ -150,6 +174,7 @@ describe('items/removeItem', () => {
         name: 'miscItem',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       })
     );
     store.dispatch(removeItem(item.id));
@@ -164,9 +189,24 @@ describe('items/removeItems', () => {
 
     // add modifier items to state
     // normally done by `items/incrementModifer`, but we're not testing that here
-    const item1 = new MiscItem({ name: 'item1', amazonProducts: [], selectedAmazonASIN: '' });
-    const item2 = new MiscItem({ name: 'item2', amazonProducts: [], selectedAmazonASIN: '' });
-    const item3 = new MiscItem({ name: 'item3', amazonProducts: [], selectedAmazonASIN: '' });
+    const item1 = new MiscItem({
+      name: 'item1',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
+    const item2 = new MiscItem({
+      name: 'item2',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
+    const item3 = new MiscItem({
+      name: 'item3',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item1)));
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item2)));
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item3)));
@@ -182,7 +222,12 @@ describe('items/rotate', () => {
   it('rotates an item', () => {
     const store = setupStore();
 
-    const item = new PotItem({ name: 'Pot', amazonProducts: [], selectedAmazonASIN: '' });
+    const item = new PotItem({
+      name: 'Pot',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item)));
 
     store.dispatch(rotate(item.id));
@@ -195,7 +240,12 @@ describe('items/incrementModifier', () => {
   it('creates a modifier item and adds to the parent item', () => {
     const store = setupStore();
 
-    const item = new PotItem({ name: 'Pot', amazonProducts: [], selectedAmazonASIN: '' });
+    const item = new PotItem({
+      name: 'Pot',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item)));
 
     store.dispatch(
@@ -225,7 +275,12 @@ describe('items/incrementModifier', () => {
 describe('items/decrementModifier', () => {
   it('removes one modifier', () => {
     const store = setupStore();
-    const item = new PotItem({ name: 'Pot', amazonProducts: [], selectedAmazonASIN: '' });
+    const item = new PotItem({
+      name: 'Pot',
+      amazonProducts: [],
+      selectedAmazonASIN: '',
+      linkedASINs: [],
+    });
     store.dispatch(addItem(ItemReduxAdapter.itemToState(item)));
     store.dispatch(
       incrementModifier({

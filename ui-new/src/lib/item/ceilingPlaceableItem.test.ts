@@ -9,6 +9,7 @@ describe('CeilingPlaceableItem', () => {
         name: 'foo',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       item.placementShadow = {
         x: 1,
@@ -36,6 +37,7 @@ describe('CeilingPlaceableItem', () => {
         name: 'foo',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(
         item.opacity({
@@ -50,6 +52,7 @@ describe('CeilingPlaceableItem', () => {
         name: 'foo',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(
         item.opacity({

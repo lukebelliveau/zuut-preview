@@ -16,6 +16,7 @@ export default class CurvedDuctItem extends DuctItem {
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     x = 0,
     y = 0,
     width = 610,
@@ -32,6 +33,7 @@ export default class CurvedDuctItem extends DuctItem {
       id,
       amazonProducts,
       selectedAmazonASIN,
+      linkedASINs,
       x,
       y,
       width,
@@ -50,34 +52,10 @@ export default class CurvedDuctItem extends DuctItem {
   }
 
   copy(): CurvedDuctItem {
-    return new CurvedDuctItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new CurvedDuctItem(this.copyArgs());
   }
 
   copyWithModifiers(): CurvedDuctItem {
-    return new CurvedDuctItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new CurvedDuctItem(this.copyArgsWithModifiers());
   }
 }

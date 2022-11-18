@@ -7,6 +7,7 @@ describe('CarbonFilterItem', () => {
       name: 'filter',
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(carbonFilter.type).toEqual(CARBON_FILTER_ITEM_TYPE);
   });
@@ -16,6 +17,7 @@ describe('CarbonFilterItem', () => {
       name: 'filter',
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(carbonFilter.image).toEqual(CarbonFilterImage);
   });

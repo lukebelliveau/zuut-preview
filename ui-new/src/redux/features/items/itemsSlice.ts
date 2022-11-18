@@ -280,6 +280,7 @@ export const incrementModifier = createAsyncThunk(
         recordId: modifier.recordId,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       dispatch(addItem(ItemReduxAdapter.itemToState(newModifier)));
 

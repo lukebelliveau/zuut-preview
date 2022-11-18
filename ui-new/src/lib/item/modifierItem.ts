@@ -13,14 +13,23 @@ export default class ModifierItem {
   name: string;
   amazonProducts: AmazonProduct[];
   selectedAmazonASIN: string;
+  linkedASINs: string[];
   recordId?: string;
 
-  constructor({ name, id = v4(), amazonProducts, recordId, selectedAmazonASIN }: ItemArgs) {
+  constructor({
+    name,
+    id = v4(),
+    amazonProducts,
+    recordId,
+    selectedAmazonASIN,
+    linkedASINs,
+  }: ItemArgs) {
     this.id = id;
     this.name = name;
     this.amazonProducts = amazonProducts;
     this.selectedAmazonASIN = selectedAmazonASIN;
     this.recordId = recordId;
+    this.linkedASINs = linkedASINs;
   }
 
   copy(): ModifierItem {
@@ -30,6 +39,7 @@ export default class ModifierItem {
       recordId: this.recordId,
       amazonProducts: this.amazonProducts,
       selectedAmazonASIN: this.selectedAmazonASIN,
+      linkedASINs: this.linkedASINs,
     });
   }
 }

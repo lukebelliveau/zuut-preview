@@ -29,11 +29,22 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
     height = 915,
     description = '',
     rotation = 0,
+    linkedASINs,
     modifiers = defaultLightModifiers,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, width, length, height, recordId, selectedAmazonASIN });
+    super({
+      name,
+      id,
+      amazonProducts,
+      width,
+      length,
+      height,
+      recordId,
+      selectedAmazonASIN,
+      linkedASINs,
+    });
     this.x = x;
     this.y = y;
     this.description = description;
@@ -48,35 +59,10 @@ export default class LightItem extends CeilingGrowspaceItem implements IPlaceabl
   }
 
   copy(): LightItem {
-    return new LightItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new LightItem(this.copyArgs());
   }
 
   copyWithModifiers(): LightItem {
-    return new LightItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new LightItem(this.copyArgsWithModifiers());
   }
 }

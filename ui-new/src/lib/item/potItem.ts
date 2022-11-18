@@ -66,6 +66,7 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     recordId,
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     x = 0,
     y = 0,
     width = 610,
@@ -77,7 +78,17 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, width, length, height, recordId, selectedAmazonASIN });
+    super({
+      name,
+      id,
+      amazonProducts,
+      width,
+      length,
+      height,
+      recordId,
+      selectedAmazonASIN,
+      linkedASINs,
+    });
     this.x = x;
     this.y = y;
     this.description = description;
@@ -96,39 +107,12 @@ export default class PotItem extends GrowspaceItem implements IPlaceableItem {
   }
 
   copy(): PotItem {
-    const copiedPotItem = new PotItem({
-      name: this.name,
-      recordId: this.recordId,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      rotation: this.rotation,
-      modifiers: this.modifiers,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    const copiedPotItem = new PotItem(this.copyArgs());
 
     return copiedPotItem;
   }
 
   copyWithModifiers(): PotItem {
-    return new PotItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new PotItem(this.copyArgsWithModifiers());
   }
 }

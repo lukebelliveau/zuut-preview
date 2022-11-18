@@ -23,6 +23,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const light = new LightItem({
         name: 'light',
@@ -34,6 +35,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const itemList = [];
       itemList.push(duct);
@@ -57,6 +59,7 @@ describe('DuctItem', () => {
         height: 1,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const itemList = [];
       itemList.push(duct);
@@ -79,6 +82,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const window = new WindowItem({
         name: 'window',
@@ -87,6 +91,7 @@ describe('DuctItem', () => {
         y: 3600,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const itemList = [];
       itemList.push(duct);
@@ -110,6 +115,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct2 = new DuctItem({
         name: 'duct',
@@ -121,6 +127,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const window = new WindowItem({
         name: 'window',
@@ -129,6 +136,7 @@ describe('DuctItem', () => {
         y: 3600,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const itemList = [];
       itemList.push(duct1);
@@ -165,6 +173,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct1 = new DuctItem({
         name: 'duct',
@@ -176,6 +185,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct2 = new DuctItem({
         name: 'duct',
@@ -187,6 +197,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct3 = new DuctItem({
         name: 'duct',
@@ -198,6 +209,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct4 = new DuctItem({
         name: 'duct',
@@ -209,6 +221,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct5 = new DuctItem({
         name: 'duct',
@@ -220,6 +233,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct6 = new DuctItem({
         name: 'duct',
@@ -231,6 +245,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const window = new WindowItem({
         name: 'window',
@@ -239,6 +254,7 @@ describe('DuctItem', () => {
         y: 3600,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const itemList = [];
       itemList.push(duct0);
@@ -290,6 +306,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct1 = new DuctItem({
         name: 'duct',
@@ -301,6 +318,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       // duct2 placed directly under duct1
       const duct2 = new DuctItem({
@@ -313,6 +331,7 @@ describe('DuctItem', () => {
         height: feetToMm(1),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const window = new WindowItem({
@@ -322,6 +341,7 @@ describe('DuctItem', () => {
         y: 3600,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const itemList = [];
       itemList.push(duct0);
@@ -352,6 +372,7 @@ describe('#collisionStateBetween', () => {
       length: 1001,
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const duct = new DuctItem({
       name: '',
@@ -362,6 +383,7 @@ describe('#collisionStateBetween', () => {
       length: 2000,
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
 
     expect(duct.collisionStateBetween(duct, growspace)).toBe(CollisionState.NEUTRAL);

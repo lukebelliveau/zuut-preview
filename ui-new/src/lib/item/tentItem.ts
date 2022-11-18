@@ -26,36 +26,11 @@ export default class Tent extends PlaceableItem {
   }
 
   copy(): Tent {
-    return new Tent({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new Tent(this.copyArgs());
   }
 
   copyWithModifiers(): Tent {
-    return new Tent({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new Tent(this.copyArgsWithModifiers());
   }
 
   collisionStateBetween(

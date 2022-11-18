@@ -29,6 +29,7 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
     height = 915,
     description = '',
     rotation = 0,
+    linkedASINs,
     modifiers = defaultFanModifiers,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
@@ -49,6 +50,7 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
       collisionState: collisionState,
       placementShadow: placementShadow,
       recordId,
+      linkedASINs,
     });
   }
 
@@ -57,35 +59,10 @@ export default class ExhaustFanItem extends CeilingGrowspaceItem implements IPla
   }
 
   copy(): ExhaustFanItem {
-    return new ExhaustFanItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new ExhaustFanItem(this.copyArgs());
   }
 
   copyWithModifiers(): ExhaustFanItem {
-    return new ExhaustFanItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new ExhaustFanItem(this.copyArgsWithModifiers());
   }
 }

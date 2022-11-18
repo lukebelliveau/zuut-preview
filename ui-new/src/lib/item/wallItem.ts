@@ -24,35 +24,11 @@ export default class WallItem extends PlaceableItem implements IPlaceableItem {
   type: string = WALL_ITEM_TYPE;
 
   copy(): WallItem {
-    return new WallItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: feetToMm(0.2),
-      length: feetToMm(2),
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new WallItem(this.copyArgs());
   }
 
   copyWithModifiers(): WallItem {
-    return new WallItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-    });
+    return new WallItem(this.copyArgsWithModifiers());
   }
 
   drag(position: Point, items: IItem[], playground: Playground) {

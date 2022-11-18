@@ -4,9 +4,24 @@ import { sortSelectedToLast } from './itemList';
 
 describe('sortSelectedToLast', () => {
   const itemList: IItem[] = [];
-  const item0 = new PlaceableItem({ name: 'item0', amazonProducts: [], selectedAmazonASIN: '' });
-  const item1 = new PlaceableItem({ name: 'item1', amazonProducts: [], selectedAmazonASIN: '' });
-  const item2 = new PlaceableItem({ name: 'item2', amazonProducts: [], selectedAmazonASIN: '' });
+  const item0 = new PlaceableItem({
+    name: 'item0',
+    amazonProducts: [],
+    selectedAmazonASIN: '',
+    linkedASINs: [],
+  });
+  const item1 = new PlaceableItem({
+    name: 'item1',
+    amazonProducts: [],
+    selectedAmazonASIN: '',
+    linkedASINs: [],
+  });
+  const item2 = new PlaceableItem({
+    name: 'item2',
+    amazonProducts: [],
+    selectedAmazonASIN: '',
+    linkedASINs: [],
+  });
   itemList.push(item0);
   itemList.push(item1);
   itemList.push(item2);

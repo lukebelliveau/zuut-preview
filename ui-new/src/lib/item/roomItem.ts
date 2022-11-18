@@ -13,34 +13,10 @@ export default class RoomItem extends PlaceableItem {
   type: string = ROOM_ITEM_TYPE;
 
   copy(): RoomItem {
-    return new RoomItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new RoomItem(this.copyArgs());
   }
 
   copyWithModifiers(): RoomItem {
-    return new RoomItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new RoomItem(this.copyArgsWithModifiers());
   }
 }

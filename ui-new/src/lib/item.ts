@@ -14,11 +14,13 @@ export interface IItem {
   amazonProducts: AmazonProduct[];
   selectedAmazonASIN: string;
   modifiers?: Modifiers;
+  linkedASINs: string[];
 }
 
 export interface ItemArgs {
   name: string;
   amazonProducts: AmazonProduct[];
+  linkedASINs: string[];
   selectedAmazonASIN: string;
   recordId?: string;
   id?: string;
@@ -31,6 +33,7 @@ export class Item implements IItem {
   name: string;
   amazonProducts: AmazonProduct[];
   selectedAmazonASIN: string;
+  linkedASINs: string[];
 
   constructor({
     name,
@@ -38,12 +41,14 @@ export class Item implements IItem {
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
   }: ItemArgs) {
     this.id = id;
     this.recordId = recordId;
     this.name = name;
     this.amazonProducts = amazonProducts;
     this.selectedAmazonASIN = selectedAmazonASIN;
+    this.linkedASINs = linkedASINs;
   }
 
   copy(): Item {
@@ -52,6 +57,7 @@ export class Item implements IItem {
       id: this.id,
       amazonProducts: this.amazonProducts,
       selectedAmazonASIN: this.selectedAmazonASIN,
+      linkedASINs: this.linkedASINs,
     });
   }
 }

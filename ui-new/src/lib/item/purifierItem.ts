@@ -24,6 +24,7 @@ export default class PurifierItem extends GrowspaceItem implements IPlaceableIte
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     x = 0,
     y = 0,
     width = 610,
@@ -36,7 +37,7 @@ export default class PurifierItem extends GrowspaceItem implements IPlaceableIte
     placementShadow = undefined,
     recordId,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN, linkedASINs });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -54,35 +55,10 @@ export default class PurifierItem extends GrowspaceItem implements IPlaceableIte
   }
 
   copy(): PurifierItem {
-    return new PurifierItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new PurifierItem(this.copyArgs());
   }
 
   copyWithModifiers(): PurifierItem {
-    return new PurifierItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new PurifierItem(this.copyArgsWithModifiers());
   }
 }

@@ -22,6 +22,7 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
     name,
     id = v4(),
     amazonProducts,
+    linkedASINs,
     x = 0,
     y = 0,
     width = 610,
@@ -39,6 +40,7 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
       name,
       id,
       amazonProducts,
+      linkedASINs,
       x,
       y,
       width,
@@ -59,35 +61,10 @@ export default class CarbonFilterItem extends CeilingGrowspaceItem implements IP
   }
 
   copy(): CarbonFilterItem {
-    return new CarbonFilterItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-      amazonProducts: this.amazonProducts,
-    });
+    return new CarbonFilterItem(this.copyArgs());
   }
 
   copyWithModifiers(): CarbonFilterItem {
-    return new CarbonFilterItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new CarbonFilterItem(this.copyArgsWithModifiers());
   }
 }

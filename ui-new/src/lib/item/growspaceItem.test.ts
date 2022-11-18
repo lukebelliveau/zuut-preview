@@ -16,6 +16,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new GrowspaceItem({
         name: '',
@@ -26,6 +27,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -39,6 +41,7 @@ describe('GrowspaceItem', () => {
         length: 100,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new CeilingGrowspaceItem({
         name: '',
@@ -49,6 +52,7 @@ describe('GrowspaceItem', () => {
         length: 100,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.NEUTRAL);
     });
@@ -62,6 +66,7 @@ describe('GrowspaceItem', () => {
         length: 100,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new GrowspaceItem({
         name: '',
@@ -72,6 +77,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(1001),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.NEUTRAL);
     });
@@ -85,6 +91,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new Tent({
         name: '',
@@ -95,6 +102,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(1000),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -108,6 +116,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new Tent({
         name: '',
@@ -118,6 +127,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(1000),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -131,6 +141,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new Tent({
         name: '',
@@ -141,6 +152,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(1000),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
@@ -155,6 +167,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new Tent({
         name: '',
@@ -165,6 +178,7 @@ describe('GrowspaceItem', () => {
         length: feetToMm(1000),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });

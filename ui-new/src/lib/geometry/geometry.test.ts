@@ -26,6 +26,7 @@ describe('itemHasVerticalOrientation', () => {
       length: feetToMm(20),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(itemHasVerticalOrientation(item)).toBe(true);
   });
@@ -40,6 +41,7 @@ describe('itemHasVerticalOrientation', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(itemHasVerticalOrientation(item)).toBe(false);
   });
@@ -57,6 +59,7 @@ describe('itemHasHorizontalOrientation', () => {
       length: feetToMm(20),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(itemHasVerticalOrientation(item)).toBe(true);
   });
@@ -71,6 +74,7 @@ describe('itemHasHorizontalOrientation', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(itemHasVerticalOrientation(item)).toBe(false);
   });
@@ -440,6 +444,7 @@ describe('areColliding', () => {
       length: feetToMm(100),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const other = new PlaceableItem({
       name: '',
@@ -450,6 +455,7 @@ describe('areColliding', () => {
       length: feetToMm(1001),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, other)).toBe(false);
   });
@@ -463,6 +469,7 @@ describe('areColliding', () => {
       length: feetToMm(100),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const otherRight = new PlaceableItem({
       name: '',
@@ -473,6 +480,7 @@ describe('areColliding', () => {
       length: feetToMm(100),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, otherRight)).toBe(false);
     const otherBelow = new PlaceableItem({
@@ -484,6 +492,7 @@ describe('areColliding', () => {
       length: feetToMm(100),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, otherBelow)).toBe(false);
     const otherLeft = new PlaceableItem({
@@ -495,6 +504,7 @@ describe('areColliding', () => {
       length: feetToMm(100),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, otherLeft)).toBe(false);
     const otherTop = new PlaceableItem({
@@ -506,6 +516,7 @@ describe('areColliding', () => {
       length: feetToMm(100),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, otherTop)).toBe(false);
   });
@@ -519,6 +530,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const other = new PlaceableItem({
       name: '',
@@ -529,6 +541,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, other)).toBe(true);
   });
@@ -542,6 +555,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const other = new PlaceableItem({
       name: '',
@@ -552,6 +566,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, other)).toBe(true);
   });
@@ -565,6 +580,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const other = new PlaceableItem({
       name: '',
@@ -575,6 +591,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, other)).toBe(true);
   });
@@ -588,6 +605,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const other = new PlaceableItem({
       name: '',
@@ -598,6 +616,7 @@ describe('areColliding', () => {
       length: feetToMm(10),
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(areColliding(item, other)).toBe(true);
   });

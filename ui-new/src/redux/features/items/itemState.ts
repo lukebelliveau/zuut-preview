@@ -16,6 +16,7 @@ export type ItemState = {
   rotation?: number;
   modifiers?: Modifiers;
   amazonProducts: AmazonProduct[];
+  linkedASINs: string[];
   selectedAmazonASIN: string;
   recordId?: string;
 };

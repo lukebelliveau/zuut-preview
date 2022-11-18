@@ -37,6 +37,7 @@ interface ItemConstructorArgs {
   height?: number | undefined;
   description?: string;
   amazonProducts: AmazonProduct[];
+  linkedASINs: string[];
   selectedAmazonASIN: string;
 }
 
@@ -49,6 +50,7 @@ const constructorArgs = (item: ItemRecord): ItemConstructorArgs => {
     amazonProducts: amazonProducts,
     selectedAmazonASIN: item.linkedASINs[0],
     recordId: item.recordId,
+    linkedASINs: item.linkedASINs,
   };
 
   if (isPlaceableItemRecord(item)) {
@@ -141,6 +143,7 @@ export const fetchMiscItems = async (): Promise<Item[]> => {
             },
           ],
           selectedAmazonASIN: miscItem.linkedASINs[0],
+          linkedASINs: miscItem.linkedASINs,
         })
       );
     } catch (e) {

@@ -16,6 +16,7 @@ describe('Growspace', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new Tent({
         name: '',
@@ -26,6 +27,7 @@ describe('Growspace', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(growspace.collisionStateBetween(growspace, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -39,6 +41,7 @@ describe('Growspace', () => {
         length: feetToMm(1001),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const item = new GrowspaceItem({
         name: '',
@@ -49,6 +52,7 @@ describe('Growspace', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(growspace.collisionStateBetween(growspace, item)).toBe(CollisionState.NEUTRAL);
     });
@@ -62,6 +66,7 @@ describe('Growspace', () => {
         length: feetToMm(1001),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const duct = new DuctItem({
         name: '',
@@ -72,6 +77,7 @@ describe('Growspace', () => {
         length: feetToMm(2000),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       expect(growspace.collisionStateBetween(growspace, duct)).toBe(CollisionState.NEUTRAL);
@@ -86,6 +92,7 @@ describe('Growspace', () => {
         length: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const item = new GrowspaceItem({
         name: '',
@@ -96,6 +103,7 @@ describe('Growspace', () => {
         length: feetToMm(1001),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(growspace.collisionStateBetween(growspace, item)).toBe(CollisionState.CONFLICTED);
     });

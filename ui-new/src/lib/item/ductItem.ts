@@ -31,6 +31,7 @@ export default class DuctItem extends CeilingPlaceableItem {
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     recordId,
     x = 0,
     y = 0,
@@ -59,6 +60,7 @@ export default class DuctItem extends CeilingPlaceableItem {
       placementShadow,
       recordId,
       selectedAmazonASIN,
+      linkedASINs,
     });
   }
 
@@ -67,36 +69,11 @@ export default class DuctItem extends CeilingPlaceableItem {
   }
 
   copy(): DuctItem {
-    return new DuctItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new DuctItem(this.copyArgs());
   }
 
   copyWithModifiers(): DuctItem {
-    return new DuctItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new DuctItem(this.copyArgsWithModifiers());
   }
 
   updateCollisions(items: IItem[], playground: Playground) {

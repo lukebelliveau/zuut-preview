@@ -21,35 +21,11 @@ export default class WindowItem extends WallItem {
   }
 
   copy(): WindowItem {
-    return new WindowItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: feetToMm(0.2),
-      length: feetToMm(2),
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new WindowItem(this.copyArgs());
   }
 
   copyWithModifiers(): WindowItem {
-    return new WindowItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new WindowItem(this.copyArgsWithModifiers());
   }
 
   collisionStateBetween(

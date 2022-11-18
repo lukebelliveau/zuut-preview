@@ -111,10 +111,11 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     rotation = 0,
     modifiers = {},
     selectedAmazonASIN,
+    linkedASINs,
     collisionState = CollisionState.NEUTRAL,
     placementShadow = undefined,
   }: PlaceableItemArgs) {
-    super({ name, id, amazonProducts, recordId, selectedAmazonASIN });
+    super({ name, id, amazonProducts, recordId, selectedAmazonASIN, linkedASINs });
     this.x = x;
     this.y = y;
     this.width = width;
@@ -356,8 +357,8 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
     return this.y + 50;
   }
 
-  copy(): IPlaceableItem {
-    return new PlaceableItem({
+  copyArgs() {
+    return {
       name: this.name,
       id: v4(),
       x: this.x,
@@ -368,24 +369,23 @@ export default class PlaceableItem extends Item implements IPlaceableItem, Geome
       description: this.description,
       amazonProducts: this.amazonProducts,
       selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+      linkedASINs: this.linkedASINs,
+    };
+  }
+
+  copyArgsWithModifiers() {
+    return {
+      ...this.copyArgs(),
+      modifiers: this.modifiers,
+    };
+  }
+
+  copy(): IPlaceableItem {
+    return new PlaceableItem(this.copyArgs());
   }
 
   copyWithModifiers(): IPlaceableItem {
-    return new PlaceableItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new PlaceableItem(this.copyArgsWithModifiers());
   }
 
   get offset(): Point {

@@ -6,6 +6,7 @@ describe('WindowItem', () => {
       name: 'window',
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     expect(window.type).toEqual(WINDOW_ITEM_TYPE);
   });
@@ -15,6 +16,7 @@ describe('WindowItem', () => {
       name: 'window',
       amazonProducts: [],
       selectedAmazonASIN: '',
+      linkedASINs: [],
     });
     const copy = window.copy();
     expect(copy instanceof WindowItem).toBe(true);

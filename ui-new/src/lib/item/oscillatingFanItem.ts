@@ -21,6 +21,7 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
     id = v4(),
     amazonProducts,
     selectedAmazonASIN,
+    linkedASINs,
     recordId,
     x = 0,
     y = 0,
@@ -37,6 +38,7 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
       name,
       id,
       amazonProducts,
+      linkedASINs,
       recordId,
       x,
       y,
@@ -57,35 +59,10 @@ export default class OscillatingFanItem extends CeilingGrowspaceItem implements 
   }
 
   copy(): OscillatingFanItem {
-    return new OscillatingFanItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new OscillatingFanItem(this.copyArgs());
   }
 
   copyWithModifiers(): OscillatingFanItem {
-    return new OscillatingFanItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new OscillatingFanItem(this.copyArgsWithModifiers());
   }
 }

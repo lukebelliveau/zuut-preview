@@ -17,12 +17,14 @@ describe('PlaceableItem', () => {
           name: 'soil',
           amazonProducts: [],
           selectedAmazonASIN: '',
+          linkedASINs: [],
         });
         const placeableItem = new PlaceableItem({
           name: 'item',
           id: v4(),
           amazonProducts: [],
           selectedAmazonASIN: '',
+          linkedASINs: [],
         });
 
         placeableItem.addModifier(soilItem);
@@ -33,6 +35,7 @@ describe('PlaceableItem', () => {
         name: 'soil',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const placeableItem = new PlaceableItem({
         name: 'item',
@@ -47,6 +50,7 @@ describe('PlaceableItem', () => {
         modifiers: { soil: initSoil() },
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       placeableItem.addModifier(soilItem);
@@ -60,15 +64,18 @@ describe('PlaceableItem', () => {
         name: 'soil',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const soilItem2 = new ModifierItem({
         name: 'soil',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const placeableItem = new PlaceableItem({
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
         name: 'item',
         id: v4(),
         x: feetToMm(0),
@@ -94,11 +101,13 @@ describe('PlaceableItem', () => {
         name: 'soil',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const bambooItem = new ModifierItem({
         name: 'bamboo',
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const placeableItem = new PlaceableItem({
         name: 'item',
@@ -113,6 +122,7 @@ describe('PlaceableItem', () => {
         modifiers: { soil: initSoil(), bamboo: initBambooStick() },
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       placeableItem.addModifier(soilItem);
@@ -136,6 +146,7 @@ describe('PlaceableItem', () => {
         length: 20,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       item.place({ x: 99, y: 99 });
 
@@ -158,6 +169,7 @@ describe('PlaceableItem', () => {
         length: 20,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       item.drag({ x: 99, y: 99 }, [], playground);
 
@@ -175,6 +187,7 @@ describe('PlaceableItem', () => {
         length: 20,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       item.drag({ x: 300, y: 600 }, [], playground);
 
@@ -212,6 +225,7 @@ describe('PlaceableItem', () => {
         height: feetToMm(2),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const testItem = new PlaceableItem({
@@ -224,6 +238,7 @@ describe('PlaceableItem', () => {
         height: feetToMm(2),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const itemList: IItem[] = [];
@@ -271,6 +286,7 @@ describe('PlaceableItem', () => {
         placementShadow,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.drop([], playground)).toBe(true);
     });
@@ -290,6 +306,7 @@ describe('PlaceableItem', () => {
         collisionState: CollisionState.NEUTRAL,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.drop([], playground)).toBe(false);
     });
@@ -310,6 +327,7 @@ describe('PlaceableItem', () => {
         placementShadow,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       item.drop([], playground);
 
@@ -337,6 +355,7 @@ describe('PlaceableItem', () => {
         collisionState: CollisionState.NEUTRAL,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       // does not currently collide with collidingItem, but has a placementShadow that does
       const testItem = new PlaceableItem({
@@ -354,6 +373,7 @@ describe('PlaceableItem', () => {
         placementShadow,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const itemList: IItem[] = [];
@@ -381,6 +401,7 @@ describe('PlaceableItem', () => {
         placementShadow,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       testItem.drop([], playground);
@@ -402,6 +423,7 @@ describe('PlaceableItem', () => {
         length: 1000,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const placementShadow = {
         x: 0,
@@ -431,6 +453,7 @@ describe('PlaceableItem', () => {
         placementShadow,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const items: IItem[] = [];
@@ -459,6 +482,7 @@ describe('PlaceableItem', () => {
         collisionState: CollisionState.NEUTRAL,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const playground = new Playground(1_000, 1_000, undefined, plan);
       const items: IItem[] = [];
@@ -478,6 +502,7 @@ describe('PlaceableItem', () => {
         length: feetToMm(50),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const placementShadow = {
         x: 0,
@@ -507,6 +532,7 @@ describe('PlaceableItem', () => {
         placementShadow,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const items: IItem[] = [];
@@ -532,6 +558,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new PlaceableItem({
         name: '',
@@ -542,6 +569,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(1001),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.NEUTRAL);
     });
@@ -555,6 +583,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const otherRight = new PlaceableItem({
         name: '',
@@ -565,6 +594,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, otherRight)).toBe(CollisionState.NEUTRAL);
       const otherBelow = new PlaceableItem({
@@ -576,6 +606,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, otherBelow)).toBe(CollisionState.NEUTRAL);
       const otherLeft = new PlaceableItem({
@@ -587,6 +618,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(100),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, otherLeft)).toBe(CollisionState.NEUTRAL);
       const otherTop = new PlaceableItem({
@@ -599,6 +631,7 @@ describe('PlaceableItem', () => {
         collisionState: CollisionState.NEUTRAL,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, otherTop)).toBe(CollisionState.NEUTRAL);
     });
@@ -612,6 +645,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new PlaceableItem({
         name: '',
@@ -622,6 +656,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -635,6 +670,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new PlaceableItem({
         name: '',
@@ -645,6 +681,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -658,6 +695,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new PlaceableItem({
         name: '',
@@ -668,6 +706,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -681,6 +720,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       const other = new PlaceableItem({
         name: '',
@@ -691,6 +731,7 @@ describe('PlaceableItem', () => {
         width: feetToMm(10),
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.collisionStateBetween(item, other)).toBe(CollisionState.CONFLICTED);
     });
@@ -709,6 +750,7 @@ describe('PlaceableItem', () => {
         length: 20,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
 
       const placementShadow = item.createDefaultPlacementShadow({ x: 300, y: 600 }, playground);
@@ -746,6 +788,7 @@ describe('PlaceableItem', () => {
         height: 0,
         amazonProducts: [],
         selectedAmazonASIN: '',
+        linkedASINs: [],
       });
       expect(item.rotation).toEqual(0);
 
@@ -765,7 +808,12 @@ describe('PlaceableItem', () => {
 
   describe('#opacity', () => {
     it('returns a lighter value when being dragged', () => {
-      const item = new PlaceableItem({ name: 'foo', amazonProducts: [], selectedAmazonASIN: '' });
+      const item = new PlaceableItem({
+        name: 'foo',
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+        linkedASINs: [],
+      });
       item.placementShadow = {
         x: 1,
         y: 2,
@@ -788,7 +836,12 @@ describe('PlaceableItem', () => {
       ).toBe(0.2);
     });
     it('returns a stronger value when at rest', () => {
-      const item = new PlaceableItem({ name: 'foo', amazonProducts: [], selectedAmazonASIN: '' });
+      const item = new PlaceableItem({
+        name: 'foo',
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+        linkedASINs: [],
+      });
       expect(
         item.opacity({
           [Layer.CEILING]: true,
@@ -798,7 +851,12 @@ describe('PlaceableItem', () => {
       ).toBe(1);
     });
     it('returns a lighter value when the item is not on the selected plane of existence', () => {
-      const item = new PlaceableItem({ name: 'foo', amazonProducts: [], selectedAmazonASIN: '' });
+      const item = new PlaceableItem({
+        name: 'foo',
+        amazonProducts: [],
+        selectedAmazonASIN: '',
+        linkedASINs: [],
+      });
       expect(
         item.opacity({
           [Layer.CEILING]: true,

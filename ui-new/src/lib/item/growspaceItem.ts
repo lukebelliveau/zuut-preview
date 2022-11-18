@@ -17,35 +17,11 @@ export default class GrowspaceItem extends PlaceableItem {
   type: string = GROWSPACE_ITEM_TYPE;
 
   copy(): GrowspaceItem {
-    return new GrowspaceItem({
-      name: this.name,
-      id: v4(),
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-    });
+    return new GrowspaceItem(this.copyArgs());
   }
 
   copyWithModifiers(): GrowspaceItem {
-    return new GrowspaceItem({
-      name: this.name,
-      id: v4(),
-      x: this.xPlus50(),
-      y: this.yPlus50(),
-      width: this.width,
-      length: this.length,
-      height: this.height,
-      description: this.description,
-      amazonProducts: this.amazonProducts,
-      selectedAmazonASIN: this.selectedAmazonASIN,
-      modifiers: this.modifiers,
-      recordId: this.recordId,
-    });
+    return new GrowspaceItem(this.copyArgsWithModifiers());
   }
 
   collisionStateBetween(
