@@ -64,18 +64,16 @@ const createAmazonProductDetailMap = (
   return amazonProductDetails;
 };
 
-const ProductModal = ({
+export const ProductModal = ({
   open,
   closeModal,
   item,
-  index,
-  changeSelectedASIN,
+  changeProduct,
 }: {
   open: boolean;
   item: CartItem;
-  index: number;
   closeModal: () => void;
-  changeSelectedASIN: (ASIN: string, index: number) => void;
+  changeProduct: (itemName: string, selectedASIN: string) => void;
 }) => {
   const ASINs = item.linkedASINs;
   const { isLoading, error, data: amazonProducts } = useQueryAmazonProductsByASIN(ASINs, item.name);
@@ -89,7 +87,7 @@ const ProductModal = ({
   const amazonProductDetails = createAmazonProductDetailMap(item, amazonProducts);
 
   const changeSelectedProductASIN = (ASIN: string) => {
-    changeSelectedASIN(ASIN, index);
+    changeProduct(item.name, ASIN);
     closeModal();
   };
 

@@ -24,6 +24,7 @@ import waitForElement from './waitForElement';
 import { PATH_PLAYGROUND } from 'src/routes/paths';
 import { INVENTORY } from 'src/config';
 import { Navigate } from 'react-router-dom';
+import { setAllProducts } from '../cart/cartSlice';
 
 const initialState: PlaygroundState = {
   planId: '0',
@@ -100,17 +101,6 @@ export const loadSavedPlayground = createAsyncThunk(
     }
   }
 );
-
-export const loadFirebasePlayground = async (grow: any) => {
-  const plan = grow.plans.entities[grow.playground.planId];
-  if (grow && grow.items && plan) {
-    dispatch(create(plan));
-    dispatch(setPlan(plan.id));
-    dispatch(addMany(grow.items.present.entities));
-  } else {
-    throw new Error('Attempted to load firebase playground with bad grow.');
-  }
-};
 
 export const resizePlayground = createAsyncThunk(
   'playground/resizePlayground',

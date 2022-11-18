@@ -12,24 +12,32 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useQueryCartItems } from '../../airtable/airtableApi';
+import { ItemState } from '../../redux/features/items/itemState';
+import { useEffect, useRef, useState } from 'react';
 import { AmazonProductMap, useQueryAmazonProductsByASIN } from '../../airtable/amazonProducts';
 import { potRecordComparator } from '../../airtable/pots';
-import { AirtableItemRecord, isPlaceableItemRecord } from '../../airtable/Record';
 import { POT_ITEM_TYPE } from '../../lib/item/potItem';
 import useQueryParams, { paramKeys } from '../../lib/url';
 
-import ProductModal from './ProductModal';
+import { ProductModal } from './ProductModal';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import queryKeys from 'src/lib/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
-import { store } from 'src/redux/store';
+import { store, useDispatch } from 'src/redux/store';
 import TopLevelErrorBoundary from '../TopLevelErrorBoundary';
 import LoadingScreen from '../LoadingScreen';
 import mixpanelTrack from 'src/utils/mixpanelTrack';
 import TotalPriceRow from './PriceRow';
 import StyledTableRow from './StyledCartTableRow';
+import { useGetGrow } from 'src/firebase/database/getGrow';
+import { Item } from 'src/lib/item';
+import { CartState } from 'src/redux/features/cart/cartState';
+import { isPlaceableItem } from 'src/lib/item/placeableItem';
+import { loadFirebaseCart, setProductASIN } from 'src/redux/features/cart/cartSlice';
+import useBuildPlayground from 'src/hooks/useBuildPlayground';
+import { Navigate } from 'react-router-dom';
+import { useSelectAllItems } from 'src/redux/features/items/itemsSelectors';
+import { useSelectCart } from 'src/redux/features/cart/cartSelectors';
 
 interface ShoppingCartUrlItem {
   quantity: number;
@@ -68,14 +76,6 @@ export const constructAmazonLinkWithASIN = (asin: string) => {
   return `https://www.amazon.com/dp/${asin}?tag=${amazonZUUTTag}`;
 };
 
-const renderDimensionsIfPlaceableItem = (item: AirtableItemRecord) => {
-  if ('width' in item && 'length' in item && 'description' in item) {
-    return `${item.length} in * ${item.width} in`;
-  }
-
-  return 'N/A';
-};
-
 export interface CartItem {
   name: string;
   amazonProducts: string[];
@@ -88,35 +88,6 @@ export interface CartItem {
   description?: string;
   quantity: number;
 }
-
-const createCartItems = (cartItems: AirtableItemRecord[] | undefined): CartItem[] => {
-  if (cartItems === undefined) return [];
-
-  let cartItemMap: { [itemName: string]: CartItem } = {};
-
-  cartItems.forEach((item) => {
-    if (cartItemMap[item.name]) {
-      cartItemMap[item.name].quantity += 1;
-    } else {
-      cartItemMap[item.name] = {
-        name: item.name,
-        amazonProducts: item.amazonProducts,
-        linkedASINs: item.linkedASINs,
-        recordId: item.recordId,
-        selectedASIN: item.linkedASINs[0],
-        itemType: item.itemType ? item.itemType : '',
-        quantity: 1,
-      };
-      if (isPlaceableItemRecord(item)) {
-        cartItemMap[item.name].width = item.width;
-        cartItemMap[item.name].length = item.length;
-        cartItemMap[item.name].description = item.description;
-      }
-    }
-  });
-
-  return Object.values(cartItemMap);
-};
 
 const cartItemsComparator = (a: CartItem, b: CartItem) => {
   if (a.itemType === POT_ITEM_TYPE && b.itemType === POT_ITEM_TYPE) {
@@ -136,54 +107,129 @@ const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+const createCartItems = (
+  items: ItemState[],
+  cart: CartState,
+  selectedItemNames: string[] | null
+): CartItem[] => {
+  if (cart.selectedProductASINs === undefined) return [];
+  if (selectedItemNames === null) throw Error('Navigated to cart with no items selected');
+
+  let cartItemMap: { [itemName: string]: CartItem } = {};
+
+  const selectedNames = [...selectedItemNames];
+  items
+    .filter((item) => {
+      /**
+       * array of item names repeat if the quantity is greater than one.
+       * so here we remove a name each time we find one, so the quantities are correct
+       */
+      const foundIndex = selectedNames.findIndex((name) => name === item.name);
+      if (foundIndex > -1) {
+        selectedNames.splice(foundIndex, 1);
+        return true;
+      }
+      return false;
+    })
+    .forEach((item) => {
+      if (cartItemMap[item.name]) {
+        cartItemMap[item.name].quantity += 1;
+      } else {
+        cartItemMap[item.name] = {
+          name: item.name,
+          amazonProducts: item.amazonProducts.map((product) => product.recordId),
+          linkedASINs: item.linkedASINs,
+          recordId: item.recordId ? item.recordId : '',
+          selectedASIN:
+            cart.selectedProductASINs[item.name] !== undefined
+              ? cart.selectedProductASINs[item.name]
+              : item.linkedASINs[0],
+          itemType: item.type ? item.type : '',
+          quantity: 1,
+        };
+        if (isPlaceableItem(item as Item)) {
+          cartItemMap[item.name].width = item.width;
+          cartItemMap[item.name].length = item.length;
+          cartItemMap[item.name].description = item.description;
+        }
+      }
+    });
+
+  const cartItems = Object.values(cartItemMap);
+  return cartItems;
+};
+
+const ShoppingCartTableLoader = () => {
+  const queryParam = useQueryParams();
+  const playground = useBuildPlayground();
+  const growId = queryParam.get(paramKeys.growId);
+  const { isLoading, error, data: grow } = useGetGrow(growId);
+
+  if (error) throw Error('Error loading playground');
+  if (playground && playground.plan) {
+    if (growId !== null && growId !== undefined) {
+      return <ShoppingCartTable />;
+    } else {
+      return <Navigate to={`/playground`} />;
+    }
+  } else {
+    if (growId) {
+      if (growId && !playground.plan && grow) {
+        loadFirebaseCart(grow);
+        return <LoadingScreen />;
+      } else if (growId && !playground.plan && isLoading) {
+        return <LoadingScreen />;
+      } else {
+        throw Error(`Error loading playground with growId ${growId}`);
+      }
+    } else {
+      return <Navigate to={`/playground`} />;
+    }
+  }
+};
+
 const ShoppingCartTable = () => {
-  const query = useQueryParams();
-  const queryClient = useQueryClient();
-  const [indexOfProductModal, setIndexOfProductModal] = useState<null | number>(null);
-
-  const recordIdString = query.get(paramKeys.recordIds);
-  if (recordIdString == null) throw Error('Attempted to load a shopping cart with no items.');
-
-  const recordIds = JSON.parse(recordIdString);
-
-  const { isLoading, error, data: cartRecords } = useQueryCartItems({ recordIds });
-
-  const [cartItems, setCartItems] = useState<CartItem[]>(createCartItems(cartRecords));
+  const items = useSelectAllItems();
+  const cart = useSelectCart();
+  const queryParam = useQueryParams();
+  const selectedItemsRaw = queryParam.get(paramKeys.selectedItems);
+  const selectedItemNames = JSON.parse(
+    decodeURIComponent(selectedItemsRaw !== null ? selectedItemsRaw : '')
+  );
+  const [cartItems, setCartItems] = useState<CartItem[]>(
+    createCartItems(items, cart, selectedItemNames)
+  );
+  const [productModalItem, setProductModalItem] = useState<CartItem | null>(null);
   const [shoppingCartUrl, setShoppingCartUrl] = useState<string>(
     createAmazonAddToShoppingCartUrl(cartItems)
   );
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
+  const cartRef = useRef<CartState>(cart);
 
+  const changeProduct = (itemName: string, selectedASIN: string) => {
+    queryClient.invalidateQueries([queryKeys.totalCartPrice]);
+    dispatch(setProductASIN({ itemName, selectedASIN }));
+  };
+
+  const openProductModal = (item: CartItem) => {
+    setProductModalItem(item);
+  };
+
+  /**
+   * recompute cart items when cart product selections change
+   */
   useEffect(() => {
-    setCartItems(createCartItems(cartRecords));
-  }, [cartRecords]);
+    if (cart === cartRef.current) {
+      return;
+    }
+    cartRef.current = cart;
+    setCartItems(createCartItems(items, cart, selectedItemNames));
+  }, [items, cart, selectedItemNames]);
 
   useEffect(() => {
     setShoppingCartUrl(createAmazonAddToShoppingCartUrl(cartItems));
   }, [cartItems]);
-
-  if (isLoading || error || cartRecords === undefined) {
-    if (isLoading) return <LoadingScreen />;
-    // if (isLoading) return <div>Loading cart...</div>;
-    if (error) return <div>Error!</div>;
-    if (cartRecords === undefined)
-      return (
-        <Typography>
-          Sorry, there are no products for these items. Please leave us some feedback with the
-          button on the right, and we'll be sure to get this fixed up. Thank you!
-        </Typography>
-      );
-  }
-
-  // const shoppingCartUrl = createAmazonAddToShoppingCartUrl(cartItems);
-
-  const changeSelectedASIN = (ASIN: string, index: number) => {
-    // invalidate price query so price is re-computed
-    queryClient.invalidateQueries([queryKeys.totalCartPrice]);
-
-    let newCartItems: CartItem[] = [...cartItems];
-    newCartItems[index].selectedASIN = ASIN;
-    setCartItems(newCartItems);
-  };
 
   const sortedCartItems = cartItems.sort(cartItemsComparator);
 
@@ -213,8 +259,7 @@ const ShoppingCartTable = () => {
                     item={item}
                     key={`${item.recordId}=${index}`}
                     index={index}
-                    changeSelectedASIN={changeSelectedASIN}
-                    setIndexOfProductModal={setIndexOfProductModal}
+                    openProductModal={openProductModal}
                   />
                 ))}
                 <TotalPriceRow cartItems={cartItems} />
@@ -258,15 +303,14 @@ const ShoppingCartTable = () => {
             </div>
           </div>
         </Container>
-        {indexOfProductModal !== null ? (
+        {productModalItem !== null ? (
           <ProductModal
-            open={indexOfProductModal !== null}
+            open={productModalItem !== null}
             closeModal={() => {
-              setIndexOfProductModal(null);
+              setProductModalItem(null);
             }}
-            item={cartItems[indexOfProductModal]}
-            index={indexOfProductModal}
-            changeSelectedASIN={changeSelectedASIN}
+            item={productModalItem}
+            changeProduct={changeProduct}
           />
         ) : null}
       </>
@@ -319,14 +363,12 @@ export const getSelectedAmazonProductPrice = (
 
 const ItemRow = ({
   item,
-  changeSelectedASIN,
   index,
-  setIndexOfProductModal,
+  openProductModal,
 }: {
   item: CartItem;
-  changeSelectedASIN: (ASIN: string, index: number) => void;
   index: number;
-  setIndexOfProductModal: React.Dispatch<React.SetStateAction<number | null>>;
+  openProductModal: (itemName: CartItem) => void;
 }) => {
   const ASINs = item.linkedASINs;
 
@@ -367,12 +409,7 @@ const ItemRow = ({
   return (
     <StyledTableRow key={`${item.recordId}=${index}`}>
       <TableCell>
-        <Button
-          // style={{ width: 50, height: 50, padding: 0, fontSize: 10 }}
-          onClick={() => setIndexOfProductModal(index)}
-        >
-          Select Product
-        </Button>
+        <Button onClick={() => openProductModal(item)}>Select Product</Button>
       </TableCell>
       <TableCell component="th" scope="row">
         <div>{item.name}</div>
@@ -423,4 +460,4 @@ const ItemRow = ({
   );
 };
 
-export default ShoppingCartTable;
+export default ShoppingCartTableLoader;

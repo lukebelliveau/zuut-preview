@@ -258,7 +258,7 @@ export const copyItem = createAsyncThunk(
 
     const item = ItemReduxAdapter.stateToItem(itemState) as PlaceableItem;
     const copiedItem = item.copyWithModifiers();
-    console.log(copiedItem);
+
     dispatch(addItem(ItemReduxAdapter.itemToState(copiedItem)));
 
     const state = getState() as RootState;

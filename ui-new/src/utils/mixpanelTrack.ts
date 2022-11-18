@@ -3,7 +3,6 @@ import { mixpanelTracking } from 'src';
 
 const mixpanelTrack = (eventName: string, properties: { [key: string]: any }) => {
   if (mixpanelTracking) {
-    console.log('??????????');
     mixpanel.track(eventName, properties);
   }
 };

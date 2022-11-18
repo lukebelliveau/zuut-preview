@@ -7,16 +7,12 @@ import Page from '../../components/Page';
 
 import ShowPlayground, { PlaygroundWithPlan } from './ShowPlayground';
 import useResponsive from 'src/hooks/useResponsive';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MobileWarningDialog from 'src/components/playground/MobileWarningDialog';
 import useBuildPlayground from 'src/hooks/useBuildPlayground';
 import { dispatch } from 'src/redux/store';
 import LoadingScreen from 'src/components/LoadingScreen';
-import {
-  loadFirebasePlayground,
-  resizePlayground,
-  setPlan,
-} from 'src/redux/features/playgrounds/playgroundSlice';
+import { resizePlayground, setPlan } from 'src/redux/features/playgrounds/playgroundSlice';
 import useQueryParams, { paramKeys } from 'src/lib/url';
 import { useGetGrow } from 'src/firebase/database/getGrow';
 import Plan from 'src/lib/plan';
@@ -25,6 +21,9 @@ import { feetToMm } from 'src/lib/conversions';
 import PlanReduxAdapter from 'src/lib/plan/planReduxAdapter';
 import { create } from 'src/redux/features/plans/planSlice';
 import useLoadDefaultItemASINs from 'src/hooks/useLoadDefaultItemASINs';
+import { loadFirebaseCart, setAllProducts } from 'src/redux/features/cart/cartSlice';
+import { firebaseDb } from 'src/redux/firebaseInit';
+import { onValue, ref } from 'firebase/database';
 
 /**
  * Not in use now (in demo-only mode)
@@ -56,6 +55,19 @@ const PlaygroundLoader = () => {
   const growId = queryParam.get(paramKeys.growId);
   const { isLoading, error, data: grow } = useGetGrow(growId);
 
+  useEffect(() => {
+    return () => {
+      const dbRef = ref(firebaseDb, 'grows/' + growId);
+      onValue(dbRef, (snapshot: any) => {
+        const data = snapshot.val();
+        const state = JSON.parse(data);
+        const selectedProductASINs = state?.cart?.selectedProductASINs;
+
+        if (selectedProductASINs) dispatch(setAllProducts(state.cart.selectedProductASINs));
+      });
+    };
+  });
+
   if (error) throw Error('Error loading playground');
   if (playground && playground.plan) {
     if (growId !== null && growId !== undefined) {
@@ -66,7 +78,7 @@ const PlaygroundLoader = () => {
   } else {
     if (growId) {
       if (growId && !playground.plan && grow) {
-        loadFirebasePlayground(grow);
+        loadFirebaseCart(grow);
         return <LoadingScreen />;
       } else if (growId && !playground.plan && isLoading) {
         return <LoadingScreen />;

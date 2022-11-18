@@ -14,6 +14,7 @@ export const paramKeys = {
   recordIds: 'recordIds',
   shared: 'shared',
   growId: 'growId',
+  selectedItems: 'selectedItems',
 };
 
 export const shoppingCartUrlWithRecordIds = (items: IItem[], selectedIds: string[]) => {

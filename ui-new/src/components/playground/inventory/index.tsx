@@ -15,28 +15,26 @@ import {
 
 import { Link as RouterLink } from 'react-router-dom';
 
-// utils
-import cssStyles from '../../../utils/cssStyles';
 // config
 import { NAVBAR, HEADER, INVENTORY } from '../../../config';
-import Iconify from '../../Iconify';
 import Scrollbar from '../../Scrollbar';
 import { varFade } from '../../animate';
 import AnimatedToggleButton from './ToggleButton';
 import { AppStore, useDispatch } from 'src/redux/store';
-import { selectSelectedItemId } from 'src/redux/features/interactions/interactionsSelectors';
+import {
+  selectSelectedItemId,
+  useSelectAllSelectedItems as useSelectAllSelectedIds,
+} from 'src/redux/features/interactions/interactionsSelectors';
 import { useSelectAllItemIds, useSelectAllItems } from 'src/redux/features/items/itemsSelectors';
 import ItemReduxAdapter from 'src/lib/item/itemReduxAdapter';
 import useAppSelector from 'src/hooks/useAppSelector';
 import { isPlaceableItem } from 'src/lib/item/placeableItem';
-import { shoppingCartUrlWithRecordIds } from 'src/lib/url';
+import useQueryParams, { paramKeys, shoppingCartUrlWithRecordIds } from 'src/lib/url';
 import {
   selectOrDeselectAllIfSelected,
   setVisibleLayer,
   selectMany,
   toggleSelect,
-  select,
-  unselect,
   unselectAll,
 } from 'src/redux/features/interactions/interactionsSlice';
 import { handleDeleteOnKeyDown } from 'src/utils/interactionHandlers';
@@ -44,7 +42,6 @@ import { useStore } from 'react-redux';
 import { IItem, Item } from 'src/lib/item';
 import RemoveDoneIcon from '@mui/icons-material/RemoveDone';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import Select from 'src/theme/overrides/Select';
 import { useTheme } from '@mui/system';
 import { isWallItem } from 'src/lib/item/wallItem';
 import { isModifierItem } from 'src/lib/item/modifierItem';
@@ -90,6 +87,19 @@ const HackyHeaderSpacer = () => {
   );
 };
 
+const useShoppingCartUrl = () => {
+  const queryParam = useQueryParams();
+  const selectedItemIds = useSelectAllSelectedIds();
+  const items = useSelectAllItems();
+  const selectedItems = items.filter((item) => selectedItemIds.includes(item.id));
+  const selectedItemNames = selectedItems.map((item) => item.name);
+  const growId = queryParam.get(paramKeys.growId);
+  if (!growId) return '/playground';
+  return `/cart?${paramKeys.growId}=${growId}&${paramKeys.selectedItems}=${encodeURIComponent(
+    JSON.stringify(selectedItemNames)
+  )}`;
+};
+
 export default function InventoryDrawer() {
   const [open, setOpen] = useState(false);
 
@@ -99,8 +109,12 @@ export default function InventoryDrawer() {
   const store = useStore() as AppStore;
   const theme = useTheme();
   const isMobile = useResponsive('down', 'sm');
-
   const items = ItemReduxAdapter.itemStatesToItemList(itemStates);
+  const queryParam = useQueryParams();
+  const growId = queryParam.get(paramKeys.growId);
+
+  const shoppingCartUrl = useShoppingCartUrl();
+
   const itemIds = useSelectAllItemIds();
 
   const handleItemKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>, item: Item) => {
@@ -137,8 +151,6 @@ export default function InventoryDrawer() {
       dispatch(unselectAll());
     };
   }
-
-  const shoppingCartUrl = shoppingCartUrlWithRecordIds(items, selectedIds);
 
   const varSidebar = varFade({
     distance: NAVBAR.BASE_WIDTH,
